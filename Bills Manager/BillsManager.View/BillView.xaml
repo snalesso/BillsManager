@@ -1,0 +1,198 @@
+﻿<UserControl x:Class="BillsManager.View.BillView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ViewModel="clr-namespace:BillsManager.ViewModel;assembly=BillsManager.ViewModel"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=ViewModel:BillViewModel, IsDesignTimeCreatable=True}">
+
+    <UserControl.Resources>
+        <ResourceDictionary Source="Dictionaries\Styles.xaml" />
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="8" />
+            <ColumnDefinition Width="Auto"
+                              MinWidth="75" />
+            <ColumnDefinition Width="8" />
+            <ColumnDefinition Width="Auto"
+                              MinWidth="150" />
+            <ColumnDefinition Width="8" />
+            <ColumnDefinition Width="Auto"
+                              MinWidth="75" />
+            <ColumnDefinition Width="8" />
+            <ColumnDefinition Width="Auto"
+                              MinWidth="150" />
+            <ColumnDefinition Width="8" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="24" />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="8" />
+        </Grid.RowDefinitions>
+
+        <!--Details-->
+        <TextBlock Grid.Column="1"
+                   Grid.ColumnSpan="7"
+                   Grid.Row="1"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Text="Details"
+                   VerticalAlignment="Center" />
+
+        <TextBlock Grid.Column="1"
+                   Grid.Row="3"
+                   HorizontalAlignment="Right"
+                   Text="Release date"
+                   VerticalAlignment="Top" />
+        <DatePicker x:Name="dtpReleaseDate"
+                    Grid.Column="3"
+                    Grid.Row="3"
+                    DisplayDateEnd="{Binding Path=DisplayDateEndForPaymentDate, Mode=OneWay}"
+                    HorizontalAlignment="Stretch"
+                    SelectedDate="{Binding Path=ReleaseDate}"
+                    TabIndex="0"
+                    VerticalAlignment="Center" />
+
+
+        <TextBlock Grid.Column="5"
+                   Grid.Row="3"
+                   HorizontalAlignment="Right"
+                   Text="Due date"
+                   VerticalAlignment="Top" />
+        <DatePicker Grid.Column="7"
+                    Grid.Row="3"
+                    DisplayDateStart="{Binding Path=ReleaseDate}"
+                    HorizontalAlignment="Stretch"
+                    SelectedDate="{Binding Path=DueDate}"
+                    TabIndex="1"
+                    VerticalAlignment="Center" />
+
+
+        <TextBlock Grid.Column="1"
+                   Grid.Row="5"
+                   HorizontalAlignment="Right"
+                   Text="Is paid"
+                   VerticalAlignment="Top" />
+        <CheckBox Grid.Column="3"
+                  Grid.Row="5"
+                  HorizontalAlignment="Left"
+                  IsChecked="{Binding Path=IsPaid}"
+                  TabIndex="3"
+                  VerticalAlignment="Center" />
+
+
+        <TextBlock Grid.Column="5"
+                   Grid.Row="5"
+                   HorizontalAlignment="Right"
+                   Text="Payment date"
+                   VerticalAlignment="Top" />
+        <DatePicker Grid.Column="7"
+                    Grid.Row="5"
+                    DisplayDateEnd="{Binding Path=DisplayDateEndForPaymentDate, Mode=OneWay}"
+                    DisplayDateStart="{Binding Path=ReleaseDate}"
+                    HorizontalAlignment="Stretch"
+                    IsEnabled="{Binding Path=IsPaid}"
+                    SelectedDate="{Binding Path=PaymentDate}"
+                    TabIndex="4"
+                    VerticalAlignment="Center" />
+
+
+        <TextBlock Grid.Column="5"
+                   Grid.Row="7"
+                   HorizontalAlignment="Right"
+                   Text="Code"
+                   VerticalAlignment="Top" />
+        <TextBox Grid.Column="7"
+                 Grid.Row="7"
+                 HorizontalAlignment="Stretch"
+                 MaxLines="1"
+                 TabIndex="6"
+                 Text="{Binding Path=Code, UpdateSourceTrigger=PropertyChanged}"
+                 VerticalAlignment="Center" />
+
+
+        <TextBlock Grid.Column="1"
+                   Grid.Row="7"
+                   HorizontalAlignment="Right"
+                   Text="Amount"
+                   VerticalAlignment="Top" />
+        <TextBox Grid.Column="3"
+                 Grid.Row="7"
+                 HorizontalAlignment="Stretch"
+                 MaxLines="1"
+                 TabIndex="5"
+                 Text="{Binding Path=Amount, UpdateSourceTrigger=PropertyChanged}"
+                 TextAlignment="Right"
+                 VerticalAlignment="Center" />
+
+        <TextBlock Grid.Column="1"
+                   Grid.Row="9"
+                   HorizontalAlignment="Right"
+                   Text="Supplier"
+                   VerticalAlignment="Top" />
+        <ComboBox Grid.Column="3"
+                  Grid.ColumnSpan="5"
+                  Grid.Row="9"
+                  HorizontalAlignment="Stretch"
+                  ItemsSource="{Binding Path=AvailableSuppliers}"
+                  SelectedItem="{Binding Path=SelectedSupplier, UpdateSourceTrigger=PropertyChanged}"
+                  TabIndex="7"
+                  VerticalAlignment="Center">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=Name}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <TextBlock Grid.Column="1"
+                   Grid.Row="11"
+                   HorizontalAlignment="Right"
+                   Text="Notes"
+                   VerticalAlignment="Top" />
+        <TextBox Grid.Column="3"
+                 Grid.ColumnSpan="5"
+                 Grid.Row="11"
+                 Height="64"
+                 Width="390"
+                 HorizontalAlignment="Stretch"
+                 HorizontalScrollBarVisibility="Disabled"
+                 TabIndex="8"
+                 Text="{Binding Path=Notes, UpdateSourceTrigger=PropertyChanged}"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Center"
+                 VerticalScrollBarVisibility="Auto" />
+
+        <StackPanel Grid.Column="1"
+                    Grid.ColumnSpan="7"
+                    Grid.Row="15"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+            <Button Margin="0 0 8 0"
+                    Width="80"
+                    Command="{Binding Path=CancelAddEditAndCloseCommand}"
+                    Content="Cancel" />
+            <Button Width="80"
+                    Command="{Binding Path=ConfirmAddEditAndCloseCommand}"
+                    Content="Ok" />
+        </StackPanel>
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,34 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ViewValues.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!--NORMAL-->
+    
+    <!--#FF0087C8-->
+    <SolidColorBrush x:Key="ButtonNormalBackgroundBrush"
+                     Color="#FF0087C8" />
+    
+    <SolidColorBrush x:Key="ButtonNormalForegroundBrush"
+                     Color="White" />
+
+    <SolidColorBrush x:Key="ButtonNormalBorderBrush"
+                     Color="#FF0087C8" />
+
+
+    <SolidColorBrush x:Key="ButtonDisabledBackgroundBrush"
+                     Color="Gray" />
+
+    <SolidColorBrush x:Key="ButtonDisabledBorderBrush"
+                     Color="Gray" />
+    
+    <SolidColorBrush x:Key="ButtonIsDefaultBorderBrush"
+                     Color="Orange" />
+    
+
+    <SolidColorBrush x:Key="CloseBrush"
+                     Color="#FFC80000" />
+
+</ResourceDictionary>

@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="BillsManager.View.SearchSuppliersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ViewModel="clr-namespace:BillsManager.ViewModel;assembly=BillsManager.ViewModel"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=ViewModel:SearchSuppliersViewModel, IsDesignTimeCreatable=True}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Dictionaries/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="8" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="8" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Obligation" />
+
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal"
+                    Grid.Row="2">
+            <CheckBox IsChecked="{Binding Path=UseObligationStateFilter}"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center" />
+            <ComboBox Grid.Row="1"
+                      Grid.Column="2"
+                      ItemsSource="{Binding Path=ObligationStates, Mode=OneTime}"
+                      Width="150"
+                      SelectedValue="{Binding Path=ObligationStateFilterValue}"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Center" />
+        </StackPanel>
+
+        <Button Content="Filter"
+                Grid.Column="2"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Grid.Row="2"
+                Command="{Binding Path=SendFilterCommand}" />
+        
+        <Button Command="{Binding Path=ExitSearchCommand}"
+                Content="Show all"
+                Grid.Column="4"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Grid.Row="2" />
+    </Grid>
+</UserControl>
