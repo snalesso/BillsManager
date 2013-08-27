@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Caliburn.Micro;
 using System.ComponentModel;
+using System.Windows.Input;
 
 namespace BillsManager.ViewModel
 {
