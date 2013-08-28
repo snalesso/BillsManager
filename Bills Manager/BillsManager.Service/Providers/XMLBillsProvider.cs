@@ -201,11 +201,7 @@ namespace BillsManager.Service.Providers
 
         void IncreaseBillsCount()
         {
-            var billsCountAttribute = this.xmlBillsDB.Root.Element("Bills").Attribute("BillsCount");
-
-            var currBillsCount = uint.Parse(billsCountAttribute.Value);
-
-            billsCountAttribute.SetValue(currBillsCount + 1);
+            this.xmlBillsDB.Root.Element("Bills").Attribute("BillsCount").SetValue(uint.Parse(this.xmlBillsDB.Root.Element("Bills").Attribute("BillsCount").Value) + 1);
         }
 
         void DecreaseBillsCount()
