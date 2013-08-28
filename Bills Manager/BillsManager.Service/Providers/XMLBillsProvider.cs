@@ -188,7 +188,7 @@ namespace BillsManager.Service.Providers
             var newXDoc = new XDocument();
 
             newXDoc.Declaration = new XDeclaration("1.0", "utf-8", null);
-            newXDoc.Add(new XElement("BillsDatabase", new XElement("Bills", new XAttribute("LastID", 0))));
+            newXDoc.Add(new XElement("BillsDatabase", new XElement("Bills", new XAttribute("LastID", 0), new XAttribute("BillsCount", 0))));
             newXDoc.Root.Add(new XAttribute("CreationDate", DateTime.Today));
 
             newXDoc.Save(this.billsDBFolder + this.billsDBFileName + this.dbExt);
@@ -201,7 +201,11 @@ namespace BillsManager.Service.Providers
 
         void IncreaseBillsCount()
         {
-            this.xmlBillsDB.Root.Element("Bills").Attribute("BillsCount").SetValue(uint.Parse(this.xmlBillsDB.Root.Element("Bills").Attribute("BillsCount").Value) + 1);
+            var billsCountAttribute = this.xmlBillsDB.Root.Element("Bills").Attribute("BillsCount");
+
+            var currBillsCount = uint.Parse(billsCountAttribute.Value);
+
+            billsCountAttribute.SetValue(currBillsCount + 1);
         }
 
         void DecreaseBillsCount()
