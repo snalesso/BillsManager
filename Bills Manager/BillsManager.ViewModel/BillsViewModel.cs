@@ -218,7 +218,7 @@ namespace BillsManager.ViewModel
                     {
                         BillViewModel newBillVM = new BillViewModel(new Bill(this.billsProvider.GetLastID() + 1), this.windowManager, /*this.dialogService,*/ this.eventAggregator);
 
-                        newBillVM.SetupForAdding();
+                        newBillVM.SetupForAddEdit();
 
                         if (this.windowManager.ShowDialog(newBillVM, settings: new Dictionary<String, object> { { "ResizeMode", ResizeMode.NoResize }, { "IsCloseButtonVisible", true } }) == true)
                         {
