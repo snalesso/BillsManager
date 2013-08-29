@@ -290,7 +290,12 @@ namespace BillsManager.ViewModel
         #region methods
 
         // TODO: find a better way (should be solved creating different VMs for Item and AddEdit)
-        public void SetupForAddEdit()
+        public void SetupForAdding()
+        {
+            this.SetSuppliersProperties();
+        }
+
+        protected void SetSuppliersProperties()
         {
             this.AvailableSuppliers = this.GetAvailableSuppliers();
 
@@ -303,7 +308,7 @@ namespace BillsManager.ViewModel
             }
         }
 
-        protected void CleanAfterAddEdit()
+        protected void CleanSuppliersProperties()
         {
             this.selectedSupplier = null;
             this.availableSuppliers = null;
@@ -313,7 +318,6 @@ namespace BillsManager.ViewModel
 
         public override void CanClose(Action<bool> callback)
         {
-            // TDOD: make it for both close window button or noone
             if (this.IsInEditMode)
             {
                 var question = new DialogViewModel(
@@ -354,13 +358,12 @@ namespace BillsManager.ViewModel
                 if (this.confirmAddEditAndCloseCommand == null) this.confirmAddEditAndCloseCommand = new RelayCommand(
                     () =>
                     {
+                        this.CleanSuppliersProperties();
+
                         if (this.IsInEditMode)
                         {
                             this.EndEdit();
                         }
-
-                        this.CleanAfterAddEdit();
-
                         this.TryClose(true);
                     },
                     () => this.IsValid);
@@ -377,13 +380,12 @@ namespace BillsManager.ViewModel
                 if (this.cancelAddEditAndCloseCommand == null) this.cancelAddEditAndCloseCommand = new RelayCommand(
                     () =>
                     {
+                        this.CleanSuppliersProperties();
+
                         if (this.IsInEditMode)
                         {
                             this.CancelEdit();
                         }
-
-                        this.CleanAfterAddEdit();
-
                         this.TryClose(false);
                     });
 

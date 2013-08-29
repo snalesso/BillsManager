@@ -51,12 +51,11 @@ namespace BillsManager.ViewModel
 
         public void BeginEdit()
         {
-            this.exposedSupplierBackup = (Supplier)this.ExposedSupplier.Clone();
-
             this.IsInEditMode = true;
+            this.exposedSupplierBackup = (Supplier)this.ExposedSupplier.Clone();
         }
 
-        private void RevertChanges()
+        public void CancelEdit()
         {
             this.eMail = this.exposedSupplierBackup.eMail;
             this.Name = this.exposedSupplierBackup.Name;
@@ -71,22 +70,17 @@ namespace BillsManager.ViewModel
             this.City = this.exposedSupplierBackup.City;
             this.Province = this.exposedSupplierBackup.Province;
             this.Country = this.exposedSupplierBackup.Country;
-        }
 
-        public void CancelEdit()
-        {
-            this.RevertChanges();
-
-            this.EndEdit();
+            this.HasChanges = false;
+            this.IsInEditMode = false;
+            this.exposedSupplierBackup = null;
         }
 
         public void EndEdit()
         {
             this.HasChanges = false;
-
-            this.exposedSupplierBackup = null;
-
             this.IsInEditMode = false;
+            this.exposedSupplierBackup = null;
         }
 
         #endregion

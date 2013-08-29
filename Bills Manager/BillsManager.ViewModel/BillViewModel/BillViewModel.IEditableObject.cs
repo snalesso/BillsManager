@@ -10,13 +10,7 @@ namespace BillsManager.ViewModel
     {
         #region IEditableObject
 
-        #region fields
-
         private Bill exposedBillBackup;
-
-        #endregion
-
-        #region properties
 
         private bool isInEditMode = false;
         public bool IsInEditMode
@@ -47,10 +41,6 @@ namespace BillsManager.ViewModel
             }
         }
 
-        #endregion
-
-        #region methods
-
         private IEnumerable<Supplier> GetAvailableSuppliers()
         {
             IEnumerable<Supplier> s = null;
@@ -72,7 +62,7 @@ namespace BillsManager.ViewModel
 
             this.IsInEditMode = true;
 
-            this.SetupForAddEdit();
+            this.SetSuppliersProperties();
         }
 
         protected void RevertChanges()
@@ -100,12 +90,8 @@ namespace BillsManager.ViewModel
 
             this.exposedBillBackup = null;
 
-            this.CleanAfterAddEdit();
-
             this.IsInEditMode = false;
         }
-
-        #endregion
 
         #endregion
     }

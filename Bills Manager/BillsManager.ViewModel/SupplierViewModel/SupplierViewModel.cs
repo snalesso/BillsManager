@@ -314,8 +314,6 @@ namespace BillsManager.ViewModel
 
         #region methods
 
-        #region message handlers
-
         public void Handle(BillsOfSupplierMessage message)
         {
             if (message.SupplierName == this.Name)
@@ -324,10 +322,6 @@ namespace BillsManager.ViewModel
                 this.eventAggregator.Publish(new SuppliersFilterNeedsRefreshMessage());
             }
         }
-
-        #endregion
-
-        #region overrieds
 
         public override void CanClose(Action<bool> callback)
         {
@@ -355,8 +349,6 @@ namespace BillsManager.ViewModel
             }
             else callback(true);
         }
-        
-        #endregion
 
         #endregion
 
@@ -370,9 +362,7 @@ namespace BillsManager.ViewModel
                 if (this.confirmAddEditAndCloseCommand == null) this.confirmAddEditAndCloseCommand = new RelayCommand(
                     () =>
                     {
-                        if (this.IsInEditMode)
-                            this.EndEdit();
-
+                        if (this.IsInEditMode) this.EndEdit();
                         this.TryClose(true);
                     },
                     () => this.IsValid);
@@ -389,9 +379,7 @@ namespace BillsManager.ViewModel
                 if (this.cancelAddEditAndCloseCommand == null) this.cancelAddEditAndCloseCommand = new RelayCommand(
                     () =>
                     {
-                        if (this.IsInEditMode)
-                            this.CancelEdit();
-
+                        if (this.IsInEditMode) this.CancelEdit();
                         this.TryClose(false);
                     });
 
