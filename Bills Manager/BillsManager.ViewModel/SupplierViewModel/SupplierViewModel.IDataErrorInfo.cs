@@ -4,12 +4,13 @@ using Caliburn.Micro;
 
 namespace BillsManager.ViewModel
 {
-    public partial class BillViewModel : Screen, IDataErrorInfo
+    public partial class SupplierViewModel : Screen, IDataErrorInfo
     {
         #region IDataErrorInfo
 
-        private ValidationRulesTracker<BillViewModel> rulesTracker;
+        private ValidationRulesTracker<SupplierViewModel> rulesTracker;
 
+        // TODO: a simpler way to notify IsValid might be to check if the notifying property has a validation rule
         public bool IsValid
         {
             get { return string.IsNullOrEmpty(this.Error); }
@@ -28,7 +29,7 @@ namespace BillsManager.ViewModel
             get
             {
                 if (this.rulesTracker == null)
-                    this.rulesTracker = new ValidationRulesTracker<BillViewModel>(this);
+                    this.rulesTracker = new ValidationRulesTracker<SupplierViewModel>(this);
 
                 return this.rulesTracker.GetErrorsForProperty(columnName);
             }

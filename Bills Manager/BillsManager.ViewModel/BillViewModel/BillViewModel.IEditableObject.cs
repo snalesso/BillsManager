@@ -1,10 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using BillsManager.Model;
-using Caliburn.Micro;
-using System.Linq;
-using System.Collections.Generic;
 using BillsManager.ViewModel.Messages;
-using System;
+using Caliburn.Micro;
 
 namespace BillsManager.ViewModel
 {

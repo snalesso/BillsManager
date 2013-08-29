@@ -119,7 +119,7 @@
                  Width="387"
                  MaxLines="1"
                  TabIndex="0"
-                 Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                  VerticalAlignment="Center" />
 
         <TextBlock Grid.Column="1"
@@ -135,7 +135,7 @@
                  HorizontalAlignment="Stretch"
                  HorizontalScrollBarVisibility="Disabled"
                  TabIndex="1"
-                 Text="{Binding Path=Notes, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding Path=Notes, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                  TextWrapping="Wrap"
                  VerticalAlignment="Center"
                  VerticalScrollBarVisibility="Auto" />
@@ -211,7 +211,7 @@
                  Width="150"
                  MaxLines="1"
                  TabIndex="2"
-                 Text="{Binding Path=City, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding Path=City, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                  VerticalAlignment="Center" />
 
         <TextBlock Grid.Column="5"
@@ -224,7 +224,7 @@
                  Width="150"
                  MaxLines="1"
                  TabIndex="5"
-                 Text="{Binding Path=Country, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding Path=Country, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                  VerticalAlignment="Center" />
 
         <TextBlock Grid.Column="5"
@@ -237,7 +237,7 @@
                  Width="150"
                  MaxLines="1"
                  TabIndex="7"
-                 Text="{Binding Path=Number, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding Path=Number, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                  VerticalAlignment="Center" />
 
         <TextBlock Grid.Column="1"
@@ -250,7 +250,7 @@
                  Width="150"
                  MaxLines="1"
                  TabIndex="4"
-                 Text="{Binding Path=Province, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding Path=Province, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                  VerticalAlignment="Center" />
 
         <TextBlock Grid.Column="1"
@@ -263,7 +263,7 @@
                  Width="150"
                  MaxLines="1"
                  TabIndex="6"
-                 Text="{Binding Path=Street, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding Path=Street, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                  VerticalAlignment="Center" />
 
         <TextBlock Grid.Column="5"
@@ -276,7 +276,7 @@
                  Width="150"
                  MaxLines="1"
                  TabIndex="3"
-                 Text="{Binding Path=Zip, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding Path=Zip, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                  VerticalAlignment="Center" />
 
 

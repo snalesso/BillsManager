@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using BillsManager.Model;
-using BillsManager.Service;
 using BillsManager.ViewModel.Commanding;
 using BillsManager.ViewModel.Messages;
 using Caliburn.Micro;
@@ -55,6 +55,7 @@ namespace BillsManager.ViewModel
 
         #region wrapped from supplier
 
+        [Required(ErrorMessage = "You must specify a name.")]
         public string Name
         {
             get { return this.ExposedSupplier.Name; }
@@ -64,6 +65,7 @@ namespace BillsManager.ViewModel
                 {
                     this.ExposedSupplier.Name = value;
                     this.NotifyOfPropertyChange(() => this.Name);
+                    this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
                 }
             }
@@ -146,6 +148,7 @@ namespace BillsManager.ViewModel
             }
         }
 
+        [StringLength(80, ErrorMessage = "You cannot exceed 80 characters.")]
         public string Notes
         {
             get { return this.ExposedSupplier.Notes; }
@@ -155,6 +158,7 @@ namespace BillsManager.ViewModel
                 {
                     this.ExposedSupplier.Notes = value;
                     this.NotifyOfPropertyChange(() => this.Notes);
+                    this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
                 }
             }
@@ -162,6 +166,7 @@ namespace BillsManager.ViewModel
 
         #region address
 
+        [Required(ErrorMessage = "You must specify a street.")]
         public string Street
         {
             get { return this.ExposedSupplier.Street; }
@@ -171,11 +176,13 @@ namespace BillsManager.ViewModel
                 {
                     this.ExposedSupplier.Street = value;
                     this.NotifyOfPropertyChange(() => this.Street);
+                    this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
                 }
             }
         }
 
+        [Required(ErrorMessage = "You must specify a number.")]
         public string Number
         {
             get { return this.ExposedSupplier.Number; }
@@ -185,11 +192,13 @@ namespace BillsManager.ViewModel
                 {
                     this.ExposedSupplier.Number = value;
                     this.NotifyOfPropertyChange(() => this.Number);
+                    this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
                 }
             }
         }
 
+        [Required(ErrorMessage = "You must specify a city.")]
         public string City
         {
             get { return this.ExposedSupplier.City; }
@@ -199,11 +208,14 @@ namespace BillsManager.ViewModel
                 {
                     this.ExposedSupplier.City = value;
                     this.NotifyOfPropertyChange(() => this.City);
+                    this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
                 }
             }
         }
 
+        [Required(ErrorMessage = "You must specify a zip.")]
+        [Range(10000, 99999, ErrorMessage = "The zip must be 5 characters long.")]
         public ushort Zip
         {
             get { return this.ExposedSupplier.Zip; }
@@ -213,11 +225,14 @@ namespace BillsManager.ViewModel
                 {
                     this.ExposedSupplier.Zip = value;
                     this.NotifyOfPropertyChange(() => this.Zip);
+                    this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
                 }
             }
         }
 
+        [Required(ErrorMessage = "You must specify a province.")]
+        [StringLength(2, MinimumLength = 2, ErrorMessage = "The province abbreviation must be 2 characters long.")]
         public string Province
         {
             get { return this.ExposedSupplier.Province; }
@@ -227,11 +242,13 @@ namespace BillsManager.ViewModel
                 {
                     this.ExposedSupplier.Province = value;
                     this.NotifyOfPropertyChange(() => this.Province);
+                    this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
                 }
             }
         }
 
+        [Required(ErrorMessage = "You must specify a country.")]
         public string Country
         {
             get { return this.ExposedSupplier.Country; }
@@ -241,6 +258,7 @@ namespace BillsManager.ViewModel
                 {
                     this.ExposedSupplier.Country = value;
                     this.NotifyOfPropertyChange(() => this.Country);
+                    this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
                 }
             }
@@ -316,7 +334,7 @@ namespace BillsManager.ViewModel
                     "Are you sure you want to discard all the changes?",
                     new[]
                     {
-                        new DialogResponse(ResponseType.Yes, 15),
+                        new DialogResponse(ResponseType.Yes, 3),
                         new DialogResponse(ResponseType.No)
                     });
 
@@ -346,7 +364,8 @@ namespace BillsManager.ViewModel
                     {
                         if (this.IsInEditMode) this.EndEdit();
                         this.TryClose(true);
-                    });
+                    },
+                    () => this.IsValid);
 
                 return this.confirmAddEditAndCloseCommand;
             }

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using BillsManager.Model;
-using BillsManager.Service;
 using BillsManager.ViewModel.Commanding;
-using BillsManager.ViewModel.Messages;
 using Caliburn.Micro;
-using System.ComponentModel.DataAnnotations;
 
 namespace BillsManager.ViewModel
 {
@@ -191,7 +189,7 @@ namespace BillsManager.ViewModel
             }
         }
 
-        [StringLength(40, ErrorMessage = "You have to stay under 40 characters.")]
+        [StringLength(40, ErrorMessage = "You cannot exceed 40 characters.")]
         public string Notes
         {
             get { return this.ExposedBill.Notes; }

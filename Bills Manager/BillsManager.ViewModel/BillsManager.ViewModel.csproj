@@ -67,6 +67,7 @@
     <Compile Include="DialogViewModel\DialogViewModel.cs" />
     <Compile Include="DialogViewModel\ResponseType.cs" />
     <Compile Include="ExtensionMethods\ExtensionMethods.cs" />
+    <Compile Include="SupplierViewModel\SupplierViewModel.IDataErrorInfo.cs" />
     <Compile Include="Validation\ValidationRulesTrackerGeneric.cs" />
     <Compile Include="Messages\BillsFilterMessage.cs" />
     <Compile Include="Messages\SupplierNameChangedMessage.cs" />
