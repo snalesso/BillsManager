@@ -218,6 +218,8 @@ namespace BillsManager.ViewModel
                     {
                         BillViewModel newBillVM = new BillViewModel(new Bill(this.billsProvider.GetLastID() + 1), this.windowManager, /*this.dialogService,*/ this.eventAggregator);
 
+                        newBillVM.SetupForAdding();
+
                         if (this.windowManager.ShowDialog(newBillVM, settings: new Dictionary<String, object> { { "ResizeMode", ResizeMode.NoResize }, { "IsCloseButtonVisible", true } }) == true)
                         {
                             this.billsProvider.Add(newBillVM.ExposedBill);
@@ -238,7 +240,7 @@ namespace BillsManager.ViewModel
             }
         }
 
-        private bool canAddNewBill = false;
+        private bool canAddNewBill = false; // TODO: change enabling system with add supp button in new bill
         public bool CanAddNewBill
         {
             get { return this.canAddNewBill; }

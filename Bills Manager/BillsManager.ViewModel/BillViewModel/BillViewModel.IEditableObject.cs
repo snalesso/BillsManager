@@ -1,6 +1,10 @@
 ﻿using System.ComponentModel;
 using BillsManager.Model;
 using Caliburn.Micro;
+using System.Linq;
+using System.Collections.Generic;
+using BillsManager.ViewModel.Messages;
+using System;
 
 namespace BillsManager.ViewModel
 {
@@ -39,14 +43,31 @@ namespace BillsManager.ViewModel
             }
         }
 
-        public void BeginEdit()
+        private IEnumerable<Supplier> GetAvailableSuppliers()
         {
-            this.IsInEditMode = true;
+            IEnumerable<Supplier> s = null;
 
-            this.exposedBillBackup = (Bill)this.ExposedBill.Clone();
+            this.eventAggregator.Publish(new AskForAvailableSuppliersMessage(supps => s = supps));
+
+            return s;
         }
 
-        public void CancelEdit()
+        public void Handle(AvailableSuppliersMessage message)
+        {
+            if (this.IsInEditMode)
+                this.AvailableSuppliers = message.AvailableSuppliers;
+        }
+
+        public void BeginEdit()
+        {
+            this.exposedBillBackup = (Bill)this.ExposedBill.Clone();
+
+            this.IsInEditMode = true;
+
+            this.SetSuppliersProperties();
+        }
+
+        protected void RevertChanges()
         {
             this.Amount = this.exposedBillBackup.Amount;
             this.Code = this.exposedBillBackup.Code;
@@ -55,18 +76,23 @@ namespace BillsManager.ViewModel
             this.PaymentDate = this.exposedBillBackup.PaymentDate;
             this.RegistrationDate = this.exposedBillBackup.RegistrationDate;
             this.ReleaseDate = this.exposedBillBackup.ReleaseDate;
-            this.Supplier = this.exposedBillBackup.Supplier;
+            this.Supplier = this.exposedBillBackup.Supplier; 
+        }
 
-            this.HasChanges = false;
-            this.IsInEditMode = false;
-            this.exposedBillBackup = null;
+        public void CancelEdit()
+        {
+            this.RevertChanges();
+
+            this.EndEdit();
         }
 
         public void EndEdit()
         {
-            this.IsInEditMode = false;
             this.HasChanges = false;
+
             this.exposedBillBackup = null;
+
+            this.IsInEditMode = false;
         }
 
         #endregion

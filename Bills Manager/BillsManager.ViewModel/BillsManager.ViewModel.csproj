@@ -41,6 +41,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Interactivity">
       <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\net40\System.Windows.Interactivity.dll</HintPath>
@@ -66,6 +67,7 @@
     <Compile Include="DialogViewModel\DialogViewModel.cs" />
     <Compile Include="DialogViewModel\ResponseType.cs" />
     <Compile Include="ExtensionMethods\ExtensionMethods.cs" />
+    <Compile Include="Validation\ValidationRulesTrackerGeneric.cs" />
     <Compile Include="Messages\BillsFilterMessage.cs" />
     <Compile Include="Messages\SupplierNameChangedMessage.cs" />
     <Compile Include="Messages\SuppliersFilterMessage.cs" />

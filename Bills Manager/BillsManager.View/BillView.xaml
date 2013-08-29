@@ -124,7 +124,7 @@
                  HorizontalAlignment="Stretch"
                  MaxLines="1"
                  TabIndex="6"
-                 Text="{Binding Path=Code, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding Path=Code, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                  VerticalAlignment="Center" />
 
 
@@ -138,7 +138,7 @@
                  HorizontalAlignment="Stretch"
                  MaxLines="1"
                  TabIndex="5"
-                 Text="{Binding Path=Amount, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding Path=Amount, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                  TextAlignment="Right"
                  VerticalAlignment="Center" />
 
@@ -147,20 +147,32 @@
                    HorizontalAlignment="Right"
                    Text="Supplier"
                    VerticalAlignment="Top" />
-        <ComboBox Grid.Column="3"
+
+        <Grid Grid.Column="3"
                   Grid.ColumnSpan="5"
                   Grid.Row="9"
                   HorizontalAlignment="Stretch"
-                  ItemsSource="{Binding Path=AvailableSuppliers}"
-                  SelectedItem="{Binding Path=SelectedSupplier, UpdateSourceTrigger=PropertyChanged}"
-                  TabIndex="7"
                   VerticalAlignment="Center">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Path=Name}" />
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="8" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <ComboBox 
+                  ItemsSource="{Binding Path=AvailableSuppliers}"
+                  SelectedItem="{Binding Path=SelectedSupplier, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                  TabIndex="7">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=Name}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <Button Grid.Column="2" Content="+" Width="30" />
+
+        </Grid>
 
         <TextBlock Grid.Column="1"
                    Grid.Row="11"
@@ -175,7 +187,7 @@
                  HorizontalAlignment="Stretch"
                  HorizontalScrollBarVisibility="Disabled"
                  TabIndex="8"
-                 Text="{Binding Path=Notes, UpdateSourceTrigger=PropertyChanged}"
+                 Text="{Binding Path=Notes, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                  TextWrapping="Wrap"
                  VerticalAlignment="Center"
                  VerticalScrollBarVisibility="Auto" />
@@ -191,7 +203,8 @@
                     Content="Cancel" />
             <Button Width="80"
                     Command="{Binding Path=ConfirmAddEditAndCloseCommand}"
-                    Content="Ok" />
+                    Content="Ok"
+                    ToolTip="{Binding Error, Mode=OneWay}"/>
         </StackPanel>
 
     </Grid>
