@@ -17,7 +17,8 @@ namespace BillsManager.ViewModel
         IHandle<AskForAvailableSuppliersMessage>,
         IHandle<SuppliersNeedRefreshMessage>,
         IHandle<SuppliersFilterMessage>,
-        IHandle<SuppliersFilterNeedsRefreshMessage>
+        IHandle<SuppliersFilterNeedsRefreshMessage>,
+        IHandle<AddNewSupplierMessage>
     {
         #region fields
 
@@ -165,11 +166,6 @@ namespace BillsManager.ViewModel
             this.SupplierViewModels = new ObservableCollection<SupplierViewModel>(this.suppliersProvider.GetAll().Select(s => new SupplierViewModel(s, this.windowManager, /*this.dialogService,*/ this.eventAggregator)));
         }
 
-        public void Handle(SuppliersFilterNeedsRefreshMessage message)
-        {
-            this.NotifyOfPropertyChange(() => this.FilteredSupplierViewModels);
-        }
-
         #region message handlers
 
         public void Handle(AskForAvailableSuppliersMessage message)
@@ -187,12 +183,17 @@ namespace BillsManager.ViewModel
             this.Filters = message.Filters;
         }
 
-        #endregion
+        public void Handle(SuppliersFilterNeedsRefreshMessage message)
+        {
+            this.NotifyOfPropertyChange(() => this.FilteredSupplierViewModels);
+        }
 
-        //private void PublishAvailableSuppliersChangedHandler(object sender, NotifyCollectionChangedEventArgs e)
-        //{
-        //    this.PublishAvailableSuppliersChanged();
-        //}
+        public void Handle(AddNewSupplierMessage message)
+        {
+            this.AddNewSupplierCommand.Execute(null);
+        }
+
+        #endregion
 
         #endregion
 

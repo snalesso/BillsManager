@@ -50,12 +50,6 @@ namespace BillsManager.ViewModel
             return s;
         }
 
-        public void Handle(AvailableSuppliersMessage message)
-        {
-            if (this.IsInEditMode)
-                this.AvailableSuppliers = message.AvailableSuppliers;
-        }
-
         public void BeginEdit()
         {
             this.exposedBillBackup = (Bill)this.ExposedBill.Clone();

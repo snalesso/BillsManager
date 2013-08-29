@@ -4,11 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using BillsManager.Model;
 using BillsManager.ViewModel.Commanding;
+using BillsManager.ViewModel.Messages;
 using Caliburn.Micro;
 
 namespace BillsManager.ViewModel
 {
-    public partial class BillViewModel : Screen
+    public partial class BillViewModel :
+        Screen,
+        IHandle<AvailableSuppliersMessage>
     {
         #region fields
 
@@ -309,6 +312,11 @@ namespace BillsManager.ViewModel
             this.availableSuppliers = null;
         }
 
+        public void Handle(AvailableSuppliersMessage message)
+        {
+            this.AvailableSuppliers = message.AvailableSuppliers;
+        }
+
         #region overrides
 
         public override void CanClose(Action<bool> callback)
@@ -344,6 +352,21 @@ namespace BillsManager.ViewModel
         #endregion
 
         #region commands
+
+        private RelayCommand addNewSupplierCommand;
+        public RelayCommand AddNewSupplierCommand
+        {
+            get
+            {
+                if (this.addNewSupplierCommand == null) this.addNewSupplierCommand = new RelayCommand(
+                    () =>
+                    {
+                        this.eventAggregator.Publish(new AddNewSupplierMessage());
+                    });
+
+                return this.addNewSupplierCommand;
+            }
+        }
 
         protected RelayCommand confirmAddEditAndCloseCommand;
         public RelayCommand ConfirmAddEditAndCloseCommand

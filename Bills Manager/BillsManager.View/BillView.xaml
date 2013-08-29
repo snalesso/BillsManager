@@ -170,7 +170,7 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-            <Button Grid.Column="2" Content="+" Width="30" />
+            <Button Grid.Column="2" Content="+" Width="30" Command="{Binding AddNewSupplierCommand, Mode=OneWay}" />
 
         </Grid>
 
