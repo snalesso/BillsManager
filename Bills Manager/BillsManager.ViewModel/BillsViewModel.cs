@@ -17,7 +17,8 @@ namespace BillsManager.ViewModel
         //IHandle<AvailableSuppliersMessage>,
         IHandle<BillsNeedRefreshMessage>,
         IHandle<BillsFilterMessage>,
-        IHandle<SupplierNameChangedMessage>
+        IHandle<SupplierNameChangedMessage>,
+        IHandle<SupplierDeletedMessage>
     {
         #region fields
 
@@ -160,7 +161,11 @@ namespace BillsManager.ViewModel
                     s.Name,
                     this.BillViewModels.Where(bvm => bvm.Supplier == s.Name).Select(bvm => bvm.ExposedBill))));
 
-            if (notify) this.NotifyOfPropertyChange(() => this.BillViewModels);
+            if (notify)
+            {
+                this.NotifyOfPropertyChange(() => this.BillViewModels);
+                this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
+            }
         }
 
         #region message handlers
@@ -200,6 +205,17 @@ namespace BillsManager.ViewModel
 
             if (bills.Count() > 0)
                 this.billsProvider.Edit(bills);
+        }
+
+        public void Handle(SupplierDeletedMessage message)
+        {
+            var bvmsToDelete = this.BillViewModels.Where(bvm => bvm.Supplier == message.DeletedSupplier.Name).ToList();
+            bvmsToDelete.Select(bvm => bvm.ExposedBill).Apply(b => this.billsProvider.Delete(b));
+            foreach (var bvm in bvmsToDelete)
+            {
+                this.BillViewModels.Remove(bvm);
+            }
+            this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
         }
 
         #endregion

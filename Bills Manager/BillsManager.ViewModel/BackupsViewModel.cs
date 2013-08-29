@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using BillsManager.Model;
 using BillsManager.Service;
 using BillsManager.Service.Providers;
 using BillsManager.ViewModel.Commanding;
@@ -87,10 +88,20 @@ namespace BillsManager.ViewModel
 
         #region methods
 
-        void RefreshBackupsList(bool notify = true) // TODO: show a busy indicator
+        private void RefreshBackupsList(bool notify = true) // TODO: show a busy indicator
         {
             this.backupViewModels = new ObservableCollection<BackupViewModel>(this.backupsProvider.GetAll().Select(b => new BackupViewModel(b)));
             if (notify) this.NotifyOfPropertyChange(() => this.BackupViewModels);
+        }
+
+        private string BackupData(Backup backup)
+        {
+            return backup.CreationTime.ToLongDateString() + "   " + backup.CreationTime.ToLongTimeString() +
+                   Environment.NewLine +
+                   Environment.NewLine +
+                   backup.BillsCount + " bills" +
+                   Environment.NewLine +
+                   backup.SuppliersCount + " suppliers";
         }
 
         #endregion
@@ -130,9 +141,9 @@ namespace BillsManager.ViewModel
 
                             var question = new DialogViewModel(
                                 "Rolling back",
-                                "Are you sure you want to rollback to the following backup?" + "\r\n" + "\r\n" +
-                                p.CreationTime.ToLongDateString() + "\r\n" +
-                                p.CreationTime.ToLongTimeString(),
+                                "Are you sure you want to ROLLBACK to the following backup?" +
+                                Environment.NewLine +
+                                Environment.NewLine + this.BackupData(p.ExposedBackup),
                                 new[]
                                 {
                                     new DialogResponse(ResponseType.Yes, 15),
@@ -173,15 +184,15 @@ namespace BillsManager.ViewModel
 
                             var question = new DialogViewModel(
                                 "Deleting backup",
-                                "Are you sure you want to delete the following backup?" + "\r\n" + "\r\n" +
-                                p.CreationTime.ToLongDateString() + "\r\n" +
-                                p.CreationTime.ToLongTimeString(),
+                                "Are you sure you want to DELETE the following backup?" +
+                                Environment.NewLine +
+                                Environment.NewLine + this.BackupData(p.ExposedBackup),
                                 new[]
                                 {
                                     new DialogResponse(ResponseType.Yes, 15),
                                     new DialogResponse(ResponseType.No)
                                 });
-                            
+
                             this.windowManager.ShowDialog(question);
 
                             if (question.Response == ResponseType.Yes)

@@ -293,11 +293,14 @@ namespace BillsManager.ViewModel
 
                             if (question.Response == ResponseType.Yes)
                             {
-                                this.SupplierViewModels.Remove(p);
                                 this.suppliersProvider.Delete(p.ExposedSupplier);
+                                this.SupplierViewModels.Remove(p);
+
+                                this.NotifyOfPropertyChange(() => this.FilteredSupplierViewModels);
 
                                 this.SelectedSupplierViewModel = null;
-                                this.PublishAvailableSuppliersChanged();
+                                this.PublishAvailableSuppliersChanged(); // TODO: make that you can pass a parameter as edited, deleted, added in order to avoid multiple refreshes, or make single messages for each event
+                                this.eventAggregator.Publish(new SupplierDeletedMessage(p.ExposedSupplier));
                             }
                         },
                         p => p != null);
