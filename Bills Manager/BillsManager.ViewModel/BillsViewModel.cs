@@ -14,7 +14,7 @@ namespace BillsManager.ViewModel
 {
     public partial class BillsViewModel :
         Screen,
-        IHandle<AvailableSuppliersMessage>,
+        //IHandle<AvailableSuppliersMessage>,
         IHandle<BillsNeedRefreshMessage>,
         IHandle<BillsFilterMessage>,
         IHandle<SupplierNameChangedMessage>
@@ -165,18 +165,18 @@ namespace BillsManager.ViewModel
 
         #region message handlers
 
-        public void Handle(AvailableSuppliersMessage message)
-        {
-            uint count = 0;
+        //public void Handle(AvailableSuppliersMessage message)
+        //{
+        //    uint count = 0;
 
-            foreach (Supplier s in message.AvailableSuppliers)
-            {
-                count++;
-                break;
-            }
+        //    foreach (Supplier s in message.AvailableSuppliers)
+        //    {
+        //        count++;
+        //        break;
+        //    }
 
-            this.CanAddNewBill = (count != 0);
-        }
+        //    this.CanAddNewBill = (count != 0);
+        //}
 
         public void Handle(BillsNeedRefreshMessage message)
         {
@@ -233,26 +233,25 @@ namespace BillsManager.ViewModel
                                 newBillVM.Supplier,
                                 this.BillViewModels.Select(bvm => bvm.ExposedBill).Where(b => b.Supplier == newBillVM.Supplier)));
                         }
-                    },
-                    () => this.CanAddNewBill);
+                    });
 
                 return this.addNewBillCommand;
             }
         }
 
-        private bool canAddNewBill = false; // TODO: change enabling system with add supp button in new bill
-        public bool CanAddNewBill
-        {
-            get { return this.canAddNewBill; }
-            set
-            {
-                if (this.canAddNewBill != value)
-                {
-                    this.canAddNewBill = value;
-                    this.NotifyOfPropertyChange(() => this.CanAddNewBill);
-                }
-            }
-        }
+        //private bool canAddNewBill = false; // TODO: change enabling system with add supp button in new bill
+        //public bool CanAddNewBill
+        //{
+        //    get { return this.canAddNewBill; }
+        //    set
+        //    {
+        //        if (this.canAddNewBill != value)
+        //        {
+        //            this.canAddNewBill = value;
+        //            this.NotifyOfPropertyChange(() => this.CanAddNewBill);
+        //        }
+        //    }
+        //}
 
         private RelayCommand<BillViewModel> editBillCommand;
         public RelayCommand<BillViewModel> EditBillCommand

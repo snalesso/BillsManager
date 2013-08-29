@@ -5,7 +5,7 @@ using BillsManager.ViewModel.Messages;
 
 namespace BillsManager.ViewModel
 {
-    public partial class BillsViewModel : Screen, IHandle<AvailableSuppliersMessage>
+    public partial class BillsViewModel : Screen
     {
         #region ctor
 
