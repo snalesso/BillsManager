@@ -62,7 +62,7 @@ namespace BillsManager.ViewModel
 
             this.IsInEditMode = true;
 
-            this.SetSuppliersProperties();
+            this.SetupForAdEdit();
         }
 
         protected void RevertChanges()

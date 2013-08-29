@@ -314,6 +314,8 @@ namespace BillsManager.ViewModel
 
         #region methods
 
+        #region message handlers
+
         public void Handle(BillsOfSupplierMessage message)
         {
             if (message.SupplierName == this.Name)
@@ -323,8 +325,13 @@ namespace BillsManager.ViewModel
             }
         }
 
+        #endregion
+
+        #region overrides
+
         public override void CanClose(Action<bool> callback)
         {
+            // TODO: make it triggered by both close window button or by noone
             if (this.IsInEditMode)
             {
                 //if (this.dialogService.ShowYesNoQuestion("Closing", "Are you sure you want to discard all the changes?"))
@@ -349,6 +356,8 @@ namespace BillsManager.ViewModel
             }
             else callback(true);
         }
+
+        #endregion
 
         #endregion
 

@@ -290,12 +290,7 @@ namespace BillsManager.ViewModel
         #region methods
 
         // TODO: find a better way (should be solved creating different VMs for Item and AddEdit)
-        public void SetupForAdding()
-        {
-            this.SetSuppliersProperties();
-        }
-
-        protected void SetSuppliersProperties()
+        public void SetupForAdEdit()
         {
             this.AvailableSuppliers = this.GetAvailableSuppliers();
 
@@ -358,12 +353,13 @@ namespace BillsManager.ViewModel
                 if (this.confirmAddEditAndCloseCommand == null) this.confirmAddEditAndCloseCommand = new RelayCommand(
                     () =>
                     {
-                        this.CleanSuppliersProperties();
-
                         if (this.IsInEditMode)
                         {
                             this.EndEdit();
                         }
+
+                        this.CleanSuppliersProperties();
+
                         this.TryClose(true);
                     },
                     () => this.IsValid);
@@ -380,12 +376,13 @@ namespace BillsManager.ViewModel
                 if (this.cancelAddEditAndCloseCommand == null) this.cancelAddEditAndCloseCommand = new RelayCommand(
                     () =>
                     {
-                        this.CleanSuppliersProperties();
-
                         if (this.IsInEditMode)
                         {
                             this.CancelEdit();
                         }
+
+                        this.CleanSuppliersProperties();
+
                         this.TryClose(false);
                     });
 

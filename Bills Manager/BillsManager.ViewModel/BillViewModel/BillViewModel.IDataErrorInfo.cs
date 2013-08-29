@@ -17,10 +17,7 @@ namespace BillsManager.ViewModel
 
         public string Error
         {
-            get
-            {
-                return this.rulesTracker.GetAllErrors();
-            }
+            get { return this.rulesTracker.GetAllErrors(); }
         }
 
         public string this[string columnName]
