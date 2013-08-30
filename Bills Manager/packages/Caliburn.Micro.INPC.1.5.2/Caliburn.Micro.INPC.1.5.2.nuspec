@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Caliburn.Micro.INPC</id>
+    <version>1.5.2</version>
+    <authors>Rob Eisenberg,  Marco Amendola,  Chin Bae,  Ryan Cromwell,  Nigel Sampson,  Thomas Ibel,  Matt Hidinger</authors>
+    <owners>Rob Eisenberg,  Marco Amendola,  Chin Bae,  Ryan Cromwell,  Nigel Sampson,  Thomas Ibel,  Matt Hidinger</owners>
+    <licenseUrl>http://caliburnmicro.codeplex.com/license</licenseUrl>
+    <projectUrl>http://caliburnmicro.codeplex.com/</projectUrl>
+    <iconUrl>http://www.caliburnproject.org/CaliburnIcon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A standalone version of Caliburn.Micro's INPC implementation, BindableCollection, Execute.OnUIThread and InDesignMode checking designed for all Xaml platforms.</description>
+    <language>en-US</language>
+    <tags>Silverlight WPF WP7 WP71 WP8 SL4 SL5 SL Phone WinRT INPC INotifyPropertyChanged MVVM Metro</tags>
+  </metadata>
+</package>

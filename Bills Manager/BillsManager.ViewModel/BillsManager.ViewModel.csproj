@@ -57,6 +57,7 @@
     <Compile Include="BackupsViewModel.cs" />
     <Compile Include="BackupViewModel.cs" />
     <Compile Include="BillDetailsViewModel.cs" />
+    <Compile Include="ExtensionMethods\ExtendedObservableCollectionGeneric.cs" />
     <Compile Include="Messages\AddNewSupplierMessage.cs" />
     <Compile Include="BillViewModel\BillViewModel.IDataErrorInfo.cs" />
     <Compile Include="BillViewModel\BillViewModel.IEditableObject.cs" />

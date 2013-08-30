@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Caliburn.Micro.EventAggregator</id>
+    <version>1.5.2</version>
+    <authors>Rob Eisenberg,  Marco Amendola,  Chin Bae,  Ryan Cromwell,  Nigel Sampson,  Thomas Ibel,  Matt Hidinger</authors>
+    <owners>Rob Eisenberg,  Marco Amendola,  Chin Bae,  Ryan Cromwell,  Nigel Sampson,  Thomas Ibel,  Matt Hidinger</owners>
+    <licenseUrl>http://caliburnmicro.codeplex.com/license</licenseUrl>
+    <projectUrl>http://caliburnmicro.codeplex.com/</projectUrl>
+    <iconUrl>http://www.caliburnproject.org/CaliburnIcon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A small, simple event aggregator implementation for .NET, SL, WP7, WP8, WinRT, Mono and Unity3d.</description>
+    <language>en-US</language>
+    <tags>Silverlight WPF WP7 WP71 WP8 SL4 SL5 SL Phone EA PubSub EventAggregator Messaging Messenger Publish Subscribe Event Mono Unity3d WinRT Metro</tags>
+  </metadata>
+</package>

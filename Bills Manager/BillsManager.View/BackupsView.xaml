@@ -23,18 +23,20 @@
 
         <Menu>
             <MenuItem Header="Create new"
-                      Command="{Binding Path=CreateNewBackupCommand}" />
+                      Command="{Binding Path=CreateNewBackupCommand, Mode=OneTime}" />
             <MenuItem Header="Rollback"
-                      Command="{Binding Path=RollbackBackupCommand}"
+                      Command="{Binding Path=RollbackCommand, Mode=OneTime}"
                       CommandParameter="{Binding Path=SelectedBackupViewModel}" />
             <MenuItem Header="Delete"
-                      Command="{Binding Path=DeleteBackupCommand}"
+                      Command="{Binding Path=DeleteBackupCommand, Mode=OneTime}"
                       CommandParameter="{Binding Path=SelectedBackupViewModel}" />
+            
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+            
             <MenuItem Header="Database folder"
-                      Command="{Binding Path=OpenDBFolderCommand}" />
+                      Command="{Binding Path=OpenDBFolderCommand, Mode=OneTime}" />
             <MenuItem Header="Backups folder"
-                      Command="{Binding Path=OpenBackupsFolderCommand}" />
+                      Command="{Binding Path=OpenBackupsFolderCommand, Mode=OneTime}" />
         </Menu>
 
         <ListBox Grid.Row="2"

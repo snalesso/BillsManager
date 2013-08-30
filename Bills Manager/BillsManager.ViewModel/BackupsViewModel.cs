@@ -38,25 +38,21 @@ namespace BillsManager.ViewModel
             this.eventAggregator.Subscribe(this);
 
             this.DisplayName = "Backup Center";
+
+            this.LoadBackups();
         }
 
         #endregion
 
         #region properties
 
-        private ObservableCollection<BackupViewModel> backupViewModels;
-        public ObservableCollection<BackupViewModel> BackupViewModels
+        private ExtendedObservableCollection<BackupViewModel> backupViewModels;
+        public ExtendedObservableCollection<BackupViewModel> BackupViewModels
         {
             get
             {
                 if (this.backupViewModels == null)
-                    if (!Execute.InDesignMode) // TODO: separate dt
-                    {
-                        this.RefreshBackupsList(false);
-                    }
-                    // DESIGN TIME
-                    else
-                        this.backupViewModels = new ObservableCollection<BackupViewModel>();
+                    this.backupViewModels = new ExtendedObservableCollection<BackupViewModel>();
 
                 return this.backupViewModels;
             }
@@ -88,13 +84,79 @@ namespace BillsManager.ViewModel
 
         #region methods
 
-        private void RefreshBackupsList(bool notify = true) // TODO: show a busy indicator
+        private void LoadBackups()
         {
-            this.backupViewModels = new ObservableCollection<BackupViewModel>(this.backupsProvider.GetAll().Select(b => new BackupViewModel(b)));
-            if (notify) this.NotifyOfPropertyChange(() => this.BackupViewModels);
+            this.BackupViewModels = new ExtendedObservableCollection<BackupViewModel>(this.backupsProvider.GetAll()
+                     .OrderByDescending(b => b.CreationTime)
+                     .Select(b => new BackupViewModel(b)));
         }
 
-        private string BackupData(Backup backup)
+        private void CreateNewBackup()
+        {
+            this.backupsProvider.CreateNew();
+        }
+
+        private void Rollback(Backup backup)
+        {
+            //if (this.dialogService.ShowYesNoQuestion
+            //    ("Confirm rollback",
+            //    "Are you sure you want to rollback to the following backup?" + "\r\n" + "\r\n" +
+            //    p.CreationTime.ToLongDateString() + "\r\n" +
+            //    p.CreationTime.ToLongTimeString()))
+
+            var question = new DialogViewModel(
+                "Rolling back",
+                "Are you sure you want to ROLLBACK to the following backup?" +
+                Environment.NewLine +
+                Environment.NewLine + this.GetBackupInfo(backup),
+                new[]
+                {
+                    // TODO: use a checkbox to speed up the confirm
+                    new DialogResponse(ResponseType.Yes, 10),
+                    new DialogResponse(ResponseType.No)
+                });
+
+            this.windowManager.ShowDialog(question);
+
+            if (question.Response == ResponseType.Yes)
+            {
+                this.backupsProvider.Rollback(backup);
+                this.LoadBackups();
+
+                this.eventAggregator.Publish(new SuppliersNeedRefreshMessage());
+                this.eventAggregator.Publish(new BillsNeedRefreshMessage());
+            }
+        }
+
+        private void DeleteBackup(Backup backup)
+        {
+            //if (this.dialogService.ShowYesNoQuestion(
+            //    "Confirm rollback",
+            //    "Are you sure you want to delete the following backup?" + "\r\n" + "\r\n" +
+            //        p.CreationTime.ToLongDateString() + "\r\n" +
+            //        p.CreationTime.ToLongTimeString()))
+
+            var question = new DialogViewModel(
+                "Deleting backup",
+                "Are you sure you want to DELETE the following backup?" +
+                Environment.NewLine +
+                Environment.NewLine + this.GetBackupInfo(backup),
+                new[]
+                                {
+                                    new DialogResponse(ResponseType.Yes, 15),
+                                    new DialogResponse(ResponseType.No)
+                                });
+
+            this.windowManager.ShowDialog(question);
+
+            if (question.Response == ResponseType.Yes)
+            {
+                this.backupsProvider.Delete(backup);
+                this.LoadBackups();
+            }
+        }
+
+        private string GetBackupInfo(Backup backup)
         {
             return backup.CreationTime.ToLongDateString() + "   " + backup.CreationTime.ToLongTimeString() +
                    Environment.NewLine +
@@ -102,6 +164,17 @@ namespace BillsManager.ViewModel
                    backup.BillsCount + " bills" +
                    Environment.NewLine +
                    backup.SuppliersCount + " suppliers";
+        }
+
+        private void OpenBackupsFolder()
+        {
+            Process.Start(AppDomain.CurrentDomain.BaseDirectory + @"\Database\Backups\");
+        }
+
+        private void OpenDBFolder()
+        {
+            // TODO: do a check
+            Process.Start(AppDomain.CurrentDomain.BaseDirectory + @"\Database\");
         }
 
         #endregion
@@ -116,54 +189,25 @@ namespace BillsManager.ViewModel
                 if (this.createNewBackupCommand == null) this.createNewBackupCommand = new RelayCommand(
                     () =>
                     {
-                        this.backupsProvider.CreateNew();
-                        this.RefreshBackupsList();
+                        this.CreateNewBackup();
+                        this.LoadBackups();
                     });
 
                 return this.createNewBackupCommand;
             }
         }
 
-        private RelayCommand<BackupViewModel> rollbackBackupCommand;
-        public RelayCommand<BackupViewModel> RollbackBackupCommand
+        private RelayCommand<BackupViewModel> rollbackCommand;
+        public RelayCommand<BackupViewModel> RollbackCommand
         {
             get
             {
-                if (this.rollbackBackupCommand == null)
-                    this.rollbackBackupCommand = new RelayCommand<BackupViewModel>(
-                        p =>
-                        {
-                            //if (this.dialogService.ShowYesNoQuestion
-                            //    ("Confirm rollback",
-                            //    "Are you sure you want to rollback to the following backup?" + "\r\n" + "\r\n" +
-                            //    p.CreationTime.ToLongDateString() + "\r\n" +
-                            //    p.CreationTime.ToLongTimeString()))
-
-                            var question = new DialogViewModel(
-                                "Rolling back",
-                                "Are you sure you want to ROLLBACK to the following backup?" +
-                                Environment.NewLine +
-                                Environment.NewLine + this.BackupData(p.ExposedBackup),
-                                new[]
-                                {
-                                    new DialogResponse(ResponseType.Yes, 15),
-                                    new DialogResponse(ResponseType.No)
-                                });
-
-                            this.windowManager.ShowDialog(question);
-
-                            if (question.Response == ResponseType.Yes)
-                            {
-                                this.backupsProvider.Rollback(p.ExposedBackup);
-                                this.RefreshBackupsList();
-
-                                this.eventAggregator.Publish(new SuppliersNeedRefreshMessage());
-                                this.eventAggregator.Publish(new BillsNeedRefreshMessage());
-                            }
-                        },
+                if (this.rollbackCommand == null)
+                    this.rollbackCommand = new RelayCommand<BackupViewModel>(
+                        p => this.Rollback(p.ExposedBackup),
                         p => p != null);
 
-                return this.rollbackBackupCommand;
+                return this.rollbackCommand;
             }
         }
 
@@ -174,33 +218,7 @@ namespace BillsManager.ViewModel
             {
                 if (this.deleteBackupCommand == null)
                     this.deleteBackupCommand = new RelayCommand<BackupViewModel>(
-                        p =>
-                        {
-                            //if (this.dialogService.ShowYesNoQuestion(
-                            //    "Confirm rollback",
-                            //    "Are you sure you want to delete the following backup?" + "\r\n" + "\r\n" +
-                            //        p.CreationTime.ToLongDateString() + "\r\n" +
-                            //        p.CreationTime.ToLongTimeString()))
-
-                            var question = new DialogViewModel(
-                                "Deleting backup",
-                                "Are you sure you want to DELETE the following backup?" +
-                                Environment.NewLine +
-                                Environment.NewLine + this.BackupData(p.ExposedBackup),
-                                new[]
-                                {
-                                    new DialogResponse(ResponseType.Yes, 15),
-                                    new DialogResponse(ResponseType.No)
-                                });
-
-                            this.windowManager.ShowDialog(question);
-
-                            if (question.Response == ResponseType.Yes)
-                            {
-                                this.backupsProvider.Delete(p.ExposedBackup);
-                                this.RefreshBackupsList();
-                            }
-                        },
+                        p => this.DeleteBackup(p.ExposedBackup),
                         p => p != null);
 
                 return this.deleteBackupCommand;
@@ -212,8 +230,8 @@ namespace BillsManager.ViewModel
         {
             get
             {
-                if (this.openDBFolderCommand == null) this.openDBFolderCommand = new RelayCommand(
-                    () => Process.Start(AppDomain.CurrentDomain.BaseDirectory + @"\Database\"));
+                if (this.openDBFolderCommand == null)
+                    this.openDBFolderCommand = new RelayCommand(() => this.OpenDBFolder());
 
                 return this.openDBFolderCommand;
             }
@@ -224,8 +242,8 @@ namespace BillsManager.ViewModel
         {
             get
             {
-                if (this.openBackupsFolderCommand == null) this.openBackupsFolderCommand = new RelayCommand(
-                    () => Process.Start(AppDomain.CurrentDomain.BaseDirectory + @"\Database\Backups\"));
+                if (this.openBackupsFolderCommand == null)
+                    this.openBackupsFolderCommand = new RelayCommand(() => this.OpenBackupsFolder());
 
                 return this.openBackupsFolderCommand;
             }
