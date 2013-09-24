@@ -16,7 +16,6 @@ namespace BillsManager.ViewModel
         IHandle<AskForAvailableSuppliersMessage>,
         IHandle<SuppliersNeedRefreshMessage>,
         IHandle<SuppliersFilterMessage>,
-        IHandle<SuppliersFilterNeedsRefreshMessage>,
         IHandle<AddNewSupplierRequestMessage>
     {
         #region fields
@@ -236,11 +235,6 @@ namespace BillsManager.ViewModel
         public void Handle(SuppliersFilterMessage message)
         {
             this.Filters = message.Filters;
-        }
-
-        public void Handle(SuppliersFilterNeedsRefreshMessage message)
-        {
-            this.NotifyOfPropertyChange(() => this.FilteredSupplierViewModels);
         }
 
         public void Handle(AddNewSupplierRequestMessage message)

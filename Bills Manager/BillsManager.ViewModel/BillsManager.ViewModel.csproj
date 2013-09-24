@@ -76,7 +76,6 @@
     <Compile Include="Validation\ValidationRulesTrackerGeneric.cs" />
     <Compile Include="Messages\Searches events\BillsFilterMessage.cs" />
     <Compile Include="Messages\Searches events\SuppliersFilterMessage.cs" />
-    <Compile Include="Messages\Searches events\SuppliersFilterNeedsRefreshMessage.cs" />
     <Compile Include="SearchBillsViewModel.cs" />
     <Compile Include="BillsViewModel.cs" />
     <Compile Include="BillViewModel\BillViewModel.cs" />
