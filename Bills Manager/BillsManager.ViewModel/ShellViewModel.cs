@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
-using BillsManager.Service;
 using BillsManager.ViewModel.Commanding;
 using BillsManager.ViewModel.Factories;
 using Caliburn.Micro;
@@ -13,7 +13,7 @@ namespace BillsManager.ViewModel
 
         //private readonly IDialogService dialogService;
         private readonly IWindowManager windowManager;
-        private readonly IEventAggregator eventAggregator; // TODO: review who should inherit this specific instance
+        private readonly IEventAggregator eventAggregator;
         private readonly IFactory<BillsViewModel> billsViewModelFactory;
         private readonly IFactory<SuppliersViewModel> suppliersViewModelFactory;
         private readonly IFactory<BackupsViewModel> backupsViewModelFactory;
@@ -38,7 +38,15 @@ namespace BillsManager.ViewModel
             this.windowManager = windowManager;
             this.eventAggregator = eventAggregator;
 
+
+
             this.DisplayName = "Bills Manager";
+
+            this.SuppliersViewModel = this.suppliersViewModelFactory.Create();
+            this.BillsViewModel = this.billsViewModelFactory.Create();
+
+            this.SearchBillsViewModel = new SearchBillsViewModel(this.SuppliersViewModel.SupplierViewModels.Select(svm => svm.ExposedSupplier), this.eventAggregator);
+            this.SearchSuppliersViewModel = new SearchSuppliersViewModel(this.eventAggregator);
         }
 
         #endregion
@@ -48,14 +56,7 @@ namespace BillsManager.ViewModel
         private BillsViewModel billsViewModel;
         public BillsViewModel BillsViewModel
         {
-            get
-            {
-
-                if (this.billsViewModel == null)
-                    this.billsViewModel = this.billsViewModelFactory.Create();
-
-                return this.billsViewModel;
-            }
+            get { return this.billsViewModel; }
             private set
             {
                 if (this.billsViewModel != value)
@@ -69,13 +70,7 @@ namespace BillsManager.ViewModel
         private SuppliersViewModel suppliersViewModel;
         public SuppliersViewModel SuppliersViewModel
         {
-            get
-            {
-                if (this.suppliersViewModel == null)
-                    this.suppliersViewModel = this.suppliersViewModelFactory.Create();
-
-                return this.suppliersViewModel;
-            }
+            get { return this.suppliersViewModel; }
             private set
             {
                 if (this.suppliersViewModel != value)
@@ -89,19 +84,27 @@ namespace BillsManager.ViewModel
         private SearchBillsViewModel searchBillsViewModel;
         public SearchBillsViewModel SearchBillsViewModel
         {
-            get
-            {
-                if (this.searchBillsViewModel == null)
-                    this.searchBillsViewModel = new SearchBillsViewModel(this.eventAggregator);
-
-                return this.searchBillsViewModel;
-            }
+            get { return this.searchBillsViewModel; }
             private set
             {
                 if (this.searchBillsViewModel != value)
                 {
                     this.searchBillsViewModel = value;
                     this.NotifyOfPropertyChange(() => this.SearchBillsViewModel);
+                }
+            }
+        }
+
+        private SearchSuppliersViewModel searchSuppliersViewModel;
+        public SearchSuppliersViewModel SearchSuppliersViewModel
+        {
+            get { return this.searchSuppliersViewModel; }
+            set
+            {
+                if (this.searchSuppliersViewModel != value)
+                {
+                    this.searchSuppliersViewModel = value;
+                    this.NotifyOfPropertyChange(() => this.SearchSuppliersViewModel);
                 }
             }
         }

@@ -65,37 +65,17 @@
     <Compile Include="BackupsView.xaml.cs">
       <DependentUpon>BackupsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BillDetailsView.xaml.cs">
-      <DependentUpon>BillDetailsView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="BillsView.xaml.cs">
       <DependentUpon>BillsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="BillView.xaml.cs">
       <DependentUpon>BillView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CloseWindowButton.cs" />
-    <Compile Include="Controls\ControlBox.xaml.cs">
-      <DependentUpon>ControlBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ResizeWindowButton.cs" />
-    <Compile Include="Controls\MinimizeWindowButton.cs" />
-    <Compile Include="Controls\WindowControlBar.xaml.cs">
-      <DependentUpon>WindowControlBar.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\WindowIcon.cs" />
-    <Compile Include="Controls\WindowTitleBar.cs" />
-    <Compile Include="DataTemplates\AgentDataTemplate.xaml.cs">
-      <DependentUpon>AgentDataTemplate.xaml</DependentUpon>
-    </Compile>
     <Compile Include="DataTemplates\BackupDataTemplate.xaml.cs">
       <DependentUpon>BackupDataTemplate.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataTemplates\BillDataTemplate.xaml.cs">
       <DependentUpon>BillDataTemplate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DataTemplates\ResponseDataTemplate.xaml.cs">
-      <DependentUpon>ResponseDataTemplate.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataTemplates\SupplierDataTemplate.xaml.cs">
       <DependentUpon>SupplierDataTemplate.xaml</DependentUpon>
@@ -146,10 +126,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="BillDetailsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="BillsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -158,19 +134,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ControlBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\WindowControlBar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="DataTemplates\BackupDataTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="DataTemplates\ResponseDataTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -182,10 +146,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="DataTemplates\AgentDataTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="DataTemplates\BillDataTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -194,7 +154,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Styles\CloseWindowButtonStyle.xaml">
+    <Page Include="Dictionaries\Styles\ContextMenuStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -210,19 +170,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dictionaries\Styles\MenuScrollViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dictionaries\Styles\MenuStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\MinimizeWindowButtonStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\ResizeWindowButtonStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\TextBoxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -235,6 +187,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dictionaries\Styles\Values\Geometries.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dictionaries\Styles\Values\MenuValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -7,53 +7,42 @@
              xmlns:DataTemplates="clr-namespace:BillsManager.View.DataTemplates"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=ViewModel:BillsViewModel, IsDesignTimeCreatable=True}">
-    
+
     <UserControl.Resources>
         <ResourceDictionary Source="Dictionaries\Styles.xaml" />
     </UserControl.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="8" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+    <ListBox Grid.IsSharedSizeScope="True"
+             ItemsSource="{Binding FilteredBillViewModels, Mode=OneWay}"
+             MinHeight="350"
+             SelectedItem="{Binding Path=SelectedBillViewModel}"
+             SelectionMode="Single"
+             BorderThickness="0">
 
-        <ContentControl x:Name="SearchBillsViewModel" Margin="8 0 0 0"/>
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <DataTemplates:BillDataTemplate />
+            </DataTemplate>
+        </ListBox.ItemTemplate>
 
-        <ListBox Grid.IsSharedSizeScope="True"
-                 ItemsSource="{Binding Path=FilteredBillViewModels}"
-                 MinHeight="350"
-                 SelectedItem="{Binding Path=SelectedBillViewModel}"
-                 SelectionMode="Single"
-                 BorderThickness="0"
-                 Grid.Row="2">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <DataTemplates:BillDataTemplate />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <ListBox.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Add"
+                          Command="{Binding Path=AddNewBillCommand, Mode=OneTime}" />
+                <Separator />
+                <MenuItem Header="Edit"
+                          Command="{Binding Path=EditBillCommand, Mode=OneTime}"
+                          CommandParameter="{Binding SelectedBillViewModel}" />
+                <MenuItem Header="Delete"
+                          Command="{Binding Path=DeleteBillCommand, Mode=OneTime}"
+                          CommandParameter="{Binding SelectedBillViewModel}" />
+                <Separator />
+                <MenuItem Header="Pay"
+                          Command="{Binding Path=PayBillCommand, Mode=OneTime}"
+                          CommandParameter="{Binding SelectedBillViewModel}" />
+            </ContextMenu>
+        </ListBox.ContextMenu>
 
-        <!--<ListView Grid.Column="1" Grid.Row="3" MinHeight="350"
-                  ItemsSource="{Binding Path=BillViewModels}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Code}"
-                                    Header="Code" />
-                    <GridViewColumn Header="Amount"
-                                    DisplayMemberBinding="{Binding Path=Amount}" />
-                    <GridViewColumn Header="Supplier"
-                                    DisplayMemberBinding="{Binding Path=Supplier.Name}" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=DueDate}"
-                                    Header="Due date" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Notes}"
-                                    Header="Notes" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=PaymentDate}"
-                                    Header="Payed" />
-                </GridView>
-            </ListView.View>
-        </ListView>-->
-    </Grid>
+    </ListBox>
 
 </UserControl>

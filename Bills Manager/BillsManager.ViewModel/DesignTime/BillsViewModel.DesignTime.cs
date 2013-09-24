@@ -1,20 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using BillsManager.Model;
 using Caliburn.Micro;
-using BillsManager.ViewModel.Messages;
 
 namespace BillsManager.ViewModel
 {
-    public partial class BillsViewModel : Screen
+    public partial class BillsViewModel
     {
         #region ctor
 
         public BillsViewModel()
         {
             if (Execute.InDesignMode)
-            {
                 this.LoadDesignTimeData();
-            }
         }
 
         #endregion
@@ -36,7 +35,7 @@ namespace BillsManager.ViewModel
                 "http://www.faber-castell.it",
                 "02/43069601",
                 "sconti 10/06 - 24/09."
-            //,new[] { new Agent("Barbara", "Robecchi", "347-7892234", string.Empty) }
+                //,new[] { new Agent("Barbara", "Robecchi", "347-7892234", string.Empty) }
             );
 
             Bill newBill = new Bill(
@@ -46,7 +45,7 @@ namespace BillsManager.ViewModel
                 DateTime.Today,
                 DateTime.Today.AddDays(-2),
                 723.61,
-                supp.Name,
+                supp.ID,
                 "call agent for reduction",
                 "X3V-KDM");
 
@@ -57,7 +56,7 @@ namespace BillsManager.ViewModel
                 null,
                 DateTime.Today.AddDays(-32),
                 54.06,
-                supp.Name,
+                supp.ID,
                 "ask for catalog",
                 "DK23595");
 
@@ -68,7 +67,7 @@ namespace BillsManager.ViewModel
                 null,
                 DateTime.Today.AddDays(-3),
                 54.06,
-                supp.Name,
+                supp.ID,
                 "call agent for reductions and new winter orders",
                 "AZ381EY");
 
@@ -79,14 +78,18 @@ namespace BillsManager.ViewModel
                 null,
                 DateTime.Today.AddDays(-32),
                 54.06,
-                supp.Name,
+                supp.ID,
                 "ask for catalog",
                 "DK23595");
 
-            this.BillViewModels.Add(new BillViewModel(newBill));
-            this.BillViewModels.Add(new BillViewModel(newBill2));
-            this.BillViewModels.Add(new BillViewModel(newBill3));
-            this.BillViewModels.Add(new BillViewModel(newBill4));
+            var bills = new List<BillViewModel>();
+
+            bills.Add(new BillViewModel(newBill));
+            bills.Add(new BillViewModel(newBill2));
+            bills.Add(new BillViewModel(newBill3));
+            bills.Add(new BillViewModel(newBill4));
+
+            this.BillViewModels = new ObservableCollection<BillViewModel>(bills);
         }
 
         #endregion

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Windows;
 using BillsManager.Model;
 using BillsManager.ViewModel.Commanding;
 using BillsManager.ViewModel.Messages;
@@ -11,7 +12,7 @@ namespace BillsManager.ViewModel
 {
     public partial class BillViewModel :
         Screen,
-        IHandle<AvailableSuppliersMessage>
+        IHandle<SuppliersListChangedMessage>
     {
         #region fields
 
@@ -30,20 +31,36 @@ namespace BillsManager.ViewModel
             IEventAggregator eventAggregator)
         {
             if (bill == null)
-                throw new ArgumentNullException("The bill cannot be null");
+                throw new ArgumentNullException("bill cannot be null");
 
-            this.ExposedBill = bill;
+            this.exposedBill = bill;
 
             this.windowManager = windowManager;
             //this.dialogService = dialogService;
             this.eventAggregator = eventAggregator;
 
             this.eventAggregator.Subscribe(this);
+
+            //this.Supplier = this.GetSupplier(this.SupplierID);
         }
 
         #endregion
 
         #region properties
+
+        // TODO: remove this proprerty when removed close window button
+        private bool isClosing;
+        public bool IsClosing
+        {
+            get { return this.isClosing; }
+            set
+            {
+                if (this.isClosing != value)
+                {
+                    this.isClosing = value;
+                }
+            }
+        }
 
         protected Bill exposedBill;
         public Bill ExposedBill
@@ -85,7 +102,7 @@ namespace BillsManager.ViewModel
                 {
                     this.selectedSupplier = value;
                     this.NotifyOfPropertyChange(() => this.SelectedSupplier);
-                    this.Supplier = this.SelectedSupplier.Name;
+                    this.SupplierID = this.SelectedSupplier.ID;
                 }
             }
         }
@@ -177,22 +194,25 @@ namespace BillsManager.ViewModel
         }
 
         [Required(ErrorMessage = "You must specify a supplier.")]
-        public string Supplier
+        [Range(0, uint.MaxValue, ErrorMessage = "Chosen supplier ID is out of range.")]
+        public uint SupplierID
         {
-            get { return this.ExposedBill.Supplier; }
+            get { return this.ExposedBill.SupplierID; }
             set
             {
-                if (this.Supplier != value)
+                if (this.SupplierID != value)
                 {
-                    this.ExposedBill.Supplier = value;
-                    this.NotifyOfPropertyChange(() => this.Supplier);
+                    this.ExposedBill.SupplierID = value;
+                    this.NotifyOfPropertyChange(() => this.SupplierID);
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
+
+                    //this.SelectedSupplier = this.GetSupplier(this.SupplierID);
                 }
             }
         }
 
-        [StringLength(40, ErrorMessage = "You cannot exceed 40 characters.")]
+        [StringLength(100, ErrorMessage = "You cannot exceed 100 characters.")]
         public string Notes
         {
             get { return this.ExposedBill.Notes; }
@@ -227,6 +247,20 @@ namespace BillsManager.ViewModel
         #endregion
 
         #region added
+
+        private Supplier supplier;
+        public Supplier Supplier
+        {
+            get { return this.supplier; }
+            set
+            {
+                if (this.supplier != value)
+                {
+                    this.supplier = value;
+                    this.NotifyOfPropertyChange(() => this.Supplier);
+                }
+            }
+        }
 
         public bool IsPaid
         {
@@ -292,17 +326,25 @@ namespace BillsManager.ViewModel
 
         #region methods
 
+        //private Supplier GetSupplier(uint supplierID)
+        //{
+        //    Supplier supp = null;
+        //    this.eventAggregator.Publish(new AskForSupplierMessage(supplierID, s => supp = s));
+
+        //    return supp;
+        //}
+
         // TODO: find a better way (should be solved creating different VMs for Item and AddEdit)
-        public void SetupForAdEdit()
+        public void SetupForAddEdit()
         {
             this.AvailableSuppliers = this.GetAvailableSuppliers();
 
             if (this.IsInEditMode)
             {
-                this.SelectedSupplier = this.AvailableSuppliers.Single(s => s.Name == this.Supplier);
+                this.SelectedSupplier = this.AvailableSuppliers.Single(s => s.ID == this.SupplierID);
 
                 if (this.SelectedSupplier == null)
-                    throw new ArgumentNullException("Cannot find " + this.Supplier + " among available suppliers.");
+                    throw new ArgumentNullException("Cannot find " + this.SupplierID + " among available suppliers.");
             }
         }
 
@@ -312,39 +354,16 @@ namespace BillsManager.ViewModel
             this.availableSuppliers = null;
         }
 
-        public void Handle(AvailableSuppliersMessage message)
+        public void Handle(SuppliersListChangedMessage message)
         {
-            this.AvailableSuppliers = message.AvailableSuppliers;
+            this.AvailableSuppliers = message.Suppliers;
         }
 
         #region overrides
 
         public override void CanClose(Action<bool> callback)
         {
-            if (this.IsInEditMode)
-            {
-                var question = new DialogViewModel(
-                    "Closing",
-                    "Are you sure you want to discard all the changes?",
-                    new[]
-                    {
-                        new DialogResponse(ResponseType.Yes, 3),
-                        new DialogResponse(ResponseType.No)
-                    });
-
-                this.windowManager.ShowDialog(question);
-
-                //if (this.dialogService.ShowYesNoQuestion("Closing", "Are you sure you want to discard all the changes?"))
-                if (question.Response == ResponseType.Yes)
-                {
-                    this.CancelEdit();
-                    this.availableSuppliers = null;
-                    this.selectedSupplier = null;
-                    callback(true);
-                }
-                else callback(false);
-            }
-            else callback(true);
+            callback(this.IsClosing);
         }
 
         #endregion
@@ -361,7 +380,7 @@ namespace BillsManager.ViewModel
                 if (this.addNewSupplierCommand == null) this.addNewSupplierCommand = new RelayCommand(
                     () =>
                     {
-                        this.eventAggregator.Publish(new AddNewSupplierMessage());
+                        this.eventAggregator.Publish(new AddNewSupplierRequestMessage());
                     });
 
                 return this.addNewSupplierCommand;
@@ -377,12 +396,11 @@ namespace BillsManager.ViewModel
                     () =>
                     {
                         if (this.IsInEditMode)
-                        {
                             this.EndEdit();
-                        }
 
                         this.CleanSuppliersProperties();
 
+                        this.IsClosing = true;
                         this.TryClose(true);
                     },
                     () => this.IsValid);
@@ -399,14 +417,40 @@ namespace BillsManager.ViewModel
                 if (this.cancelAddEditAndCloseCommand == null) this.cancelAddEditAndCloseCommand = new RelayCommand(
                     () =>
                     {
-                        if (this.IsInEditMode)
+                        if (this.HasChanges)
                         {
-                            this.CancelEdit();
+                            var question = new DialogViewModel(
+                                   "Canceling " + (this.IsInEditMode ? "edit" : "add"),
+                                   "Are you sure you want to discard all the changes?",
+                                   new[]
+                            {
+                                new DialogResponse(ResponseType.Yes),
+                                new DialogResponse(ResponseType.No)
+                            });
+
+                            this.windowManager.ShowDialog(question, settings: new Dictionary<string, object> { { "ResizeMode", ResizeMode.NoResize } });
+
+                            if (question.Response == ResponseType.Yes)
+                            {
+                                if (this.IsInEditMode)
+                                    this.CancelEdit();
+
+                                this.CleanSuppliersProperties();
+
+                                this.IsClosing = true;
+                                this.TryClose(false);
+                            }
                         }
+                        else
+                        {
+                            if (this.IsInEditMode)
+                                this.CancelEdit();
 
-                        this.CleanSuppliersProperties();
+                            this.CleanSuppliersProperties();
 
-                        this.TryClose(false);
+                            this.IsClosing = true;
+                            this.TryClose(false);
+                        }
                     });
 
                 return this.cancelAddEditAndCloseCommand;

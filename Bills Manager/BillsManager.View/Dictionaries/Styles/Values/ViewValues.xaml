@@ -13,5 +13,7 @@
                      Color="#FF3C3C3C" />
 
     <System:Double x:Key="ViewFontSize">19</System:Double>
+
+    <Thickness x:Key="BorderThickness" Left="2" Top="2" Right="2" Bottom="2" />
     
 </ResourceDictionary>

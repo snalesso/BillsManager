@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows;
 using BillsManager.Model;
-using BillsManager.Service;
 using BillsManager.Service.Providers;
 using BillsManager.ViewModel.Commanding;
 using BillsManager.ViewModel.Messages;
@@ -19,6 +20,9 @@ namespace BillsManager.ViewModel
         private readonly IWindowManager windowManager;
         //private readonly IDialogService dialogService;
         private readonly IEventAggregator eventAggregator;
+
+        private readonly string dbDirectory = AppDomain.CurrentDomain.BaseDirectory + @"\Database\";
+        private readonly string buDirectory = AppDomain.CurrentDomain.BaseDirectory + @"\Backups\";
 
         #endregion
 
@@ -46,13 +50,13 @@ namespace BillsManager.ViewModel
 
         #region properties
 
-        private ExtendedObservableCollection<BackupViewModel> backupViewModels;
-        public ExtendedObservableCollection<BackupViewModel> BackupViewModels
+        private ObservableCollection<BackupViewModel> backupViewModels;
+        public ObservableCollection<BackupViewModel> BackupViewModels
         {
             get
             {
                 if (this.backupViewModels == null)
-                    this.backupViewModels = new ExtendedObservableCollection<BackupViewModel>();
+                    this.backupViewModels = new ObservableCollection<BackupViewModel>();
 
                 return this.backupViewModels;
             }
@@ -86,7 +90,7 @@ namespace BillsManager.ViewModel
 
         private void LoadBackups()
         {
-            this.BackupViewModels = new ExtendedObservableCollection<BackupViewModel>(this.backupsProvider.GetAll()
+            this.BackupViewModels = new ObservableCollection<BackupViewModel>(this.backupsProvider.GetAll()
                      .OrderByDescending(b => b.CreationTime)
                      .Select(b => new BackupViewModel(b)));
         }
@@ -98,62 +102,15 @@ namespace BillsManager.ViewModel
 
         private void Rollback(Backup backup)
         {
-            //if (this.dialogService.ShowYesNoQuestion
-            //    ("Confirm rollback",
-            //    "Are you sure you want to rollback to the following backup?" + "\r\n" + "\r\n" +
-            //    p.CreationTime.ToLongDateString() + "\r\n" +
-            //    p.CreationTime.ToLongTimeString()))
+            this.backupsProvider.Rollback(backup);
 
-            var question = new DialogViewModel(
-                "Rolling back",
-                "Are you sure you want to ROLLBACK to the following backup?" +
-                Environment.NewLine +
-                Environment.NewLine + this.GetBackupInfo(backup),
-                new[]
-                {
-                    // TODO: use a checkbox to speed up the confirm
-                    new DialogResponse(ResponseType.Yes, 10),
-                    new DialogResponse(ResponseType.No)
-                });
-
-            this.windowManager.ShowDialog(question);
-
-            if (question.Response == ResponseType.Yes)
-            {
-                this.backupsProvider.Rollback(backup);
-                this.LoadBackups();
-
-                this.eventAggregator.Publish(new SuppliersNeedRefreshMessage());
-                this.eventAggregator.Publish(new BillsNeedRefreshMessage());
-            }
+            this.eventAggregator.Publish(new SuppliersNeedRefreshMessage());
+            this.eventAggregator.Publish(new BillsNeedRefreshMessage());
         }
 
         private void DeleteBackup(Backup backup)
         {
-            //if (this.dialogService.ShowYesNoQuestion(
-            //    "Confirm rollback",
-            //    "Are you sure you want to delete the following backup?" + "\r\n" + "\r\n" +
-            //        p.CreationTime.ToLongDateString() + "\r\n" +
-            //        p.CreationTime.ToLongTimeString()))
-
-            var question = new DialogViewModel(
-                "Deleting backup",
-                "Are you sure you want to DELETE the following backup?" +
-                Environment.NewLine +
-                Environment.NewLine + this.GetBackupInfo(backup),
-                new[]
-                                {
-                                    new DialogResponse(ResponseType.Yes, 15),
-                                    new DialogResponse(ResponseType.No)
-                                });
-
-            this.windowManager.ShowDialog(question);
-
-            if (question.Response == ResponseType.Yes)
-            {
-                this.backupsProvider.Delete(backup);
-                this.LoadBackups();
-            }
+            this.backupsProvider.Delete(backup);
         }
 
         private string GetBackupInfo(Backup backup)
@@ -168,13 +125,28 @@ namespace BillsManager.ViewModel
 
         private void OpenBackupsFolder()
         {
-            Process.Start(AppDomain.CurrentDomain.BaseDirectory + @"\Database\Backups\");
+            if (System.IO.Directory.Exists(this.buDirectory))
+                Process.Start(this.buDirectory);
+            else
+                this.windowManager.ShowDialog(new DialogViewModel(
+                    "Directory not found",
+                    "Couldn't find any database folder." +
+                    Environment.NewLine +
+                    "Is this the first run?"),
+                    settings: new Dictionary<string, object> { { "ResizeMode", ResizeMode.NoResize } }); // TODO: language
         }
 
         private void OpenDBFolder()
         {
-            // TODO: do a check
-            Process.Start(AppDomain.CurrentDomain.BaseDirectory + @"\Database\");
+            if (System.IO.Directory.Exists(this.dbDirectory))
+                Process.Start(this.dbDirectory);
+            else
+                this.windowManager.ShowDialog(new DialogViewModel(
+                    "Directory not found",
+                    "Couldn't find any database folder." +
+                    Environment.NewLine +
+                    "Is this the first run?"),
+                    settings: new Dictionary<string, object> { { "ResizeMode", ResizeMode.NoResize } }); // TODO: language
         }
 
         #endregion
@@ -189,8 +161,22 @@ namespace BillsManager.ViewModel
                 if (this.createNewBackupCommand == null) this.createNewBackupCommand = new RelayCommand(
                     () =>
                     {
-                        this.CreateNewBackup();
-                        this.LoadBackups();
+                        var question = new DialogViewModel(
+                            "New backup creation",
+                            "Are you sure you want to create a new backup?", // TODO: language
+                            new[]
+                            {
+                                new DialogResponse(ResponseType.Yes, "Create new backup"),
+                                new DialogResponse(ResponseType.No)
+                            });
+
+                        this.windowManager.ShowDialog(question, settings: new Dictionary<string, object> { { "ResizeMode", ResizeMode.NoResize } });
+
+                        if (question.Response == ResponseType.Yes)
+                        {
+                            this.CreateNewBackup();
+                            this.LoadBackups();
+                        }
                     });
 
                 return this.createNewBackupCommand;
@@ -204,10 +190,34 @@ namespace BillsManager.ViewModel
             {
                 if (this.rollbackCommand == null)
                     this.rollbackCommand = new RelayCommand<BackupViewModel>(
-                        p => this.Rollback(p.ExposedBackup),
+                        p =>
+                        {
+                            //if (this.dialogService.ShowYesNoQuestion
+                            //    ("Confirm rollback",
+                            //    "Are you sure you want to rollback to the following backup?"
+                            var question = new DialogViewModel(
+                                "Rolling back",
+                                "Are you sure you want to ROLLBACK to the following backup?" + // TODO: language
+                                Environment.NewLine +
+                                Environment.NewLine + this.GetBackupInfo(p.ExposedBackup),
+                                new[]
+                                {
+                                    new DialogResponse(ResponseType.Yes, "Rollback", "Confirm rollback"),
+                                    new DialogResponse(ResponseType.No)
+                                });
+
+                            this.windowManager.ShowDialog(question, settings: new Dictionary<string, object> { { "ResizeMode", ResizeMode.NoResize } });
+
+                            if (question.Response == ResponseType.Yes)
+                            {
+                                this.Rollback(p.ExposedBackup);
+                                this.LoadBackups();
+                            }
+                        },
                         p => p != null);
 
                 return this.rollbackCommand;
+
             }
         }
 
@@ -218,7 +228,31 @@ namespace BillsManager.ViewModel
             {
                 if (this.deleteBackupCommand == null)
                     this.deleteBackupCommand = new RelayCommand<BackupViewModel>(
-                        p => this.DeleteBackup(p.ExposedBackup),
+                        p =>
+                        {
+                            //if (this.dialogService.ShowYesNoQuestion(
+                            //    "Confirm rollback",
+                            //    "Are you sure you want to delete the following backup?"
+                            var question = new DialogViewModel(
+                                "Deleting backup",
+                                "Are you sure you want to DELETE the following backup?" +
+                                Environment.NewLine +
+                                Environment.NewLine +
+                                this.GetBackupInfo(p.ExposedBackup),
+                                new[]
+                                {
+                                    new DialogResponse(ResponseType.Yes, "Delete", "Confirm delete"),
+                                    new DialogResponse(ResponseType.No)
+                                });
+
+                            this.windowManager.ShowDialog(question, settings: new Dictionary<string, object> { { "ResizeMode", ResizeMode.NoResize } });
+
+                            if (question.Response == ResponseType.Yes)
+                            {
+                                this.DeleteBackup(p.ExposedBackup);
+                                this.LoadBackups();
+                            }
+                        },
                         p => p != null);
 
                 return this.deleteBackupCommand;

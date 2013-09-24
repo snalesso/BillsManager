@@ -2,6 +2,7 @@
 {
     public enum ResponseType
     {
+        Null,
         Yes,
         No,
         Ok,

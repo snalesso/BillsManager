@@ -77,7 +77,7 @@ namespace BillsManager.ViewModel
 
         #region methods
 
-        void SendFilters() // TODO: should not refresh if therere no changes in the filters list
+        void SendFilters()
         {
             List<Func<SupplierViewModel, bool>> filters = new List<Func<SupplierViewModel, bool>>();
 

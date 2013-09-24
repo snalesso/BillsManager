@@ -23,10 +23,16 @@
 
     <SolidColorBrush x:Key="ButtonDisabledBorderBrush"
                      Color="Gray" />
-    
+
+    <!--#FF005899-->
     <SolidColorBrush x:Key="ButtonIsDefaultBorderBrush"
-                     Color="Orange" />
-    
+                     Color="#FF00C887" /> 
+
+    <SolidColorBrush x:Key="ButtonIsCancelBorderBrush"
+                     Color="#FFC887C8" />
+
+    <SolidColorBrush x:Key="ButtonFocusedBorderBrush"
+                     Color="#FF005899" />
 
     <SolidColorBrush x:Key="CloseBrush"
                      Color="#FFC80000" />

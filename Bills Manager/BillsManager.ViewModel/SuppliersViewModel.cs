@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using BillsManager.Model;
-using BillsManager.Service;
 using BillsManager.Service.Providers;
 using BillsManager.ViewModel.Commanding;
 using BillsManager.ViewModel.Messages;
@@ -18,7 +17,7 @@ namespace BillsManager.ViewModel
         IHandle<SuppliersNeedRefreshMessage>,
         IHandle<SuppliersFilterMessage>,
         IHandle<SuppliersFilterNeedsRefreshMessage>,
-        IHandle<AddNewSupplierMessage>
+        IHandle<AddNewSupplierRequestMessage>
     {
         #region fields
 
@@ -43,57 +42,27 @@ namespace BillsManager.ViewModel
             this.eventAggregator = eventAggregator;
 
             this.eventAggregator.Subscribe(this);
+
+            this.LoadSuppliers();
         }
 
         #endregion
 
         #region properties
 
-        private SearchSuppliersViewModel searchSuppliersViewModel;
-        public SearchSuppliersViewModel SearchSuppliersViewModel
-        {
-            get
-            {
-                if (this.searchSuppliersViewModel == null)
-                    this.searchSuppliersViewModel = new SearchSuppliersViewModel(this.eventAggregator);
-
-                return this.searchSuppliersViewModel;
-            }
-            set
-            {
-                if (this.searchSuppliersViewModel != value)
-                {
-                    this.searchSuppliersViewModel = value;
-                    this.NotifyOfPropertyChange(() => this.SearchSuppliersViewModel);
-                }
-            }
-        }
-
         private ObservableCollection<SupplierViewModel> supplierViewModels;
         public ObservableCollection<SupplierViewModel> SupplierViewModels
         {
-            get
-            {
-                if (this.supplierViewModels == null)
-                {
-                    if (!Execute.InDesignMode)
-                    {
-                        this.supplierViewModels = new ObservableCollection<SupplierViewModel>(this.suppliersProvider.GetAll().Select(s => new SupplierViewModel(s, this.windowManager, /*this.dialogService,*/ this.eventAggregator)));
-                        this.PublishAvailableSuppliersChanged();
-                    }
-                    // DESIGN TIME
-                    else
-                        this.SupplierViewModels = new ObservableCollection<SupplierViewModel>();
-                }
-
-                return this.supplierViewModels;
-            }
+            get { return this.supplierViewModels; }
             protected set
             {
                 if (this.supplierViewModels != value)
                 {
                     this.supplierViewModels = value;
                     this.NotifyOfPropertyChange(() => this.SupplierViewModels);
+
+                    if (!Execute.InDesignMode)
+                        this.PublishAvailableSuppliersChanged();
                 }
             }
         }
@@ -146,36 +115,122 @@ namespace BillsManager.ViewModel
 
         #region methods
 
-        protected IEnumerable<Supplier> GetSuppliers()
+        private void LoadSuppliers()
         {
-            List<Supplier> supps = new List<Supplier>();
-
-            foreach (SupplierViewModel svm in this.SupplierViewModels)
-                supps.Add(svm.ExposedSupplier);
-
-            return supps;
+            this.SupplierViewModels = new ObservableCollection<SupplierViewModel>(
+                this.suppliersProvider.GetAll()
+                .Select(s => new SupplierViewModel(s, this.windowManager, this.eventAggregator)));
         }
 
-        protected void PublishAvailableSuppliersChanged()
+        private void AddSupplier()
         {
-            this.eventAggregator.Publish(new AvailableSuppliersMessage(this.GetSuppliers()));
+            {
+                SupplierViewModel newSvm = new SupplierViewModel(
+                    new Supplier(this.suppliersProvider.GetLastID() + 1), this.windowManager, /*this.dialogService,*/ this.eventAggregator);
+                
+                if (this.windowManager.ShowDialog(newSvm, null, settings: new Dictionary<string, object> { { "ResizeMode", ResizeMode.NoResize } }) == true)
+                {
+                    if (this.suppliersProvider.Add(newSvm.ExposedSupplier))
+                    {
+                        this.SupplierViewModels.Add(newSvm);
+
+                        this.PublishAvailableSuppliersChanged();
+                    }
+                    else // TODO: reshow the dialog with this suppVM
+                    {
+                        throw new OperationCanceledException("Couldn't save the new supplier. Please try again.");
+                    }
+                }
+            }
         }
 
-        protected void RefreshSuppliersList()
+        private void EditSupplier(SupplierViewModel supplierViewModel)
         {
-            this.SupplierViewModels = new ObservableCollection<SupplierViewModel>(this.suppliersProvider.GetAll().Select(s => new SupplierViewModel(s, this.windowManager, /*this.dialogService,*/ this.eventAggregator)));
+            Supplier oldSupplier = (Supplier)supplierViewModel.ExposedSupplier.Clone();
+
+            supplierViewModel.BeginEdit();
+
+            if (this.windowManager.ShowDialog(supplierViewModel, null, settings: new Dictionary<string, object> { { "ResizeMode", ResizeMode.NoResize } }) == true)
+            {
+                if (this.suppliersProvider.Edit(supplierViewModel.ExposedSupplier))
+                {
+                    // TODO: move to this.EditSupplier
+                    this.eventAggregator.Publish(new SupplierEditedMessage(supplierViewModel.ExposedSupplier, oldSupplier));
+                }
+                else
+                {
+                    this.windowManager.ShowDialog(new DialogViewModel(
+                        "Error", // TODO: language
+                        "Error during editing."),
+                        settings: new Dictionary<string, object> { { "ResizeMode", ResizeMode.NoResize } });
+                }
+            }
+        }
+
+        private void DeleteSupplier(SupplierViewModel supplierViewModel)
+        {
+            var question = new DialogViewModel(
+                "Deleting supplier",
+                "Do you really want to DELETE this supplier?" +
+                Environment.NewLine +
+                Environment.NewLine +
+                this.GetSupplierInfo(supplierViewModel.ExposedSupplier)
+                ,
+                new[]
+                {
+                    new DialogResponse(ResponseType.Yes, "Delete", "Confirm delete"),
+                    new DialogResponse(ResponseType.No)
+                });
+
+            this.windowManager.ShowDialog(question, settings: new Dictionary<string, object> { { "ResizeMode", ResizeMode.NoResize } });
+
+            if (question.Response == ResponseType.Yes)
+            {
+                this.suppliersProvider.Delete(supplierViewModel.ExposedSupplier);
+                this.SupplierViewModels.Remove(this.SupplierViewModels.Single(svm => svm.ExposedSupplier == supplierViewModel.ExposedSupplier));
+
+                this.NotifyOfPropertyChange(() => this.FilteredSupplierViewModels);
+
+                this.SelectedSupplierViewModel = null;
+                this.PublishAvailableSuppliersChanged();
+                this.eventAggregator.Publish(new SupplierDeletedMessage(supplierViewModel.ExposedSupplier));
+            }
+        }
+
+        private string GetSupplierInfo(Supplier supplier)
+        {
+            return
+                supplier.Name +
+                Environment.NewLine +
+                supplier.Street +
+                " " + supplier.Number +
+                ", " + supplier.Zip +
+                " " + supplier.City +
+                " (" + supplier.Province + ")" +
+                " - " + supplier.Country;
+            // TODO: add bills count to supplier's info
+        }
+
+        private void PublishAvailableSuppliersChanged()
+        {
+            this.eventAggregator.Publish(new SuppliersListChangedMessage(this.SupplierViewModels.Select(svm => svm.ExposedSupplier)));
+        }
+
+        private void ShowSuppliersBills(Supplier supplier)
+        {
+            this.eventAggregator.Publish(new ActivateBillsSupplierFilterMessage(supplier));
         }
 
         #region message handlers
 
         public void Handle(AskForAvailableSuppliersMessage message)
         {
-            message.AcquireSuppliersAction.Invoke(this.GetSuppliers());
+            message.AcquireSuppliersAction(this.SupplierViewModels.Select(svm => svm.ExposedSupplier));
         }
 
         public void Handle(SuppliersNeedRefreshMessage message)
         {
-            this.RefreshSuppliersList();
+            this.LoadSuppliers();
         }
 
         public void Handle(SuppliersFilterMessage message)
@@ -188,9 +243,9 @@ namespace BillsManager.ViewModel
             this.NotifyOfPropertyChange(() => this.FilteredSupplierViewModels);
         }
 
-        public void Handle(AddNewSupplierMessage message)
+        public void Handle(AddNewSupplierRequestMessage message)
         {
-            this.AddNewSupplierCommand.Execute(null);
+            this.AddSupplier();
         }
 
         #endregion
@@ -205,17 +260,7 @@ namespace BillsManager.ViewModel
             get
             {
                 if (this.addNewSupplierCommand == null) this.addNewSupplierCommand = new RelayCommand(
-                    () =>
-                    {
-                        SupplierViewModel newSupp = new SupplierViewModel(new Supplier(this.suppliersProvider.GetLastID() + 1), this.windowManager, /*this.dialogService,*/ this.eventAggregator);
-
-                        if (this.windowManager.ShowDialog(newSupp, null, settings: new Dictionary<string, object> { { "ResizeMode", ResizeMode.NoResize } }) == true)
-                        {
-                            this.SupplierViewModels.Add(newSupp);
-                            this.suppliersProvider.Add(newSupp.ExposedSupplier);
-                            this.PublishAvailableSuppliersChanged();
-                        }
-                    });
+                    () => this.AddSupplier());
 
                 return this.addNewSupplierCommand;
             }
@@ -228,20 +273,7 @@ namespace BillsManager.ViewModel
             {
                 if (this.editSupplierCommand == null)
                     this.editSupplierCommand = new RelayCommand<SupplierViewModel>(
-                        p =>
-                        {
-                            string oldName = p.Name;
-
-                            p.BeginEdit();
-
-                            if (this.windowManager.ShowDialog(p, null, settings: new Dictionary<string, object> { { "ResizeMode", ResizeMode.NoResize } }) == true)
-                            {
-                                this.suppliersProvider.Edit(p.ExposedSupplier);
-
-                                if (p.Name != oldName)
-                                    this.eventAggregator.Publish(new SupplierNameChangedMessage(oldName, p.Name));
-                            }
-                        },
+                        p => this.EditSupplier(p),
                         p => p != null);
 
                 return this.editSupplierCommand;
@@ -255,57 +287,24 @@ namespace BillsManager.ViewModel
             {
                 if (this.deleteSupplierCommand == null)
                     this.deleteSupplierCommand = new RelayCommand<SupplierViewModel>(
-                        p =>
-                        {
-                            //if (this.dialogService.ShowYesNoQuestion("Delete supplier", "Do you really want to delete this supplier?\n\n" +
-                            //    p.Name + "\n" +
-                            //    p.Street +
-                            //    " " + p.Number +
-                            //    ", " + p.Zip +
-                            //    " " + p.City +
-                            //    " (" + p.Province + ")" +
-                            //    " - " + p.Country // TODO: fix (add Address support? can't remember what the problem is :| )
-                            //    //+ "\n" + p.ExposedSupplier.Bills.Count + " bills"
-                            //    ))
-                            // TODO: use a custom dialog window containing a SupplierDetailsView
-                            // TODO: language
-                            // TODO: Supplier support
-
-                            var question = new DialogViewModel(
-                                "Delete supplier",
-                                "Do you really want to delete this supplier?\n\n" +
-                                p.Name + "\n" +
-                                p.Street +
-                                " " + p.Number +
-                                ", " + p.Zip +
-                                " " + p.City +
-                                " (" + p.Province + ")" +
-                                " - " + p.Country // TODO: fix (add Address support? can't remember what the problem is :| )
-                                // + "\n" + p.ExposedSupplier.Bills.Count + " bills"
-                                ,
-                                new[]
-                                {
-                                    new DialogResponse(ResponseType.Yes, 5),
-                                    new DialogResponse(ResponseType.No)
-                                });
-
-                            this.windowManager.ShowDialog(question);
-
-                            if (question.Response == ResponseType.Yes)
-                            {
-                                this.suppliersProvider.Delete(p.ExposedSupplier);
-                                this.SupplierViewModels.Remove(p);
-
-                                this.NotifyOfPropertyChange(() => this.FilteredSupplierViewModels);
-
-                                this.SelectedSupplierViewModel = null;
-                                this.PublishAvailableSuppliersChanged(); // TODO: make that you can pass a parameter as edited, deleted, added in order to avoid multiple refreshes, or make single messages for each event
-                                this.eventAggregator.Publish(new SupplierDeletedMessage(p.ExposedSupplier));
-                            }
-                        },
+                        p => this.DeleteSupplier(p),
                         p => p != null);
 
                 return this.deleteSupplierCommand;
+            }
+        }
+
+        private RelayCommand<SupplierViewModel> showSuppliersBillsCommand;
+        public RelayCommand<SupplierViewModel> ShowSuppliersBillsCommand
+        {
+            get
+            {
+                if (this.showSuppliersBillsCommand == null)
+                    this.showSuppliersBillsCommand = new RelayCommand<SupplierViewModel>(
+                        p => this.ShowSuppliersBills(p.ExposedSupplier),
+                        p => p != null);
+
+                return this.showSuppliersBillsCommand;
             }
         }
 

@@ -28,7 +28,14 @@ namespace BillsManager.ViewModel
                 currentTime,
                 837,
                 32,
-                3);
+                new[]
+                {
+                    DateTime.Today.AddDays(-43),
+                    DateTime.Today.AddDays(-31),
+                    DateTime.Today.AddDays(-23),
+                    DateTime.Today.AddDays(-19),
+                    DateTime.Today.AddDays(-8)
+                });
         }
 
         #endregion

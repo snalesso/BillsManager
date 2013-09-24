@@ -54,7 +54,7 @@ namespace BillsManager.ViewModel
                 DateTime.Today,
                 DateTime.Today.AddDays(-8),
                 723.61,
-                supp.Name,
+                supp.ID,
                 "call agent for reduction @additional comments to trigger validation rule",
                 "X3V-KDM");
 

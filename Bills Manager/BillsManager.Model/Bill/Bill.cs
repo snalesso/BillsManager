@@ -19,7 +19,7 @@ namespace BillsManager.Model
             DateTime? PaymentDate,
             DateTime ReleaseDate,
             Double Amount,
-            string Supplier,
+            uint SupplierID,
             string Notes,
             string Code)
         {
@@ -31,7 +31,7 @@ namespace BillsManager.Model
             this.PaymentDate = PaymentDate;
             this.RegistrationDate = RegistrationDate;
             this.ReleaseDate = ReleaseDate;
-            this.Supplier = Supplier;
+            this.SupplierID = SupplierID;
         }
 
         #endregion
@@ -113,15 +113,15 @@ namespace BillsManager.Model
             }
         }
 
-        private string supplier;
-        public string Supplier
+        private uint supplierID;
+        public uint SupplierID
         {
-            get { return this.supplier; }
+            get { return this.supplierID; }
             set
             {
-                if (this.Supplier != value)
+                if (this.SupplierID != value)
                 {
-                    this.supplier = value;
+                    this.supplierID = value;
                 }
             }
         }

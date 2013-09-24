@@ -7,17 +7,23 @@
              xmlns:View.DataTemplates="clr-namespace:BillsManager.View.DataTemplates"
              xmlns:Micro="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=ViewModel:DialogViewModel, IsDesignTimeCreatable=True}">
+             d:DataContext="{d:DesignInstance Type=ViewModel:DialogViewModel, IsDesignTimeCreatable=True}"
+             >
 
     <UserControl.Resources>
-        <ResourceDictionary Source="Dictionaries/Styles.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Dictionaries\Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="btvConverter" />
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid MinHeight="120"
           MinWidth="270">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="8" />
-            <ColumnDefinition Width="64" />
+            <ColumnDefinition Width="32" />
             <ColumnDefinition />
             <ColumnDefinition Width="32" />
             <ColumnDefinition Width="8" />
@@ -50,13 +56,20 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Button Width="80"
-                                Margin="8 0 0 0"
-                                Content="{Binding Path=Text}"
-                                IsCancel="{Binding Path=IsCancel}"
-                                IsDefault="{Binding Path=IsDefault}"
-                                IsEnabled="{Binding Path=IsEnabled}"
-                                Micro:Message.Attach="Respond($dataContext)" />
+                        <StackPanel Margin="8 0 0 0"
+                                    Orientation="Horizontal">
+                            <CheckBox VerticalAlignment="Center"
+                                      Margin="0 0 8 0"
+                                      Content="{Binding Path=ConfirmCheckText}"
+                                      IsChecked="{Binding Path=IsEnabled}"
+                                      Visibility="{Binding UseConfirmCheck, Converter={StaticResource ResourceKey=btvConverter}}" />
+                            <Button MinWidth="80"
+                                    Content="{Binding Path=Text}"
+                                    IsCancel="{Binding Path=IsCancel}"
+                                    IsDefault="{Binding Path=IsDefault}"
+                                    IsEnabled="{Binding Path=IsEnabled}"
+                                    Micro:Message.Attach="Respond($dataContext)" />
+                        </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

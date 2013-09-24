@@ -10,46 +10,58 @@
 
         <Setter Property="Background"
                 Value="{StaticResource ResourceKey=ButtonNormalBackgroundBrush}" />
-        
+
         <Setter Property="Foreground"
                 Value="{StaticResource ResourceKey=ButtonNormalForegroundBrush}" />
-        
+
         <Setter Property="BorderBrush"
                 Value="{StaticResource ResourceKey=ButtonNormalBorderBrush}" />
-        
+
         <Setter Property="BorderThickness"
-                Value="1" />
-        
+                Value="{StaticResource ResourceKey=BorderThickness}" />
+
         <Setter Property="HorizontalContentAlignment"
                 Value="Center" />
-        
+
         <Setter Property="VerticalContentAlignment"
                 Value="Center" />
-        
+
         <Setter Property="Padding"
                 Value="3 2" />
 
         <Setter Property="Template">
             <Setter.Value>
-                
+
                 <ControlTemplate TargetType="{x:Type Button}">
-                    
+
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        
+
                         <ContentPresenter Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           RecognizesAccessKey="True"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Border>
-                    
+
                     <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsCancel"
+                                 Value="true">
+                            <Setter Property="BorderBrush"
+                                    Value="{StaticResource ResourceKey=ButtonIsCancelBorderBrush}" />
+                        </Trigger>
 
                         <Trigger Property="IsDefault"
                                  Value="true">
                             <Setter Property="BorderBrush"
                                     Value="{StaticResource ResourceKey=ButtonIsDefaultBorderBrush}" />
+                        </Trigger>
+
+                        <Trigger Property="IsFocused"
+                                 Value="true">
+                            <Setter Property="BorderBrush"
+                                    Value="{StaticResource ResourceKey=ButtonFocusedBorderBrush}" />
                         </Trigger>
 
                             <Trigger Property="IsEnabled"
@@ -60,11 +72,11 @@
                                     Value="{StaticResource ResourceKey=ButtonDisabledBorderBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
-                    
+
                 </ControlTemplate>
-                
+
             </Setter.Value>
-        </Setter>        
+        </Setter>
     </Style>
 
 </ResourceDictionary>

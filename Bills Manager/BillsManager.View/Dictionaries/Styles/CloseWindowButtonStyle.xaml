@@ -4,10 +4,11 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Values.xaml" />
+        <ResourceDictionary Source="CrossButtonStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type Controls:CloseWindowButton}"
-           BasedOn="CrossButtonStyle">
+           BasedOn="{StaticResource ResourceKey=CrossButtonStyle}">
         <!--<Setter Property="Height"
                 Value="20" />
         <Setter Property="Width"

@@ -1,7 +1,7 @@
 ﻿using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
+using System.Windows;
 using BillsManager.Model;
 using BillsManager.ViewModel.Commanding;
 using BillsManager.ViewModel.Messages;
@@ -9,7 +9,12 @@ using Caliburn.Micro;
 
 namespace BillsManager.ViewModel
 {
-    public partial class SupplierViewModel : Screen, IEditableObject, IHandle<BillsOfSupplierMessage>
+    public partial class SupplierViewModel :
+        Screen,
+        IHandle<BillsListChangedMessage>,
+        IHandle<BillAddedMessage>,
+        IHandle<BillDeletedMessage>,
+        IHandle<BillEditedMessage>
     {
         #region fields
 
@@ -27,6 +32,9 @@ namespace BillsManager.ViewModel
             IWindowManager windowManager,
             IEventAggregator eventAggregator)
         {
+            if (supplier == null)
+                throw new ArgumentNullException("supplier cannot be null.");
+
             this.exposedSupplier = supplier;
             //this.dialogService = dialogService;
             this.windowManager = windowManager;
@@ -53,7 +61,26 @@ namespace BillsManager.ViewModel
             }
         }
 
+        // TODO: remove this proprerty when removed close window button
+        private bool isClosing;
+        public bool IsClosing
+        {
+            get { return this.isClosing; }
+            set
+            {
+                if (this.isClosing != value)
+                {
+                    this.isClosing = value;
+                }
+            }
+        }
+
         #region wrapped from supplier
+
+        public uint ID
+        {
+            get { return this.ExposedSupplier.ID; }
+        }
 
         [Required(ErrorMessage = "You must specify a name.")]
         public string Name
@@ -148,13 +175,13 @@ namespace BillsManager.ViewModel
             }
         }
 
-        [StringLength(80, ErrorMessage = "You cannot exceed 80 characters.")]
+        [StringLength(100, ErrorMessage = "You cannot exceed 100 characters.")]
         public string Notes
         {
             get { return this.ExposedSupplier.Notes; }
             set
             {
-                if (this.Notes != value) // TODO: review this.[N]otes or this.[n]otes
+                if (this.Notes != value)
                 {
                     this.ExposedSupplier.Notes = value;
                     this.NotifyOfPropertyChange(() => this.Notes);
@@ -275,8 +302,7 @@ namespace BillsManager.ViewModel
         {
             get
             {
-                //return this.ExposedSupplier.Bills.Sum(bvm => -bvm.Amount);
-                return obligationAmount; // TODO: fix
+                return obligationAmount;
             }
             set
             {
@@ -287,7 +313,7 @@ namespace BillsManager.ViewModel
                     this.NotifyOfPropertyChange(() => this.ObligationState);
                 }
             }
-        } //TODO: this.NotifyOfPropertyChange(() => this.ObligationAmount); ---> add + edit + delete commands
+        }
 
         public Obligation ObligationState
         {
@@ -314,47 +340,69 @@ namespace BillsManager.ViewModel
 
         #region methods
 
-        #region message handlers
-
-        public void Handle(BillsOfSupplierMessage message)
-        {
-            if (message.SupplierName == this.Name)
-            {
-                this.ObligationAmount = message.Bills.Sum(b => -b.Amount);
-                this.eventAggregator.Publish(new SuppliersFilterNeedsRefreshMessage());
-            }
-        }
-
-        #endregion
-
         #region overrides
 
         public override void CanClose(Action<bool> callback)
         {
-            // TODO: make it triggered by both close window button or by noone
-            if (this.IsInEditMode)
+            callback(this.IsClosing);
+        }
+
+        #endregion
+
+        #region message handlers
+
+        public void Handle(BillsListChangedMessage message)
+        {
+            double newOblAmount = 0;
+
+            foreach (var bill in message.Bills)
             {
-                //if (this.dialogService.ShowYesNoQuestion("Closing", "Are you sure you want to discard all the changes?"))
-
-                var question = new DialogViewModel(
-                    "Closing",
-                    "Are you sure you want to discard all the changes?",
-                    new[]
-                    {
-                        new DialogResponse(ResponseType.Yes, 3),
-                        new DialogResponse(ResponseType.No)
-                    });
-
-                this.windowManager.ShowDialog(question);
-
-                if (question.Response == ResponseType.Yes)
-                {
-                    this.CancelEdit();
-                    callback(true);
-                }
-                else callback(false);
+                if (bill.SupplierID == this.ID & !bill.PaymentDate.HasValue)
+                    newOblAmount += -bill.Amount;
             }
-            else callback(true);
+
+            this.ObligationAmount = newOblAmount;
+        }
+
+        public void Handle(BillAddedMessage message)
+        {
+            if (this.ID == message.AddedBill.SupplierID)
+                if (!message.AddedBill.PaymentDate.HasValue)
+                    this.ObligationAmount += -message.AddedBill.Amount;
+        }
+
+        public void Handle(BillDeletedMessage message)
+        {
+            if (this.ID == message.DeletedBill.SupplierID)
+                if (!message.DeletedBill.PaymentDate.HasValue)
+                    this.ObligationAmount += message.DeletedBill.Amount;
+        }
+
+        public void Handle(BillEditedMessage message)
+        {
+            bool supplierChanged = message.NewBillVersion.SupplierID != message.OldBillVersion.SupplierID;
+
+            if (supplierChanged)
+            {
+                if (this.ID == message.OldBillVersion.SupplierID)
+                    if (!message.OldBillVersion.PaymentDate.HasValue)
+                        this.ObligationAmount += message.OldBillVersion.Amount;
+
+                if (this.ID == message.NewBillVersion.SupplierID)
+                    if (!message.NewBillVersion.PaymentDate.HasValue)
+                        this.ObligationAmount += -message.NewBillVersion.Amount;
+            }
+            else
+            {
+                if (this.ID == message.NewBillVersion.SupplierID)
+                {
+                    if (!message.OldBillVersion.PaymentDate.HasValue)
+                        this.ObligationAmount += message.OldBillVersion.Amount;
+
+                    if (!message.NewBillVersion.PaymentDate.HasValue)
+                        this.ObligationAmount += -message.NewBillVersion.Amount;
+                }
+            }
         }
 
         #endregion
@@ -372,6 +420,8 @@ namespace BillsManager.ViewModel
                     () =>
                     {
                         if (this.IsInEditMode) this.EndEdit();
+
+                        this.IsClosing = true;
                         this.TryClose(true);
                     },
                     () => this.IsValid);
@@ -388,8 +438,40 @@ namespace BillsManager.ViewModel
                 if (this.cancelAddEditAndCloseCommand == null) this.cancelAddEditAndCloseCommand = new RelayCommand(
                     () =>
                     {
-                        if (this.IsInEditMode) this.CancelEdit();
-                        this.TryClose(false);
+                        if (this.HasChanges)
+                        {
+                            var question = new DialogViewModel(
+                                "Canceling " + (this.IsInEditMode ? "edit" : "add"),
+                                "Are you sure you want to discard all the changes?", // TODO: language
+                                new[]
+                            {
+                                new DialogResponse(ResponseType.Yes),
+                                new DialogResponse(ResponseType.No)
+                            });
+
+                            this.windowManager.ShowDialog(question, settings: new Dictionary<string, object> { { "ResizeMode", ResizeMode.NoResize } });
+
+                            if (question.Response == ResponseType.Yes)
+                            {
+                                if (this.IsInEditMode)
+                                {
+                                    this.CancelEdit();
+                                }
+
+                                this.IsClosing = true;
+                                this.TryClose(false);
+                            }
+                        }
+                        else
+                        {
+                            if (this.IsInEditMode)
+                            {
+                                this.CancelEdit();
+                            }
+
+                            this.IsClosing = true;
+                            this.TryClose(false);
+                        }
                     });
 
                 return this.cancelAddEditAndCloseCommand;

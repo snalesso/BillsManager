@@ -41,7 +41,7 @@ namespace BillsManager.Service.Providers
                         (DateTime?)XBill.Attribute("PaymentDate"),
                         (DateTime)XBill.Attribute("ReleaseDate"),
                         (double)XBill.Attribute("Amount"),
-                        (string)XBill.Attribute("Supplier"),
+                        (uint)XBill.Attribute("SupplierID"),
                         (string)XBill.Attribute("Notes"),
                         (string)XBill.Attribute("Code")
                         );
@@ -84,7 +84,7 @@ namespace BillsManager.Service.Providers
 
             this.IncreaseLastIDValue();
 
-            this.IncreaseBillsCount();
+            //this.IncreaseBillsCount();
 
             this.SaveXDocument();
 
@@ -133,7 +133,7 @@ namespace BillsManager.Service.Providers
 
             this.xmlBillsDB.Root.Element("Bills").Elements().Single(elem => elem.Attribute("ID").Value == bill.ID.ToString()).Remove();
 
-            this.DecreaseBillsCount();
+            //this.DecreaseBillsCount();
 
             this.SaveXDocument();
 
@@ -147,7 +147,7 @@ namespace BillsManager.Service.Providers
             foreach (Bill b in bills)
             {
                 this.xmlBillsDB.Root.Element("Bills").Elements().Single(elem => elem.Attribute("ID").Value == b.ID.ToString()).Remove();
-                this.DecreaseBillsCount();
+                //this.DecreaseBillsCount();
             }
 
             this.SaveXDocument();
@@ -188,7 +188,7 @@ namespace BillsManager.Service.Providers
             var newXDoc = new XDocument();
 
             newXDoc.Declaration = new XDeclaration("1.0", "utf-8", null);
-            newXDoc.Add(new XElement("BillsDatabase", new XElement("Bills", new XAttribute("LastID", 0), new XAttribute("BillsCount", 0))));
+            newXDoc.Add(new XElement("BillsDatabase", new XElement("Bills", new XAttribute("LastID", 0)/*, new XAttribute("BillsCount", 0)*/)));
             newXDoc.Root.Add(new XAttribute("CreationDate", DateTime.Today));
 
             newXDoc.Save(this.billsDBFolder + this.billsDBFileName + this.dbExt);
@@ -199,7 +199,7 @@ namespace BillsManager.Service.Providers
             this.xmlBillsDB.Root.Element("Bills").Attribute("LastID").SetValue(uint.Parse(this.xmlBillsDB.Root.Element("Bills").Attribute("LastID").Value) + 1);
         }
 
-        void IncreaseBillsCount()
+        /*void IncreaseBillsCount()
         {
             this.xmlBillsDB.Root.Element("Bills").Attribute("BillsCount").SetValue(uint.Parse(this.xmlBillsDB.Root.Element("Bills").Attribute("BillsCount").Value) + 1);
         }
@@ -207,7 +207,7 @@ namespace BillsManager.Service.Providers
         void DecreaseBillsCount()
         {
             this.xmlBillsDB.Root.Element("Bills").Attribute("BillsCount").SetValue(uint.Parse(this.xmlBillsDB.Root.Element("Bills").Attribute("BillsCount").Value) - 1);
-        }
+        }*/
 
         void SaveXDocument()
         {

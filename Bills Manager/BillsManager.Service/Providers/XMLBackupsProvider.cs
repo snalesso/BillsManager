@@ -6,20 +6,22 @@ using BillsManager.Model;
 
 namespace BillsManager.Service.Providers
 {
-    public class XMLBackupsProvider : IBackupsProvider /* TODO: controllare il controllo dell'esistenza delle directories,
-                                                        * per decidere se i comandi tipo per creare un nuovo backup devono essere disabilitati da principio
-                                                        * o se controllare ad ogni richiesta di creare un nuovo backup se è fattibile */
+    public class XMLBackupsProvider : IBackupsProvider
     {
         #region fields
 
         private readonly string dbFolderPath = AppDomain.CurrentDomain.BaseDirectory + @"\Database\";
-        private readonly string backupsFolderPath = AppDomain.CurrentDomain.BaseDirectory + @"\Database\Backups\";
+        private readonly string backupsFolderPath = AppDomain.CurrentDomain.BaseDirectory + @"\Backups\";
+        private readonly string dbTempFolder = AppDomain.CurrentDomain.BaseDirectory + @"\DB Temp Folder\";
+
         private readonly string billsDBFileName = @"Bills";
         private readonly string suppliersDBFileName = @"Suppliers";
         private readonly string dbExt = ".bmdb";
         private readonly string buExt = ".bmbu";
 
         #endregion
+
+        #region methods
 
         public IEnumerable<Backup> GetAll()
         {
@@ -35,12 +37,18 @@ namespace BillsManager.Service.Providers
 
                          XBackup = XDocument.Load(b);
 
+                         List<DateTime> rollbackDates = new List<DateTime>();
+
+                         if (XBackup.Root.Element("RollbackDates") != null)
+                             foreach (var date in XBackup.Root.Element("RollbackDates").Elements())
+                                 rollbackDates.Add(DateTime.Parse(date.Value));
+
                          return new Backup(
                              b,
                              (DateTime)XBackup.Root.Attribute("CreationTime"),
-                             (uint)XBackup.Root.Element("Bills").Attribute("BillsCount"),
-                             (uint)XBackup.Root.Element("Suppliers").Attribute("SuppliersCount"),
-                             ushort.Parse(XBackup.Root.Attribute("TimesUsedForRollback").Value));
+                             (uint)XBackup.Root.Element("Bills").Elements().Count(),
+                             (uint)XBackup.Root.Element("Suppliers").Elements().Count(),
+                             rollbackDates);
                      });
             }
             else
@@ -49,41 +57,54 @@ namespace BillsManager.Service.Providers
 
         public bool CreateNew()
         {
-            DateTime creationTime = DateTime.Now;
+            if (System.IO.File.Exists(this.dbFolderPath + this.billsDBFileName + this.dbExt) |
+                System.IO.File.Exists(this.dbFolderPath + this.suppliersDBFileName + this.dbExt))
+            {
 
-            XDocument xmlSuppliers = XDocument.Load(this.dbFolderPath + this.suppliersDBFileName + this.dbExt);
-            XDocument xmlBills = XDocument.Load(this.dbFolderPath + this.billsDBFileName + this.dbExt);
+                DateTime creationTime = DateTime.Now;
 
-            XDocument xmlBackup = new XDocument();
-            xmlBackup.Declaration = new XDeclaration("1.0", "utf-8", null);
+                XDocument xmlSuppliers = XDocument.Load(this.dbFolderPath + this.suppliersDBFileName + this.dbExt);
+                XDocument xmlBills = XDocument.Load(this.dbFolderPath + this.billsDBFileName + this.dbExt);
 
-            xmlBackup.Add(new XElement("Backup",
-                xmlSuppliers.Root.Element("Suppliers"),
-                xmlBills.Root.Element("Bills")));
+                XDocument xmlBackup = new XDocument();
+                xmlBackup.Declaration = new XDeclaration("1.0", "utf-8", null);
 
-            // xmlBackup.Root.Element("Suppliers").Add(new XAttribute("LastID", xmlSuppliers.Root.Attribute("LastID").Value));
-            // xmlBackup.Root.Element("Bills").Add(new XAttribute("LastID", xmlBills.Root.Attribute("LastID").Value));
+                xmlBackup.Add(new XElement("Backup",
+                    xmlSuppliers.Root.Element("Suppliers"),
+                    xmlBills.Root.Element("Bills")));
 
-            // xmlBackup.Root.Add(new XAttribute("SuppliersCount", xmlBackup.Root.Element("Suppliers").Descendants("Supplier").Count()));
-            // xmlBackup.Root.Add(new XAttribute("BillsCount", xmlBackup.Root.Element("Bills").Descendants("Bill").Count()));
-            xmlBackup.Root.Add(new XAttribute("CreationTime", creationTime)); // TODO: check if creationtime is really needed and where
-            xmlBackup.Root.Add(new XAttribute("TimesUsedForRollback", 0));
+                // xmlBackup.Root.Element("Suppliers").Add(new XAttribute("LastID", xmlSuppliers.Root.Attribute("LastID").Value));
+                // xmlBackup.Root.Element("Bills").Add(new XAttribute("LastID", xmlBills.Root.Attribute("LastID").Value));
 
-            this.EnsureBackupsFolderExists();
-            string savePath = this.backupsFolderPath;
-            savePath += creationTime.Date.Day + "-" + creationTime.Date.Month + "-" + creationTime.Date.Year;
-            savePath += "_";
-            savePath += creationTime.TimeOfDay.Hours + "." + creationTime.TimeOfDay.Minutes + "." + creationTime.TimeOfDay.Seconds;
-            savePath += this.buExt;
-            xmlBackup.Save(savePath);
+                // xmlBackup.Root.Add(new XAttribute("SuppliersCount", xmlBackup.Root.Element("Suppliers").Descendants("Supplier").Count()));
+                // xmlBackup.Root.Add(new XAttribute("BillsCount", xmlBackup.Root.Element("Bills").Descendants("Bill").Count()));
 
-            return true;
+                xmlBackup.Root.Add(new XAttribute("CreationTime", creationTime));
+                //xmlBackup.Root.Add(new XAttribute("TimesUsedForRollback", 0));
+
+                this.EnsureBackupsFolderExists();
+                string savePath = this.backupsFolderPath;
+                savePath += creationTime.Date.Day + "-" + creationTime.Date.Month + "-" + creationTime.Date.Year;
+                savePath += "_";
+                savePath += creationTime.TimeOfDay.Hours + "." + creationTime.TimeOfDay.Minutes + "." + creationTime.TimeOfDay.Seconds;
+                savePath += this.buExt;
+                xmlBackup.Save(savePath);
+
+                return true;
+            }
+
+            return false;
         }
 
         public bool Rollback(Backup backup)
         {
-            if (System.IO.File.Exists(backup.Path)) // TODO: move current database to temp folder in order to prevent data losing in case of power interrupt
+            if (System.IO.File.Exists(backup.Path))
             {
+                System.IO.Directory.CreateDirectory(this.dbTempFolder);
+
+                foreach (var file in System.IO.Directory.GetFiles(this.dbFolderPath))
+                    System.IO.File.Copy(file, this.dbTempFolder + System.IO.Path.GetFileName(file),true);
+
                 XDocument xmlBackup = XDocument.Load(backup.Path);
                 XDocument xmlSuppliers = new XDocument();
                 XDocument xmlBills = new XDocument();
@@ -95,20 +116,29 @@ namespace BillsManager.Service.Providers
                 xmlBills.Declaration = new XDeclaration("1.0", "utf-8", null);
                 xmlBills.Add(new XElement("BillsDatabase", xmlBackup.Root.Element("Bills")));
                 xmlBills.Save(this.dbFolderPath + this.billsDBFileName + this.dbExt);
-                               
+
+                this.AddRollbackDate(xmlBackup, DateTime.Now);
+
+                xmlBackup.Save(backup.Path);
+
+                if (System.IO.Directory.Exists(this.dbTempFolder))
+                    System.IO.Directory.Delete(this.dbTempFolder, true);
+
                 return true;
             }
 
-            return false;            
+            return false;
         }
 
         public bool Delete(Backup backup)
         {
             if (System.IO.File.Exists(backup.Path))
-                System.IO.File.Delete(backup.Path);
+                System.IO.File.Delete(backup.Path); // TODO: change to move to recycle bin
 
             return true;
         }
+
+        #region support methods
 
         void EnsureBackupsFolderExists()
         {
@@ -118,5 +148,24 @@ namespace BillsManager.Service.Providers
             }
         }
 
+        void AddRollbackDate(XDocument xmlBackup, DateTime rollbackDate)
+        {
+            if (xmlBackup == null)
+                throw new NotImplementedException("xmlBackup cannot be null");
+
+            var rollbackDates = xmlBackup.Root.Element("RollbackDates");
+
+            if (rollbackDates == null)
+            {
+                rollbackDates = new XElement("RollbackDates");
+                xmlBackup.Root.Add(rollbackDates);
+            }
+
+            rollbackDates.Add(new XElement("RollbackDate", rollbackDate));
+        }
+
+        #endregion
+
+        #endregion
     }
 }

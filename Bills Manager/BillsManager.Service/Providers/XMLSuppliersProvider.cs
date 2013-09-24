@@ -67,7 +67,7 @@ namespace BillsManager.Service.Providers
 
             this.IncreaseLastIDValue();
 
-            this.IncreaseSuppliersCount();
+            //this.IncreaseSuppliersCount();
 
             this.SaveXDocument();
 
@@ -92,11 +92,12 @@ namespace BillsManager.Service.Providers
 
         public bool Delete(Supplier supplier)
         {
+            // TODO: review: can delete or edit if theres no db file? D:
             this.EnsureXDocumentIsInitialized();
 
             this.xmlSuppliersDB.Root.Element("Suppliers").Elements().Single(elem => elem.Attribute("ID").Value == supplier.ID.ToString()).Remove();
 
-            this.DecreaseSuppliersCount();
+            //this.DecreaseSuppliersCount();
 
             this.SaveXDocument();
 
@@ -136,7 +137,7 @@ namespace BillsManager.Service.Providers
             var newXDoc = new XDocument();
 
             newXDoc.Declaration = new XDeclaration("1.0", "utf-8", null);
-            newXDoc.Add(new XElement("SuppliersDatabase", new XElement("Suppliers", new XAttribute("LastID", 0), new XAttribute("SuppliersCount", 0))));
+            newXDoc.Add(new XElement("SuppliersDatabase", new XElement("Suppliers", new XAttribute("LastID", 0)/*, new XAttribute("SuppliersCount", 0)*/)));
             newXDoc.Root.Add(new XAttribute("CreationDate", DateTime.Today));
 
             newXDoc.Save(this.suppliersDBFolder + this.suppliersDBFileName + this.dbExt);
@@ -147,7 +148,7 @@ namespace BillsManager.Service.Providers
             this.xmlSuppliersDB.Root.Element("Suppliers").Attribute("LastID").SetValue(uint.Parse(this.xmlSuppliersDB.Root.Element("Suppliers").Attribute("LastID").Value) + 1);
         }
 
-        void IncreaseSuppliersCount()
+        /*void IncreaseSuppliersCount()
         {
             this.xmlSuppliersDB.Root.Element("Suppliers").Attribute("SuppliersCount").SetValue(uint.Parse(this.xmlSuppliersDB.Root.Element("Suppliers").Attribute("SuppliersCount").Value) + 1);
         }
@@ -155,7 +156,7 @@ namespace BillsManager.Service.Providers
         void DecreaseSuppliersCount()
         {
             this.xmlSuppliersDB.Root.Element("Suppliers").Attribute("SuppliersCount").SetValue(uint.Parse(this.xmlSuppliersDB.Root.Element("Suppliers").Attribute("SuppliersCount").Value) - 1);
-        }
+        }*/
 
         void SaveXDocument()
         {

@@ -11,6 +11,7 @@ using Caliburn.Micro;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
+using System.Windows.Media;
 
 namespace BillsManager.App
 {
@@ -171,6 +172,8 @@ namespace BillsManager.App
                     //,
                     //SnapsToDevicePixels = true
                 };
+
+                RenderOptions.SetClearTypeHint(window, ClearTypeHint.Enabled);
 
                 window.SetValue(Caliburn.Micro.View.IsGeneratedProperty, true);
 

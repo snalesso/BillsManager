@@ -6,8 +6,8 @@
              xmlns:ViewModel="clr-namespace:BillsManager.ViewModel;assembly=BillsManager.ViewModel"
              xmlns:DataTemplates="clr-namespace:BillsManager.View.DataTemplates"
              mc:Ignorable="d"
-             Height="430" MinHeight="430"
-             Width="Auto" MinWidth="360"
+             MinHeight="530"
+             MinWidth="360"
              d:DataContext="{d:DesignInstance Type=ViewModel:BackupsViewModel, IsDesignTimeCreatable=True}">
 
     <UserControl.Resources>

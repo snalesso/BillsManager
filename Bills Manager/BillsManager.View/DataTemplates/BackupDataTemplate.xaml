@@ -5,7 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ViewModel="clr-namespace:BillsManager.ViewModel;assembly=BillsManager.ViewModel"
              mc:Ignorable="d" 
-             d:DataContext="{d:DesignInstance Type=ViewModel:BackupViewModel}">
+             d:DataContext="{d:DesignInstance Type=ViewModel:BackupViewModel, IsDesignTimeCreatable=True}">
+    
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="8" />
@@ -40,12 +45,32 @@
             <Run Text=" bills" />
         </TextBlock>
 
-        <TextBlock Grid.Column="1"
-                   Grid.Row="7">
+        <TextBlock Grid.Row="7" Grid.Column="1" Visibility="{Binding HasNoRollbacks, Converter={StaticResource BooleanToVisibilityConverter}}" >
             <Run Text="Used " />
             <Run Text="{Binding Path=TimesUsedForRollback, Mode=OneTime}" />
             <Run Text=" times to restore" />
         </TextBlock>
+
+        <Expander Grid.Row="7" Grid.Column="1" Visibility="{Binding HasRollbacks, Converter={StaticResource BooleanToVisibilityConverter}}"
+                  BorderThickness="0"
+                  BorderBrush="{x:Null}"
+                  Background="{x:Null}">
+            <Expander.Header>
+                <TextBlock Grid.Column="1">
+                    <Run Text="Used " />
+                    <Run Text="{Binding Path=TimesUsedForRollback, Mode=OneTime}" />
+                    <Run Text=" times to restore" />
+                </TextBlock>
+            </Expander.Header>
+
+            <ItemsControl ItemsSource="{Binding RollbackDates}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Mode=OneWay, StringFormat=\{0:F\}}" Margin="24 8 0 0" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Expander>
 
     </Grid>
 </UserControl>

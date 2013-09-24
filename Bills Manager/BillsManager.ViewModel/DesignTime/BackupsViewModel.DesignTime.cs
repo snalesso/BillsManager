@@ -31,7 +31,14 @@ namespace BillsManager.ViewModel
                         currentTime,
                         961,
                         38,
-                        0)));
+                        new[]
+                        {
+                            DateTime.Today.AddDays(-43),
+                            DateTime.Today.AddDays(-31),
+                            DateTime.Today.AddDays(-23),
+                            DateTime.Today.AddDays(-19),
+                            DateTime.Today.AddDays(-8)
+                        })));
 
             this.BackupViewModels.Add(
                 new BackupViewModel(
@@ -40,7 +47,14 @@ namespace BillsManager.ViewModel
                         currentTime.AddDays(-4),
                         830,
                         31,
-                        2)));
+                        new[]
+                        {
+                            DateTime.Today.AddDays(-43),
+                            DateTime.Today.AddDays(-31),
+                            DateTime.Today.AddDays(-23),
+                            DateTime.Today.AddDays(-19),
+                            DateTime.Today.AddDays(-8)
+                        })));
 
             this.BackupViewModels.Add(
                 new BackupViewModel(
@@ -49,7 +63,14 @@ namespace BillsManager.ViewModel
                         currentTime.AddDays(-10),
                         680,
                         24,
-                        3)));
+                        new[]
+                        {
+                            DateTime.Today.AddDays(-43),
+                            DateTime.Today.AddDays(-31),
+                            DateTime.Today.AddDays(-23),
+                            DateTime.Today.AddDays(-19),
+                            DateTime.Today.AddDays(-8)
+                        })));
 
             this.BackupViewModels.Add(
                 new BackupViewModel(
@@ -58,7 +79,14 @@ namespace BillsManager.ViewModel
                         currentTime.AddDays(-18),
                         680,
                         19,
-                        1)));
+                        new[]
+                        {
+                            DateTime.Today.AddDays(-43),
+                            DateTime.Today.AddDays(-31),
+                            DateTime.Today.AddDays(-23),
+                            DateTime.Today.AddDays(-19),
+                            DateTime.Today.AddDays(-8)
+                        })));
         }
 
         #endregion

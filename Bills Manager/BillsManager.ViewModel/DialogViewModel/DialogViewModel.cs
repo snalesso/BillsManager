@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Threading;
 using Caliburn.Micro;
-using System.Linq;
 
 namespace BillsManager.ViewModel
 {
@@ -16,40 +16,50 @@ namespace BillsManager.ViewModel
 
         #region ctor
 
-
+        // TODO: review ctors gerarchy (make it create a default button in both cases)
         public DialogViewModel(string caption, string message, IEnumerable<DialogResponse> responses)
+            : this(caption, message)
         {
-            this.Caption = caption;
-            this.Message = message;
-
             if (responses != null)
-            {
                 this.Responses = responses;
+            else
+                this.Responses = new[] { new DialogResponse(ResponseType.Ok) };
+            
 
-                foreach (DialogResponse resp in responses)
+            bool hasDefault = false, hasCancel = false;
+
+            foreach (DialogResponse resp in this.Responses)
+            {
+                hasDefault |= resp.IsDefault;
+                hasCancel |= resp.IsCancel;
+            }
+
+            if (!hasDefault)
+                this.Responses.FirstOrDefault().IsDefault = true;
+
+            if (!hasCancel)
+                this.Responses.LastOrDefault().IsCancel = true;
+
+
+            foreach (DialogResponse resp in this.Responses)
+            {
+                if (resp.Timer > 0)
                 {
-                    if (resp.Timer > 0)
-                    {
-                        this.timer = new DispatcherTimer() { Interval = new System.TimeSpan(0, 0, 0, 1) };
-                        this.timer.Tick += this.UpdateResponsesTimers;
-                        break;
-                    }
+                    this.timer = new DispatcherTimer() { Interval = new System.TimeSpan(0, 0, 0, 1) };
+                    this.timer.Tick += this.UpdateResponsesTimers;
+                    break;
                 }
             }
-            else
-            {
-                this.Responses = new[] { new DialogResponse(ResponseType.Ok, "Ok") };
-            }
-
-            this.Responses.FirstOrDefault().IsDefault = true;
-            this.Responses.LastOrDefault().IsCancel = true;
 
             if (timer != null) timer.Start(); // TODO: move in a void connected to DialogView.Shown or smth like that
         }
 
         public DialogViewModel(string caption, string message)
-            : this(caption, message, null)
         {
+            this.Caption = caption;
+            this.Message = message;
+
+            this.Responses = new[] { new DialogResponse(ResponseType.Ok) };
         }
 
         #endregion
@@ -98,7 +108,7 @@ namespace BillsManager.ViewModel
             }
         }
 
-        private ResponseType response;
+        private ResponseType response = ResponseType.Null;
         public ResponseType Response
         {
             get { return this.response; }
@@ -145,6 +155,11 @@ namespace BillsManager.ViewModel
             this.Response = dialogResponse.Response;
 
             this.TryClose(null);
+        }
+
+        public override void CanClose(Action<bool> callback)
+        {
+            callback(this.Response != ResponseType.Null);
         }
 
         #endregion

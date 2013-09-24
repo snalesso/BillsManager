@@ -4,7 +4,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ViewModel="clr-namespace:BillsManager.ViewModel;assembly=BillsManager.ViewModel"
-             xmlns:Controls="clr-namespace:BillsManager.View.Controls"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="920"
@@ -22,6 +21,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="8" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="8" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -31,46 +32,60 @@
         </Grid.ColumnDefinitions>
 
         <Menu Grid.ColumnSpan="3">
-            <MenuItem Command="{Binding Path=BillsViewModel.AddNewBillCommand}"
+            <MenuItem Command="{Binding Path=BillsViewModel.AddNewBillCommand, Mode=OneTime}"
                       Header="New bill" />
-            <MenuItem Command="{Binding Path=BillsViewModel.EditBillCommand}"
+            <MenuItem Command="{Binding Path=BillsViewModel.EditBillCommand, Mode=OneTime}"
                       CommandParameter="{Binding Path=BillsViewModel.SelectedBillViewModel}"
                       Header="Edit Bill" />
-            <MenuItem Command="{Binding Path=BillsViewModel.DeleteBillCommand}"
+            <MenuItem Command="{Binding Path=BillsViewModel.DeleteBillCommand, Mode=OneTime}"
                       CommandParameter="{Binding Path=BillsViewModel.SelectedBillViewModel}"
                       Header="Delete Bill" />
+            <MenuItem Command="{Binding Path=BillsViewModel.PayBillCommand, Mode=OneTime}"
+                      CommandParameter="{Binding Path=BillsViewModel.SelectedBillViewModel}"
+                      Header="Pay Bill" />
 
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
-            <MenuItem Command="{Binding Path=SuppliersViewModel.AddNewSupplierCommand}"
+            <MenuItem Command="{Binding Path=SuppliersViewModel.AddNewSupplierCommand, Mode=OneTime}"
                       Header="New supplier" />
-            <MenuItem Command="{Binding Path=SuppliersViewModel.EditSupplierCommand}"
+            <MenuItem Command="{Binding Path=SuppliersViewModel.EditSupplierCommand, Mode=OneTime}"
                       CommandParameter="{Binding Path=SuppliersViewModel.SelectedSupplierViewModel}"
                       Header="Edit Supplier" />
-            <MenuItem Command="{Binding Path=SuppliersViewModel.DeleteSupplierCommand}"
+            <MenuItem Command="{Binding Path=SuppliersViewModel.DeleteSupplierCommand, Mode=OneTime}"
                       CommandParameter="{Binding Path=SuppliersViewModel.SelectedSupplierViewModel}"
                       Header="Delete Supplier" />
-
+            <MenuItem Header="Show bills"
+                      Command="{Binding Path=SuppliersViewModel.ShowSuppliersBillsCommand, Mode=OneTime}"
+                      CommandParameter="{Binding Path=SuppliersViewModel.SelectedSupplierViewModel}"/>
+            
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
             <MenuItem Command="{Binding Path=ShowBackupCenterCommand, Mode=OneTime}"
                       Header="Backup Center" />
         </Menu>
+        
+        <ContentControl Grid.Row="2"
+                        x:Name="SearchBillsViewModel"/>
 
         <ContentControl x:Name="BillsViewModel"
-                        Grid.Row="2"
+                        Grid.Row="4"
                         HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Stretch" />
+                        HorizontalContentAlignment="Stretch"/>
 
         <GridSplitter Grid.Column="1"
                       Grid.Row="2"
+                      Grid.RowSpan="3"
                       Background="Transparent"
                       HorizontalAlignment="Stretch"
                       ResizeBehavior="PreviousAndNext" />
 
+        <ContentControl Grid.Row="2"
+                        Grid.Column="2"
+                        x:Name="SearchSuppliersViewModel" />
+
         <ContentControl x:Name="SuppliersViewModel"
                         Grid.Column="2"
-                        Grid.Row="2"
+                        Grid.Row="4"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Stretch" />
 

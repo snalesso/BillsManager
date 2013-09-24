@@ -10,8 +10,10 @@ namespace BillsManager.ViewModel
 {
     public partial class SearchBillsViewModel :
         Screen,
-        IHandle<AvailableSuppliersMessage>,
-        IHandle<SupplierNameChangedMessage>
+        IHandle<SuppliersListChangedMessage>,
+        IHandle<SupplierEditedMessage>,
+        IHandle<BillEditedMessage>,
+        IHandle<ActivateBillsSupplierFilterMessage>
     {
         #region fields
 
@@ -21,24 +23,22 @@ namespace BillsManager.ViewModel
         private readonly Func<BillViewModel, bool> supplierNameFilter;
         private readonly Func<BillViewModel, bool> releaseDateFilter;
         private readonly Func<BillViewModel, bool> dueDateFilter;
-        //private readonly Func<BillViewModel, bool> amountFilter;
-        //private readonly Func<BillViewModel, bool> codeFilter;
 
         #endregion
 
         #region ctor
 
         public SearchBillsViewModel(
+            IEnumerable<Supplier> availableSuppliers,
             IEventAggregator eventAggregator)
         {
+            this.AvailableSuppliers = availableSuppliers;
             this.eventAggregator = eventAggregator;
 
             this.isPaidFilter = bvm => bvm.PaymentDate.HasValue == this.IsPaidFilterValue;
-            this.supplierNameFilter = bvm => bvm.Supplier.Contains(this.SelectedSupplier.Name);
+            this.supplierNameFilter = bvm => bvm.SupplierID == this.SelectedSupplier.ID;
             this.releaseDateFilter = bvm => bvm.ReleaseDate == this.ReleaseDateFilterValue;
             this.dueDateFilter = bvm => bvm.DueDate == this.dueDateFilterValue;
-            //this.amountFilter = bvm => bvm.Amount == this.amountFilterValue;
-            //this.codeFilter = bvm => bvm.Code.Contains(this.CodeFilterValue);
 
             this.eventAggregator.Subscribe(this);
         }
@@ -92,34 +92,6 @@ namespace BillsManager.ViewModel
             }
         }
 
-        //private bool useCodeFilter;
-        //public bool UseCodeFilter
-        //{
-        //    get { return this.useCodeFilter; }
-        //    set
-        //    {
-        //        if (this.useCodeFilter != value)
-        //        {
-        //            this.useCodeFilter = value;
-        //            this.NotifyOfPropertyChange(() => this.UseCodeFilter);
-        //        }
-        //    }
-        //}
-
-        //private string codeFilterValue;
-        //public string CodeFilterValue
-        //{
-        //    get { return this.codeFilterValue; }
-        //    set
-        //    {
-        //        if (this.codeFilterValue != value)
-        //        {
-        //            this.codeFilterValue = value;
-        //            this.NotifyOfPropertyChange(() => this.CodeFilterValue);
-        //        }
-        //    }
-        //}
-
         private bool? isPaidFilterValue;
         public bool? IsPaidFilterValue
         {
@@ -150,34 +122,6 @@ namespace BillsManager.ViewModel
                 }
             }
         }
-
-        //private bool useAmountFilter;
-        //public bool UseAmountFilter
-        //{
-        //    get { return this.useAmountFilter; }
-        //    set
-        //    {
-        //        if (this.useAmountFilter != value)
-        //        {
-        //            this.useAmountFilter = value;
-        //            this.NotifyOfPropertyChange(() => this.UseAmountFilter);
-        //        }
-        //    }
-        //}
-
-        //private double amountFilterValue;
-        //public double AmountFilterValue
-        //{
-        //    get { return this.amountFilterValue; }
-        //    set
-        //    {
-        //        if (this.amountFilterValue != value)
-        //        {
-        //            this.amountFilterValue = value;
-        //            this.NotifyOfPropertyChange(() => this.AmountFilterValue);
-        //        }
-        //    }
-        //}
 
         private bool useReleaseDateFilter;
         public bool UseReleaseDateFilter
@@ -245,7 +189,7 @@ namespace BillsManager.ViewModel
 
         #region methods
 
-        void SendFilters()
+        private void SendFilters()
         {
             List<Func<BillViewModel, bool>> filters = new List<Func<BillViewModel, bool>>();
 
@@ -253,8 +197,6 @@ namespace BillsManager.ViewModel
             if (this.UseSupplierFilter) filters.Add(this.supplierNameFilter);
             if (this.UseReleaseDateFilter) filters.Add(this.releaseDateFilter);
             if (this.UseDueDateFilter) filters.Add(this.dueDateFilter);
-            //if (this.UseAmountFilter) filters.Add(this.amountFilter);
-            //if (this.UseCodeFilter & !string.IsNullOrEmpty(this.CodeFilterValue)) filters.Add(this.codeFilter);
 
             if (filters.Count > 0)
                 this.eventAggregator.Publish(new BillsFilterMessage(filters));
@@ -262,7 +204,7 @@ namespace BillsManager.ViewModel
                 this.eventAggregator.Publish(new BillsFilterMessage((Func<BillViewModel, bool>)null));
         }
 
-        void DeactivateAllFilters()
+        private void DeactivateAllFilters()
         {
             this.UseDueDateFilter = false;
             this.UseReleaseDateFilter = false;
@@ -272,16 +214,44 @@ namespace BillsManager.ViewModel
 
         #region message handlers
 
-        public void Handle(AvailableSuppliersMessage message)
+        public void Handle(SuppliersListChangedMessage message)
         {
-            this.AvailableSuppliers = message.AvailableSuppliers;
+            this.AvailableSuppliers = message.Suppliers;
+
+            if (!this.AvailableSuppliers.Contains(this.SelectedSupplier))
+            {
+                this.UseSupplierFilter = false;
+                this.SendFilters();
+            }
         }
 
-        public void Handle(SupplierNameChangedMessage message)
+        public void Handle(SupplierEditedMessage message)
         {
-            var selSupp = this.SelectedSupplier;
-            this.NotifyOfPropertyChange(() => this.AvailableSuppliers); // TODO: find a better fix
-            this.SelectedSupplier = selSupp;
+            if (message.OldSupplierVersion.Name != message.NewSupplierVersion.Name)
+            {
+                var supps = this.AvailableSuppliers;
+                var selSupp = this.SelectedSupplier;
+
+                this.AvailableSuppliers = null;
+                this.SelectedSupplier = null;
+
+                this.AvailableSuppliers = supps;
+                this.SelectedSupplier = selSupp;
+            }
+        }
+
+        public void Handle(BillEditedMessage message)
+        {
+            this.SendFilters(); // TODO: refresh only if needed
+        }
+
+        public void Handle(ActivateBillsSupplierFilterMessage message)
+        {
+            if (this.AvailableSuppliers.Any(s => s.ID == message.Supplier.ID))
+            {
+                this.SelectedSupplier = this.AvailableSuppliers.Single(s => s.ID == message.Supplier.ID);
+                this.SendFilters();
+            }
         }
 
         #endregion

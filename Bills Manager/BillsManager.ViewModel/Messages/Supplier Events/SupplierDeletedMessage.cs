@@ -14,6 +14,5 @@ namespace BillsManager.ViewModel.Messages
         {
             get { return deletedSupplier; }
         }
-
     }
 }

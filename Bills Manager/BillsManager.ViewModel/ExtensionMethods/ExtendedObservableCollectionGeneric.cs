@@ -45,12 +45,14 @@ namespace BillsManager.ViewModel
         {
             this.CheckReentrancy();
 
+            var deleted = new List<T>(deleteItems);
+
             foreach (T item in deleteItems)
             {
                 this.Items.Remove(item);
             }
 
-            this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, deleteItems));
+            this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, deleted));
             this.OnPropertyChanged(new PropertyChangedEventArgs("Count"));
         }
 

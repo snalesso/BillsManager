@@ -43,11 +43,11 @@ namespace BillsManager.ViewModel
 
         private IEnumerable<Supplier> GetAvailableSuppliers()
         {
-            IEnumerable<Supplier> s = null;
+            IEnumerable<Supplier> suppliers = null;
 
-            this.eventAggregator.Publish(new AskForAvailableSuppliersMessage(supps => s = supps));
+            this.eventAggregator.Publish(new AskForAvailableSuppliersMessage(s => suppliers = s));
 
-            return s;
+            return suppliers;
         }
 
         public void BeginEdit()
@@ -56,7 +56,7 @@ namespace BillsManager.ViewModel
 
             this.IsInEditMode = true;
 
-            this.SetupForAdEdit();
+            this.SetupForAddEdit();
         }
 
         protected void RevertChanges()
@@ -68,7 +68,7 @@ namespace BillsManager.ViewModel
             this.PaymentDate = this.exposedBillBackup.PaymentDate;
             this.RegistrationDate = this.exposedBillBackup.RegistrationDate;
             this.ReleaseDate = this.exposedBillBackup.ReleaseDate;
-            this.Supplier = this.exposedBillBackup.Supplier; 
+            this.SupplierID = this.exposedBillBackup.SupplierID; 
         }
 
         public void CancelEdit()

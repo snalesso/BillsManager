@@ -95,7 +95,8 @@
                       VerticalAlignment="Center" />
             <ComboBox Grid.Row="1"
                       Grid.Column="2"
-                      Width="150"
+                      MinWidth="230"
+                      Width="Auto"
                       SelectedValue="{Binding Path=SelectedSupplier}"
                       ItemsSource="{Binding Path=AvailableSuppliers, IsAsync=True}"
                       VerticalAlignment="Center"

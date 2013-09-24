@@ -25,8 +25,11 @@ namespace BillsManager.ViewModel
 
             this.Responses = new[]
             {
-                new DialogResponse(ResponseType.Retry, "Retry", 10),
-                new DialogResponse(ResponseType.Abort, "Abort"),
+                new DialogResponse(ResponseType.Yes, ".. go on!", "I wish to ..."),
+                new DialogResponse(ResponseType.No, "Nein", "I say") {IsEnabled = true},
+                new DialogResponse(ResponseType.Retry, 10),
+                new DialogResponse(ResponseType.Abort, "Abort!", 3),
+                new DialogResponse(ResponseType.Cancel),
             };
         }
 

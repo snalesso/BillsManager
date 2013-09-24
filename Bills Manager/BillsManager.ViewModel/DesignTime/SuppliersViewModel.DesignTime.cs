@@ -1,4 +1,5 @@
-﻿using BillsManager.Model;
+﻿using System.Collections.ObjectModel;
+using BillsManager.Model;
 using Caliburn.Micro;
 
 namespace BillsManager.ViewModel
@@ -89,6 +90,7 @@ namespace BillsManager.ViewModel
             //    "for changed order",
             //    "AB 325 MY"));
 
+            this.SupplierViewModels = new ObservableCollection<SupplierViewModel>();
             this.SupplierViewModels.Add(svm1);
             this.SupplierViewModels.Add(svm2);
             this.SupplierViewModels.Add(svm3);

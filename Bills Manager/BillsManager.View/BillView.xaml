@@ -197,14 +197,14 @@
                     Grid.Row="15"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
-            <Button Margin="0 0 8 0"
-                    Width="80"
-                    Command="{Binding Path=CancelAddEditAndCloseCommand}"
-                    Content="Cancel" />
             <Button Width="80"
                     Command="{Binding Path=ConfirmAddEditAndCloseCommand}"
                     Content="Ok"
-                    ToolTip="{Binding Error, Mode=OneWay}"/>
+                    Margin="0 0 8 0" />
+            <Button Width="80"
+                    Command="{Binding Path=CancelAddEditAndCloseCommand}"
+                    Content="Cancel"
+                    IsCancel="True" />
         </StackPanel>
 
     </Grid>

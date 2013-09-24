@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BillsManager.Model
 {
@@ -11,13 +12,13 @@ namespace BillsManager.Model
             DateTime creationTime,
             uint billsCount,
             uint suppliersCount,
-            ushort timesUsedForRollback)
+            IEnumerable<DateTime> rollbackDates)
         {
             this.path = path;
             this.creationTime = creationTime;
             this.billsCount = billsCount;
             this.suppliersCount = suppliersCount;
-            this.timesUsedForRollback = timesUsedForRollback;
+            this.rollbackDates = rollbackDates;
         }
 
         #endregion
@@ -36,10 +37,10 @@ namespace BillsManager.Model
             get { return this.creationTime; }
         }
 
-        private readonly ushort timesUsedForRollback = 0;
-        public ushort TimesUsedForRollback
+        private IEnumerable<DateTime> rollbackDates;
+        public IEnumerable<DateTime> RollbackDates
         {
-            get { return this.timesUsedForRollback; }
+            get { return rollbackDates; }
         }
 
         private readonly uint suppliersCount = 0;

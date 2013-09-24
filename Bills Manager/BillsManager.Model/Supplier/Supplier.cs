@@ -144,7 +144,7 @@ namespace BillsManager.Model
             }
             set
             {
-                if (this.Notes != value) // TODO: review this.[N]otes or this.[n]otes
+                if (this.Notes != value)
                 {
                     this.notes = value;
                 }

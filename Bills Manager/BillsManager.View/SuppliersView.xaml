@@ -7,33 +7,23 @@
              xmlns:DataTemplates="clr-namespace:BillsManager.View.DataTemplates"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=ViewModel:SuppliersViewModel, IsDesignTimeCreatable=True}">
-    
+
     <UserControl.Resources>
         <ResourceDictionary Source="Dictionaries\Styles.xaml" />
     </UserControl.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="8" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        
-        <ContentControl x:Name="SearchSuppliersViewModel" Margin="8 0 0 0" />
-        
-        <ListBox Grid.IsSharedSizeScope="True"
-                 ItemsSource="{Binding Path=FilteredSupplierViewModels}"
-                 MinHeight="350"
-                 SelectedItem="{Binding Path=SelectedSupplierViewModel}"
-                 SelectionMode="Single"
-                 BorderThickness="0"
-                 Grid.Row="2">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <DataTemplates:SupplierDataTemplate />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </Grid>
+    <ListBox Grid.IsSharedSizeScope="True"
+             ItemsSource="{Binding Path=FilteredSupplierViewModels}"
+             MinHeight="350"
+             SelectedItem="{Binding Path=SelectedSupplierViewModel}"
+             SelectionMode="Single"
+             BorderThickness="0"
+             Grid.Row="2">
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <DataTemplates:SupplierDataTemplate />
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
 
 </UserControl>

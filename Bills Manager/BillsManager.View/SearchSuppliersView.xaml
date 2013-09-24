@@ -41,7 +41,8 @@
             <ComboBox Grid.Row="1"
                       Grid.Column="2"
                       ItemsSource="{Binding Path=ObligationStates, Mode=OneTime}"
-                      Width="150"
+                      MinWidth="100"
+                      Width="Auto"
                       SelectedValue="{Binding Path=ObligationStateFilterValue}"
                       VerticalAlignment="Center"
                       HorizontalAlignment="Center" />

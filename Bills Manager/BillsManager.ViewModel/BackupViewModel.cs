@@ -1,6 +1,8 @@
-﻿using Caliburn.Micro;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using BillsManager.Model;
-using System;
+using Caliburn.Micro;
 
 namespace BillsManager.ViewModel
 {
@@ -14,6 +16,9 @@ namespace BillsManager.ViewModel
         public BackupViewModel(
             Backup backup)
         {
+            if (backup == null)
+                throw new ArgumentNullException("backup cannot be null.");
+
             this.exposedBackup = backup;
         }
 
@@ -21,7 +26,7 @@ namespace BillsManager.ViewModel
 
         #region properties
 
-        private Backup exposedBackup; // TODO: replace every exposed property with a bare field. WHY???
+        private Backup exposedBackup;
         public Backup ExposedBackup
         {
             get { return this.exposedBackup; }
@@ -34,7 +39,7 @@ namespace BillsManager.ViewModel
                 }
             }
         }
-
+        
         #region wrapped from backup
 
         public string Path
@@ -47,9 +52,9 @@ namespace BillsManager.ViewModel
             get { return this.ExposedBackup.CreationTime; }
         }
 
-        public ushort TimesUsedForRollback
+        public IEnumerable<DateTime> RollbackDates
         {
-            get { return this.ExposedBackup.TimesUsedForRollback; }
+            get { return this.ExposedBackup.RollbackDates; }
         }
 
         public uint SuppliersCount
@@ -60,6 +65,25 @@ namespace BillsManager.ViewModel
         public uint BillsCount
         {
             get { return this.ExposedBackup.BillsCount; }
+        }
+
+        #endregion
+
+        #region added
+
+        public bool HasRollbacks
+        {
+            get { return this.TimesUsedForRollback > 0; }
+        }
+
+        public bool HasNoRollbacks
+        {
+            get { return !this.HasRollbacks; }
+        }
+
+        public ushort TimesUsedForRollback
+        {
+            get { return (ushort)this.RollbackDates.Count(); }
         }
 
         #endregion

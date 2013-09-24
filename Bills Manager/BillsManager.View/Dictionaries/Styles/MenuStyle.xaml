@@ -1,14 +1,13 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
+    
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Values.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-
     <Style TargetType="{x:Type Menu}">
         <Setter Property="Background"
-                Value="Transparent" />
+                Value="{StaticResource ResourceKey=MenuBackgroundBrush}" />
     </Style>
-    
+
 </ResourceDictionary>

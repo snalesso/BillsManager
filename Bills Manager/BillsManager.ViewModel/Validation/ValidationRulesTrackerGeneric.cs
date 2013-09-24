@@ -50,7 +50,7 @@ namespace BillsManager.ViewModel.Validation
             return string.Join(Environment.NewLine, errors);
         }
 
-        public string GetAllErrors() // TODO: convert to LINQ
+        public string GetAllErrors() // TODO: optimize for speed
         {
             string errors = string.Empty;
 
