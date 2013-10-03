@@ -5,10 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ViewModel="clr-namespace:BillsManager.ViewModel;assembly=BillsManager.ViewModel"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=ViewModel:BillViewModel, IsDesignTimeCreatable=True}">
+             MinWidth="400"
+             d:DataContext="{d:DesignInstance Type=ViewModel:BillDetailsViewModel, IsDesignTimeCreatable=True}">
+
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Dictionaries\Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        </ResourceDictionary>
     </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="8" />
@@ -35,73 +43,117 @@
             <ColumnDefinition Width="8" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="8" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
             <ColumnDefinition Width="8" />
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="Amount"
                    Grid.Column="1"
-                   Grid.Row="1" />
+                   Grid.Row="1"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{DynamicResource ViewTitleBrush}" />
         <TextBlock Text="{Binding Path=Amount, StringFormat=\{0:c\}}"
                    Grid.Column="3"
                    Grid.Row="1"
-                   TextAlignment="Right" />
+                   TextAlignment="Right"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left" />
 
         <TextBlock Text="Supplier"
                    Grid.Column="1"
-                   Grid.Row="3" />
-        <TextBlock Text="{Binding Path=Supplier}"
+                   Grid.Row="3"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{DynamicResource ViewTitleBrush}" />
+        <TextBlock Text="{Binding Path=Supplier.Name}"
                    Grid.Column="3"
-                   Grid.Row="3" />
+                   Grid.Row="3"
+                   VerticalAlignment="Center" />
 
         <TextBlock Text="Code"
                    Grid.Column="1"
-                   Grid.Row="5" />
+                   Grid.Row="5"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{DynamicResource ViewTitleBrush}" />
         <TextBlock Text="{Binding Path=Code}"
                    Grid.Column="3"
-                   Grid.Row="5" />
+                   Grid.Row="5"
+                   VerticalAlignment="Center" />
 
-        <TextBlock Text="Payment state"
+        <TextBlock Text="Payment"
                    Grid.Column="1"
-                   Grid.Row="7" />
+                   Grid.Row="7"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{DynamicResource ViewTitleBrush}" />
         <StackPanel Orientation="Horizontal"
                     Grid.Column="3"
                     Grid.Row="7">
             <TextBlock Text="{Binding Path=PaymentDate, StringFormat=Paid on \{0:D\}}"
-                       Visibility="{Binding Path=IsPaid, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                       Visibility="{Binding Path=IsPaid, Converter={StaticResource BooleanToVisibilityConverter}}"
+                       VerticalAlignment="Center" />
             <TextBlock Text="Not paid"
                        Visibility="{Binding Path=IsNotPaid, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </StackPanel>
 
-        <TextBlock Text="Due date"
+        <TextBlock Text="Dues on"
                    Grid.Column="1"
-                   Grid.Row="9" />
+                   Grid.Row="9"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{DynamicResource ViewTitleBrush}" />
         <TextBlock Grid.Column="3"
-                   Grid.Row="9">
+                   Grid.Row="9"
+                   VerticalAlignment="Center">
             <Run Text="{Binding Path=DueDate, StringFormat=\{0:D\}}" />
             <Run Text="{Binding Path=DuesIn, Mode=OneWay, StringFormat=(\{0\})}" />
         </TextBlock>
 
-        <TextBlock Text="Release date"
+        <TextBlock Text="Released on"
                    Grid.Column="1"
-                   Grid.Row="11" />
+                   Grid.Row="11"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{DynamicResource ViewTitleBrush}" />
         <TextBlock Text="{Binding Path=ReleaseDate, StringFormat=\{0:D\}}"
                    Grid.Column="3"
-                   Grid.Row="11" />
+                   Grid.Row="11"
+                   VerticalAlignment="Center" />
 
-        <TextBlock Text="Registration date"
+        <TextBlock Text="Registered on"
                    Grid.Column="1"
-                   Grid.Row="13" />
+                   Grid.Row="13"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{DynamicResource ViewTitleBrush}" />
         <TextBlock Text="{Binding Path=RegistrationDate, StringFormat=\{0:D\}}"
                    Grid.Column="3"
-                   Grid.Row="13" />
+                   Grid.Row="13"
+                   VerticalAlignment="Center" />
 
         <TextBlock Text="Notes"
                    Grid.Column="1"
-                   Grid.Row="15" />
+                   Grid.Row="15"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{DynamicResource ViewTitleBrush}" />
         <TextBlock Text="{Binding Path=Notes}"
                    Grid.Column="3"
-                   Grid.Row="15" />
+                   Grid.Row="15"
+                   TextWrapping="Wrap"
+                   TextTrimming="CharacterEllipsis"
+                   VerticalAlignment="Center"
+                   MaxWidth="390" />
 
         <StackPanel Orientation="Horizontal"
                     Grid.Column="1"
@@ -109,10 +161,14 @@
                     Grid.Row="17"
                     HorizontalAlignment="Right">
             <Button Content="Edit"
-                    Width="80" />
+                    MinWidth="80"
+                    Command="{Binding Path=SwitchToEditCommand, Mode=OneTime}"
+                    IsDefault="True" />
             <Button Content="Close"
                     Margin="8 0 0 0"
-                    Width="80" />
+                    MinWidth="80"
+                    Command="{Binding Path=CloseDetailsViewCommand, Mode=OneTime}"
+                    IsCancel="True" />
         </StackPanel>
 
     </Grid>

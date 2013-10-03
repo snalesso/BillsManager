@@ -2,6 +2,7 @@
 
 namespace BillsManager.ViewModel
 {
+#if DEBUG
     public partial class ShellViewModel : Screen, IShell
     {
         #region ctor
@@ -11,5 +12,6 @@ namespace BillsManager.ViewModel
         }
 
         #endregion
-    }
+    } 
+#endif
 }

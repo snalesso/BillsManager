@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace BillsManager.View
 {
     /// <summary>
-    /// Logica di interazione per SupplierViewModel.xaml
+    /// Interaction logic for SupplierDetailsView.xaml
     /// </summary>
-    public partial class SupplierView : UserControl
+    public partial class SupplierDetailsView : UserControl
     {
-        public SupplierView()
+        public SupplierDetailsView()
         {
             InitializeComponent();
         }

@@ -19,10 +19,10 @@ namespace BillsManager.ViewModel
 
         private readonly IEventAggregator eventAggregator;
 
-        private readonly Func<BillViewModel, bool> isPaidFilter;
-        private readonly Func<BillViewModel, bool> supplierNameFilter;
-        private readonly Func<BillViewModel, bool> releaseDateFilter;
-        private readonly Func<BillViewModel, bool> dueDateFilter;
+        private readonly Func<BillDetailsViewModel, bool> isPaidFilter;
+        private readonly Func<BillDetailsViewModel, bool> supplierNameFilter;
+        private readonly Func<BillDetailsViewModel, bool> releaseDateFilter;
+        private readonly Func<BillDetailsViewModel, bool> dueDateFilter;
 
         #endregion
 
@@ -191,7 +191,7 @@ namespace BillsManager.ViewModel
 
         private void SendFilters()
         {
-            List<Func<BillViewModel, bool>> filters = new List<Func<BillViewModel, bool>>();
+            List<Func<BillDetailsViewModel, bool>> filters = new List<Func<BillDetailsViewModel, bool>>();
 
             if (this.IsPaidFilterValue.HasValue) filters.Add(this.isPaidFilter);
             if (this.UseSupplierFilter) filters.Add(this.supplierNameFilter);
@@ -201,7 +201,7 @@ namespace BillsManager.ViewModel
             if (filters.Count > 0)
                 this.eventAggregator.Publish(new BillsFilterMessage(filters));
             else
-                this.eventAggregator.Publish(new BillsFilterMessage((Func<BillViewModel, bool>)null));
+                this.eventAggregator.Publish(new BillsFilterMessage((Func<BillDetailsViewModel, bool>)null));
         }
 
         private void DeactivateAllFilters()

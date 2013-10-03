@@ -54,9 +54,15 @@
   <ItemGroup>
     <Compile Include="BackupsViewModel.cs" />
     <Compile Include="BackupViewModel.cs" />
+    <Compile Include="BillViewModels\BillAddEditViewModel\BillAddEditViewModel.cs" />
+    <Compile Include="BillViewModels\BillAddEditViewModel\BillAddEditViewModel.IEditableObject.cs" />
+    <Compile Include="BillViewModels\BillAddEditViewModel\BillAddEditViewModel.IDataErrorInfo.cs" />
+    <Compile Include="BillViewModels\BillDetailsViewModel\BillDetailsViewModel.cs" />
+    <Compile Include="BillViewModels\BillViewModel.cs" />
+    <Compile Include="DesignTime\BillAddEditViewModel.DesignTime.cs" />
+    <Compile Include="DesignTime\BillDetailsViewModel.DesignTime.cs" />
+    <Compile Include="DesignTime\SupplierAddEditViewModel.DesignTime.cs" />
     <Compile Include="Messages\AddNewSupplierRequestMessage.cs" />
-    <Compile Include="BillViewModel\BillViewModel.IDataErrorInfo.cs" />
-    <Compile Include="BillViewModel\BillViewModel.IEditableObject.cs" />
     <Compile Include="DesignTime\DialogViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\SearchBillsViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\SearchSuppliersViewModel.DesignTime.cs" />
@@ -65,25 +71,34 @@
     <Compile Include="DialogViewModel\DialogViewModel.cs" />
     <Compile Include="DialogViewModel\ResponseType.cs" />
     <Compile Include="ExtensionMethods\ExtensionMethods.cs" />
+    <Compile Include="Messages\AskForSupplierMessage.cs" />
     <Compile Include="Messages\Bill Events\BillAddedMessage.cs" />
     <Compile Include="Messages\Bill Events\BillDeletedMessage.cs" />
     <Compile Include="Messages\Bill Events\BillEditedMessage.cs" />
     <Compile Include="Messages\BillsListChangedMessage.cs" />
     <Compile Include="Messages\ActivateBillsSupplierFilterMessage.cs" />
+    <Compile Include="Messages\EditSupplierRequestMessage.cs" />
+    <Compile Include="Messages\EditBillRequestMessage.cs" />
     <Compile Include="Messages\Supplier Events\SupplierDeletedMessage.cs" />
     <Compile Include="Messages\Supplier Events\SupplierEditedMessage.cs" />
-    <Compile Include="SupplierViewModel\SupplierViewModel.IDataErrorInfo.cs" />
+    <Compile Include="SupplierViewModels\SupplierAddEditViewModel\SupplierAddEditViewModel.IDataErrorInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SupplierViewModels\SupplierAddEditViewModel\SupplierAddEditViewModel.IEditableObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SupplierViewModels\SupplierDetailsViewModel\SupplierDetailsViewModel.cs" />
+    <Compile Include="SupplierViewModels\SupplierViewModel.cs" />
     <Compile Include="Validation\ValidationRulesTrackerGeneric.cs" />
     <Compile Include="Messages\Searches events\BillsFilterMessage.cs" />
     <Compile Include="Messages\Searches events\SuppliersFilterMessage.cs" />
     <Compile Include="SearchBillsViewModel.cs" />
     <Compile Include="BillsViewModel.cs" />
-    <Compile Include="BillViewModel\BillViewModel.cs" />
     <Compile Include="DesignTime\BackupsViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\BackupViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\ShellViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\SuppliersViewModel.DesignTime.cs" />
-    <Compile Include="DesignTime\SupplierViewModel.DesignTime.cs" />
+    <Compile Include="DesignTime\SupplierDetailsViewModel.DesignTime.cs" />
     <Compile Include="EnumObligation.cs" />
     <Compile Include="Factories\BackupsViewModelFactory.cs" />
     <Compile Include="Factories\BillsViewModelFactory.cs" />
@@ -107,11 +122,9 @@
     <Compile Include="SearchSuppliersViewModel.cs" />
     <Compile Include="ShellViewModel.cs" />
     <Compile Include="SuppliersViewModel.cs" />
-    <Compile Include="SupplierViewModel\SupplierViewModel.cs" />
-    <Compile Include="SupplierViewModel\SupplierViewModel.IEditableObject.cs" />
+    <Compile Include="SupplierViewModels\SupplierAddEditViewModel\SupplierAddEditViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DesignTime\BillViewModel.DesignTime.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +137,7 @@
       <Name>BillsManager.Service</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

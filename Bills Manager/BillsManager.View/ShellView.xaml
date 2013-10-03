@@ -26,23 +26,46 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="6*" />
             <ColumnDefinition Width="4" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="4*" />
         </Grid.ColumnDefinitions>
 
         <Menu Grid.ColumnSpan="3">
+            <!--<MenuItem Header="rgejgeorsè">
+                <MenuItem Header="grejogj"
+                          InputGestureText="CTRL+F">
+                    <MenuItem Header="grejogj"
+                              InputGestureText="CTRL+F" />
+                    <MenuItem Header="grejogj fwefa fewfaeweeee"
+                              InputGestureText="CTRL+F" />
+                    <MenuItem Header="gfewty"
+                              InputGestureText="CTRL+SHIFT+F,G" />
+                    <MenuItem Header="grejogj"
+                              InputGestureText="CTRL+F" />
+                </MenuItem>
+                <MenuItem Header="grejogj fwefa fewfaeweeee"
+                          InputGestureText="CTRL+F" />
+                <MenuItem Header="gfewty"
+                          InputGestureText="CTRL+SHIFT+F,G" />
+                <MenuItem Header="grejogj"
+                          InputGestureText="CTRL+F" />
+            </MenuItem>-->
+
             <MenuItem Command="{Binding Path=BillsViewModel.AddNewBillCommand, Mode=OneTime}"
                       Header="New bill" />
             <MenuItem Command="{Binding Path=BillsViewModel.EditBillCommand, Mode=OneTime}"
                       CommandParameter="{Binding Path=BillsViewModel.SelectedBillViewModel}"
-                      Header="Edit Bill" />
+                      Header="Edit bill" />
             <MenuItem Command="{Binding Path=BillsViewModel.DeleteBillCommand, Mode=OneTime}"
                       CommandParameter="{Binding Path=BillsViewModel.SelectedBillViewModel}"
-                      Header="Delete Bill" />
+                      Header="Delete bill" />
             <MenuItem Command="{Binding Path=BillsViewModel.PayBillCommand, Mode=OneTime}"
                       CommandParameter="{Binding Path=BillsViewModel.SelectedBillViewModel}"
-                      Header="Pay Bill" />
+                      Header="Pay bill" />
+            <MenuItem Command="{Binding Path=BillsViewModel.ShowBillDetailsCommand, Mode=OneTime}"
+                      CommandParameter="{Binding Path=BillsViewModel.SelectedBillViewModel}"
+                      Header="Show bill details" />
 
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
@@ -50,27 +73,31 @@
                       Header="New supplier" />
             <MenuItem Command="{Binding Path=SuppliersViewModel.EditSupplierCommand, Mode=OneTime}"
                       CommandParameter="{Binding Path=SuppliersViewModel.SelectedSupplierViewModel}"
-                      Header="Edit Supplier" />
+                      Header="Edit supplier" />
             <MenuItem Command="{Binding Path=SuppliersViewModel.DeleteSupplierCommand, Mode=OneTime}"
                       CommandParameter="{Binding Path=SuppliersViewModel.SelectedSupplierViewModel}"
-                      Header="Delete Supplier" />
+                      Header="Delete supplier" />
             <MenuItem Header="Show bills"
                       Command="{Binding Path=SuppliersViewModel.ShowSuppliersBillsCommand, Mode=OneTime}"
-                      CommandParameter="{Binding Path=SuppliersViewModel.SelectedSupplierViewModel}"/>
-            
+                      CommandParameter="{Binding Path=SuppliersViewModel.SelectedSupplierViewModel}" />
+            <MenuItem Header="Show supplier details"
+                      Command="{Binding SuppliersViewModel.ShowSupplierDetailsCommand, Mode=OneWay}"
+                      CommandParameter="{Binding SuppliersViewModel.SelectedSupplierViewModel}" />
+
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
             <MenuItem Command="{Binding Path=ShowBackupCenterCommand, Mode=OneTime}"
-                      Header="Backup Center" />
+                      Header="Backup center" />
         </Menu>
-        
+
         <ContentControl Grid.Row="2"
-                        x:Name="SearchBillsViewModel"/>
+                        Margin="8 0 0 0"
+                        x:Name="SearchBillsViewModel" />
 
         <ContentControl x:Name="BillsViewModel"
                         Grid.Row="4"
                         HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Stretch"/>
+                        HorizontalContentAlignment="Stretch" />
 
         <GridSplitter Grid.Column="1"
                       Grid.Row="2"

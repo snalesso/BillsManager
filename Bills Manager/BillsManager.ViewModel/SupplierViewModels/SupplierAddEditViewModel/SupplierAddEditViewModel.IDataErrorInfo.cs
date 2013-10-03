@@ -1,14 +1,13 @@
 ﻿using System.ComponentModel;
 using BillsManager.ViewModel.Validation;
-using Caliburn.Micro;
 
 namespace BillsManager.ViewModel
 {
-    public partial class SupplierViewModel : Screen, IDataErrorInfo
+    public partial class SupplierAddEditViewModel : IDataErrorInfo
     {
         #region IDataErrorInfo
 
-        private ValidationRulesTracker<SupplierViewModel> rulesTracker;
+        private ValidationRulesTracker<SupplierAddEditViewModel> rulesTracker;
 
         // TODO: a simpler way to notify IsValid might be to check if the notifying property has a validation rule
         public bool IsValid
@@ -25,8 +24,9 @@ namespace BillsManager.ViewModel
         {
             get
             {
+                // TODO: move initialization to ctor?
                 if (this.rulesTracker == null)
-                    this.rulesTracker = new ValidationRulesTracker<SupplierViewModel>(this);
+                    this.rulesTracker = new ValidationRulesTracker<SupplierAddEditViewModel>(this);
 
                 return this.rulesTracker.GetErrorsForProperty(columnName);
             }

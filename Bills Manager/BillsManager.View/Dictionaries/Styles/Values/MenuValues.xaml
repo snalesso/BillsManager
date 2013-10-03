@@ -5,19 +5,39 @@
                      Color="White" />
 
     <SolidColorBrush x:Key="MenuBorderBrush"
-                     Color="Black" />
+                     Color="#FF1C97EA" />
 
     <SolidColorBrush x:Key="MenuForegroundBrush"
-                     Color="Black" />
+                     Color="White" />
 
-
+    <!--#FF28A43D-->
+    <!--#FF0087C8-->
     <SolidColorBrush x:Key="MenuHoverBackgroundBrush"
-                     Color="#FF00B4FF" />
+                     Color="#FF1C97EA" />
 
     <SolidColorBrush x:Key="MenuHoverBorderBrush"
-                     Color="#FF00B4FF" />
+                     Color="#FF1C97EA" />
 
     <SolidColorBrush x:Key="MenuHoverForegroundBrush"
                      Color="White" />
+
+    <SolidColorBrush x:Key="MenuPressedBackgroundBrush"
+                     Color="#FF106024" />
+    
+    <!--#FF106024-->
+    <SolidColorBrush x:Key="MenuPressedForegroundBrush"
+                     Color="White" />
+
+    <SolidColorBrush x:Key="MenuPressedBorderBrush"
+                     Color="White" />
+
+    <SolidColorBrush x:Key="MenuDisabledForegroundBrush"
+                     Color="#FFC9C9C9" />
+
+    <SolidColorBrush x:Key="MenuDisabledBackgroundBrush"
+                     Color="#FFC9C9C9" />
+
+    <SolidColorBrush x:Key="MenuDisabledBorderBrush"
+                     Color="#FFC9C9C9" />
     
 </ResourceDictionary>

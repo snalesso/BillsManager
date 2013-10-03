@@ -1,29 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using BillsManager.Model;
 
 namespace BillsManager.ViewModel.Messages
 {
+    // TODO: make generic ?
     public class SuppliersFilterMessage
     {
-        public SuppliersFilterMessage(Func<SupplierViewModel, bool> filter)
+        public SuppliersFilterMessage(Func<SupplierDetailsViewModel, bool> filter)
         {
             this.filter = filter;
         }
 
-        public SuppliersFilterMessage(IEnumerable<Func<SupplierViewModel, bool>> filters)
+        public SuppliersFilterMessage(IEnumerable<Func<SupplierDetailsViewModel, bool>> filters)
         {
             this.filters = filters;
         }
 
-        private readonly Func<SupplierViewModel, bool> filter;
-        public Func<SupplierViewModel, bool> Filter
+        private readonly Func<SupplierDetailsViewModel, bool> filter;
+        public Func<SupplierDetailsViewModel, bool> Filter
         {
             get { return this.filter; }
         }
 
-        private readonly IEnumerable<Func<SupplierViewModel, bool>> filters;
-        public IEnumerable<Func<SupplierViewModel, bool>> Filters
+        private readonly IEnumerable<Func<SupplierDetailsViewModel, bool>> filters;
+        public IEnumerable<Func<SupplierDetailsViewModel, bool>> Filters
         {
             get { return this.filters; }
         }

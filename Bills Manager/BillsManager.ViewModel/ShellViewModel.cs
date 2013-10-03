@@ -124,7 +124,7 @@ namespace BillsManager.ViewModel
                 if (this.showBackupCenterCommand == null) this.showBackupCenterCommand = new RelayCommand(
                     () =>
                     {
-                        this.windowManager.ShowDialog(this.backupsViewModelFactory.Create(), null, settings: new Dictionary<string, object>
+                        this.windowManager.ShowDialog(this.backupsViewModelFactory.Create(), settings: new Dictionary<string, object>
                         {
                             {"ResizeMode", ResizeMode.NoResize}
                         });

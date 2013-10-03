@@ -42,12 +42,12 @@
                   Grid.Row="2"
                   HorizontalAlignment="Left"
                   VerticalAlignment="Center" />
-        
+
         <CheckBox Content="Not paid"
-                   Visibility="Hidden"
-                   Grid.Row="2"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center" />
+                  Visibility="Hidden"
+                  Grid.Row="2"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center" />
 
 
         <TextBlock Grid.Column="2"
@@ -118,11 +118,13 @@
             <Button Content="Filter"
                     Command="{Binding Path=SendFilterCommand}"
                     VerticalAlignment="Center"
-                    HorizontalAlignment="Center" />
+                    HorizontalAlignment="Center"
+                    Focusable="False" />
 
             <Button Command="{Binding Path=ExitSearchCommand}"
                     Content="Show all"
-                    Margin="8 0 0 0" />
+                    Margin="8 0 0 0"
+                    Focusable="False" />
 
         </StackPanel>
 

@@ -1,9 +1,10 @@
-﻿using Caliburn.Micro;
+﻿using System;
 using BillsManager.Model;
-using System;
+using Caliburn.Micro;
 
 namespace BillsManager.ViewModel
 {
+#if DEBUG
     public partial class BackupsViewModel : Screen
     {
         #region ctor
@@ -91,4 +92,5 @@ namespace BillsManager.ViewModel
 
         #endregion
     }
+#endif
 }

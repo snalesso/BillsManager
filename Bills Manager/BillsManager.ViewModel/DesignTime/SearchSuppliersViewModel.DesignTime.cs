@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace BillsManager.ViewModel
 {
+#if DEBUG
     public partial class SearchSuppliersViewModel
     {
         #region ctor
@@ -26,5 +27,6 @@ namespace BillsManager.ViewModel
         }
 
         #endregion
-    }
+    } 
+#endif
 }

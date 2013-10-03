@@ -4,6 +4,7 @@ using Caliburn.Micro;
 
 namespace BillsManager.ViewModel
 {
+#if DEBUG
     public partial class BackupViewModel : PropertyChangedBase
     {
         #region ctor
@@ -39,5 +40,6 @@ namespace BillsManager.ViewModel
         }
 
         #endregion
-    }
+    } 
+#endif
 }

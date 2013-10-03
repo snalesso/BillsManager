@@ -22,12 +22,12 @@
         </Grid.RowDefinitions>
 
         <Menu>
-            <MenuItem Header="Create new"
+            <MenuItem Header="New backup"
                       Command="{Binding Path=CreateNewBackupCommand, Mode=OneTime}" />
             <MenuItem Header="Rollback"
                       Command="{Binding Path=RollbackCommand, Mode=OneTime}"
                       CommandParameter="{Binding Path=SelectedBackupViewModel}" />
-            <MenuItem Header="Delete"
+            <MenuItem Header="Delete backup"
                       Command="{Binding Path=DeleteBackupCommand, Mode=OneTime}"
                       CommandParameter="{Binding Path=SelectedBackupViewModel}" />
             
@@ -39,16 +39,71 @@
                       Command="{Binding Path=OpenBackupsFolderCommand, Mode=OneTime}" />
         </Menu>
 
-        <ListBox Grid.Row="2"
+        <ListView Grid.Row="2"
                  BorderThickness="0"
                  ItemsSource="{Binding Path=BackupViewModels}"
                  SelectedItem="{Binding Path=SelectedBackupViewModel}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <DataTemplates:BackupDataTemplate />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="HorizontalContentAlignment"
+                            Value="Stretch" />
+                    <Setter Property="VerticalContentAlignment"
+                            Value="Center" />
+                    <Setter Property="Background"
+                            Value="Transparent" />
+                    <Setter Property="Foreground"
+                            Value="{StaticResource ResourceKey=ViewForegroundBrush}" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <Border BorderThickness="{TemplateBinding Property=BorderThickness}"
+                                        Background="{TemplateBinding Property=Background}"
+                                        BorderBrush="{TemplateBinding Property=BorderBrush}"
+                                        Padding="0 5">
+                                    <DataTemplates:BackupDataTemplate />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                    Value="true">
+                            <Setter Property="Background"
+                                    Value="#FFE8E8E8" />
+                        </Trigger>
+                        <Trigger Property="IsSelected"
+                                    Value="true">
+                            <Setter Property="Foreground"
+                                    Value="{StaticResource ResourceKey=ButtonNormalForegroundBrush}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                            Value="true" />
+                                <Condition Property="IsFocused"
+                                            Value="true" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background"
+                                    Value="{StaticResource ResourceKey=ButtonNormalBackgroundBrush}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                            Value="true" />
+                                <Condition Property="IsFocused"
+                                            Value="false" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background"
+                                    Value="{StaticResource ResourceKey=ButtonDisabledBackgroundBrush}" />
+                        </MultiTrigger>
+                    </Style.Triggers>
+
+                </Style>
+            </ListView.ItemContainerStyle>
+            
+        </ListView>
 
     </Grid>
 </UserControl>

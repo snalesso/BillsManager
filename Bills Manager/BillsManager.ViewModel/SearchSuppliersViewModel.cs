@@ -13,7 +13,7 @@ namespace BillsManager.ViewModel
 
         private readonly IEventAggregator eventAggregator;
 
-        private readonly Func<SupplierViewModel, bool> obligationStateFilter;
+        private readonly Func<SupplierDetailsViewModel, bool> obligationStateFilter;
 
         #endregion
 
@@ -79,14 +79,14 @@ namespace BillsManager.ViewModel
 
         void SendFilters()
         {
-            List<Func<SupplierViewModel, bool>> filters = new List<Func<SupplierViewModel, bool>>();
+            List<Func<SupplierDetailsViewModel, bool>> filters = new List<Func<SupplierDetailsViewModel, bool>>();
 
             if (this.UseObligationStateFilter) filters.Add(this.obligationStateFilter);
 
             if (filters.Count > 0)
                 this.eventAggregator.Publish(new SuppliersFilterMessage(filters));
             else
-                this.eventAggregator.Publish(new SuppliersFilterMessage((Func<SupplierViewModel, bool>)null));
+                this.eventAggregator.Publish(new SuppliersFilterMessage((Func<SupplierDetailsViewModel, bool>)null));
         }
 
         void DeactivateAllFilters()

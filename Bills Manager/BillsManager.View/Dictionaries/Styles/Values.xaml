@@ -6,6 +6,7 @@
         <ResourceDictionary Source="Values\Geometries.xaml" />
         <ResourceDictionary Source="Values\ViewValues.xaml" />
         <ResourceDictionary Source="Values\MenuValues.xaml" />
+        <ResourceDictionary Source="Values\MenuItemValues.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

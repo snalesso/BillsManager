@@ -6,33 +6,73 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!--NORMAL-->
-    
+
     <!--#FF0087C8-->
+    <!--#FF28A43D-->
+    <!--#FF0087ED-->
     <SolidColorBrush x:Key="ButtonNormalBackgroundBrush"
-                     Color="#FF0087C8" />
+                     Color="#FF1C97EA" />
+
+    <!--#FF0087C8-->
+    <!--#FF28A43D-->
+    <SolidColorBrush x:Key="ButtonNormalBorderBrush"
+                     Color="#FF1C97EA" />
     
     <SolidColorBrush x:Key="ButtonNormalForegroundBrush"
                      Color="White" />
-
-    <SolidColorBrush x:Key="ButtonNormalBorderBrush"
-                     Color="#FF0087C8" />
-
+    
+    
 
     <SolidColorBrush x:Key="ButtonDisabledBackgroundBrush"
-                     Color="Gray" />
+                     Color="#FFB4B4B4" />
 
     <SolidColorBrush x:Key="ButtonDisabledBorderBrush"
-                     Color="Gray" />
+                     Color="#FFB4B4B4" />
 
-    <!--#FF005899-->
+    <SolidColorBrush x:Key="ButtonDisabledForegroundBrush"
+                     Color="White" />
+    
+    
+    
+    
+    
     <SolidColorBrush x:Key="ButtonIsDefaultBorderBrush"
-                     Color="#FF00C887" /> 
-
+                     Color="#FF00C887" />
+    
+    <!--#FFFF3A52-->
+    <!--#FFFF415B-->
+    <!--#FFEA4964-->
     <SolidColorBrush x:Key="ButtonIsCancelBorderBrush"
-                     Color="#FFC887C8" />
+                     Color="#FFC86D97" />
+    
+    
+    
+    
 
+    <!--#FF106024-->
+    <!--#FF005899-->
+    <!--#FF0075CC-->
     <SolidColorBrush x:Key="ButtonFocusedBorderBrush"
-                     Color="#FF005899" />
+                     Color="#FF007CD2" />
+    
+    
+    
+    
+
+    <!--#FF106024-->
+    <SolidColorBrush x:Key="ButtonPressedBackgroundBrush"
+                     Color="#FF007CD2" />
+
+    <!--#FF106024-->
+    <SolidColorBrush x:Key="ButtonPressedBorderBrush"
+                     Color="#FF007CD2" />
+    
+    <SolidColorBrush x:Key="ButtonPressedForegroundBrush"
+                     Color="White" />
+    
+    
+    
+    
 
     <SolidColorBrush x:Key="CloseBrush"
                      Color="#FFC80000" />

@@ -6,10 +6,10 @@
              xmlns:cal="http://www.caliburnproject.org"
              x:Class="BillsManager.View.DataTemplates.BillDataTemplate"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type ViewModel:BillViewModel}}" >
+             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type ViewModel:BillDetailsViewModel}}" >
 
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <ResourceDictionary Source="/BillsManager.View;component/Dictionaries/Styles.xaml" />
     </UserControl.Resources>
 
     <Grid >
@@ -24,28 +24,35 @@
             <ColumnDefinition Width="8" />
             <ColumnDefinition Width="Auto"
                               SharedSizeGroup="col1" />
-            <ColumnDefinition Width="24" />
+            <ColumnDefinition Width="42" />
             <ColumnDefinition Width="Auto"
                               SharedSizeGroup="col3" />
-            <ColumnDefinition Width="24" />
+            <ColumnDefinition Width="42" />
             <ColumnDefinition Width="Auto"
                               SharedSizeGroup="col5" />
             <ColumnDefinition Width="8" />
         </Grid.ColumnDefinitions>
 
-        <!--<TextBlock Text="{Binding Path=Supplier.Name}"
+        <TextBlock Text="{Binding Path=Supplier.Name}"
                    HorizontalAlignment="Left"
                    Grid.Column="1"
-                   Grid.Row="1" />-->
+                   Grid.Row="1" />
+
+        <TextBlock Text="{Binding Path=Code}"
+                   HorizontalAlignment="Left"
+                   Grid.Row="1"
+                   Grid.Column="3" />
 
         <TextBlock Text="{Binding Path=Amount, StringFormat=\{0:c\}}"
-                   Grid.Column="3"
+                   Grid.Column="5"
                    Grid.Row="1"
                    Language="it-IT" />
+        
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Left"
-                    Grid.Row="1"
-                    Grid.Column="5">
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="5">
             <TextBlock Visibility="{Binding IsNotPaid, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Run Text="{Binding DuesIn, Mode=OneWay}" />
                 <Run Text=" " />
@@ -58,18 +65,13 @@
             </TextBlock>
         </StackPanel>
 
-        <TextBlock Text="{Binding Path=Code}"
-                   HorizontalAlignment="Left"
-                   Grid.Row="1"
-                   Grid.Column="1" />
-
-        <TextBlock Grid.Row="3"
+        <!--<TextBlock Grid.Row="3"
                    Grid.Column="1"
                    Grid.ColumnSpan="5"
                    MaxWidth="230"
                    Text="{Binding Path=Notes}"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Left"
-                   TextTrimming="CharacterEllipsis" />
+                   TextTrimming="CharacterEllipsis" />-->
     </Grid>
 </UserControl>

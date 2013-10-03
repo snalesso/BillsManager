@@ -5,9 +5,9 @@ namespace BillsManager.View
     /// <summary>
     /// Logica di interazione per BillView.xaml
     /// </summary>
-    public partial class BillView : UserControl
+    public partial class BillAddEditView : UserControl
     {
-        public BillView()
+        public BillAddEditView()
         {
             InitializeComponent();
         }

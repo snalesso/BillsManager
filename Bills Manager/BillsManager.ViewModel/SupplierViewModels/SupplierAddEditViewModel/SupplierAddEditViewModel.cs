@@ -4,17 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Windows;
 using BillsManager.Model;
 using BillsManager.ViewModel.Commanding;
-using BillsManager.ViewModel.Messages;
 using Caliburn.Micro;
 
 namespace BillsManager.ViewModel
 {
-    public partial class SupplierViewModel :
-        Screen,
-        IHandle<BillsListChangedMessage>,
-        IHandle<BillAddedMessage>,
-        IHandle<BillDeletedMessage>,
-        IHandle<BillEditedMessage>
+    public partial class SupplierAddEditViewModel : SupplierViewModel
     {
         #region fields
 
@@ -26,9 +20,8 @@ namespace BillsManager.ViewModel
 
         #region ctor
 
-        public SupplierViewModel(
+        public SupplierAddEditViewModel(
             Supplier supplier,
-            //IDialogService dialogService,
             IWindowManager windowManager,
             IEventAggregator eventAggregator)
         {
@@ -36,7 +29,6 @@ namespace BillsManager.ViewModel
                 throw new ArgumentNullException("supplier cannot be null.");
 
             this.exposedSupplier = supplier;
-            //this.dialogService = dialogService;
             this.windowManager = windowManager;
             this.eventAggregator = eventAggregator;
 
@@ -47,19 +39,7 @@ namespace BillsManager.ViewModel
 
         #region properties
 
-        private Supplier exposedSupplier;
-        public Supplier ExposedSupplier
-        {
-            get { return this.exposedSupplier; }
-            protected set
-            {
-                if (this.exposedSupplier != value)
-                {
-                    this.exposedSupplier = value;
-                    this.NotifyOfPropertyChange(() => this.ExposedSupplier);
-                }
-            }
-        }
+        #region view support
 
         // TODO: remove this proprerty when removed close window button
         private bool isClosing;
@@ -74,16 +54,13 @@ namespace BillsManager.ViewModel
                 }
             }
         }
+        
+        #endregion
 
         #region wrapped from supplier
 
-        public uint ID
-        {
-            get { return this.ExposedSupplier.ID; }
-        }
-
         [Required(ErrorMessage = "You must specify a name.")]
-        public string Name
+        public override string Name
         {
             get { return this.ExposedSupplier.Name; }
             set
@@ -98,25 +75,7 @@ namespace BillsManager.ViewModel
             }
         }
 
-        //public Address Address
-        //{
-        //    get
-        //    {
-        //        //if (this.address == null) this.address = new Address();
-        //        // TODO: review
-        //        return this.ExposedSupplier.Address;
-        //    }
-        //    set
-        //    {
-        //        if (this.ExposedSupplier.Address != value)
-        //        {
-        //            this.ExposedSupplier.Address = value;
-        //            this.NotifyOfPropertyChange(() => this.Address);
-        //        }
-        //    }
-        //}
-
-        public string eMail
+        public override string eMail
         {
             get { return this.ExposedSupplier.eMail; }
             set
@@ -130,7 +89,7 @@ namespace BillsManager.ViewModel
             }
         }
 
-        public string Website
+        public override string Website
         {
             get { return this.ExposedSupplier.Website; }
             set
@@ -144,24 +103,7 @@ namespace BillsManager.ViewModel
             }
         }
 
-        //public ObservableCollection<Agent> Agents
-        //{
-        //    get
-        //    {
-        //        if (this.ExposedSupplier.Agents == null) this.ExposedSupplier.Agents = new ObservableCollection<Agent>();
-        //        return this.ExposedSupplier.Agents;
-        //    }
-        //    set
-        //    {
-        //        if (this.ExposedSupplier.Agents != value)
-        //        {
-        //            this.ExposedSupplier.Agents = value;
-        //            this.NotifyOfPropertyChange(() => this.Agents);
-        //        }
-        //    }
-        //}
-
-        public string Phone
+        public override string Phone
         {
             get { return this.ExposedSupplier.Phone; }
             set
@@ -176,7 +118,7 @@ namespace BillsManager.ViewModel
         }
 
         [StringLength(100, ErrorMessage = "You cannot exceed 100 characters.")]
-        public string Notes
+        public override string Notes
         {
             get { return this.ExposedSupplier.Notes; }
             set
@@ -194,7 +136,7 @@ namespace BillsManager.ViewModel
         #region address
 
         [Required(ErrorMessage = "You must specify a street.")]
-        public string Street
+        public override string Street
         {
             get { return this.ExposedSupplier.Street; }
             set
@@ -210,7 +152,7 @@ namespace BillsManager.ViewModel
         }
 
         [Required(ErrorMessage = "You must specify a number.")]
-        public string Number
+        public override string Number
         {
             get { return this.ExposedSupplier.Number; }
             set
@@ -226,7 +168,7 @@ namespace BillsManager.ViewModel
         }
 
         [Required(ErrorMessage = "You must specify a city.")]
-        public string City
+        public override string City
         {
             get { return this.ExposedSupplier.City; }
             set
@@ -243,7 +185,7 @@ namespace BillsManager.ViewModel
 
         [Required(ErrorMessage = "You must specify a zip.")]
         [Range(10000, 99999, ErrorMessage = "The zip must be 5 characters long.")]
-        public ushort Zip
+        public override ushort Zip
         {
             get { return this.ExposedSupplier.Zip; }
             set
@@ -260,7 +202,7 @@ namespace BillsManager.ViewModel
 
         [Required(ErrorMessage = "You must specify a province.")]
         [StringLength(2, MinimumLength = 2, ErrorMessage = "The province abbreviation must be 2 characters long.")]
-        public string Province
+        public override string Province
         {
             get { return this.ExposedSupplier.Province; }
             set
@@ -276,7 +218,7 @@ namespace BillsManager.ViewModel
         }
 
         [Required(ErrorMessage = "You must specify a country.")]
-        public string Country
+        public override string Country
         {
             get { return this.ExposedSupplier.Country; }
             set
@@ -292,38 +234,6 @@ namespace BillsManager.ViewModel
         }
 
         #endregion
-
-        #endregion
-
-        #region added
-
-        private double obligationAmount = 0;
-        public double ObligationAmount
-        {
-            get
-            {
-                return obligationAmount;
-            }
-            set
-            {
-                if (this.obligationAmount != value)
-                {
-                    this.obligationAmount = value;
-                    this.NotifyOfPropertyChange(() => this.ObligationAmount);
-                    this.NotifyOfPropertyChange(() => this.ObligationState);
-                }
-            }
-        }
-
-        public Obligation ObligationState
-        {
-            get
-            {
-                if (this.ObligationAmount < 0) return Obligation.Creditor;
-                if (this.ObligationAmount > 0) return Obligation.Debtor;
-                return Obligation.Null;
-            }
-        }
 
         #endregion
 
@@ -345,64 +255,6 @@ namespace BillsManager.ViewModel
         public override void CanClose(Action<bool> callback)
         {
             callback(this.IsClosing);
-        }
-
-        #endregion
-
-        #region message handlers
-
-        public void Handle(BillsListChangedMessage message)
-        {
-            double newOblAmount = 0;
-
-            foreach (var bill in message.Bills)
-            {
-                if (bill.SupplierID == this.ID & !bill.PaymentDate.HasValue)
-                    newOblAmount += -bill.Amount;
-            }
-
-            this.ObligationAmount = newOblAmount;
-        }
-
-        public void Handle(BillAddedMessage message)
-        {
-            if (this.ID == message.AddedBill.SupplierID)
-                if (!message.AddedBill.PaymentDate.HasValue)
-                    this.ObligationAmount += -message.AddedBill.Amount;
-        }
-
-        public void Handle(BillDeletedMessage message)
-        {
-            if (this.ID == message.DeletedBill.SupplierID)
-                if (!message.DeletedBill.PaymentDate.HasValue)
-                    this.ObligationAmount += message.DeletedBill.Amount;
-        }
-
-        public void Handle(BillEditedMessage message)
-        {
-            bool supplierChanged = message.NewBillVersion.SupplierID != message.OldBillVersion.SupplierID;
-
-            if (supplierChanged)
-            {
-                if (this.ID == message.OldBillVersion.SupplierID)
-                    if (!message.OldBillVersion.PaymentDate.HasValue)
-                        this.ObligationAmount += message.OldBillVersion.Amount;
-
-                if (this.ID == message.NewBillVersion.SupplierID)
-                    if (!message.NewBillVersion.PaymentDate.HasValue)
-                        this.ObligationAmount += -message.NewBillVersion.Amount;
-            }
-            else
-            {
-                if (this.ID == message.NewBillVersion.SupplierID)
-                {
-                    if (!message.OldBillVersion.PaymentDate.HasValue)
-                        this.ObligationAmount += message.OldBillVersion.Amount;
-
-                    if (!message.NewBillVersion.PaymentDate.HasValue)
-                        this.ObligationAmount += -message.NewBillVersion.Amount;
-                }
-            }
         }
 
         #endregion

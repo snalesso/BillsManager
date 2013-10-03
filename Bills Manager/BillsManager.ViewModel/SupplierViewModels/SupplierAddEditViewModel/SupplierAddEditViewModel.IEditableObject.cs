@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel;
 using BillsManager.Model;
-using Caliburn.Micro;
 
 namespace BillsManager.ViewModel
 {
-    public partial class SupplierViewModel : Screen, IEditableObject
+    public partial class SupplierAddEditViewModel : IEditableObject
     {
         #region IEditableObject
 
@@ -20,7 +19,7 @@ namespace BillsManager.ViewModel
         public bool IsInEditMode
         {
             get { return this.isInEditMode; }
-            protected set
+            private set
             {
                 if (this.isInEditMode != value)
                 {
@@ -34,7 +33,7 @@ namespace BillsManager.ViewModel
         public bool HasChanges
         {
             get { return this.hasChanges; }
-            protected set
+            private set
             {
                 if (this.hasChanges != value)
                 {

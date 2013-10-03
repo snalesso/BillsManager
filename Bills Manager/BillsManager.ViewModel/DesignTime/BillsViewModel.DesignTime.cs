@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using BillsManager.Model;
 using Caliburn.Micro;
+using System.Linq;
 
 namespace BillsManager.ViewModel
 {
+#if DEBUG
     public partial class BillsViewModel
     {
         #region ctor
@@ -82,16 +84,19 @@ namespace BillsManager.ViewModel
                 "ask for catalog",
                 "DK23595");
 
-            var bills = new List<BillViewModel>();
+            var bills = new List<BillDetailsViewModel>();
 
-            bills.Add(new BillViewModel(newBill));
-            bills.Add(new BillViewModel(newBill2));
-            bills.Add(new BillViewModel(newBill3));
-            bills.Add(new BillViewModel(newBill4));
+            bills.Add(new BillDetailsViewModel(newBill) { Supplier = supp });
+            bills.Add(new BillDetailsViewModel(newBill2) { Supplier = supp });
+            bills.Add(new BillDetailsViewModel(newBill3) { Supplier = supp });
+            bills.Add(new BillDetailsViewModel(newBill4) { Supplier = supp });
 
-            this.BillViewModels = new ObservableCollection<BillViewModel>(bills);
+            this.BillViewModels = new ObservableCollection<BillDetailsViewModel>(bills);
+
+            this.SelectedBillViewModel = this.BillViewModels.FirstOrDefault();
         }
 
         #endregion
-    }
+    } 
+#endif
 }

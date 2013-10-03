@@ -12,18 +12,92 @@
         <ResourceDictionary Source="Dictionaries\Styles.xaml" />
     </UserControl.Resources>
 
-    <ListBox Grid.IsSharedSizeScope="True"
-             ItemsSource="{Binding Path=FilteredSupplierViewModels}"
-             MinHeight="350"
-             SelectedItem="{Binding Path=SelectedSupplierViewModel}"
-             SelectionMode="Single"
-             BorderThickness="0"
-             Grid.Row="2">
-        <ListBox.ItemTemplate>
+    <ListView Grid.IsSharedSizeScope="True"
+              ItemsSource="{Binding Path=FilteredSupplierViewModels}"
+              MinHeight="350"
+              SelectedItem="{Binding Path=SelectedSupplierViewModel}"
+              SelectionMode="Single"
+              BorderThickness="0"
+              Grid.Row="2"
+              >
+
+        <ListView.ItemContainerStyle>
+            <Style TargetType="{x:Type ListViewItem}">
+                <Setter Property="HorizontalContentAlignment"
+                        Value="Stretch" />
+                <Setter Property="VerticalContentAlignment"
+                        Value="Center" />
+                <Setter Property="Background"
+                        Value="Transparent" />
+                <Setter Property="Foreground"
+                        Value="{StaticResource ResourceKey=ViewForegroundBrush}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                            <Border BorderThickness="{TemplateBinding Property=BorderThickness}"
+                                    Background="{TemplateBinding Property=Background}"
+                                    BorderBrush="{TemplateBinding Property=BorderBrush}"
+                                    Padding="0 5">
+                                <GridViewRowPresenter Content="{TemplateBinding Content}" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver"
+                             Value="true">
+                        <Setter Property="Background"
+                                Value="#FFE8E8E8" />
+                    </Trigger>
+                    <Trigger Property="IsSelected"
+                             Value="true">
+                        <Setter Property="Foreground"
+                                Value="{StaticResource ResourceKey=ButtonNormalForegroundBrush}" />
+                    </Trigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsSelected"
+                                       Value="true" />
+                            <Condition Property="IsFocused"
+                                       Value="true" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background"
+                                Value="{StaticResource ResourceKey=ButtonNormalBackgroundBrush}" />
+                    </MultiTrigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsSelected"
+                                       Value="true" />
+                            <Condition Property="IsFocused"
+                                       Value="false" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background"
+                                Value="{StaticResource ResourceKey=ButtonDisabledBackgroundBrush}" />
+                    </MultiTrigger>
+                </Style.Triggers>
+
+            </Style>
+        </ListView.ItemContainerStyle>
+
+        <ListView.View>
+            <GridView>
+                <GridViewColumn DisplayMemberBinding="{Binding Name}"
+                                Header="Name"
+                                Width="160" />
+                <GridViewColumn DisplayMemberBinding="{Binding ObligationState, Mode=OneWay}"
+                                Header="Obligation"
+                                Width="100" />
+                <GridViewColumn DisplayMemberBinding="{Binding Notes}"
+                                Header="Notes"
+                                Width="Auto" />
+            </GridView>
+        </ListView.View>
+        <!--<ListView.ItemTemplate>
             <DataTemplate>
                 <DataTemplates:SupplierDataTemplate />
             </DataTemplate>
-        </ListBox.ItemTemplate>
-    </ListBox>
+        </ListView.ItemTemplate>-->
+    </ListView>
 
 </UserControl>

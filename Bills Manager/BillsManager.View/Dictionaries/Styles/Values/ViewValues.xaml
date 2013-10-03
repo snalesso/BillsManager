@@ -11,8 +11,25 @@
     <!--#FF3C3C3C-->
     <SolidColorBrush x:Key="ViewForegroundBrush"
                      Color="#FF3C3C3C" />
+    
+    <SolidColorBrush x:Key="ViewDisabledForegroundBrush"
+                     Color="#FFC9C9C9" />
+    
+    <SolidColorBrush x:Key="ViewBorderBrush"
+                     Color="White" />
 
-    <System:Double x:Key="ViewFontSize">19</System:Double>
+    <SolidColorBrush x:Key="ViewTitleBrush"
+                     Color="#FF0091F7" />
+    <!--#FF00B700-->
+    <SolidColorBrush x:Key="PaidBrush"
+                     Color="#FF00B400" />
+
+    <SolidColorBrush x:Key="NotPaidBrush"
+                     Color="#FFFF0000" />
+
+    <System:Double x:Key="ViewFontSize">14</System:Double>
+    
+    <System:Double x:Key="MarginSize">8</System:Double>
 
     <Thickness x:Key="BorderThickness" Left="2" Top="2" Right="2" Bottom="2" />
     

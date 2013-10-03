@@ -2,6 +2,7 @@
 
 namespace BillsManager.ViewModel
 {
+#if DEBUG
     public partial class DialogViewModel
     {
         #region ctor
@@ -34,5 +35,6 @@ namespace BillsManager.ViewModel
         }
 
         #endregion
-    }
+    } 
+#endif
 }

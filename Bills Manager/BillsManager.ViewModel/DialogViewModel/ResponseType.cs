@@ -2,12 +2,12 @@
 {
     public enum ResponseType
     {
-        Null,
-        Yes,
+        Null = -1,
         No,
-        Ok,
+        Yes,
         Cancel,
-        Retry,
-        Abort
+        Ok,
+        Abort,
+        Retry
     }
 }

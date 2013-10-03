@@ -113,7 +113,7 @@ namespace BillsManager.Model
             }
         }
 
-        private uint supplierID;
+        private uint supplierID; // TODO: find a default value that means no supplier (0 means the first created supplier)
         public uint SupplierID
         {
             get { return this.supplierID; }

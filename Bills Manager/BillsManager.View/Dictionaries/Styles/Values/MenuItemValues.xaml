@@ -1,0 +1,43 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="MenuItemBackgroundBrush"
+                     Color="White" />
+
+    <SolidColorBrush x:Key="MenuItemBorderBrush"
+                     Color="White" />
+
+    <SolidColorBrush x:Key="MenuItemForegroundBrush"
+                     Color="#FF3C3C3C" />
+    
+    <!--#FF28A43D-->
+    <SolidColorBrush x:Key="MenuItemHoverBackgroundBrush"
+                     Color="#FF1C97EA" />
+
+    <SolidColorBrush x:Key="MenuItemHoverBorderBrush"
+                     Color="#FF1C97EA" />
+
+    <SolidColorBrush x:Key="MenuItemHoverForegroundBrush"
+                     Color="White" />
+    
+    <!--#FF106024-->
+    <SolidColorBrush x:Key="MenuItemPressedBackgroundBrush"
+                     Color="#FF0075CC" />
+
+    <SolidColorBrush x:Key="MenuItemPressedBorderBrush"
+                     Color="#FF0075CC" />
+
+    <SolidColorBrush x:Key="MenuItemPressedForegroundBrush"
+                     Color="White" />
+    
+    
+    <SolidColorBrush x:Key="MenuItemDisabledBackgroundBrush"
+                     Color="White" />
+
+    <SolidColorBrush x:Key="MenuItemDisabledBorderBrush"
+                     Color="White" />
+
+    <SolidColorBrush x:Key="MenuItemDisabledForegroundBrush"
+                     Color="#FFB4B4B4" />
+    
+</ResourceDictionary>

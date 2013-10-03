@@ -1,0 +1,152 @@
+﻿<UserControl x:Class="BillsManager.View.SupplierDetailsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ViewModel="clr-namespace:BillsManager.ViewModel;assembly=BillsManager.ViewModel"
+             mc:Ignorable="d"
+             MinWidth="400"
+             d:DataContext="{d:DesignInstance Type=ViewModel:SupplierDetailsViewModel, IsDesignTimeCreatable=True}">
+
+    <UserControl.Resources>
+        <ResourceDictionary Source="Dictionaries\Styles.xaml" />
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="24" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="8" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="8" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="8" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="8" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Name"
+                   Grid.Column="1"
+                   Grid.Row="1"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{StaticResource ViewTitleBrush}" />
+        <TextBlock Text="{Binding Path=Name}"
+                   Grid.Column="3"
+                   Grid.Row="1"
+                   TextAlignment="Right"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left" />
+
+        <TextBlock Text="Address"
+                   Grid.Column="1"
+                   Grid.Row="3"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{StaticResource ViewTitleBrush}" />
+        <TextBlock Text="{Binding Path=FullAddress}"
+                   Grid.Column="3"
+                   Grid.Row="3"
+                   VerticalAlignment="Center" />
+
+        <TextBlock Text="Obligation"
+                   Grid.Column="1"
+                   Grid.Row="5"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{StaticResource ViewTitleBrush}" />
+        <TextBlock Grid.Column="3"
+                   Grid.Row="5"
+                   VerticalAlignment="Center">
+            <Run Text="{Binding Path=ObligationState, Mode=OneWay}" />
+            <Run Text="  " />
+            <Run Text="{Binding ObligationAmount, StringFormat=\{0:C2\}}" />
+        </TextBlock>
+
+        <TextBlock Text="Phone"
+                   Grid.Column="1"
+                   Grid.Row="7"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{StaticResource ViewTitleBrush}" />
+        <TextBlock Grid.Column="3"
+                   Grid.Row="7"
+                   Text="{Binding Path=Phone}"
+                   VerticalAlignment="Center" />
+
+        <TextBlock Text="eMail"
+                   Grid.Column="1"
+                   Grid.Row="9"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{StaticResource ViewTitleBrush}" />
+        <TextBlock Text="{Binding Path=eMail}"
+                   Grid.Column="3"
+                   Grid.Row="9"
+                   VerticalAlignment="Center" />
+
+        <TextBlock Text="Website"
+                   Grid.Column="1"
+                   Grid.Row="11"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{StaticResource ViewTitleBrush}" />
+        <TextBlock Text="{Binding Path=Website}"
+                   Grid.Column="3"
+                   Grid.Row="11"
+                   VerticalAlignment="Center" />
+
+        <TextBlock Text="Notes"
+                   Grid.Column="1"
+                   Grid.Row="13"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{StaticResource ViewTitleBrush}" />
+        <TextBlock Text="{Binding Path=Notes}"
+                   Grid.Column="3"
+                   Grid.Row="13"
+                   TextWrapping="Wrap"
+                   TextTrimming="CharacterEllipsis"
+                   VerticalAlignment="Center"
+                   MaxWidth="390" />
+
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="3"
+                    Grid.Row="15"
+                    HorizontalAlignment="Right">
+            <Button Content="Edit"
+                    MinWidth="80"
+                    Command="{Binding Path=SwitchToEditCommand, Mode=OneTime}"
+                    IsDefault="True" />
+            <Button Content="Close"
+                    Margin="8 0 0 0"
+                    MinWidth="80"
+                    Command="{Binding Path=CloseDetailsViewCommand, Mode=OneTime}"
+                    IsCancel="True" />
+        </StackPanel>
+
+    </Grid>
+</UserControl>

@@ -4,8 +4,11 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Styles\MenuItemStyle.xaml" />
         <ResourceDictionary Source="Styles\MenuStyle.xaml" />
+        <ResourceDictionary Source="Styles\MenuScrollViewerStyle.xaml" />
         <ResourceDictionary Source="Styles\ContextMenuStyle.xaml" />
         <ResourceDictionary Source="Styles\ButtonStyle.xaml" />
+        <ResourceDictionary Source="Styles\ExpanderStyle.xaml" />
+        <ResourceDictionary Source="Styles\ToolBarSeparatorStyle.xaml" />
         <!--<ResourceDictionary Source="Styles\CloseWindowButtonStyle.xaml" />-->
         <!--<ResourceDictionary Source="Styles\ResizeWindowButtonStyle.xaml" />-->
         <!--<ResourceDictionary Source="Styles\MinimizeWindowButtonStyle.xaml" />-->

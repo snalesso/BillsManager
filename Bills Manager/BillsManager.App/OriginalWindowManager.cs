@@ -171,6 +171,8 @@ namespace BillsManager.App
                     UseLayoutRounding = true
                     //,
                     //SnapsToDevicePixels = true
+                    ,
+                    FontSize = 12
                 };
 
                 RenderOptions.SetClearTypeHint(window, ClearTypeHint.Enabled);

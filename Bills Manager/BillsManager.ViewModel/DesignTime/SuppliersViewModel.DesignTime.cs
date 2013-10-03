@@ -1,9 +1,11 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using BillsManager.Model;
 using Caliburn.Micro;
 
 namespace BillsManager.ViewModel
 {
+#if DEBUG
     public partial class SuppliersViewModel : Screen
     {
         #region ctor
@@ -22,7 +24,7 @@ namespace BillsManager.ViewModel
 
         protected void LoadDesignTimeData()
         {
-            SupplierViewModel svm1 = new SupplierViewModel(new Supplier(
+            var svm1 = new SupplierDetailsViewModel(new Supplier(
                 0,
                 "Faber-Castell",
                 "Via Stromboli",
@@ -48,7 +50,7 @@ namespace BillsManager.ViewModel
             //    "call agent for reduction",
             //    "X3V-KDM"));
 
-            SupplierViewModel svm2 = new SupplierViewModel(new Supplier(
+            var svm2 = new SupplierDetailsViewModel(new Supplier(
                 1,
                 "Faber-Castell",
                 "Via Stromboli",
@@ -64,7 +66,7 @@ namespace BillsManager.ViewModel
                 //,new[] { new Agent("Barbara", "Robecchi", "347-7892234", string.Empty) }
             ));
 
-            SupplierViewModel svm3 = new SupplierViewModel(new Supplier(
+            var svm3 = new SupplierDetailsViewModel(new Supplier(
                 2,
                 "Faber-Castell",
                 "Via Stromboli",
@@ -90,12 +92,15 @@ namespace BillsManager.ViewModel
             //    "for changed order",
             //    "AB 325 MY"));
 
-            this.SupplierViewModels = new ObservableCollection<SupplierViewModel>();
+            this.SupplierViewModels = new ObservableCollection<SupplierDetailsViewModel>();
             this.SupplierViewModels.Add(svm1);
             this.SupplierViewModels.Add(svm2);
             this.SupplierViewModels.Add(svm3);
+
+            this.SelectedSupplierViewModel = this.SupplierViewModels.FirstOrDefault();
         }
 
         #endregion
     }
+#endif
 }

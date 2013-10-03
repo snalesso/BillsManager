@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Caliburn.Micro;
+﻿using Caliburn.Micro;
 
 namespace BillsManager.ViewModel
 {
@@ -45,8 +41,6 @@ namespace BillsManager.ViewModel
         #endregion
 
         #region properties
-
-        private bool _run { get; set; }
 
         private ResponseType response;
         public ResponseType Response

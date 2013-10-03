@@ -1,15 +1,14 @@
-﻿using System;
-using System.ComponentModel;
-using BillsManager.Model;
+﻿using BillsManager.Model;
 using Caliburn.Micro;
 
 namespace BillsManager.ViewModel
 {
-    public partial class SupplierViewModel : Screen, IEditableObject
+#if DEBUG
+    public partial class SupplierDetailsViewModel
     {
         #region ctor
 
-        public SupplierViewModel()
+        public SupplierDetailsViewModel()
         {
             if (Execute.InDesignMode)
             {
@@ -17,11 +16,11 @@ namespace BillsManager.ViewModel
             }
         }
 
-        public SupplierViewModel(Supplier exposedSupplier)
+        public SupplierDetailsViewModel(Supplier supplier)
         {
             if (Execute.InDesignMode)
             {
-                this.ExposedSupplier = exposedSupplier;
+                this.ExposedSupplier = supplier;
             }
         }
 
@@ -62,5 +61,6 @@ namespace BillsManager.ViewModel
         }
 
         #endregion
-    }
+    } 
+#endif
 }

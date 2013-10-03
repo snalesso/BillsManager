@@ -65,11 +65,14 @@
     <Compile Include="BackupsView.xaml.cs">
       <DependentUpon>BackupsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BillDetailsView.xaml.cs">
+      <DependentUpon>BillDetailsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BillsView.xaml.cs">
       <DependentUpon>BillsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BillView.xaml.cs">
-      <DependentUpon>BillView.xaml</DependentUpon>
+    <Compile Include="BillAddEditView.xaml.cs">
+      <DependentUpon>BillAddEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataTemplates\BackupDataTemplate.xaml.cs">
       <DependentUpon>BackupDataTemplate.xaml</DependentUpon>
@@ -105,11 +108,14 @@
     <Compile Include="ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SupplierDetailsView.xaml.cs">
+      <DependentUpon>SupplierDetailsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SuppliersView.xaml.cs">
       <DependentUpon>SuppliersView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SupplierView.xaml.cs">
-      <DependentUpon>SupplierView.xaml</DependentUpon>
+    <Compile Include="SupplierAddEditView.xaml.cs">
+      <DependentUpon>SupplierAddEditView.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -126,11 +132,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="BillDetailsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="BillsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="BillView.xaml">
+    <Page Include="BillAddEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -162,6 +172,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dictionaries\Styles\ExpanderStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dictionaries\Styles\MenuItemStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -170,11 +184,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Styles\MenuScrollViewer.xaml">
+    <Page Include="Dictionaries\Styles\MenuScrollViewerStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dictionaries\Styles\MenuStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dictionaries\Styles\ToolbarSeparatorStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -187,6 +205,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dictionaries\Styles\Values\Geometries.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dictionaries\Styles\Values\MenuItemValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -210,11 +232,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SupplierDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SuppliersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SupplierView.xaml">
+    <Page Include="SupplierAddEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

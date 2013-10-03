@@ -1,15 +1,18 @@
 ﻿using System;
-using System.ComponentModel;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using BillsManager.Model;
 using Caliburn.Micro;
 
 namespace BillsManager.ViewModel
 {
-    public partial class BillViewModel : Screen
+#if DEBUG
+    public partial class BillDetailsViewModel
     {
         #region ctor
 
-        public BillViewModel()
+        public BillDetailsViewModel()
         {
             if (Execute.InDesignMode)
             {
@@ -17,21 +20,18 @@ namespace BillsManager.ViewModel
             }
         }
 
-        public BillViewModel(Bill exposedBill)
+        public BillDetailsViewModel(Bill bill)
         {
-            if (Execute.InDesignMode)
-            {
-                this.ExposedBill = exposedBill;
-            }
+            this.ExposedBill = bill;
         }
 
         #endregion
 
         #region methods
 
-        private void LoadDesignTimeData()
+        void LoadDesignTimeData()
         {
-            Supplier supp = new Supplier(
+            var supp = new Supplier(
                 0,
                 "Faber-Castell",
                 "Via Stromboli",
@@ -58,9 +58,10 @@ namespace BillsManager.ViewModel
                 "call agent for reduction @additional comments to trigger validation rule",
                 "X3V-KDM");
 
-            //this.AvailableSuppliers = new[] { supp };
+            this.Supplier = supp;
         }
 
         #endregion
-    }
+    } 
+#endif
 }

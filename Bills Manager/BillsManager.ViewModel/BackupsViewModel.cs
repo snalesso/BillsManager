@@ -41,7 +41,7 @@ namespace BillsManager.ViewModel
 
             this.eventAggregator.Subscribe(this);
 
-            this.DisplayName = "Backup Center";
+            this.DisplayName = "Backup center";
 
             this.LoadBackups();
         }

@@ -154,7 +154,13 @@ namespace BillsManager.ViewModel
         {
             this.Response = dialogResponse.Response;
 
-            this.TryClose(null);
+            bool? result = null;
+            if (dialogResponse.IsDefault)
+                result = true;
+            if (dialogResponse.IsCancel)
+                result = false;
+            
+            this.TryClose(result);
         }
 
         public override void CanClose(Action<bool> callback)

@@ -10,24 +10,22 @@ using Caliburn.Micro;
 
 namespace BillsManager.ViewModel
 {
-    public partial class BillViewModel :
-        Screen,
+    public partial class BillAddEditViewModel :
+        BillViewModel,
         IHandle<SuppliersListChangedMessage>
     {
         #region fields
 
-        //protected readonly IDialogService dialogService;
-        private readonly IWindowManager windowManager;
+        protected readonly IWindowManager windowManager;
         protected readonly IEventAggregator eventAggregator;
 
         #endregion
 
         #region ctor
 
-        public BillViewModel(
+        public BillAddEditViewModel(
             Bill bill,
             IWindowManager windowManager,
-            //IDialogService dialogService,
             IEventAggregator eventAggregator)
         {
             if (bill == null)
@@ -36,21 +34,22 @@ namespace BillsManager.ViewModel
             this.exposedBill = bill;
 
             this.windowManager = windowManager;
-            //this.dialogService = dialogService;
             this.eventAggregator = eventAggregator;
 
             this.eventAggregator.Subscribe(this);
 
-            //this.Supplier = this.GetSupplier(this.SupplierID);
+            this.AvailableSuppliers = this.GetAvailableSuppliers();
         }
 
         #endregion
 
         #region properties
 
+        #region view support
+
         // TODO: remove this proprerty when removed close window button
         private bool isClosing;
-        public bool IsClosing
+        private bool IsClosing
         {
             get { return this.isClosing; }
             set
@@ -61,22 +60,12 @@ namespace BillsManager.ViewModel
                 }
             }
         }
+        
+        #endregion
 
-        protected Bill exposedBill;
-        public Bill ExposedBill
-        {
-            get { return this.exposedBill; }
-            protected set
-            {
-                if (this.exposedBill != value)
-                {
-                    this.exposedBill = value;
-                    this.NotifyOfPropertyChange(() => this.ExposedBill);
-                }
-            }
-        }
+        #region add/edit support
 
-        protected IEnumerable<Supplier> availableSuppliers;
+        private IEnumerable<Supplier> availableSuppliers;
         public IEnumerable<Supplier> AvailableSuppliers
         {
             get { return this.availableSuppliers; }
@@ -86,13 +75,15 @@ namespace BillsManager.ViewModel
                 {
                     this.availableSuppliers = value;
                     this.NotifyOfPropertyChange(() => this.AvailableSuppliers);
-                    this.SelectedSupplier = null;
+
+                    var selSupp = this.AvailableSuppliers.Single(s => s.ID == this.SupplierID);
+                    this.selectedSupplier = selSupp != null ? selSupp : this.AvailableSuppliers.FirstOrDefault();
                 }
             }
         }
 
-        protected Supplier selectedSupplier;
-        [Required(ErrorMessage = "You must select a supplier.")]
+        private Supplier selectedSupplier;
+        [Required(ErrorMessage = "You must select a supplier.")] // TODO: language
         public Supplier SelectedSupplier
         {
             get { return this.selectedSupplier; }
@@ -106,10 +97,12 @@ namespace BillsManager.ViewModel
                 }
             }
         }
+        
+        #endregion
 
         #region wrapped from bill
 
-        public DateTime RegistrationDate
+        public override DateTime RegistrationDate
         {
             get { return this.ExposedBill.RegistrationDate; }
             set
@@ -124,8 +117,8 @@ namespace BillsManager.ViewModel
             }
         }
 
-        [Required(ErrorMessage = "You must specify a due date.")]
-        public DateTime DueDate
+        [Required(ErrorMessage = "You must specify a due date.")] // TODO: language
+        public override DateTime DueDate
         {
             get { return this.ExposedBill.DueDate; }
             set
@@ -136,13 +129,11 @@ namespace BillsManager.ViewModel
                     this.NotifyOfPropertyChange(() => this.DueDate);
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
-                    this.NotifyOfPropertyChange(() => this.IsDued);
-                    this.NotifyOfPropertyChange(() => this.DuesIn);
                 }
             }
         }
 
-        public DateTime? PaymentDate
+        public override DateTime? PaymentDate
         {
             get { return this.ExposedBill.PaymentDate; }
             set
@@ -151,18 +142,15 @@ namespace BillsManager.ViewModel
                 {
                     this.ExposedBill.PaymentDate = value;
                     this.NotifyOfPropertyChange(() => this.PaymentDate);
+                    this.NotifyOfPropertyChange(() => this.IsPaid);
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
-                    this.NotifyOfPropertyChange(() => this.IsPaid);
-                    this.NotifyOfPropertyChange(() => this.IsNotPaid);
-                    this.NotifyOfPropertyChange(() => this.IsDued);
-                    this.NotifyOfPropertyChange(() => this.DuesIn);
                 }
             }
         }
 
-        [Required(ErrorMessage = "You must specify a release date.")]
-        public DateTime ReleaseDate
+        [Required(ErrorMessage = "You must specify a release date.")] // TODO: language
+        public override DateTime ReleaseDate
         {
             get { return this.ExposedBill.ReleaseDate; }
             set
@@ -177,8 +165,8 @@ namespace BillsManager.ViewModel
             }
         }
 
-        [Required(ErrorMessage = "You must specify an amount.")]
-        public Double Amount
+        [Required(ErrorMessage = "You must specify an amount.")] // TODO: language
+        public override Double Amount
         {
             get { return this.ExposedBill.Amount; }
             set
@@ -193,9 +181,9 @@ namespace BillsManager.ViewModel
             }
         }
 
-        [Required(ErrorMessage = "You must specify a supplier.")]
-        [Range(0, uint.MaxValue, ErrorMessage = "Chosen supplier ID is out of range.")]
-        public uint SupplierID
+        [Required(ErrorMessage = "You must specify a supplier.")] // TODO: language
+        [Range(0, uint.MaxValue, ErrorMessage = "Chosen supplier ID is out of range.")] // TODO: language
+        public override uint SupplierID
         {
             get { return this.ExposedBill.SupplierID; }
             set
@@ -212,8 +200,8 @@ namespace BillsManager.ViewModel
             }
         }
 
-        [StringLength(100, ErrorMessage = "You cannot exceed 100 characters.")]
-        public string Notes
+        [StringLength(100, ErrorMessage = "You cannot exceed 100 characters.")] // TODO: language
+        public override string Notes
         {
             get { return this.ExposedBill.Notes; }
             set
@@ -228,8 +216,8 @@ namespace BillsManager.ViewModel
             }
         }
 
-        [Required(ErrorMessage = "You must specify a code.")]
-        public string Code
+        [Required(ErrorMessage = "You must specify a code.")] // TODO: language
+        public override string Code
         {
             get { return this.ExposedBill.Code; }
             set
@@ -248,20 +236,6 @@ namespace BillsManager.ViewModel
 
         #region added
 
-        private Supplier supplier;
-        public Supplier Supplier
-        {
-            get { return this.supplier; }
-            set
-            {
-                if (this.supplier != value)
-                {
-                    this.supplier = value;
-                    this.NotifyOfPropertyChange(() => this.Supplier);
-                }
-            }
-        }
-
         public bool IsPaid
         {
             get { return this.PaymentDate.HasValue; }
@@ -271,42 +245,6 @@ namespace BillsManager.ViewModel
                 {
                     if (value) this.PaymentDate = DateTime.Today;
                     else this.PaymentDate = null;
-                    // changing only PaymentData will Refresh IsPaid and similars
-                }
-            }
-        }
-
-        public bool IsNotPaid
-        {
-            get { return !this.IsPaid; }
-        }
-
-        public DateTime DisplayDateEndForPaymentDate
-        {
-            get { return DateTime.Today; }
-        }
-
-        public bool IsDued
-        {
-            get { return this.DueDate < DateTime.Today; }
-        }
-
-        public string DuesIn
-        {
-            get
-            {
-                var timeleft = this.DueDate.Subtract(DateTime.Today);
-
-                if (timeleft.TotalDays >= 0)
-                {
-                    if (timeleft.TotalDays == 0) return "Overdues today";
-                    if (timeleft.TotalDays == 1) return "Overdues tomorrow"; // Toyota? :D
-                    return timeleft.TotalDays.ToString() + " days left";
-                }
-                else
-                {
-                    if (timeleft.TotalDays == -1) return "Overdue yesterday";
-                    return "Overdue " + (timeleft.TotalDays * -1).ToString() + " days ago"; // TODO: language
                 }
             }
         }
@@ -326,37 +264,13 @@ namespace BillsManager.ViewModel
 
         #region methods
 
-        //private Supplier GetSupplier(uint supplierID)
-        //{
-        //    Supplier supp = null;
-        //    this.eventAggregator.Publish(new AskForSupplierMessage(supplierID, s => supp = s));
-
-        //    return supp;
-        //}
-
-        // TODO: find a better way (should be solved creating different VMs for Item and AddEdit)
-        public void SetupForAddEdit()
+        private IEnumerable<Supplier> GetAvailableSuppliers()
         {
-            this.AvailableSuppliers = this.GetAvailableSuppliers();
+            IEnumerable<Supplier> suppliers = null;
 
-            if (this.IsInEditMode)
-            {
-                this.SelectedSupplier = this.AvailableSuppliers.Single(s => s.ID == this.SupplierID);
+            this.eventAggregator.Publish(new AskForAvailableSuppliersMessage(s => suppliers = s));
 
-                if (this.SelectedSupplier == null)
-                    throw new ArgumentNullException("Cannot find " + this.SupplierID + " among available suppliers.");
-            }
-        }
-
-        protected void CleanSuppliersProperties()
-        {
-            this.selectedSupplier = null;
-            this.availableSuppliers = null;
-        }
-
-        public void Handle(SuppliersListChangedMessage message)
-        {
-            this.AvailableSuppliers = message.Suppliers;
+            return suppliers;
         }
 
         #region overrides
@@ -364,6 +278,15 @@ namespace BillsManager.ViewModel
         public override void CanClose(Action<bool> callback)
         {
             callback(this.IsClosing);
+        }
+
+        #endregion
+
+        #region message handlers
+
+        public void Handle(SuppliersListChangedMessage message)
+        {
+            this.AvailableSuppliers = message.Suppliers;
         }
 
         #endregion
@@ -377,11 +300,12 @@ namespace BillsManager.ViewModel
         {
             get
             {
-                if (this.addNewSupplierCommand == null) this.addNewSupplierCommand = new RelayCommand(
-                    () =>
-                    {
-                        this.eventAggregator.Publish(new AddNewSupplierRequestMessage());
-                    });
+                if (this.addNewSupplierCommand == null)
+                    this.addNewSupplierCommand = new RelayCommand(
+                        () =>
+                        {
+                            this.eventAggregator.Publish(new AddNewSupplierRequestMessage());
+                        });
 
                 return this.addNewSupplierCommand;
             }
@@ -398,8 +322,6 @@ namespace BillsManager.ViewModel
                         if (this.IsInEditMode)
                             this.EndEdit();
 
-                        this.CleanSuppliersProperties();
-
                         this.IsClosing = true;
                         this.TryClose(true);
                     },
@@ -414,44 +336,43 @@ namespace BillsManager.ViewModel
         {
             get
             {
-                if (this.cancelAddEditAndCloseCommand == null) this.cancelAddEditAndCloseCommand = new RelayCommand(
-                    () =>
-                    {
-                        if (this.HasChanges)
-                        {
-                            var question = new DialogViewModel(
-                                   "Canceling " + (this.IsInEditMode ? "edit" : "add"),
-                                   "Are you sure you want to discard all the changes?",
-                                   new[]
+                if (this.cancelAddEditAndCloseCommand == null)
+                    this.cancelAddEditAndCloseCommand = new RelayCommand(
+                        () =>
+                        { // TODO: optimize
+                            if (this.HasChanges)
                             {
-                                new DialogResponse(ResponseType.Yes),
-                                new DialogResponse(ResponseType.No)
-                            });
+                                var question = new DialogViewModel(
+                                       "Canceling " + (this.IsInEditMode ? "edit" : "add"),
+                                       "Are you sure you want to discard all the changes?",
+                                       new[]
+                                       {
+                                           new DialogResponse(ResponseType.Yes),
+                                           new DialogResponse(ResponseType.No)
+                                       });
 
-                            this.windowManager.ShowDialog(question, settings: new Dictionary<string, object> { { "ResizeMode", ResizeMode.NoResize } });
+                                this.windowManager.ShowDialog(
+                                    question,
+                                    settings: new Dictionary<string, object> { { "ResizeMode", ResizeMode.NoResize } });
 
-                            if (question.Response == ResponseType.Yes)
+                                if (question.Response == ResponseType.Yes)
+                                {
+                                    if (this.IsInEditMode)
+                                        this.CancelEdit();
+
+                                    this.IsClosing = true;
+                                    this.TryClose(false);
+                                }
+                            }
+                            else
                             {
                                 if (this.IsInEditMode)
                                     this.CancelEdit();
 
-                                this.CleanSuppliersProperties();
-
                                 this.IsClosing = true;
                                 this.TryClose(false);
                             }
-                        }
-                        else
-                        {
-                            if (this.IsInEditMode)
-                                this.CancelEdit();
-
-                            this.CleanSuppliersProperties();
-
-                            this.IsClosing = true;
-                            this.TryClose(false);
-                        }
-                    });
+                        });
 
                 return this.cancelAddEditAndCloseCommand;
             }
