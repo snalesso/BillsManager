@@ -165,6 +165,13 @@ namespace BillsManager.ViewModel
             return supp;
         }
 
+        public new void Refresh()
+        {
+            base.Refresh();
+
+            this.Supplier = this.GetSupplier(this.SupplierID);
+        }
+
         #endregion
 
         #region commands

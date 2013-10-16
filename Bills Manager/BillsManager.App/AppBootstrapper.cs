@@ -2,13 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Windows;
-using BillsManager.Service;
 using BillsManager.Service.Providers;
 using BillsManager.View;
 using BillsManager.ViewModel;
 using BillsManager.ViewModel.Factories;
 using Caliburn.Micro;
-using System.Windows.Media;
 
 namespace BillsManager.App
 {
@@ -83,11 +81,10 @@ namespace BillsManager.App
                 { "SizeToContent", SizeToContent.Manual},
                 { "Width", 1350},
                 { "Height", 750}
-                //, { "Foreground", foregroundBrush}
             });
         }
 
-        protected override IEnumerable<System.Reflection.Assembly> SelectAssemblies()
+        protected override IEnumerable<Assembly> SelectAssemblies()
         {
             var assemblies = new List<Assembly>(base.SelectAssemblies());
 

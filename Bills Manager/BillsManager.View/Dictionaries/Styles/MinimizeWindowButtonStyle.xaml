@@ -24,20 +24,24 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:MinimizeWindowButton}">
-                    <Border x:Name="border"
-                            Background="{TemplateBinding Background}">
+                    <Border Background="{TemplateBinding Background}"
+                            Padding="{TemplateBinding Padding}">
                         <Path Data="{StaticResource ResourceKey=MinimizeGeometry}"
                               Fill="{TemplateBinding Foreground}"
                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                              Stretch="Uniform"
-                              Margin="{TemplateBinding Padding}" />
+                              Stretch="Uniform" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver"
                                  Value="true">
                             <Setter Property="Foreground"
                                     Value="{StaticResource ResourceKey=ButtonNormalBackgroundBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter Property="Foreground"
+                                    Value="{StaticResource ResourceKey=ButtonDisabledForegroundBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

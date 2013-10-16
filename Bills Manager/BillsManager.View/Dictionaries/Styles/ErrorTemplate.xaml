@@ -1,0 +1,69 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Values.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <ControlTemplate x:Key="ErrorTemplate">
+        
+        <Border BorderBrush="{StaticResource ResourceKey=ErrorTemplateBorderBrush}"
+                BorderThickness="1">
+            <Grid>
+                <Path Data="{StaticResource ResourceKey=TopRightLittleCorner}"
+                      Fill="{StaticResource ResourceKey=ErrorTemplateBorderBrush}"
+                      HorizontalAlignment="Right"
+                      VerticalAlignment="Top" />
+                <AdornedElementPlaceholder x:Name="adorner"
+                                           Margin="-1"
+                                           HorizontalAlignment="Stretch"
+                                           VerticalAlignment="Stretch" />
+
+                    <Popup x:Name="errorPopup"
+                       Placement="Right"
+                       VerticalOffset="-1"
+                       HorizontalOffset="2">
+                    <Border Background="{StaticResource ResourceKey=ErrorTemplateBackgroundBrush}">
+                        <TextBlock Foreground="{StaticResource ResourceKey=ErrorTemplateForegroundBrush}"
+                                   Text="{Binding ElementName=adorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"
+                                   Margin="4" />
+                    </Border>
+                </Popup>
+            </Grid>
+        </Border>
+
+        <ControlTemplate.Triggers>
+
+            <Trigger Property="IsMouseOver"
+                     Value="true">
+                <Setter TargetName="errorPopup"
+                        Property="IsOpen"
+                        Value="True" />
+            </Trigger>
+            
+            <Trigger Property="IsFocused"
+                     Value="true">
+                <Setter TargetName="errorPopup"
+                        Property="IsOpen"
+                        Value="True" />
+            </Trigger>
+
+            <DataTrigger Binding="{Binding ElementName=adorner, Path=AdornedElement.IsMouseOver}"
+                         Value="true">
+                <Setter TargetName="errorPopup"
+                        Property="IsOpen"
+                        Value="True" />
+            </DataTrigger>
+
+            <DataTrigger Binding="{Binding ElementName=adorner, Path=AdornedElement.IsFocused}"
+                         Value="true">
+                <Setter TargetName="errorPopup"
+                        Property="IsOpen"
+                        Value="True" />
+            </DataTrigger>
+
+        </ControlTemplate.Triggers>
+
+    </ControlTemplate>
+
+</ResourceDictionary>

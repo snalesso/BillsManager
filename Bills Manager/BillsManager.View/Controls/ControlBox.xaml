@@ -18,7 +18,7 @@
         <Controls:MinimizeWindowButton  x:Name="btnMinimize"
                                         IsTabStop="False"
                                         Focusable="False" />
-        <Controls:ResizeWindowButton  x:Name="btnResize"
+        <Controls:MaximizeWindowButton  x:Name="btnResize"
                                       IsTabStop="False"
                                       Focusable="False" />
         <Controls:CloseWindowButton  x:Name="btnClose"

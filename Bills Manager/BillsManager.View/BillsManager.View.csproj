@@ -74,6 +74,11 @@
     <Compile Include="BillAddEditView.xaml.cs">
       <DependentUpon>BillAddEditView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CloseWindowButton.cs" />
+    <Compile Include="Controls\WindowEx.cs" />
+    <Compile Include="Controls\MinimizeWindowButton.cs" />
+    <Compile Include="Controls\NormalizeWindowButton.cs" />
+    <Compile Include="Controls\MaximizeWindowButton.cs" />
     <Compile Include="DataTemplates\BackupDataTemplate.xaml.cs">
       <DependentUpon>BackupDataTemplate.xaml</DependentUpon>
     </Compile>
@@ -86,6 +91,7 @@
     <Compile Include="DialogView.xaml.cs">
       <DependentUpon>DialogView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\WindowHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -116,6 +122,9 @@
     </Compile>
     <Compile Include="SupplierAddEditView.xaml.cs">
       <DependentUpon>SupplierAddEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewWindow.xaml.cs">
+      <DependentUpon>ViewWindow.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -164,9 +173,21 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dictionaries\Styles\CloseWindowButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Dictionaries\Styles\ContextMenuStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dictionaries\Styles\ErrorTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dictionaries\Styles\NormalizeWindowButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Dictionaries\Styles\CrossButtonStyle.xaml">
       <SubType>Designer</SubType>
@@ -192,6 +213,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dictionaries\Styles\MinimizeWindowButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dictionaries\Styles\MaximizeWindowButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Dictionaries\Styles\ToolbarSeparatorStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -213,6 +242,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dictionaries\Styles\Values\MenuValues.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dictionaries\Styles\TextBoxStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dictionaries\Styles\Values\TextBoxValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -244,12 +281,26 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ViewWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BillsManager.ViewModel\BillsManager.ViewModel.csproj">
       <Project>{127368A5-65A5-46C6-A203-33ABC22B1EDD}</Project>
       <Name>BillsManager.ViewModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Attached behaviors\" />
+    <Folder Include="Behaviors\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DBM.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DBM.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

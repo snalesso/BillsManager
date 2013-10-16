@@ -4,16 +4,44 @@
     <!--<Geometry x:Key="CloseGeometry">M 0,1 L 1,0 L 1,0 L 2,1 L 3,0 L 4,1 L 3,2 L 4,3 L 3,4 L 2,3 L 1,4 L 0,3 L 1,2 L 0,1</Geometry>-->
     <Geometry x:Key="CloseGeometry">M 0,1 L 1,0 L 3,2 L 5,0 L 6,1 L 4,3 L 6,5 L 5,6 L 3,4 L 1,6 L 0,5 L 2,3 L 0,1</Geometry>
 
-    <!--<Geometry x:Key="ResizeGeometry">M 0,0 L 6,0 L 6,6 L 0,6 L 0,0 L 1,1 L 5,1 L 5,5 L 1,5 L 1,1 L 0,0</Geometry>-->
-    <Geometry x:Key="ResizeGeometry">M 0,0 L 6,0 L 6,6 L 0,6 L 0,0 L 1.4,1.4 L 4.6,1.4 L 4.7,4.6 L 1.4,4.6 L 1.4,1.4 L 0,0</Geometry>
+    <!--<Geometry x:Key="MaximizeGeometry">M 0,0 L 6,0 L 6,6 L 0,6 L 0,0 L 1.4,1.4 L 4.6,1.4 L 4.6,4.6 L 1.4,4.6 L 1.4,1.4 L 0,0 Z</Geometry>-->
+    <Geometry x:Key="MaximizeGeometry">M 0,0 L 6,0 L 6,6 L 0,6 L 0,0 L 1.15,1.15 L 4.85,1.15 L 4.85,4.85 L 1.15,4.85 L 1.15,1.15 L 0,0 Z</Geometry>
 
+
+
+
+
+
+
+
+    <GeometryGroup x:Key="NormalizeGeometry">
+        <GeometryGroup.Children>
+            <Geometry>M 1.5,0 L 6,0 L 6,4 L 5,4 L 5,3.2 L 5.3,3.2 L 5.3,1 L 2.3,1 L 2.3,1.5 L 1.5,1.5 Z</Geometry>
+            <!--<Geometry>M 1,0 L 6,0 L 6,5 L 5,5 L 5,4.5 L 5.5,4.5 L 5.5,1 L 1.5,1 L 1.5,1.5 L 1,1.5 Z</Geometry>-->
+
+            <!--<Geometry>M 0,1.5 L 5,1.5 L 5,6 L 0,6 L 0,1.5    L 0.5,2.5 L 4.5,2.5 L 4.5,5.5 L 0.5,5.5 L 0.5,2.5 Z</Geometry>-->
+            <Geometry>M 0,1.5 L 5,1.5 L 5,6 L 0,6 L 0,1.5 Z</Geometry>
+            <Geometry>M 0.8,2.5 L 4.2,2.5 L 4.2,5.2 L 0.8,5.2 L 0.8,2.5 Z</Geometry>
+        </GeometryGroup.Children>
+    </GeometryGroup>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <Geometry x:Key="MinimizeGeometry">M 0,0 0,4.6 L 6,4.6 L 6,6 L 0,6 L 0,4.6 L 0,0</Geometry>
 
     <Geometry x:Key="Checkmark">M 0,5.1 L 1.7,5.2 L 3.4,7.1 L 8,0.4 L 9.2,0 L 3.3,10.8 Z</Geometry>
 
-    <Geometry x:Key="Checkmark2">M 0 2 L 0 4.8 L 2.5 7.4 L 7.1 2.8 L 7.1 0 L 2.5 4.6 Z</Geometry>
+    <Geometry x:Key="Checkmark2">M 0 2 L 0 4.85 L 2.5 7.4 L 7.1 2.8 L 7.1 0 L 2.5 4.6 Z</Geometry>
     
-    <Geometry x:Key="Checkmark3">M 0 2 L 0 4.8 L 4 9 L 10 2.8 L 10 0 L 4 6.2 Z</Geometry>
+    <Geometry x:Key="Checkmark3">M 0 2 L 0 4.85 L 4 9 L 10 2.8 L 10 0 L 4 6.2 Z</Geometry>
 
     <Geometry x:Key="Plus">M 2,0 L 4,0 L 4,2 L 6,2 L 6,4 L 4,4 L 4,6 L 2,6 L 2,4 L 0,4 L 0,2 L 2,2 L 2,0 Z</Geometry>
     
@@ -43,4 +71,12 @@
 
     <Geometry x:Key="ExpanderDownArrow">M 1,1.5 L 4.5,5 L 8,1.5</Geometry>
 
+    <Geometry x:Key="RoundClose">F1M54.0573,47.8776L38.1771,31.9974 54.0547,16.1198C55.7604,14.4141 55.7604,11.6511 54.0573,9.94531 52.3516,8.23962 49.5859,8.23962 47.8802,9.94531L32.0026,25.8229 16.1224,9.94531C14.4167,8.23962 11.6511,8.23962 9.94794,9.94531 8.24219,11.6511 8.24219,14.4141 9.94794,16.1198L25.8255,32 9.94794,47.8776C8.24219,49.5834 8.24219,52.3477 9.94794,54.0534 11.6511,55.7572 14.4167,55.7585 16.1224,54.0534L32.0026,38.1745 47.8802,54.0534C49.5859,55.7585 52.3516,55.7572 54.0573,54.0534 55.7604,52.3477 55.763,49.5834 54.0573,47.8776z</Geometry>
+
+    <Geometry x:Key="RestoreSize">M4.3685131,23.127279L4.3685131,47.283243 47.117023,47.283243 47.117023,23.127279z M0,10.684L53.755001,10.684 53.755001,51.668001 0,51.668001z M8.5679998,0L58.668022,0 64,0 64,5.6864691 64,45.317999 58.668022,45.317999 58.668022,5.6864691 8.5679998,5.6864691z</Geometry>
+
+    <Geometry x:Key="Minimize">M0,20L53.333,20 53.333,8.888 0,8.888z</Geometry>
+    
+    <Geometry x:Key="TopRightLittleCorner">M 0,0 L 8,0 L 8,8 Z</Geometry>
+    
 </ResourceDictionary>

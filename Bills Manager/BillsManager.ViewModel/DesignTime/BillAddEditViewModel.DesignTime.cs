@@ -57,7 +57,7 @@ namespace BillsManager.ViewModel
                 723.61,
                 supp.ID,
                 "call agent for reduction @additional comments to trigger validation rule",
-                "X3V-KDM");
+                string.Empty);
 
             this.AvailableSuppliers = new[] { supp };
             this.SelectedSupplier = this.AvailableSuppliers.FirstOrDefault();

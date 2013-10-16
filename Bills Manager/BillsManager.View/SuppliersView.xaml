@@ -23,6 +23,10 @@
 
         <ListView.ItemContainerStyle>
             <Style TargetType="{x:Type ListViewItem}">
+                <Setter Property="OverridesDefaultStyle"
+                        Value="True" />
+                <Setter Property="Margin"
+                        Value="1" />
                 <Setter Property="HorizontalContentAlignment"
                         Value="Stretch" />
                 <Setter Property="VerticalContentAlignment"

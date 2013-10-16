@@ -124,9 +124,7 @@
                  HorizontalAlignment="Stretch"
                  MaxLines="1"
                  TabIndex="6"
-                 Text="{Binding Path=Code, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                 VerticalAlignment="Center" />
-
+                 Text="{Binding Path=Code, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
         <TextBlock Grid.Column="1"
                    Grid.Row="7"

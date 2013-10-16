@@ -28,7 +28,9 @@ namespace BillsManager.ViewModel
                 if (this.rulesTracker == null)
                     this.rulesTracker = new ValidationRulesTracker<SupplierAddEditViewModel>(this);
 
-                return this.rulesTracker.GetErrorsForProperty(columnName);
+                var errors = this.rulesTracker.GetErrorsForProperty(columnName);
+
+                return errors;
             }
         }
 

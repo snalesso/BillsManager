@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ViewModel="clr-namespace:BillsManager.ViewModel;assembly=BillsManager.ViewModel"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=ViewModel:SupplierViewModel, IsDesignTimeCreatable=True}">
+             d:DataContext="{d:DesignInstance Type=ViewModel:SupplierAddEditViewModel, IsDesignTimeCreatable=True}">
     
     <UserControl.Resources>
         <ResourceDictionary Source="Dictionaries\Styles.xaml" />
@@ -112,11 +112,10 @@
                    HorizontalAlignment="Right"
                    Text="Name"
                    VerticalAlignment="Top" />
-        <TextBox x:Name="txtName"
-                 Grid.Column="3"
+        <TextBox Grid.Column="3"
                  Grid.ColumnSpan="5"
+                 HorizontalAlignment="Stretch"
                  Grid.Row="3"
-                 Width="387"
                  MaxLines="1"
                  TabIndex="0"
                  Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
@@ -131,7 +130,6 @@
                  Grid.ColumnSpan="5"
                  Grid.Row="5"
                  Height="64"
-                 Width="390"
                  HorizontalAlignment="Stretch"
                  HorizontalScrollBarVisibility="Disabled"
                  TabIndex="1"

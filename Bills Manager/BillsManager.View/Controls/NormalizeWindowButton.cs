@@ -3,13 +3,13 @@ using System.Windows.Controls;
 
 namespace BillsManager.View.Controls
 {
-    public class CloseWindowButton : Button
+    public class NormalizeWindowButton : Button
     {
         protected override void OnClick()
         {
             base.OnClick();
 
-            Window.GetWindow(this).Close();
+            Window.GetWindow(this).WindowState = WindowState.Normal;
         }
     }
 }

@@ -6,7 +6,7 @@
         <ResourceDictionary Source="Values.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type Controls:CloseWindowButton}">
+    <Style TargetType="{x:Type Controls:NormalizeWindowButton}">
         <Setter Property="Height"
                 Value="20" />
         <Setter Property="Width"
@@ -23,20 +23,21 @@
                 Value="Transparent" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Controls:CloseWindowButton}">
-                    <Border Background="{TemplateBinding Background}"
-                            Padding="{TemplateBinding Padding}">
-                        <Path Data="{StaticResource ResourceKey=Close}"
+                <ControlTemplate TargetType="{x:Type Controls:NormalizeWindowButton}">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}">
+                        <Path Data="{StaticResource ResourceKey=NormalizeGeometry}"
                               Fill="{TemplateBinding Foreground}"
                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                              Stretch="Uniform" />
+                              Stretch="Uniform"
+                              Margin="{TemplateBinding Padding}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver"
                                  Value="true">
                             <Setter Property="Foreground"
-                                    Value="{StaticResource ResourceKey=CloseBrush}" />
+                                    Value="{StaticResource ResourceKey=ButtonNormalBackgroundBrush}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="false">

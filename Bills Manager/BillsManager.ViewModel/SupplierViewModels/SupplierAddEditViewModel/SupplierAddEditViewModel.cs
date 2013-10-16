@@ -39,24 +39,6 @@ namespace BillsManager.ViewModel
 
         #region properties
 
-        #region view support
-
-        // TODO: remove this proprerty when removed close window button
-        private bool isClosing;
-        public bool IsClosing
-        {
-            get { return this.isClosing; }
-            set
-            {
-                if (this.isClosing != value)
-                {
-                    this.isClosing = value;
-                }
-            }
-        }
-        
-        #endregion
-
         #region wrapped from supplier
 
         [Required(ErrorMessage = "You must specify a name.")]
@@ -250,15 +232,6 @@ namespace BillsManager.ViewModel
 
         #region methods
 
-        #region overrides
-
-        public override void CanClose(Action<bool> callback)
-        {
-            callback(this.IsClosing);
-        }
-
-        #endregion
-
         #endregion
 
         #region commands
@@ -273,7 +246,6 @@ namespace BillsManager.ViewModel
                     {
                         if (this.IsInEditMode) this.EndEdit();
 
-                        this.IsClosing = true;
                         this.TryClose(true);
                     },
                     () => this.IsValid);
@@ -309,8 +281,7 @@ namespace BillsManager.ViewModel
                                 {
                                     this.CancelEdit();
                                 }
-
-                                this.IsClosing = true;
+                                
                                 this.TryClose(false);
                             }
                         }
@@ -321,7 +292,6 @@ namespace BillsManager.ViewModel
                                 this.CancelEdit();
                             }
 
-                            this.IsClosing = true;
                             this.TryClose(false);
                         }
                     });

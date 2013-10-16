@@ -72,6 +72,8 @@
                         Value="{StaticResource ResourceKey=ButtonDisabledBackgroundBrush}" />
                 <Setter Property="BorderBrush"
                         Value="{StaticResource ResourceKey=ButtonDisabledBorderBrush}" />
+                <Setter Property="Foreground"
+                        Value="{StaticResource ResourceKey=ButtonDisabledForegroundBrush}" />
             </Trigger>
 
             <Trigger Property="IsPressed"
@@ -80,6 +82,8 @@
                         Value="{StaticResource ResourceKey=ButtonPressedBackgroundBrush}" />
                 <Setter Property="BorderBrush"
                         Value="{StaticResource ResourceKey=ButtonPressedBorderBrush}" />
+                <Setter Property="Foreground"
+                        Value="{StaticResource ResourceKey=ButtonPressedForegroundBrush}" />
             </Trigger>
 
         </Style.Triggers>

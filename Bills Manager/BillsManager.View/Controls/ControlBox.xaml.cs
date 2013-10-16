@@ -1,5 +1,5 @@
-﻿using System.Windows.Controls;
-using Microsoft.Windows.Shell;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace BillsManager.View.Controls
 {
@@ -8,13 +8,19 @@ namespace BillsManager.View.Controls
     /// </summary>
     public partial class ControlBox : UserControl
     {
+        #region fields
+
+        Window parentWindow;
+
+        #endregion
+
         #region ctor
 
         public ControlBox()
         {
             InitializeComponent();
 
-            WindowChrome.SetIsHitTestVisibleInChrome(this, true);
+            this.parentWindow = Window.GetWindow(this);
         }
 
         #endregion
@@ -28,10 +34,8 @@ namespace BillsManager.View.Controls
             {
                 if (this.CanClose != value)
                 {
-                    if (value)
-                        this.btnClose.Visibility = System.Windows.Visibility.Visible;
-                    else
-                        this.btnClose.Visibility = System.Windows.Visibility.Collapsed;
+                    this.btnClose.IsEnabled = value;
+                    WindowHelper.SetCanClose(this.parentWindow, value);
                 }
             }
         }

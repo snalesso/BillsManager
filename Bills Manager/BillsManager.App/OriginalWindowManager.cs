@@ -6,12 +6,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using System.Windows.Navigation;
-using Caliburn.Micro;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Navigation;
+using BillsManager.View;
+using BillsManager.View.Controls;
+using Caliburn.Micro;
 
 namespace BillsManager.App
 {
@@ -125,13 +124,13 @@ namespace BillsManager.App
         /// <param name="context">The view context.</param>
         /// <param name="settings">The optional popup settings.</param>
         /// <returns>The window.</returns>
-        protected virtual Window CreateWindow(object rootModel, bool isDialog, object context, IDictionary<string, object> settings)
+        protected virtual WindowEx CreateWindow(object rootModel, bool isDialog, object context, IDictionary<string, object> settings)
         {
             var view = EnsureWindow(rootModel, ViewLocator.LocateForModel(rootModel, null, context), isDialog);
             ViewModelBinder.Bind(rootModel, view, context);
 
             var haveDisplayName = rootModel as IHaveDisplayName;
-            if (haveDisplayName != null && !ConventionManager.HasBinding(view, Window.TitleProperty))
+            if (haveDisplayName != null && !ConventionManager.HasBinding(view, WindowEx.TitleProperty))
             {
                 var binding = new Binding("DisplayName");
                 if (rootModel.GetType().GetProperty("DisplayName").CanWrite)
@@ -139,7 +138,7 @@ namespace BillsManager.App
                 else
                     binding.Mode = BindingMode.OneWay;
 
-                view.SetBinding(Window.TitleProperty, binding);
+                view.SetBinding(WindowEx.TitleProperty, binding);
             }
 
             ApplySettings(view, settings);
@@ -156,23 +155,15 @@ namespace BillsManager.App
         /// <param name="view">The view.</param>
         /// <param name="isDialog">Whethor or not the window is being shown as a dialog.</param>
         /// <returns>The window.</returns>
-        protected virtual Window EnsureWindow(object model, object view, bool isDialog)
+        protected virtual WindowEx EnsureWindow(object model, object view, bool isDialog)
         {
-            var window = view as Window;
+            var window = view as WindowEx;
 
             if (window == null)
             {
-                window = new Window
+                window = new ViewWindow
                 {
                     Content = view
-                    ,
-                    SizeToContent = SizeToContent.WidthAndHeight
-                        ,
-                    UseLayoutRounding = true
-                    //,
-                    //SnapsToDevicePixels = true
-                    ,
-                    FontSize = 12
                 };
 
                 RenderOptions.SetClearTypeHint(window, ClearTypeHint.Enabled);
@@ -197,6 +188,13 @@ namespace BillsManager.App
                 {
                     window.Owner = owner;
                 }
+            }
+
+            if (isDialog)
+            {
+                window.ShowInTaskbar = false;
+                window.ResizeMode = ResizeMode.NoResize;
+                window.CanClose = false;
             }
 
             return window;
@@ -284,22 +282,12 @@ namespace BillsManager.App
 
                 foreach (var pair in settings)
                 {
-                    //if (pair.Key == "IsCloseButtonVisible")
-                    //{
-                    //    if ((bool)pair.Value == true)
-                    //    {
-                    //        this.RemoveCloseButton((Window)target);
-                    //    }
-                    //}
-                    //else
-                    //{
-                        var propertyInfo = type.GetProperty(pair.Key);
+                    var propertyInfo = type.GetProperty(pair.Key);
 
-                        if (propertyInfo != null)
-                        {
-                            propertyInfo.SetValue(target, pair.Value, null);
-                        }
-                    //}
+                    if (propertyInfo != null)
+                    {
+                        propertyInfo.SetValue(target, pair.Value, null);
+                    }
                 }
 
                 return true;
@@ -307,27 +295,6 @@ namespace BillsManager.App
 
             return false;
         }
-
-        // TODO: remove close button
-
-        //#region API Window Editing
-
-        //private const int GWL_STYLE = -16;
-        //private const int WS_SYSMENU = 0x80000;
-
-        //[DllImport("user32.dll", SetLastError = true)]
-        //private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
-
-        //[DllImport("user32.dll")]
-        //private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
-
-        //public virtual void RemoveCloseButton(Window window)
-        //{
-        //    var hwnd = new WindowInteropHelper(window).Handle;
-        //    SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
-        //}
-
-        //#endregion
 
         class WindowConductor
         {

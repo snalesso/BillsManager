@@ -126,7 +126,11 @@ namespace BillsManager.ViewModel
                     {
                         this.windowManager.ShowDialog(this.backupsViewModelFactory.Create(), settings: new Dictionary<string, object>
                         {
-                            {"ResizeMode", ResizeMode.NoResize}
+                            {"ResizeMode", ResizeMode.CanResize},
+                            {"SizeToContent", SizeToContent.Width},
+                            {"ResizeDirections", new Thickness(0, 1, 0, 1)},
+                            {"CanClose", true}/*,
+                            {"ShowInTaskbar", true}*/
                         });
                     });
 

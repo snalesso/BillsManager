@@ -36,7 +36,7 @@
                 <Setter Property="Foreground"
                         Value="{StaticResource ResourceKey=ViewForegroundBrush}" />
                 <Setter Property="Margin"
-                        Value="1.4" />
+                        Value="1" />
                 <Setter Property="OverridesDefaultStyle"
                         Value="True" />
                 <Setter Property="VerticalContentAlignment"

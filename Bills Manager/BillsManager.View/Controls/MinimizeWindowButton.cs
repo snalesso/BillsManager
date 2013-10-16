@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows;
 
 namespace BillsManager.View.Controls
 {
@@ -13,6 +9,8 @@ namespace BillsManager.View.Controls
         {
             base.OnClick();
 
+            //Window.GetWindow(this).AllowsTransparency = false;
+            //Window.GetWindow(this).WindowStyle = WindowStyle.SingleBorderWindow;
             Window.GetWindow(this).WindowState = WindowState.Minimized;
         }
     }

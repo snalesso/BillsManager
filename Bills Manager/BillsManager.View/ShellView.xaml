@@ -10,11 +10,7 @@
              d:DataContext="{d:DesignInstance Type=ViewModel:ShellViewModel, IsDesignTimeCreatable=True}">
 
     <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Dictionaries/Styles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        <ResourceDictionary Source="Dictionaries\Styles.xaml" />
     </UserControl.Resources>
 
     <Grid>
@@ -91,7 +87,6 @@
         </Menu>
 
         <ContentControl Grid.Row="2"
-                        Margin="8 0 0 0"
                         x:Name="SearchBillsViewModel" />
 
         <ContentControl x:Name="BillsViewModel"
