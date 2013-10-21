@@ -1,9 +1,9 @@
-﻿using System;
+﻿using BillsManager.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
-using BillsManager.Model;
 
 namespace BillsManager.Service.Providers
 {
@@ -95,12 +95,16 @@ namespace BillsManager.Service.Providers
         {
             this.EnsureXDocumentIsInitialized();
 
-            var XBill = this.xmlBillsDB.Root.Element("Bills").Elements("Bill").Single(elem => elem.Attribute("ID").Value == bill.ID.ToString());
+            var XBill = this.xmlBillsDB.Root.Element("Bills").Elements("Bill")
+                .Single(elem => elem.Attribute("ID").Value == bill.ID.ToString());
 
-            typeof(Bill).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(pi => pi.Name != "ID").ToList().ForEach(pi =>
-            {
-                XBill.SetAttributeValue(pi.Name, pi.GetValue(bill, null));
-            });
+            typeof(Bill).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(pi => pi.Name != "ID")
+                .ToList()
+                .ForEach(pi =>
+                {
+                    XBill.SetAttributeValue(pi.Name, pi.GetValue(bill, null));
+                });
 
             this.SaveXDocument();
 
@@ -131,7 +135,10 @@ namespace BillsManager.Service.Providers
         {
             this.EnsureXDocumentIsInitialized();
 
-            this.xmlBillsDB.Root.Element("Bills").Elements().Single(elem => elem.Attribute("ID").Value == bill.ID.ToString()).Remove();
+            this.xmlBillsDB.Root.Element("Bills")
+                .Elements()
+                .Single(elem => elem.Attribute("ID").Value == bill.ID.ToString())
+                .Remove();
 
             //this.DecreaseBillsCount();
 

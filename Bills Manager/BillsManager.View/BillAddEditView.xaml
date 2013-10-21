@@ -11,6 +11,10 @@
         <ResourceDictionary Source="Dictionaries\Styles.xaml" />
     </UserControl.Resources>
 
+    <UserControl.Background>
+        <Binding Mode="OneTime" Source="{StaticResource ViewBackgroundBrush}"/>
+    </UserControl.Background>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="8" />

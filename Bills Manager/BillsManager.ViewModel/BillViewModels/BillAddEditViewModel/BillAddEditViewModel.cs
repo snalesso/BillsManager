@@ -38,7 +38,10 @@ namespace BillsManager.ViewModel
 
             this.eventAggregator.Subscribe(this);
 
+            
+        
             this.AvailableSuppliers = this.GetAvailableSuppliers();
+            this.HasChanges = false;
         }
 
         #endregion
@@ -58,8 +61,8 @@ namespace BillsManager.ViewModel
                     this.availableSuppliers = value;
                     this.NotifyOfPropertyChange(() => this.AvailableSuppliers);
 
-                    var selSupp = this.AvailableSuppliers.Single(s => s.ID == this.SupplierID);
-                    this.selectedSupplier = selSupp != null ? selSupp : this.AvailableSuppliers.FirstOrDefault();
+                    var selSupp = this.AvailableSuppliers.SingleOrDefault(s => s.ID == this.SupplierID);
+                    this.SelectedSupplier = selSupp != null ? selSupp : this.AvailableSuppliers.FirstOrDefault();
                 }
             }
         }
@@ -79,7 +82,7 @@ namespace BillsManager.ViewModel
                 }
             }
         }
-        
+
         #endregion
 
         #region wrapped from bill
@@ -254,7 +257,7 @@ namespace BillsManager.ViewModel
 
             return suppliers;
         }
-        
+
         #region message handlers
 
         public void Handle(SuppliersListChangedMessage message)

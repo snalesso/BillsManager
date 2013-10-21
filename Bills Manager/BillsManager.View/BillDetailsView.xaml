@@ -17,6 +17,10 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
+    <UserControl.Background>
+        <Binding Mode="OneTime" Source="{StaticResource ViewBackgroundBrush}"/>
+    </UserControl.Background>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="8" />

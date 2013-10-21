@@ -11,6 +11,10 @@
         <ResourceDictionary Source="Dictionaries\Styles.xaml" />
     </UserControl.Resources>
 
+    <UserControl.Background>
+        <Binding Mode="OneTime" Source="{StaticResource ViewBackgroundBrush}"/>
+    </UserControl.Background>
+
     <Grid Grid.IsSharedSizeScope="True">
         <Grid.RowDefinitions>
             <!--0-->
@@ -246,6 +250,7 @@
         <TextBox Grid.Column="3"
                  Grid.Row="13"
                  Width="150"
+                 MaxLength="2"
                  MaxLines="1"
                  TabIndex="4"
                  Text="{Binding Path=Province, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"

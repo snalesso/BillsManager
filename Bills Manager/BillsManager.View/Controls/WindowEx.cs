@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows;
-using Microsoft.Windows.Shell;
+using System.Windows.Shell;
 
 namespace BillsManager.View.Controls
 {

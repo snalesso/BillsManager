@@ -12,6 +12,10 @@
         <ResourceDictionary Source="Dictionaries\Styles.xaml" />
     </UserControl.Resources>
 
+    <UserControl.Background>
+        <Binding Mode="OneTime" Source="{StaticResource ViewBackgroundBrush}"/>
+    </UserControl.Background>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="8" />
@@ -76,9 +80,9 @@
         <TextBlock Grid.Column="3"
                    Grid.Row="5"
                    VerticalAlignment="Center">
-            <Run Text="{Binding Path=ObligationState, Mode=OneWay}" />
+            <Run Text="{Binding Path=ObligationState, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
             <Run Text="  " />
-            <Run Text="{Binding ObligationAmount, StringFormat=\{0:C2\}}" />
+            <Run Text="{Binding ObligationAmount, StringFormat=\{0:C2\}, UpdateSourceTrigger=PropertyChanged}" />
         </TextBlock>
 
         <TextBlock Text="Phone"

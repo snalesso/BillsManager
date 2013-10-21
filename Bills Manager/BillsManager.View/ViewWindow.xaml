@@ -2,7 +2,7 @@
                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                   xmlns:Shell="http://schemas.microsoft.com/winfx/2006/xaml/presentation/shell"
+                   xmlns:Shell="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
                    xmlns:Controls="clr-namespace:BillsManager.View.Controls"
                    x:Class="BillsManager.View.ViewWindow"
                    mc:Ignorable="d"
@@ -29,6 +29,12 @@
                         Value="True" />
                 <Setter Property="WindowStyle"
                         Value="None" />
+                <Setter Property="Background"
+                        Value="{StaticResource ResourceKey=ViewBackgroundBrush}" />
+                <Setter Property="BorderBrush"
+                        Value="{StaticResource ResourceKey=ViewBorderBrush}" />
+                <Setter Property="Foreground"
+                        Value="{StaticResource ResourceKey=ViewForegroundBrush}" />
 
                 <Setter Property="Shell:WindowChrome.WindowChrome">
                     <Setter.Value>
@@ -114,7 +120,7 @@
                                             Value="Collapsed" />
                                     <Setter TargetName="controlBox"
                                             Property="Margin"
-                                            Value="0 0 -1 0" />
+                                            Value="0 -1 -1 0" />
                                 </Trigger>
                                 <Trigger Property="ResizeMode"
                                          Value="NoResize">

@@ -6,11 +6,15 @@
              xmlns:ViewModel="clr-namespace:BillsManager.ViewModel;assembly=BillsManager.ViewModel"
              xmlns:DataTemplates="clr-namespace:BillsManager.View.DataTemplates"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=ViewModel:SuppliersViewModel, IsDesignTimeCreatable=True}">
+             d:DataContext="{d:DesignInstance Type=ViewModel:SuppliersViewModel, IsDesignTimeCreatable=True}" >
 
     <UserControl.Resources>
         <ResourceDictionary Source="Dictionaries\Styles.xaml" />
     </UserControl.Resources>
+
+    <UserControl.Background>
+        <Binding Mode="OneTime" Source="{StaticResource ViewBackgroundBrush}"/>
+    </UserControl.Background>
 
     <ListView Grid.IsSharedSizeScope="True"
               ItemsSource="{Binding Path=FilteredSupplierViewModels}"
@@ -89,7 +93,7 @@
                 <GridViewColumn DisplayMemberBinding="{Binding Name}"
                                 Header="Name"
                                 Width="160" />
-                <GridViewColumn DisplayMemberBinding="{Binding ObligationState, Mode=OneWay}"
+                <GridViewColumn DisplayMemberBinding="{Binding ObligationState, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                 Header="Obligation"
                                 Width="100" />
                 <GridViewColumn DisplayMemberBinding="{Binding Notes}"

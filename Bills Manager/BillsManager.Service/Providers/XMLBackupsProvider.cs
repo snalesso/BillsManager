@@ -12,7 +12,7 @@ namespace BillsManager.Service.Providers
 
         private readonly string dbFolderPath = AppDomain.CurrentDomain.BaseDirectory + @"\Database\";
         private readonly string backupsFolderPath = AppDomain.CurrentDomain.BaseDirectory + @"\Backups\";
-        private readonly string dbTempFolder = AppDomain.CurrentDomain.BaseDirectory + @"\DB Temp Folder\";
+        private readonly string dbTempFolder = AppDomain.CurrentDomain.BaseDirectory + @"\Temp\";
 
         private readonly string billsDBFileName = @"Bills";
         private readonly string suppliersDBFileName = @"Suppliers";

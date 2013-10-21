@@ -18,6 +18,10 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
+    <UserControl.Background>
+        <Binding Mode="OneTime" Source="{StaticResource ViewBackgroundBrush}"/>
+    </UserControl.Background>
+
     <ListView Grid.IsSharedSizeScope="True"
               ItemsSource="{Binding FilteredBillViewModels, Mode=OneWay}"
               MinHeight="350"

@@ -206,7 +206,11 @@ namespace BillsManager.ViewModel
         {
             if (this.ID == message.AddedBill.SupplierID)
                 if (!message.AddedBill.PaymentDate.HasValue)
+                {
+                    if (double.IsNaN(this.obligationAmount))
+                        this.ObligationAmount = 0;
                     this.ObligationAmount += -message.AddedBill.Amount;
+                }
         }
 
         public void Handle(BillDeletedMessage message)
