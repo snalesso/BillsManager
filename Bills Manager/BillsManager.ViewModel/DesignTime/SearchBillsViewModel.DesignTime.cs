@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using BillsManager.Model;
+﻿using BillsManager.Models;
 using Caliburn.Micro;
+using System;
+using System.Linq;
 
-namespace BillsManager.ViewModel
+namespace BillsManager.ViewModels
 {
 #if DEBUG
     public partial class SearchBillsViewModel : Screen
@@ -32,13 +32,18 @@ namespace BillsManager.ViewModel
                     "Via Stromboli",
                     "14",
                     "Milano",
-                    20144,
+                    "20144",
                     "MI",
                     "Italia",
                     "faber-castell@faber-castell.it",
                     "http://www.faber-castell.it",
                     "02/43069601",
-                    "sconti 10/06 - 24/09.")};
+                    "02/43069601",
+                    "sconti 10/06 - 24/09.",
+                    "Barbara",
+                    "Robecchi",
+                    "347-7892234")
+            };
 
             this.AvailableSuppliers = supps;
             this.SelectedSupplier = this.AvailableSuppliers.FirstOrDefault();
@@ -54,6 +59,6 @@ namespace BillsManager.ViewModel
         }
 
         #endregion
-    } 
+    }
 #endif
 }

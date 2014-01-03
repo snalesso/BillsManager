@@ -1,9 +1,10 @@
-﻿using Caliburn.Micro;
+﻿#if DEBUG
 
-namespace BillsManager.ViewModel
+using Caliburn.Micro;
+
+namespace BillsManager.ViewModels
 {
-#if DEBUG
-    public partial class ShellViewModel : Screen, IShell
+    public partial class ShellViewModel
     {
         #region ctor
 
@@ -13,5 +14,6 @@ namespace BillsManager.ViewModel
 
         #endregion
     } 
-#endif
 }
+
+#endif

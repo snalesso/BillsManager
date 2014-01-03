@@ -2,26 +2,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:ViewModel="clr-namespace:BillsManager.ViewModel;assembly=BillsManager.ViewModel"
+             xmlns:ViewModels="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
              xmlns:cal="http://www.caliburnproject.org"
-             x:Class="BillsManager.View.DataTemplates.BillDataTemplate"
+             x:Class="BillsManager.Views.DataTemplates.BillDataTemplate"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type ViewModel:BillDetailsViewModel}}" >
+             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type ViewModels:BillDetailsViewModel}}" >
 
     <UserControl.Resources>
-        <ResourceDictionary Source="/BillsManager.View;component/Dictionaries/Styles.xaml" />
+        <ResourceDictionary Source="/BillsManager.Views;component/Dictionaries/Styles.xaml" />
     </UserControl.Resources>
 
     <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="8" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="8" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="8" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="8" />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
             <ColumnDefinition Width="Auto"
                               SharedSizeGroup="col1" />
             <ColumnDefinition Width="42" />
@@ -30,7 +30,7 @@
             <ColumnDefinition Width="42" />
             <ColumnDefinition Width="Auto"
                               SharedSizeGroup="col5" />
-            <ColumnDefinition Width="8" />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="{Binding Path=Supplier.Name}"

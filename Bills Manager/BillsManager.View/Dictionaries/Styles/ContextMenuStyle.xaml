@@ -7,14 +7,20 @@
 
     <Style x:Key="{x:Type ContextMenu}"
            TargetType="{x:Type ContextMenu}">
-        <Setter Property="RenderOptions.ClearTypeHint"
-                Value="Enabled" />
+        
         <Setter Property="Background"
-                Value="{StaticResource ResourceKey=MenuItemBackgroundBrush}" />
+                Value="{StaticResource MenuItemBackgroundBrush}" />
         <Setter Property="BorderBrush"
-                Value="{StaticResource ResourceKey=MenuBorderBrush}" />
+                Value="{StaticResource MenuBorderBrush}" />
         <Setter Property="Foreground"
-                Value="{StaticResource ResourceKey=MenuItemForegroundBrush}" />
+                Value="{StaticResource MenuItemForegroundBrush}" />
+
+        <Setter Property="Padding">
+            <Setter.Value>
+                <Thickness />
+            </Setter.Value>
+        </Setter>
+        
         <Setter Property="BorderThickness"
                 Value="1" />
         <Setter Property="VerticalContentAlignment"
@@ -27,11 +33,14 @@
                 Value="Both" />
         <Setter Property="Stylus.IsFlicksEnabled"
                 Value="False" />
+        
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContextMenu}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="{StaticResource ViewCornerRadius}"
+                            Padding="{TemplateBinding Padding}"
                             BorderThickness="{TemplateBinding BorderThickness}">
                         <ScrollViewer CanContentScroll="true"
                                       Style="{StaticResource {ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}}">

@@ -6,12 +6,13 @@
     </ResourceDictionary.MergedDictionaries>
 
     <ControlTemplate x:Key="ErrorTemplate">
-        
-        <Border BorderBrush="{StaticResource ResourceKey=ErrorTemplateBorderBrush}"
+
+        <Border BorderBrush="{StaticResource ErrorTemplateBorderBrush}"
+                CornerRadius="{StaticResource ViewCornerRadius}"
                 BorderThickness="1">
             <Grid>
-                <Path Data="{StaticResource ResourceKey=TopRightLittleCorner}"
-                      Fill="{StaticResource ResourceKey=ErrorTemplateBorderBrush}"
+                <Path Data="{StaticResource TopRightLittleCorner}"
+                      Fill="{StaticResource ErrorTemplateBorderBrush}"
                       HorizontalAlignment="Right"
                       VerticalAlignment="Top" />
                 <AdornedElementPlaceholder x:Name="adorner"
@@ -19,12 +20,13 @@
                                            HorizontalAlignment="Stretch"
                                            VerticalAlignment="Stretch" />
 
-                    <Popup x:Name="errorPopup"
+                <Popup x:Name="errorPopup"
                        Placement="Right"
                        VerticalOffset="-1"
                        HorizontalOffset="2">
-                    <Border Background="{StaticResource ResourceKey=ErrorTemplateBackgroundBrush}">
-                        <TextBlock Foreground="{StaticResource ResourceKey=ErrorTemplateForegroundBrush}"
+                    <Border Background="{StaticResource ErrorTemplateBackgroundBrush}"
+                            CornerRadius="{StaticResource ViewCornerRadius}">
+                        <TextBlock Foreground="{StaticResource ErrorTemplateForegroundBrush}"
                                    Text="{Binding ElementName=adorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"
                                    Margin="4" />
                     </Border>
@@ -40,7 +42,7 @@
                         Property="IsOpen"
                         Value="True" />
             </Trigger>
-            
+
             <Trigger Property="IsFocused"
                      Value="true">
                 <Setter TargetName="errorPopup"

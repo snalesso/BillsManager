@@ -1,14 +1,13 @@
-﻿using System;
+﻿using BillsManager.Models;
+using BillsManager.ViewModels.Commanding;
+using BillsManager.ViewModels.Messages;
+using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Windows;
-using BillsManager.Model;
-using BillsManager.ViewModel.Commanding;
-using BillsManager.ViewModel.Messages;
-using Caliburn.Micro;
 
-namespace BillsManager.ViewModel
+namespace BillsManager.ViewModels
 {
     public partial class BillAddEditViewModel :
         BillViewModel,
@@ -17,16 +16,16 @@ namespace BillsManager.ViewModel
         #region fields
 
         protected readonly IWindowManager windowManager;
-        protected readonly IEventAggregator eventAggregator;
+        protected readonly IEventAggregator dbEventAggregator;
 
         #endregion
 
         #region ctor
 
         public BillAddEditViewModel(
-            Bill bill,
             IWindowManager windowManager,
-            IEventAggregator eventAggregator)
+            IEventAggregator dbEventAggregator,
+            Bill bill)
         {
             if (bill == null)
                 throw new ArgumentNullException("bill cannot be null");
@@ -34,14 +33,22 @@ namespace BillsManager.ViewModel
             this.exposedBill = bill;
 
             this.windowManager = windowManager;
-            this.eventAggregator = eventAggregator;
+            this.dbEventAggregator = dbEventAggregator;
 
-            this.eventAggregator.Subscribe(this);
+            this.dbEventAggregator.Subscribe(this);
 
-            
-        
-            this.AvailableSuppliers = this.GetAvailableSuppliers();
-            this.HasChanges = false;
+            this.AvailableSuppliers = this.GetAvailableSuppliers(); /* TODO: make injected? dependencies should be provided
+                                                                     * but the handler is needed anyway */
+            this.HasChanges = false; // TODO: check if mandatory
+
+            this.Deactivated +=
+                (s, e) =>
+                {
+                    if (e.WasClosed)
+                    {
+                        this.dbEventAggregator.Unsubscribe(this);
+                    }
+                };
         }
 
         #endregion
@@ -61,13 +68,13 @@ namespace BillsManager.ViewModel
                     this.availableSuppliers = value;
                     this.NotifyOfPropertyChange(() => this.AvailableSuppliers);
 
-                    var selSupp = this.AvailableSuppliers.SingleOrDefault(s => s.ID == this.SupplierID);
+                    var selSupp = this.AvailableSuppliers.SingleOrDefault(s => s.ID == this.SupplierID); // TODO: move to selectedsupp get?
                     this.SelectedSupplier = selSupp != null ? selSupp : this.AvailableSuppliers.FirstOrDefault();
                 }
             }
         }
 
-        private Supplier selectedSupplier;
+        private Supplier selectedSupplier; // TODO: remove and make the get to point to the bill?
         [Required(ErrorMessage = "You must select a supplier.")] // TODO: language
         public Supplier SelectedSupplier
         {
@@ -185,7 +192,7 @@ namespace BillsManager.ViewModel
             }
         }
 
-        [StringLength(100, ErrorMessage = "You cannot exceed 100 characters.")] // TODO: language
+        [StringLength(200, ErrorMessage = "You cannot exceed 200 characters.")] // TODO: language
         public override string Notes
         {
             get { return this.ExposedBill.Notes; }
@@ -201,7 +208,7 @@ namespace BillsManager.ViewModel
             }
         }
 
-        [Required(ErrorMessage = "You must specify a code.")] // TODO: language
+        //[Required(ErrorMessage = "You must specify a code.")] // TODO: language
         public override string Code
         {
             get { return this.ExposedBill.Code; }
@@ -240,7 +247,7 @@ namespace BillsManager.ViewModel
 
         public new string DisplayName
         {
-            get { return this.IsInEditMode ? ("Edit bill" + (this.IsInEditMode & this.HasChanges ? " [*]" : string.Empty)) : "New bill"; }
+            get { return this.IsInEditMode ? ("Edit bill" + (this.IsInEditMode & this.HasChanges ? " [*]" : string.Empty)) : "New bill"; } // TODO: language
         }
 
         #endregion
@@ -253,9 +260,55 @@ namespace BillsManager.ViewModel
         {
             IEnumerable<Supplier> suppliers = null;
 
-            this.eventAggregator.Publish(new AskForAvailableSuppliersMessage(s => suppliers = s));
+            this.dbEventAggregator.Publish(new AvailableSuppliersRequestMessage(s => suppliers = s));
 
             return suppliers;
+        }
+
+        private void AddNewSupplier()
+        {
+            this.dbEventAggregator.Publish(new AddNewSupplierOrder());
+        }
+
+        private void ConfirmAddEditAndClose()
+        {
+            if (this.IsInEditMode)
+                this.EndEdit();
+
+            this.TryClose(true);
+        }
+
+        private void CancelAddEditAndClose()
+        {
+            // TODO: optimize
+            if (this.HasChanges)
+            {
+                var question = new DialogViewModel(
+                       "Cancel " + (this.IsInEditMode ? "edit" : "add"), // TODO: language
+                       "Are you sure you want to discard all the changes?",
+                       new[]
+                       {
+                           new DialogResponse(ResponseType.Yes),
+                           new DialogResponse(ResponseType.No)
+                       });
+
+                this.windowManager.ShowDialog(question);
+
+                if (question.FinalResponse == ResponseType.Yes)
+                {
+                    if (this.IsInEditMode)
+                        this.CancelEdit();
+
+                    this.TryClose(false);
+                }
+            }
+            else
+            {
+                if (this.IsInEditMode)
+                    this.CancelEdit();
+
+                this.TryClose(false);
+            }
         }
 
         #region message handlers
@@ -271,6 +324,8 @@ namespace BillsManager.ViewModel
 
         #region commands
 
+        // URGENT: search supplier editable combobox
+        // URGENT: update datepicker style
         private RelayCommand addNewSupplierCommand;
         public RelayCommand AddNewSupplierCommand
         {
@@ -278,10 +333,7 @@ namespace BillsManager.ViewModel
             {
                 if (this.addNewSupplierCommand == null)
                     this.addNewSupplierCommand = new RelayCommand(
-                        () =>
-                        {
-                            this.eventAggregator.Publish(new AddNewSupplierRequestMessage());
-                        });
+                        () => this.AddNewSupplier());
 
                 return this.addNewSupplierCommand;
             }
@@ -292,14 +344,9 @@ namespace BillsManager.ViewModel
         {
             get
             {
-                if (this.confirmAddEditAndCloseCommand == null) this.confirmAddEditAndCloseCommand = new RelayCommand(
-                    () =>
-                    {
-                        if (this.IsInEditMode)
-                            this.EndEdit();
-
-                        this.TryClose(true);
-                    },
+                if (this.confirmAddEditAndCloseCommand == null)
+                    this.confirmAddEditAndCloseCommand = new RelayCommand(
+                    () => this.ConfirmAddEditAndClose(),
                     () => this.IsValid);
 
                 return this.confirmAddEditAndCloseCommand;
@@ -313,39 +360,7 @@ namespace BillsManager.ViewModel
             {
                 if (this.cancelAddEditAndCloseCommand == null)
                     this.cancelAddEditAndCloseCommand = new RelayCommand(
-                        () =>
-                        { // TODO: optimize
-                            if (this.HasChanges)
-                            {
-                                var question = new DialogViewModel(
-                                       "Canceling " + (this.IsInEditMode ? "edit" : "add"),
-                                       "Are you sure you want to discard all the changes?",
-                                       new[]
-                                       {
-                                           new DialogResponse(ResponseType.Yes),
-                                           new DialogResponse(ResponseType.No)
-                                       });
-
-                                this.windowManager.ShowDialog(
-                                    question,
-                                    settings: new Dictionary<string, object> { { "ResizeMode", ResizeMode.NoResize } });
-
-                                if (question.Response == ResponseType.Yes)
-                                {
-                                    if (this.IsInEditMode)
-                                        this.CancelEdit();
-
-                                    this.TryClose(false);
-                                }
-                            }
-                            else
-                            {
-                                if (this.IsInEditMode)
-                                    this.CancelEdit();
-
-                                this.TryClose(false);
-                            }
-                        });
+                        () => this.CancelAddEditAndClose());
 
                 return this.cancelAddEditAndCloseCommand;
             }

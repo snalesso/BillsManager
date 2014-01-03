@@ -1,0 +1,140 @@
+﻿<UserControl x:Class="BillsManager.Views.SearchBillsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ViewModel="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=ViewModel:SearchBillsViewModel, IsDesignTimeCreatable=True}">
+
+    <UserControl.Resources>
+        <ResourceDictionary Source="Dictionaries\Styles.xaml" />
+    </UserControl.Resources>
+
+    <UserControl.Background>
+        <Binding Mode="OneTime"
+                 Source="{StaticResource ViewBackgroundBrush}" />
+    </UserControl.Background>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Payment"
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Margin="0 2" />
+
+        <CheckBox IsThreeState="True"
+                  IsChecked="{Binding IsPaidFilterValue}"
+                  Content="{Binding IsPaidFilterState}"
+                  Grid.Row="2"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Center" />
+
+        <CheckBox Content="Not paid"
+                  Visibility="Hidden"
+                  Grid.Row="2"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center" />
+
+
+        <TextBlock Grid.Column="2"
+                   Text="Release date"
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Margin="0 2" />
+
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    Orientation="Horizontal"
+                    Grid.Column="2"
+                    Grid.Row="2">
+            <CheckBox IsChecked="{Binding UseReleaseDateFilter}"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Center" />
+            <DatePicker VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        SelectedDate="{Binding ReleaseDateFilterValue}" />
+        </StackPanel>
+
+        <TextBlock Grid.Column="4"
+                   Text="Due date"
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Margin="0 2" />
+
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    Orientation="Horizontal"
+                    Grid.Column="4"
+                    Grid.Row="2">
+            <CheckBox IsChecked="{Binding UseDueDateFilter}"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Center" />
+            <DatePicker VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        SelectedDate="{Binding DueDateFilterValue}" />
+        </StackPanel>
+
+        <TextBlock Grid.Column="6"
+                   Text="Supplier"
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Margin="0 2" />
+
+        <StackPanel Grid.Column="6"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    Orientation="Horizontal"
+                    Grid.Row="2">
+            <CheckBox IsChecked="{Binding UseSupplierFilter}"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Center" />
+            <ComboBox Grid.Row="1"
+                      Grid.Column="2"
+                      MinWidth="230"
+                      Width="Auto"
+                      SelectedValue="{Binding SelectedSupplier}"
+                      ItemsSource="{Binding AvailableSuppliers, IsAsync=True}"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Left">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+
+        <Button Content="Filter"
+                Command="{Binding SendFilterCommand}"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Left"
+                Focusable="False"
+                Grid.Column="8"
+                Grid.Row="2" />
+
+        <Button Command="{Binding ExitSearchCommand}"
+                Content="Show all"
+                Focusable="False"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Left"
+                Grid.Column="10"
+                Grid.Row="2" />
+
+    </Grid>
+</UserControl>

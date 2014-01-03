@@ -9,16 +9,16 @@
     <Style TargetType="{x:Type Button}">
 
         <Setter Property="Background"
-                Value="{StaticResource ResourceKey=ButtonNormalBackgroundBrush}" />
+                Value="{StaticResource ButtonNormalBackgroundBrush}" />
 
         <Setter Property="Foreground"
-                Value="{StaticResource ResourceKey=ButtonNormalForegroundBrush}" />
+                Value="{StaticResource ButtonNormalForegroundBrush}" />
 
         <Setter Property="BorderBrush"
-                Value="{StaticResource ResourceKey=ButtonNormalBorderBrush}" />
+                Value="{StaticResource ButtonNormalBorderBrush}" />
 
         <Setter Property="BorderThickness"
-                Value="{StaticResource ResourceKey=BorderThickness}" />
+                Value="{StaticResource BorderThickness}" />
 
         <Setter Property="HorizontalContentAlignment"
                 Value="Center" />
@@ -35,19 +35,26 @@
 
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{StaticResource ViewCornerRadius}">
 
                         <ContentPresenter Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           RecognizesAccessKey="True"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                    </Border>                    
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
 
         <Style.Triggers>
             
+            <!--<Trigger Property="Command"
+                     Value="{x:Null}">
+                <Setter Property="IsEnabled"
+                        Value="False" />
+            </Trigger>-->
+
             <Trigger Property="IsCancel"
                      Value="true">
                 <Setter Property="BorderBrush"

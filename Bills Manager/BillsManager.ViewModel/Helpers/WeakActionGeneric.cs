@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BillsManager.ViewModel.Helpers
+namespace BillsManager.ViewModels.Helpers
 {
 
     /// <summary>

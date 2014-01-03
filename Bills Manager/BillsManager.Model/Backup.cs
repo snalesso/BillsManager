@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BillsManager.Model
+namespace BillsManager.Models
 {
     public class Backup
     {

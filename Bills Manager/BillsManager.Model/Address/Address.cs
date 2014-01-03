@@ -1,4 +1,4 @@
-﻿namespace BillsManager.Model
+﻿namespace BillsManager.Models
 {
     public partial class Address
     {
@@ -12,7 +12,7 @@
             string street,
             string number,
             string city,
-            ushort zip,
+            string zip,
             string province,
             string country)
         {
@@ -67,8 +67,8 @@
             }
         }
 
-        private ushort zip = ushort.MinValue;
-        public ushort Zip
+        private string zip;
+        public string Zip
         {
             get { return this.zip; }
             set

@@ -23,7 +23,8 @@
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
                     <Border x:Name="ClassicBorder"
                             BorderThickness="1"
-                            Background="{TemplateBinding Background}">
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="{StaticResource ViewCornerRadius}">
                         <ContentPresenter Margin="1"
                                           VerticalAlignment="Center"
                                           HorizontalAlignment="Center" />

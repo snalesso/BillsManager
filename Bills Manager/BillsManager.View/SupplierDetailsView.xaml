@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="BillsManager.View.SupplierDetailsView"
+﻿<UserControl x:Class="BillsManager.Views.SupplierDetailsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:ViewModel="clr-namespace:BillsManager.ViewModel;assembly=BillsManager.ViewModel"
+             xmlns:ViewModel="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
              mc:Ignorable="d"
              MinWidth="400"
              d:DataContext="{d:DesignInstance Type=ViewModel:SupplierDetailsViewModel, IsDesignTimeCreatable=True}">
@@ -13,143 +13,179 @@
     </UserControl.Resources>
 
     <UserControl.Background>
-        <Binding Mode="OneTime" Source="{StaticResource ViewBackgroundBrush}"/>
+        <Binding Mode="OneTime"
+                 Source="{StaticResource ViewBackgroundBrush}" />
     </UserControl.Background>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="8" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="8" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="8" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="8" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="8" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="8" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="8" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="24" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="8" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="8" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="8" />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
             <ColumnDefinition />
-            <ColumnDefinition Width="8" />
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="Name"
-                   Grid.Column="1"
-                   Grid.Row="1"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}" />
         <TextBlock Text="{Binding Path=Name}"
-                   Grid.Column="3"
-                   Grid.Row="1"
+                   Grid.Column="2"
                    TextAlignment="Right"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Left" />
 
         <TextBlock Text="Address"
-                   Grid.Column="1"
-                   Grid.Row="3"
+                   Grid.Row="2"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}" />
-        <TextBlock Text="{Binding Path=FullAddress}"
-                   Grid.Column="3"
-                   Grid.Row="3"
+        <TextBlock Text="{Binding FullAddress}"
+                   Grid.Column="2"
+                   Grid.Row="2"
                    VerticalAlignment="Center" />
 
         <TextBlock Text="Obligation"
-                   Grid.Column="1"
-                   Grid.Row="5"
+                   Grid.Row="4"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}" />
-        <TextBlock Grid.Column="3"
-                   Grid.Row="5"
+        <TextBlock Grid.Column="2"
+                   Grid.Row="4"
                    VerticalAlignment="Center">
-            <Run Text="{Binding Path=ObligationState, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Run Text="{Binding ObligationState, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
             <Run Text="  " />
-            <Run Text="{Binding ObligationAmount, StringFormat=\{0:C2\}, UpdateSourceTrigger=PropertyChanged}" />
+            <Run Text="{Binding ObligationAmount, StringFormat=\{0:N2\} €, UpdateSourceTrigger=PropertyChanged}" />
         </TextBlock>
 
-        <TextBlock Text="Phone"
-                   Grid.Column="1"
-                   Grid.Row="7"
+        <TextBlock Grid.Row="6"
+                   Text="Agent"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}" />
-        <TextBlock Grid.Column="3"
-                   Grid.Row="7"
-                   Text="{Binding Path=Phone}"
+        <TextBlock Grid.Column="2"
+                   Grid.Row="6"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center">
+            <Run Text="{Binding AgentName}" />
+            <Run Text="{Binding AgentSurname}" />
+        </TextBlock>
+
+        <TextBlock Grid.Row="8"
+                   Text="Agent phone"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{StaticResource ViewTitleBrush}" />
+        <TextBlock Grid.Column="2"
+                   Grid.Row="8"
+                   Text="{Binding AgentPhone}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center" />
+
+        <TextBlock Text="Phone"
+                   Grid.Row="10"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{StaticResource ViewTitleBrush}" />
+        <TextBlock Grid.Column="2"
+                   Grid.Row="10"
+                   Text="{Binding Phone}"
+                   VerticalAlignment="Center" />
+
+        <TextBlock Text="Fax"
+                   Grid.Row="12"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{StaticResource ViewTitleBrush}" />
+        <TextBlock Grid.Column="2"
+                   Grid.Row="12"
+                   Text="{Binding Fax}"
                    VerticalAlignment="Center" />
 
         <TextBlock Text="eMail"
-                   Grid.Column="1"
-                   Grid.Row="9"
+                   Grid.Row="14"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}" />
-        <TextBlock Text="{Binding Path=eMail}"
-                   Grid.Column="3"
-                   Grid.Row="9"
+        <TextBlock Text="{Binding eMail}"
+                   Grid.Column="2"
+                   Grid.Row="14"
                    VerticalAlignment="Center" />
 
         <TextBlock Text="Website"
-                   Grid.Column="1"
-                   Grid.Row="11"
+                   Grid.Row="16"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}" />
-        <TextBlock Text="{Binding Path=Website}"
-                   Grid.Column="3"
-                   Grid.Row="11"
+        <TextBlock Text="{Binding Website}"
+                   Grid.Column="2"
+                   Grid.Row="16"
                    VerticalAlignment="Center" />
 
         <TextBlock Text="Notes"
-                   Grid.Column="1"
-                   Grid.Row="13"
+                   Grid.Row="18"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}" />
-        <TextBlock Text="{Binding Path=Notes}"
-                   Grid.Column="3"
-                   Grid.Row="13"
+        <TextBlock Text="{Binding Notes}"
+                   Grid.Column="2"
+                   Grid.Row="18"
                    TextWrapping="Wrap"
                    TextTrimming="CharacterEllipsis"
                    VerticalAlignment="Center"
                    MaxWidth="390" />
 
         <StackPanel Orientation="Horizontal"
-                    Grid.Column="1"
                     Grid.ColumnSpan="3"
-                    Grid.Row="15"
+                    Grid.Row="20"
                     HorizontalAlignment="Right">
+
             <Button Content="Edit"
                     MinWidth="80"
-                    Command="{Binding Path=SwitchToEditCommand, Mode=OneTime}"
-                    IsDefault="True" />
+                    Command="{Binding SwitchToEditCommand, Mode=OneTime}"
+                    IsDefault="True">
+                <Button.Margin>
+                    <Thickness Right="{StaticResource MarginSizeValue}" />
+                </Button.Margin>
+            </Button>
+
             <Button Content="Close"
-                    Margin="8 0 0 0"
                     MinWidth="80"
-                    Command="{Binding Path=CloseDetailsViewCommand, Mode=OneTime}"
+                    Command="{Binding CloseDetailsViewCommand, Mode=OneTime}"
                     IsCancel="True" />
+
         </StackPanel>
 
     </Grid>

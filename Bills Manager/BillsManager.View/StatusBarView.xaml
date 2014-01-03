@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="BillsManager.Views.StatusBarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ViewModels="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="30"
+             d:DesignWidth="600"
+             d:DataContext="{d:DesignInstance Type=ViewModels:StatusBarViewModel, IsDesignTimeCreatable=True}">
+
+    <UserControl.Resources>
+        <ResourceDictionary Source="Dictionaries\Styles.xaml" />
+    </UserControl.Resources>
+
+    <StatusBar Foreground="{StaticResource ViewForegroundBrush}"
+               FontSize="{StaticResource ViewFontSize}"
+               Background="{StaticResource ViewBackgroundBrush}">
+
+        <StackPanel Orientation="Horizontal"
+                    Visibility="{Binding HasActiveDB, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+            <TextBlock Text="{Binding ActiveDBViewModel.Name, Mode=OneWay}" />
+
+            <TextBlock Text="       " />
+
+            <TextBlock>
+                <Run Text="{Binding ActiveDBViewModel.BillsViewModel.BillViewModels.Count, Mode=OneWay}" />
+                <Run Text="bills" />
+            </TextBlock>
+
+            <TextBlock Text="       " />
+
+            <TextBlock>
+                <Run Text="{Binding ActiveDBViewModel.SuppliersViewModel.SupplierViewModels.Count, Mode=OneWay}" />
+                <Run Text="suppliers" />
+            </TextBlock>
+
+            <TextBlock Text="       " />
+
+            <TextBlock Text="Saved"
+                       Visibility="{Binding ActiveDBViewModel.IsNotDirty, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+            <TextBlock Text="Edited"
+                       Visibility="{Binding ActiveDBViewModel.IsDirty, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+
+            <TextBlock Text="       " />
+
+            <TextBlock Text="{Binding ActiveDBViewModel.BillsViewModel.FiltersDescription, Mode=OneWay}" />
+
+        </StackPanel>
+
+    </StatusBar>
+
+</UserControl>

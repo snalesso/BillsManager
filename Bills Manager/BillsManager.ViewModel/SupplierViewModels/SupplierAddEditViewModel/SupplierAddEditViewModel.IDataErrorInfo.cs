@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
-using BillsManager.ViewModel.Validation;
+using BillsManager.ViewModels.Validation;
 
-namespace BillsManager.ViewModel
+namespace BillsManager.ViewModels
 {
     public partial class SupplierAddEditViewModel : IDataErrorInfo
     {
@@ -24,12 +24,10 @@ namespace BillsManager.ViewModel
         {
             get
             {
-                // TODO: move initialization to ctor?
                 if (this.rulesTracker == null)
                     this.rulesTracker = new ValidationRulesTracker<SupplierAddEditViewModel>(this);
 
                 var errors = this.rulesTracker.GetErrorsForProperty(columnName);
-
                 return errors;
             }
         }

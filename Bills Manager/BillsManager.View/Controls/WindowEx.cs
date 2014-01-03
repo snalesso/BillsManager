@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Shell;
 
-namespace BillsManager.View.Controls
+namespace BillsManager.Views.Controls
 {
     public class WindowEx : Window
     {

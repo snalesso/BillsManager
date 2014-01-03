@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using BillsManager.Model;
+using BillsManager.Models;
 using Caliburn.Micro;
 
-namespace BillsManager.ViewModel
+namespace BillsManager.ViewModels
 {
     public abstract class BillViewModel : Screen
     {

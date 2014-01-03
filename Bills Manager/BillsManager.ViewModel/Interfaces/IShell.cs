@@ -1,4 +1,4 @@
-namespace BillsManager.ViewModel
+namespace BillsManager.ViewModels
 {
     public interface IShell
     {

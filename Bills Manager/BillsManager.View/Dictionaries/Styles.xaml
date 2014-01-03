@@ -19,10 +19,25 @@
         <ResourceDictionary Source="Styles\MinimizeWindowButtonStyle.xaml" />
         
         <ResourceDictionary Source="Styles\CrossButtonStyle.xaml" />
-        <!--<ResourceDictionary Source="Styles\VerticalSeparatorStyle.xaml" />-->
-
+        
         <ResourceDictionary Source="Styles\ErrorTemplate.xaml" />
         <ResourceDictionary Source="Styles\TextBoxStyle.xaml" />
+
+        <ResourceDictionary Source="Styles\ListBoxExStyle.xaml" />
+        <ResourceDictionary Source="Styles\ListBoxItemStyle.xaml" />
+
+        <ResourceDictionary Source="Styles\ListViewStyle.xaml" />
+        <ResourceDictionary Source="Styles\ListViewItemStyle.xaml" />
+        <ResourceDictionary Source="Styles\GridViewColumnHeaderStyle.xaml" />
+
+        <ResourceDictionary Source="Styles\ComboBoxStyle.xaml" />
+        <ResourceDictionary Source="Styles\ComboBoxItemStyle.xaml" />
+        
+        <ResourceDictionary Source="Styles\CheckBoxStyle.xaml" />
+
+        <ResourceDictionary Source="Styles\GridSplitterStyle.xaml" />
+        
+        <!--<ResourceDictionary Source="Styles\WindowExStyle.xaml" />-->
 
     </ResourceDictionary.MergedDictionaries>
     

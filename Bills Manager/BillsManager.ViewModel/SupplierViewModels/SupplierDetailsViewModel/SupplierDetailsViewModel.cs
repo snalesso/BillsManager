@@ -1,10 +1,10 @@
-﻿using System;
-using BillsManager.Model;
-using BillsManager.ViewModel.Commanding;
-using BillsManager.ViewModel.Messages;
+﻿using BillsManager.Models;
+using BillsManager.ViewModels.Commanding;
+using BillsManager.ViewModels.Messages;
 using Caliburn.Micro;
+using System;
 
-namespace BillsManager.ViewModel
+namespace BillsManager.ViewModels
 {
     public partial class SupplierDetailsViewModel :
         SupplierViewModel,
@@ -16,16 +16,16 @@ namespace BillsManager.ViewModel
         #region fields
 
         protected readonly IWindowManager windowManager;
-        protected readonly IEventAggregator eventAggregator;
+        protected readonly IEventAggregator dbEventAggregator;
 
         #endregion
 
         #region ctor
 
         public SupplierDetailsViewModel(
-            Supplier supplier,
             IWindowManager windowManager,
-            IEventAggregator eventAggregator)
+            IEventAggregator dbEventAggregator,
+            Supplier supplier)
         {
             if (supplier == null)
                 throw new ArgumentNullException("supplier cannot be null");
@@ -33,9 +33,17 @@ namespace BillsManager.ViewModel
             this.ExposedSupplier = supplier;
 
             this.windowManager = windowManager;
-            this.eventAggregator = eventAggregator;
+            this.dbEventAggregator = dbEventAggregator;
 
-            this.eventAggregator.Subscribe(this);
+            this.dbEventAggregator.Subscribe(this);
+
+            // HANDLERS
+            this.Deactivated +=
+                (s, e) =>
+                {
+                    if (e.WasClosed)
+                        this.dbEventAggregator.Unsubscribe(this);
+                };
         }
 
         #endregion
@@ -45,89 +53,89 @@ namespace BillsManager.ViewModel
         #region wrapped from supplier
 
         // TODO: perform a clean override on all the other props
-        public override string City
-        {
-            get
-            {
-                return base.City;
-            }
-            set
-            {
-                base.City = value;
+        //public override string City
+        //{
+        //    get
+        //    {
+        //        return base.City;
+        //    }
+        //    set
+        //    {
+        //        base.City = value;
 
-                this.NotifyOfPropertyChange(() => this.FullAddress);
-            }
-        }
+        //        this.NotifyOfPropertyChange(() => this.FullAddress);
+        //    }
+        //}
 
-        public override string Country
-        {
-            get
-            {
-                return base.Country;
-            }
-            set
-            {
-                base.Country = value;
+        //public override string Country
+        //{
+        //    get
+        //    {
+        //        return base.Country;
+        //    }
+        //    set
+        //    {
+        //        base.Country = value;
 
-                this.NotifyOfPropertyChange(() => this.FullAddress);
-            }
-        }
+        //        this.NotifyOfPropertyChange(() => this.FullAddress);
+        //    }
+        //}
 
-        public override string Province
-        {
-            get
-            {
-                return base.Province;
-            }
-            set
-            {
-                base.Province = value;
+        //public override string Province
+        //{
+        //    get
+        //    {
+        //        return base.Province;
+        //    }
+        //    set
+        //    {
+        //        base.Province = value;
 
-                this.NotifyOfPropertyChange(() => this.FullAddress);
-            }
-        }
+        //        this.NotifyOfPropertyChange(() => this.FullAddress);
+        //    }
+        //}
 
-        public override ushort Zip
-        {
-            get
-            {
-                return base.Zip;
-            }
-            set
-            {
-                base.Zip = value;
+        //public override string Zip
+        //{
+        //    get
+        //    {
+        //        return base.Zip;
+        //    }
+        //    set
+        //    {
+        //        base.Zip = value;
 
-                this.NotifyOfPropertyChange(() => this.FullAddress);
-            }
-        }
+        //        this.NotifyOfPropertyChange(() => this.FullAddress);
+        //    }
+        //}
 
-        public override string Street
-        {
-            get
-            {
-                return base.Street;
-            }
-            set
-            {
-                base.Street = value;
+        //public override string Street
+        //{
+        //    get
+        //    {
+        //        return base.Street;
+        //    }
+        //    set
+        //    {
+        //        base.Street = value;
 
-                this.NotifyOfPropertyChange(() => this.FullAddress);
-            }
-        }
+        //        this.NotifyOfPropertyChange(() => this.FullAddress);
+        //    }
+        //}
 
-        public override string Number
-        {
-            get
-            {
-                return base.Number;
-            }
-            set
-            {
-                base.Number = value;
+        //public override string Number
+        //{
+        //    get
+        //    {
+        //        return base.Number;
+        //    }
+        //    set
+        //    {
+        //        base.Number = value;
 
-                this.NotifyOfPropertyChange(() => this.FullAddress);
-            }
-        }
+        //        this.NotifyOfPropertyChange(() => this.FullAddress);
+        //    }
+        //}
 
         #endregion
 
@@ -154,7 +162,7 @@ namespace BillsManager.ViewModel
             {
                 if (this.ObligationAmount < 0) return Obligation.Creditor;
                 if (this.ObligationAmount > 0) return Obligation.Debtor;
-                return Obligation.Null;
+                return Obligation.None;
             }
         }
 
@@ -263,7 +271,7 @@ namespace BillsManager.ViewModel
                         () =>
                         {
                             this.TryClose();
-                            this.eventAggregator.Publish(new EditSupplierRequestMessage(this.ExposedSupplier));
+                            this.dbEventAggregator.Publish(new EditSupplierRequestMessage(this.ExposedSupplier));
                         });
 
                 return this.switchToEditCommand;

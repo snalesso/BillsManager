@@ -1,16 +1,13 @@
-﻿using System;
+﻿using BillsManager.Models;
+using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using BillsManager.Model;
-using Caliburn.Micro;
 
-namespace BillsManager.ViewModel
+namespace BillsManager.ViewModels
 {
-    public partial class BackupViewModel : PropertyChangedBase
+    public partial class BackupViewModel : Screen
     {
-        #region fields
-        #endregion
-
         #region ctor
 
         public BackupViewModel(
@@ -20,6 +17,8 @@ namespace BillsManager.ViewModel
                 throw new ArgumentNullException("backup cannot be null.");
 
             this.exposedBackup = backup;
+
+            // TODO: add displayname
         }
 
         #endregion
@@ -88,9 +87,6 @@ namespace BillsManager.ViewModel
 
         #endregion
 
-        #endregion
-
-        #region methods
         #endregion
     }
 }

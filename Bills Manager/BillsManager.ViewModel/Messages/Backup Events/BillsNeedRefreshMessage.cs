@@ -1,4 +1,4 @@
-﻿namespace BillsManager.ViewModel.Messages
+﻿namespace BillsManager.ViewModels.Messages
 {
    public class BillsNeedRefreshMessage
     {

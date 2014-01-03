@@ -2,24 +2,26 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:System="clr-namespace:System;assembly=mscorlib">
 
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
     <SolidColorBrush x:Key="ViewBackgroundBrush"
                      Color="White" />
 
     <SolidColorBrush x:Key="ViewBorderBrush"
                      Color="#FF1C97EA" />
 
-    <SolidColorBrush x:Key="ToolbarBackgroundBrush"
-                     Color="#FFCADAFF" />
-
-    <System:Double x:Key="ViewTitleFontSize">17</System:Double>
+    <System:Double x:Key="ViewTitleFontSize">16</System:Double>
 
     <!--#FF3C3C3C-->
     <SolidColorBrush x:Key="ViewForegroundBrush"
-                     Color="#FF3C3C3C" />
+                     Color="#FF2E2E2E" />
 
     <SolidColorBrush x:Key="ViewDisabledForegroundBrush"
                      Color="#FFC9C9C9" />
-
+    <!--
+    blue    #FF0091F7
+    green   FF00B100 FF00B600
+    -->
     <SolidColorBrush x:Key="ViewTitleBrush"
                      Color="#FF0091F7" />
     
@@ -30,7 +32,7 @@
                      Color="#FF00B400" />
 
     <SolidColorBrush x:Key="NotPaidBrush"
-                     Color="#FFFF0000" />
+                     Color="#FFEA0000" />
     
     
     
@@ -43,20 +45,46 @@
 
     <SolidColorBrush x:Key="ErrorTemplateForegroundBrush"
                      Color="White" />
+
+<!--dark gold       FFFFC300
+    dark dark gold  FFFFBE00
+    very dark gold  FFFFB800
+    violet          FFC58EFF
+    dark violet     FFBD8AFF-->
+    <SolidColorBrush x:Key="WarningBackgroundBrush"
+                     Color="#FFFF8900" />
+    
+    <SolidColorBrush x:Key="WarningForegroundBrush"
+                     Color="White" />
     
     
+
+    <System:Double x:Key="ViewFontSize">12</System:Double>
     
+    <CornerRadius x:Key="ViewCornerRadius">0</CornerRadius>
 
-    <System:Double x:Key="ViewFontSize">14</System:Double>
+    <Thickness x:Key="ResizeBorderThickness">8</Thickness>
 
-    <System:Double x:Key="MarginSizeValue">8</System:Double>
+    <Thickness x:Key="BorderThickness">1</Thickness>
 
-    <GridLength x:Key="MarginSize">8</GridLength>
+    <Thickness x:Key="ViewBorderPadding">7</Thickness>
 
-    <Thickness x:Key="BorderThickness"
-               Left="2"
-               Top="2"
-               Right="2"
-               Bottom="2" />
+    <GridLength x:Key="MarginSize">10</GridLength>
+
+    <System:Double x:Key="MarginSizeValue">10</System:Double>
+
+    <GridLength x:Key="RegionSeparatorSize">4</GridLength>
+
+    <System:Double x:Key="RegionSeparatorSizeValue">4</System:Double>
+
+    <System:Double x:Key="ListItemSpaceSize">32</System:Double>
+    
+    <System:Double x:Key="ViewSeparatorLineSize">1</System:Double>
+    
+    <System:Double x:Key="MenuIconSize">24</System:Double>
+    
+    <System:Double x:Key="MenuItemIconSize">16</System:Double>
+
+    <System:Double x:Key="ViewIconSize">24</System:Double>
 
 </ResourceDictionary>

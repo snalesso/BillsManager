@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace BillsManager.ViewModel.Helpers
+namespace BillsManager.ViewModels.Helpers
 {
 
     /// <summary>

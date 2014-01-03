@@ -1,27 +1,31 @@
-﻿using System;
-using BillsManager.Model;
-using BillsManager.ViewModel.Commanding;
-using BillsManager.ViewModel.Messages;
+﻿using BillsManager.Models;
+using BillsManager.ViewModels.Commanding;
+using BillsManager.ViewModels.Messages;
 using Caliburn.Micro;
+using System;
 
-namespace BillsManager.ViewModel
+namespace BillsManager.ViewModels
 {
+    // TODO: add cell color for remaining due time in details view
     public partial class BillDetailsViewModel :
-        BillViewModel
+        BillViewModel,
+        IHandle<SupplierEditedMessage>
     {
         #region fields
 
         protected readonly IWindowManager windowManager;
-        protected readonly IEventAggregator eventAggregator;
+        //protected readonly IEventAggregator globalEventAggregator;
+        protected readonly IEventAggregator dbEventAggregator;
 
         #endregion
 
         #region ctor
 
         public BillDetailsViewModel(
-            Bill bill,
             IWindowManager windowManager,
-            IEventAggregator eventAggregator)
+            //IEventAggregator globalEventAggregator,
+            IEventAggregator dbEventAggregator,
+            Bill bill)
         {
             if (bill == null)
                 throw new ArgumentNullException("bill cannot be null");
@@ -29,11 +33,23 @@ namespace BillsManager.ViewModel
             this.exposedBill = bill;
 
             this.windowManager = windowManager;
-            this.eventAggregator = eventAggregator;
+            //this.globalEventAggregator = globalEventAggregator;
+            this.dbEventAggregator = dbEventAggregator;
 
-            this.eventAggregator.Subscribe(this);
+            //this.globalEventAggregator.Subscribe(this);
+            this.dbEventAggregator.Subscribe(this);
 
-            this.Supplier = this.GetSupplier(this.SupplierID);
+            //this.SupplierName = this.GetSupplierName(this.SupplierID);
+
+            this.Deactivated +=
+                (s, e) =>
+                {
+                    if (e.WasClosed)
+                    {
+                        //this.globalEventAggregator.Unsubscribe(this);
+                        this.dbEventAggregator.Unsubscribe(this);
+                    }
+                };
         }
 
         #endregion
@@ -78,17 +94,11 @@ namespace BillsManager.ViewModel
 
         #region added
 
-        private Supplier supplier;
-        public Supplier Supplier
+        public string SupplierName
         {
-            get { return this.supplier; }
-            set
+            get
             {
-                if (this.supplier != value)
-                {
-                    this.supplier = value;
-                    this.NotifyOfPropertyChange(() => this.Supplier);
-                }
+                return this.GetSupplierName();
             }
         }
 
@@ -137,7 +147,7 @@ namespace BillsManager.ViewModel
                 else
                 {
                     if (timeleft.TotalDays == -1) return "Overdue yesterday";
-                    return "Overdue " + (timeleft.TotalDays * -1).ToString() + " days ago"; // TODO: language
+                    return "Overdue " + (timeleft.TotalDays * -1).ToString() + " days ago";
                 }
             }
         }
@@ -148,7 +158,7 @@ namespace BillsManager.ViewModel
 
         public new string DisplayName
         {
-            get { return this.Code + " - " + this.Supplier.Name; }
+            get { return this.Code + " - " + this.SupplierName; } // TODO: fix
         }
 
         #endregion
@@ -157,20 +167,31 @@ namespace BillsManager.ViewModel
 
         #region methods
 
-        private Supplier GetSupplier(uint supplierID)
+        private string GetSupplierName()
         {
             // TODO: move supplier logic to BillsViewModel (same for supp's obligation amount)
-            Supplier supp = null;
-            this.eventAggregator.Publish(new AskForSupplierMessage(supplierID, s => supp = s));
+            string supp = string.Empty;
+            this.dbEventAggregator.Publish(new SupplierNameRequestMessage(this.SupplierID, s => supp = s));
             return supp;
         }
 
-        public new void Refresh()
+        private void SwitchToEdit()
         {
-            base.Refresh();
-
-            this.Supplier = this.GetSupplier(this.SupplierID);
+            this.TryClose();
+            this.dbEventAggregator.Publish(new EditBillRequestMessage(this.ExposedBill));
         }
+
+        #region message handlers
+
+        public void Handle(SupplierEditedMessage message)
+        {
+            if (this.SupplierID == message.OldSupplierVersion.ID)
+            {
+                this.NotifyOfPropertyChange(() => this.SupplierName);
+            }
+        }
+
+        #endregion
 
         #endregion
 
@@ -183,11 +204,7 @@ namespace BillsManager.ViewModel
             {
                 if (this.switchToEditCommand == null)
                     this.switchToEditCommand = new RelayCommand(
-                        () =>
-                        {
-                            this.TryClose();
-                            this.eventAggregator.Publish(new EditBillRequestMessage(this.ExposedBill));
-                        });
+                        () => this.SwitchToEdit());
 
                 return this.switchToEditCommand;
             }
@@ -200,10 +217,7 @@ namespace BillsManager.ViewModel
             {
                 if (this.closeDetailsViewCommand == null)
                     this.closeDetailsViewCommand = new RelayCommand(
-                    () =>
-                    {
-                        this.TryClose();
-                    });
+                    () => this.TryClose());
 
                 return this.closeDetailsViewCommand;
             }

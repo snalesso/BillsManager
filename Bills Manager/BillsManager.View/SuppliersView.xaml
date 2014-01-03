@@ -1,111 +1,159 @@
-﻿<UserControl x:Class="BillsManager.View.SuppliersView"
+﻿<UserControl x:Class="BillsManager.Views.SuppliersView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:ViewModel="clr-namespace:BillsManager.ViewModel;assembly=BillsManager.ViewModel"
-             xmlns:DataTemplates="clr-namespace:BillsManager.View.DataTemplates"
+             xmlns:ViewModel="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
+             xmlns:DataTemplates="clr-namespace:BillsManager.Views.DataTemplates"
+             xmlns:Caliburn="http://www.caliburnproject.org"
+             xmlns:Commanding="clr-namespace:BillsManager.ViewModels.Commanding;assembly=BillsManager.ViewModels"
+             xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=ViewModel:SuppliersViewModel, IsDesignTimeCreatable=True}" >
+             d:DataContext="{d:DesignInstance Type=ViewModel:SuppliersViewModel, IsDesignTimeCreatable=True}"
+             Caliburn:Bind.AtDesignTime="True"
+             d:DesignHeight="250"
+             d:DesignWidth="900">
 
     <UserControl.Resources>
         <ResourceDictionary Source="Dictionaries\Styles.xaml" />
     </UserControl.Resources>
 
     <UserControl.Background>
-        <Binding Mode="OneTime" Source="{StaticResource ViewBackgroundBrush}"/>
+        <Binding Mode="OneTime"
+                 Source="{StaticResource ViewBackgroundBrush}" />
     </UserControl.Background>
 
-    <ListView Grid.IsSharedSizeScope="True"
-              ItemsSource="{Binding Path=FilteredSupplierViewModels}"
-              MinHeight="350"
-              SelectedItem="{Binding Path=SelectedSupplierViewModel}"
+    <ListView x:Name="lsvSuppliers"
+              VirtualizingPanel.IsVirtualizing="True"
+              ItemsSource="{Binding FilteredSupplierViewModels, IsAsync=True}"
+              SelectedItem="{Binding SelectedSupplierViewModel}"
               SelectionMode="Single"
-              BorderThickness="0"
-              Grid.Row="2"
-              >
+              Commanding:CommandBehavior.Event="MouseDoubleClick"
+              Commanding:CommandBehavior.Command="{Binding ShowSupplierDetailsCommand}"
+              Commanding:CommandBehavior.CommandParameter="{Binding SelectedSupplierViewModel}">
 
-        <ListView.ItemContainerStyle>
-            <Style TargetType="{x:Type ListViewItem}">
-                <Setter Property="OverridesDefaultStyle"
-                        Value="True" />
-                <Setter Property="Margin"
-                        Value="1" />
-                <Setter Property="HorizontalContentAlignment"
-                        Value="Stretch" />
-                <Setter Property="VerticalContentAlignment"
-                        Value="Center" />
-                <Setter Property="Background"
-                        Value="Transparent" />
-                <Setter Property="Foreground"
-                        Value="{StaticResource ResourceKey=ViewForegroundBrush}" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type ListViewItem}">
-                            <Border BorderThickness="{TemplateBinding Property=BorderThickness}"
-                                    Background="{TemplateBinding Property=Background}"
-                                    BorderBrush="{TemplateBinding Property=BorderBrush}"
-                                    Padding="0 5">
-                                <GridViewRowPresenter Content="{TemplateBinding Content}" />
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver"
-                             Value="true">
-                        <Setter Property="Background"
-                                Value="#FFE8E8E8" />
-                    </Trigger>
-                    <Trigger Property="IsSelected"
-                             Value="true">
-                        <Setter Property="Foreground"
-                                Value="{StaticResource ResourceKey=ButtonNormalForegroundBrush}" />
-                    </Trigger>
-                    <MultiTrigger>
-                        <MultiTrigger.Conditions>
-                            <Condition Property="IsSelected"
-                                       Value="true" />
-                            <Condition Property="IsFocused"
-                                       Value="true" />
-                        </MultiTrigger.Conditions>
-                        <Setter Property="Background"
-                                Value="{StaticResource ResourceKey=ButtonNormalBackgroundBrush}" />
-                    </MultiTrigger>
-                    <MultiTrigger>
-                        <MultiTrigger.Conditions>
-                            <Condition Property="IsSelected"
-                                       Value="true" />
-                            <Condition Property="IsFocused"
-                                       Value="false" />
-                        </MultiTrigger.Conditions>
-                        <Setter Property="Background"
-                                Value="{StaticResource ResourceKey=ButtonDisabledBackgroundBrush}" />
-                    </MultiTrigger>
-                </Style.Triggers>
-
-            </Style>
-        </ListView.ItemContainerStyle>
+        <!--<ListView.ItemTemplate>
+            <DataTemplate>
+                <DataTemplates:SupplierDataTemplate />
+            </DataTemplate>
+        </ListView.ItemTemplate>-->
 
         <ListView.View>
             <GridView>
                 <GridViewColumn DisplayMemberBinding="{Binding Name}"
                                 Header="Name"
                                 Width="160" />
-                <GridViewColumn DisplayMemberBinding="{Binding ObligationState, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                                Header="Obligation"
-                                Width="100" />
+                <GridViewColumn Header="Obligation"
+                                Width="100">
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <!--<Path Name="obg"
+                                  Data="{StaticResource NullObligationGeometry}"
+                                  Fill="{StaticResource NullObligationBrush}"
+                                  Stretch="Uniform"
+                                  Height="{StaticResource ViewFontSize}"
+                                  Width="{StaticResource ViewFontSize}"
+                                  VerticalAlignment="Center" />-->
+                            <Border x:Name="obg"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"
+                                    CornerRadius="{StaticResource ViewCornerRadius}"
+                                    Padding="5"
+                                    Margin="-5">
+                                <TextBlock x:Name="text"
+                                           Grid.Column="2"
+                                           Text="{Binding ObligationState}" />
+                            </Border>
+
+                            <DataTemplate.Triggers>
+
+                                <DataTrigger Binding="{Binding ObligationState}"
+                                             Value="Creditor">
+                                    <Setter TargetName="obg"
+                                            Property="Background"
+                                            Value="{StaticResource CreditorObligationBrush}" />
+                                    <Setter TargetName="text"
+                                            Property="Foreground"
+                                            Value="{StaticResource ButtonNormalForegroundBrush}" />
+                                </DataTrigger>
+
+                                <DataTrigger Binding="{Binding ObligationState}"
+                                             Value="Debtor">
+                                    <Setter TargetName="obg"
+                                            Property="Background"
+                                            Value="{StaticResource DebtorObligationBrush}" />
+                                    <Setter TargetName="text"
+                                            Property="Foreground"
+                                            Value="{StaticResource ButtonNormalForegroundBrush}" />
+                                </DataTrigger>
+
+                            </DataTemplate.Triggers>
+
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
                 <GridViewColumn DisplayMemberBinding="{Binding Notes}"
                                 Header="Notes"
                                 Width="Auto" />
             </GridView>
         </ListView.View>
-        <!--<ListView.ItemTemplate>
-            <DataTemplate>
-                <DataTemplates:SupplierDataTemplate />
-            </DataTemplate>
-        </ListView.ItemTemplate>-->
+
+        <ListView.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Add"
+                          Command="{Binding AddNewSupplierCommand, Mode=OneWay}">
+                    <MenuItem.Icon>
+                        <Controls:AutoGreyableImage Source="Images/generic/add-16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <Separator />
+
+                <MenuItem Header="Edit"
+                          Command="{Binding EditSupplierCommand, Mode=OneWay}"
+                          CommandParameter="{Binding SelectedSupplierViewModel}">
+                    <MenuItem.Icon>
+                        <Controls:AutoGreyableImage Source="Images/generic/edit-16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Delete"
+                          Command="{Binding DeleteSupplierCommand, Mode=OneWay}"
+                          CommandParameter="{Binding SelectedSupplierViewModel}">
+                    <MenuItem.Icon>
+                        <Controls:AutoGreyableImage Source="Images/generic/delete-16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <Separator />
+
+                <MenuItem Header="Details"
+                          Command="{Binding ShowSupplierDetailsCommand, Mode=OneWay}"
+                          CommandParameter="{Binding SelectedSupplierViewModel}">
+                    <MenuItem.Icon>
+                        <Controls:AutoGreyableImage Source="Images/generic/details-16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Show bills"
+                          Command="{Binding ShowSuppliersBillsCommand, Mode=OneWay}"
+                          CommandParameter="{Binding SelectedSupplierViewModel}">
+                    <MenuItem.Icon>
+                        <Controls:AutoGreyableImage Source="Images/generic/search-16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Copy eMail"
+                          Command="{Binding CopyEMailCommand, Mode=OneWay}"
+                          CommandParameter="{Binding SelectedSupplierViewModel}">
+                    <MenuItem.Icon>
+                        <Controls:AutoGreyableImage Source="Images/generic/email-16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+            </ContextMenu>
+        </ListView.ContextMenu>
+
     </ListView>
 
 </UserControl>

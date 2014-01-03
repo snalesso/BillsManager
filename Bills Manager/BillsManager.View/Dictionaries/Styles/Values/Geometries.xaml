@@ -2,14 +2,12 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!--<Geometry x:Key="CloseGeometry">M 0,1 L 1,0 L 1,0 L 2,1 L 3,0 L 4,1 L 3,2 L 4,3 L 3,4 L 2,3 L 1,4 L 0,3 L 1,2 L 0,1</Geometry>-->
-    <Geometry x:Key="CloseGeometry">M 0,1 L 1,0 L 3,2 L 5,0 L 6,1 L 4,3 L 6,5 L 5,6 L 3,4 L 1,6 L 0,5 L 2,3 L 0,1</Geometry>
+    <!--<Geometry x:Key="CloseGeometry">M 0,1 L 1,0 L 3,2 L 5,0 L 6,1 L 4,3 L 6,5 L 5,6 L 3,4 L 1,6 L 0,5 L 2,3 L 0,1</Geometry>-->
+
+    <Geometry x:Key="CloseGeometry">M 1.5,0 L 4.5,3 L 7.5,0 L 9,1.5 L 6,4.5 L 9,7.5 L 7.5,9 L 4.5,6 L 1.5,9 L 0,7.5 L 3,4.5 L 0,1.5 Z</Geometry>
 
     <!--<Geometry x:Key="MaximizeGeometry">M 0,0 L 6,0 L 6,6 L 0,6 L 0,0 L 1.4,1.4 L 4.6,1.4 L 4.6,4.6 L 1.4,4.6 L 1.4,1.4 L 0,0 Z</Geometry>-->
     <Geometry x:Key="MaximizeGeometry">M 0,0 L 6,0 L 6,6 L 0,6 L 0,0 L 1.15,1.15 L 4.85,1.15 L 4.85,4.85 L 1.15,4.85 L 1.15,1.15 L 0,0 Z</Geometry>
-
-
-
-
 
 
 
@@ -25,41 +23,35 @@
         </GeometryGroup.Children>
     </GeometryGroup>
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <Geometry x:Key="MinimizeGeometry">M 0,0 0,4.6 L 6,4.6 L 6,6 L 0,6 L 0,4.6 L 0,0</Geometry>
+
+
+    <Geometry x:Key="NullCheckedGeometry">M 0,0 L 9,0 L 9,9 L 0,9 Z</Geometry>
+
+    <Geometry x:Key="MinimizeGeometry">M 0,0 L 0,4.6 L 6,4.6 L 6,6 L 0,6 L 0,4.6 Z</Geometry>
 
     <Geometry x:Key="Checkmark">M 0,5.1 L 1.7,5.2 L 3.4,7.1 L 8,0.4 L 9.2,0 L 3.3,10.8 Z</Geometry>
 
     <Geometry x:Key="Checkmark2">M 0 2 L 0 4.85 L 2.5 7.4 L 7.1 2.8 L 7.1 0 L 2.5 4.6 Z</Geometry>
     
-    <Geometry x:Key="Checkmark3">M 0 2 L 0 4.85 L 4 9 L 10 2.8 L 10 0 L 4 6.2 Z</Geometry>
+    <Geometry x:Key="Checkmark3">M 0,3 L 0,6 L 3,9 L 9,3 L 9,0 L 3,6 Z</Geometry>
 
     <Geometry x:Key="Plus">M 2,0 L 4,0 L 4,2 L 6,2 L 6,4 L 4,4 L 4,6 L 2,6 L 2,4 L 0,4 L 0,2 L 2,2 L 2,0 Z</Geometry>
+
+    <Geometry x:Key="Plus2">M 3,0 L 6,0 L 6,3 L 9,3 L 9,6 L 6,6 L 6,9 L 3,9 L 3,6 L 0,6 L 0,3 L 3,3 L 3,0 Z</Geometry>
     
-    <Geometry x:Key="Plus2">M 3,0 L 5,0 L 5,3 L 8,3 L 8,5 L 5,5 L 5,8 L 3,8 L 3,5 L 0,5 L 0,3 L 3,3 L 3,0 Z</Geometry>
+    <Geometry x:Key="Plus3">M 3.4,0 L 5.6,0 L 5.6,3.4 L 9,3.4 L 9,5.6 L 5.6,5.6 L 5.6,9 L 3.4,9 L 3.4,5.6 L 0,5.6 L 0,3.4 L 3.4,3.4 L 3.4,0 Z</Geometry>
 
-    <Geometry x:Key="Close">M 1.5,0 L 4.5,3 L 7.5,0 L 9,1.5 L 6,4.5 L 9,7.5 L 7.5,9 L 4.5,6 L 1.5,9 L 0,7.5 L 3,4.5 L 0,1.5 Z</Geometry>
-
-    <Geometry x:Key="UpArrow">M 0,5 L 3.5,0 L 7,5 Z</Geometry>
+    <Geometry x:Key="UpArrow">M 0,5 L 3.5,0 L 7,5 Z</Geometry>    
     
-    <Geometry x:Key="UpArrow2">M 0,4 L 3.5,0 L 7,4 Z</Geometry>
+    <Geometry x:Key="UpArrow2">M 0,4.5 L 4.5,0 L 9,4.5 L 9,8 L 4.5,3.5 L 0,8 Z</Geometry>
+          
+    <Geometry x:Key="DownArrow">M 0,0 L 9,0 L 4.5,6 Z</Geometry>
 
-    <Geometry x:Key="DownArrow">M 0,0 L 3.5,5 L 7,0 Z</Geometry>
+    <Geometry x:Key="DownArrow2">M 0,1 L 4.5,5.5 L 9,1 L 9,4.5 L 4.5,9 L 0,4.5 Z</Geometry>
 
-    <Geometry x:Key="DownArrow2">M 0,0 L 3.5,4 L 7,0 Z</Geometry>
-
-    <Geometry x:Key="RightArrow">M 0,0 L 5,3.5 L 0,7 Z</Geometry>
+    <Geometry x:Key="RightArrow">M 0,0 L 6,4.5 L 0,9 Z</Geometry>
     
-    <Geometry x:Key="RightArrow2">M 0,0 L 4,3.5 L 0,7 Z</Geometry>
+    <Geometry x:Key="RightArrow2">M 1,0 L 4.5,0 L 9,4.5 L 4.5,9 L 1,9 L 5.5,4.5 Z</Geometry>
 
     <Geometry x:Key="LeftArrow">M 0,3.5 L 5,0 L 5,7 Z</Geometry>
 
@@ -78,5 +70,21 @@
     <Geometry x:Key="Minimize">M0,20L53.333,20 53.333,8.888 0,8.888z</Geometry>
     
     <Geometry x:Key="TopRightLittleCorner">M 0,0 L 8,0 L 8,8 Z</Geometry>
+
+    <GeometryGroup x:Key="SaveGeometry">
+        <GeometryGroup.Children>
+            
+            <Geometry>M 0,0 L 10,0 L 12,2 L 12,12 L 0,12 Z</Geometry>
+            
+            <Geometry>M 1,12 L 1,5.5 L 1.5,5 L 10.5,5 L 11,5.5 L 11,12 Z</Geometry>
+            
+            <Geometry>M 4,0 L 9,0 L 9,3 L 4,3 Z</Geometry>
+
+            <Geometry>M 7,0 L 8,0 L 8,2 L 7,2 Z</Geometry>
+            
+            <Geometry>M 1,12 L 11,12 L 11,11 L 1,11 Z</Geometry>
+
+        </GeometryGroup.Children>
+    </GeometryGroup>
     
 </ResourceDictionary>

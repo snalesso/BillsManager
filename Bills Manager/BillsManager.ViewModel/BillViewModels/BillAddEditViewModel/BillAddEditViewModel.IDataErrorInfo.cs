@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
-using BillsManager.ViewModel.Validation;
+using BillsManager.ViewModels.Validation;
 
-namespace BillsManager.ViewModel
+namespace BillsManager.ViewModels
 {
     public partial class BillAddEditViewModel : IDataErrorInfo
     {

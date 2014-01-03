@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BillsManager.ViewModel
+namespace BillsManager.ViewModels
 {
     public static class ExtensionMethods
     {
-        public static IEnumerable<T> Where<T>(this IEnumerable<T> data, IEnumerable<Func<T, bool>> predicates) // TODO: optimize
+        public static IEnumerable<T> Where<T>(this IEnumerable<T> data, IEnumerable<Predicate<T>> predicates) // TODO: optimize
         {
             bool respects;
 
@@ -13,7 +13,7 @@ namespace BillsManager.ViewModel
             {
                 respects = true;
 
-                foreach (Func<T, bool> pred in predicates)
+                foreach (Predicate<T> pred in predicates)
                 {
                     if (!pred.Invoke(value))
                     {

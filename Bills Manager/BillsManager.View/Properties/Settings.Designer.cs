@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BillsManager.View.Properties {
+namespace BillsManager.Views.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

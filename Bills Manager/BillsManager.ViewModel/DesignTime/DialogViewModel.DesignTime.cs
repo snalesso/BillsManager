@@ -1,6 +1,6 @@
 ﻿using Caliburn.Micro;
 
-namespace BillsManager.ViewModel
+namespace BillsManager.ViewModels
 {
 #if DEBUG
     public partial class DialogViewModel
@@ -11,6 +11,20 @@ namespace BillsManager.ViewModel
         {
             if (Execute.InDesignMode)
             {
+                this.caption = "Test";
+                this.message = "This is a fucking test";
+                this.DisplayName = this.caption;
+
+                // TODO: move to a designdata project
+                this.responses = new[]
+                {
+                    new DialogResponse(ResponseType.Yes, ".. go on!", "I wish to ..."),
+                    new DialogResponse(ResponseType.No, "Nein", "I say") {IsEnabled = true},
+                    new DialogResponse(ResponseType.Retry, 10),
+                    new DialogResponse(ResponseType.Abort, "Abort!", 3),
+                    new DialogResponse(ResponseType.Cancel),
+                };
+
                 this.LoadDesignTimeData();
             }
         }
@@ -21,20 +35,9 @@ namespace BillsManager.ViewModel
 
         void LoadDesignTimeData()
         {
-            this.Caption = "Test";
-            this.Message = "This is a fucking test";
-
-            this.Responses = new[]
-            {
-                new DialogResponse(ResponseType.Yes, ".. go on!", "I wish to ..."),
-                new DialogResponse(ResponseType.No, "Nein", "I say") {IsEnabled = true},
-                new DialogResponse(ResponseType.Retry, 10),
-                new DialogResponse(ResponseType.Abort, "Abort!", 3),
-                new DialogResponse(ResponseType.Cancel),
-            };
         }
 
         #endregion
-    } 
+    }
 #endif
 }

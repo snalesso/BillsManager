@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
-using BillsManager.Model;
+using BillsManager.Models;
 
-namespace BillsManager.ViewModel
+namespace BillsManager.ViewModels
 {
     public partial class SupplierAddEditViewModel : IEditableObject
     {
@@ -61,6 +61,7 @@ namespace BillsManager.ViewModel
             this.Name = this.exposedSupplierBackup.Name;
             this.Notes = this.exposedSupplierBackup.Notes;
             this.Phone = this.exposedSupplierBackup.Phone;
+            this.Fax = this.exposedSupplierBackup.Fax;
             this.Website = this.exposedSupplierBackup.Website;
 
             //this.Address = this.exposedSupplierBackup.Address; // TODO: review
@@ -70,6 +71,10 @@ namespace BillsManager.ViewModel
             this.City = this.exposedSupplierBackup.City;
             this.Province = this.exposedSupplierBackup.Province;
             this.Country = this.exposedSupplierBackup.Country;
+
+            this.AgentName = this.exposedSupplierBackup.AgentName;
+            this.AgentSurname = this.exposedSupplierBackup.AgentSurname;
+            this.AgentPhone = this.exposedSupplierBackup.AgentPhone;
         }
 
         public void CancelEdit()

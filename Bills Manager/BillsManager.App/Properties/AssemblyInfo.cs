@@ -7,12 +7,12 @@ using System.Windows;
 // Le informazioni generali relative a un assembly sono controllate dal seguente 
 // set di attributi. Per modificare le informazioni associate a un assembly
 // occorre quindi modificare i valori di questi attributi.
-[assembly: AssemblyTitle("BillsManager.App")]
+[assembly: AssemblyTitle("Bills Manager")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("BillsManager.App")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
+[assembly: AssemblyProduct("Bills Manager")]
+[assembly: AssemblyCopyright("Copyright © Nalesso Sergio 2010 - 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

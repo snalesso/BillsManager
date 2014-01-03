@@ -5,16 +5,6 @@
         <ResourceDictionary Source="ViewValues.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <SolidColorBrush x:Key="TextBoxBackgroundBrush"
-                     Color="White" />
-
-    <SolidColorBrush x:Key="TextBoxBorderBrush"
-                     Color="#FF1C97EA" />
-
-    <SolidColorBrush x:Key="TextBoxForegroundBrush"
-                     Color="Black" />
-
-
     <SolidColorBrush x:Key="TextBoxDisabledBackgroundBrush"
                      Color="#FFB4B4B4" />
 

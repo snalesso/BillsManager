@@ -45,6 +45,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.1.5\lib\net40\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="Caliburn.Micro, Version=1.5.2.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\net45\Caliburn.Micro.dll</HintPath>
@@ -76,10 +79,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AppBootstrapper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OriginalWindowManager.cs" />
+    <Compile Include="Bootstrapper\AutofacBootstrapper.cs" />
+    <Compile Include="Bootstrapper\BootstrapperEx.cs" />
+    <Compile Include="Bootstrapper\Modules\EventAggregationAutoSubscriptionModule.cs" />
+    <Compile Include="Bootstrapper\Modules\EventAggregationAutoUnsubscriptionModule.cs" />
+    <Compile Include="Bootstrapper\SimpleBootstrapper.cs" />
+    <Compile Include="MinimalWindowManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -106,21 +113,21 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BillsManager.Model\BillsManager.Model.csproj">
-      <Project>{888F670B-4396-4660-8C5A-0D43FB2C0A1D}</Project>
-      <Name>BillsManager.Model</Name>
+    <ProjectReference Include="..\BillsManager.Model\BillsManager.Models.csproj">
+      <Project>{888f670b-4396-4660-8c5a-0d43fb2c0a1d}</Project>
+      <Name>BillsManager.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BillsManager.Service\BillsManager.Service.csproj">
-      <Project>{FC8A7A61-D9CF-4AC7-A62D-590C35A28A44}</Project>
-      <Name>BillsManager.Service</Name>
+    <ProjectReference Include="..\BillsManager.Service\BillsManager.Services.csproj">
+      <Project>{fc8a7a61-d9cf-4ac7-a62d-590c35a28a44}</Project>
+      <Name>BillsManager.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BillsManager.ViewModel\BillsManager.ViewModel.csproj">
-      <Project>{127368A5-65A5-46C6-A203-33ABC22B1EDD}</Project>
-      <Name>BillsManager.ViewModel</Name>
+    <ProjectReference Include="..\BillsManager.ViewModel\BillsManager.ViewModels.csproj">
+      <Project>{127368a5-65a5-46c6-a203-33abc22b1edd}</Project>
+      <Name>BillsManager.ViewModels</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BillsManager.View\BillsManager.View.csproj">
-      <Project>{36633953-EEE1-45F3-8EEF-86F7F221AA93}</Project>
-      <Name>BillsManager.View</Name>
+    <ProjectReference Include="..\BillsManager.View\BillsManager.Views.csproj">
+      <Project>{36633953-eee1-45f3-8eef-86f7f221aa93}</Project>
+      <Name>BillsManager.Views</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +137,7 @@
       <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

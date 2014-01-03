@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace BillsManager.View.Controls
+namespace BillsManager.Views.Controls
 {
     public class CloseWindowButton : Button
     {

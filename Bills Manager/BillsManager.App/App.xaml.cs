@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
+﻿using BillsManager.App.Bootstrappers;
 using System.Windows;
 
 namespace BillsManager.App
@@ -12,11 +8,11 @@ namespace BillsManager.App
     /// </summary>
     public partial class App : Application
     {
-        private readonly AppBootstrapper bootstrapper;
+        private readonly AutofacBootstrapper bootstrapper;
 
         public App()
         {
-            this.bootstrapper = new AppBootstrapper();
+            this.bootstrapper = new AutofacBootstrapper();
         }
     }
 }

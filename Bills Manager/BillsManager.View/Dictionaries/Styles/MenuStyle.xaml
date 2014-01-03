@@ -6,21 +6,23 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type Menu}">
+        
         <Setter Property="OverridesDefaultStyle"
                 Value="True" />
+        
         <Setter Property="Background"
-                Value="{StaticResource ResourceKey=MenuBackgroundBrush}" />
+                Value="{StaticResource MenuBackgroundBrush}" />
         <Setter Property="Foreground"
-                Value="{StaticResource ResourceKey=MenuForegroundBrush}" />
+                Value="{StaticResource MenuForegroundBrush}" />
         <Setter Property="BorderBrush"
-                Value="{StaticResource ResourceKey=MenuBorderBrush}" />
+                Value="{StaticResource MenuBorderBrush}" />
+        
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Menu}">
-                    <Border BorderBrush="{TemplateBinding Property=BorderBrush}"
-                            Background="{TemplateBinding Property=Background}">
-                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                        VerticalAlignment="Center" />
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            Background="{TemplateBinding Background}">
+                        <ItemsPresenter VerticalAlignment="Center" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

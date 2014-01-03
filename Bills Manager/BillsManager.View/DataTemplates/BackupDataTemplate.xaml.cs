@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace BillsManager.View.DataTemplates
+namespace BillsManager.Views.DataTemplates
 {
     /// <summary>
     /// Logica di interazione per BackupDataTemplate.xaml

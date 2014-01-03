@@ -39,5 +39,12 @@
 
     <SolidColorBrush x:Key="MenuItemDisabledForegroundBrush"
                      Color="#FFB4B4B4" />
+
+    <!--FFCAA9FF-->
+    <SolidColorBrush x:Key="MenuItemCheckedBackgroundBrush"
+                     Color="#FFB669FF" />
+
+    <SolidColorBrush x:Key="MenuItemCheckedForegroundBrush"
+                     Color="White" />
     
 </ResourceDictionary>

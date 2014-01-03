@@ -9,11 +9,11 @@
     <Style x:Key="{x:Type TextBoxBase}"
            TargetType="{x:Type TextBoxBase}">
         <Setter Property="Background"
-                Value="{StaticResource ResourceKey=TextBoxBackgroundBrush}" />
+                Value="{StaticResource ResourceKey=ViewBackgroundBrush}" />
         <Setter Property="BorderBrush"
-                Value="{StaticResource ResourceKey=TextBoxBorderBrush}" />
+                Value="{StaticResource ResourceKey=ViewBorderBrush}" />
         <Setter Property="Foreground"
-                Value="{StaticResource ResourceKey=TextBoxForegroundBrush}" />
+                Value="{StaticResource ResourceKey=ViewForegroundBrush}" />
         <Setter Property="BorderThickness"
                 Value="1" />
         <Setter Property="Padding"

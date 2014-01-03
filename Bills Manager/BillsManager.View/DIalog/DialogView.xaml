@@ -1,0 +1,95 @@
+﻿<UserControl x:Class="BillsManager.Views.DialogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ViewModel="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
+             xmlns:View.DataTemplates="clr-namespace:BillsManager.Views.DataTemplates"
+             xmlns:Micro="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=ViewModel:DialogViewModel, IsDesignTimeCreatable=True}"
+             MinHeight="120"
+             MinWidth="270"
+             MaxWidth="550">
+
+    <UserControl.Resources>
+        <ResourceDictionary Source="/BillsManager.Views;component/Dictionaries/Styles.xaml" />
+    </UserControl.Resources>
+
+    <UserControl.Background>
+        <Binding Mode="OneTime"
+                 Source="{StaticResource ViewBackgroundBrush}" />
+    </UserControl.Background>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition />
+            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="{Binding Message}"
+                   TextAlignment="Left"
+                   Grid.Column="3"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Grid.Row="2" />
+
+        <DockPanel Focusable="False"
+                   Grid.Row="6"
+                   LastChildFill="True"
+                   HorizontalAlignment="Right"
+                   Grid.ColumnSpan="7">
+
+            <ItemsControl ItemsSource="{Binding Responses}">
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel.Margin>
+                                <Thickness Right="{StaticResource MarginSizeValue}" />
+                            </StackPanel.Margin>
+                            <CheckBox VerticalAlignment="Center"
+                                      Content="{Binding ConfirmCheckText}"
+                                      IsChecked="{Binding IsEnabled}"
+                                      Visibility="{Binding UseConfirmCheck, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <CheckBox.Margin>
+                                    <Thickness Right="{StaticResource MarginSizeValue}" />
+                                </CheckBox.Margin>
+                            </CheckBox>
+                            <Button MinWidth="80"
+                                    Content="{Binding Text}"
+                                    IsCancel="{Binding IsCancel}"
+                                    IsDefault="{Binding IsDefault}"
+                                    IsEnabled="{Binding IsEnabled}"
+                                    Micro:Message.Attach="Respond($dataContext)" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <TextBlock Text="{Binding Dialog.Message}" />
+
+        </DockPanel>
+
+    </Grid>
+</UserControl>

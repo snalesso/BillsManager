@@ -1,6 +1,6 @@
-﻿using BillsManager.View.Controls;
+﻿using BillsManager.Views.Controls;
 
-namespace BillsManager.View
+namespace BillsManager.Views
 {
     /// <summary>
     /// Interaction logic for ViewWindow.xaml

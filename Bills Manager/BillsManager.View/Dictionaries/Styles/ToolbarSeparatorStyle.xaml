@@ -8,12 +8,14 @@
     <Style x:Key="{x:Static ToolBar.SeparatorStyleKey}"
            TargetType="{x:Type Separator}">
         <Setter Property="Foreground"
-                Value="{StaticResource ResourceKey=MenuItemDisabledForegroundBrush}" />
+                Value="{StaticResource ViewDisabledForegroundBrush}" />
+        <Setter Property="Margin"
+                Value="1" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Separator}">
-                    <Rectangle Stroke="{TemplateBinding Property=Foreground}"
-                               Height="{TemplateBinding Property=Height}" />
+                    <Rectangle Stroke="{TemplateBinding Foreground}"
+                               Height="{TemplateBinding Height}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

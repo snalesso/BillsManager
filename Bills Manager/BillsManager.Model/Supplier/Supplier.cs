@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-
-namespace BillsManager.Model
+﻿namespace BillsManager.Models
 {
-    // TODO: other properties: P. IVA (VATIN)? FAX (FAX)?
+    // TODO: other properties: P. IVA (VATIN)? http://en.wikipedia.org/wiki/VAT_identification_number
     public partial class Supplier
     {
         #region ctor
@@ -19,13 +16,17 @@ namespace BillsManager.Model
             string street,
             string number,
             string city,
-            ushort zip,
+            string zip,
             string province,
             string country,
             string eMail,
             string webSite,
             string phone,
-            string notes)
+            string fax,
+            string notes,
+            string agentName,
+            string agentSurname,
+            string agentPhone)
         {
             this.id = id;
 
@@ -33,7 +34,12 @@ namespace BillsManager.Model
             this.eMail = eMail;
             this.Website = webSite;
             this.Phone = phone;
+            this.Fax = fax;
             this.Notes = notes;
+
+            this.AgentName = agentName;
+            this.AgentSurname = agentSurname;
+            this.AgentPhone = agentPhone;
 
             // Address
             this.Street = street;
@@ -86,6 +92,45 @@ namespace BillsManager.Model
         //        }
         //    }
         //}
+        
+        private string agentName;
+        public string AgentName
+        {
+            get { return this.agentName; }
+            set
+            {
+                if (this.agentName != value)
+                {
+                    this.agentName = value;
+                }
+            }
+        }
+        
+        private string agentSurname;
+        public string AgentSurname
+        {
+            get { return this.agentSurname; }
+            set
+            {
+                if (this.agentSurname != value)
+                {
+                    this.agentSurname = value;
+                }
+            }
+        }
+                
+        private string agentPhone;
+        public string AgentPhone
+        {
+            get { return this.agentPhone; }
+            set
+            {
+                if (this.agentPhone != value) // TODO: cleanup worthless if's
+                {
+                    this.agentPhone = value;
+                }
+            }
+        }
 
         private string email;
         public string eMail
@@ -96,10 +141,9 @@ namespace BillsManager.Model
             }
             set
             {
-                if (this.eMail != value)
-                {
-                    this.email = value;
-                }
+                if (this.eMail == value) return;
+
+                this.email = value.ToLower();
             }
         }
 
@@ -112,10 +156,9 @@ namespace BillsManager.Model
             }
             set
             {
-                if (this.Website != value)
-                {
-                    this.webSite = value;
-                }
+                if (this.Website == value) return;
+
+                this.webSite = value.ToLower();
             }
         }
 
@@ -132,6 +175,18 @@ namespace BillsManager.Model
                 {
                     this.phone = value;
                 }
+            }
+        }
+        
+        private string fax;
+        public string Fax
+        {
+            get { return this.fax; }
+            set
+            {
+                if (this.fax == value) return;
+
+                this.fax = value;
             }
         }
 
@@ -192,16 +247,15 @@ namespace BillsManager.Model
             }
         }
 
-        private ushort zip;
-        public ushort Zip
+        private string zip;
+        public string Zip
         {
             get { return this.zip; }
             set
             {
-                if (this.Zip != value)
-                {
-                    this.zip = value;
-                }
+                if (this.Zip == value) return;
+
+                this.zip = value;
             }
         }
 
@@ -211,10 +265,9 @@ namespace BillsManager.Model
             get { return this.province; }
             set
             {
-                if (this.Province != value)
-                {
-                    this.province = value;
-                }
+                if (this.Province == value) return;
+
+                this.province = value.ToUpper();
             }
         }
 

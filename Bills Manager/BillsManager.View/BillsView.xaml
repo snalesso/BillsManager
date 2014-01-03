@@ -2,32 +2,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:ViewModel="clr-namespace:BillsManager.ViewModel;assembly=BillsManager.ViewModel"
-             xmlns:DataTemplates="clr-namespace:BillsManager.View.DataTemplates"
-             xmlns:cal="http://www.caliburnproject.org"
-             x:Class="BillsManager.View.BillsView"
+             xmlns:ViewModel="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
+             xmlns:DataTemplates="clr-namespace:BillsManager.Views.DataTemplates"
+             xmlns:Caliburn="http://www.caliburnproject.org"
+             xmlns:Commanding="clr-namespace:BillsManager.ViewModels.Commanding;assembly=BillsManager.ViewModels"
+             xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
+             x:Class="BillsManager.Views.BillsView"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type ViewModel:BillsViewModel}}">
+             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type ViewModel:BillsViewModel}}"
+             Caliburn:Bind.AtDesignTime="True"
+             d:DesignHeight="250"
+             d:DesignWidth="900">
 
     <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Dictionaries\Styles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        </ResourceDictionary>
+        <ResourceDictionary Source="Dictionaries\Styles.xaml" />
     </UserControl.Resources>
 
     <UserControl.Background>
-        <Binding Mode="OneTime" Source="{StaticResource ViewBackgroundBrush}"/>
+        <Binding Mode="OneTime"
+                 Source="{StaticResource ViewBackgroundBrush}" />
     </UserControl.Background>
 
-    <ListView Grid.IsSharedSizeScope="True"
-              ItemsSource="{Binding FilteredBillViewModels, Mode=OneWay}"
-              MinHeight="350"
+    <ListView x:Name="lsvBills"
+              Grid.IsSharedSizeScope="True"
+              VirtualizingPanel.IsVirtualizing="True"
+              ItemsSource="{Binding FilteredBillViewModels, IsAsync=True}"
               SelectedItem="{Binding SelectedBillViewModel}"
               SelectionMode="Single"
-              BorderThickness="0">
+              Commanding:CommandBehavior.Event="MouseDoubleClick"
+              Commanding:CommandBehavior.Command="{Binding ShowBillDetailsCommand}"
+              Commanding:CommandBehavior.CommandParameter="{Binding SelectedBillViewModel}">
 
         <!--<ListView.ItemTemplate>
             <DataTemplate>
@@ -35,74 +39,9 @@
             </DataTemplate>
         </ListView.ItemTemplate>-->
 
-        <ListView.ItemContainerStyle>
-            <Style TargetType="{x:Type ListViewItem}">
-                <Setter Property="Foreground"
-                        Value="{StaticResource ResourceKey=ViewForegroundBrush}" />
-                <Setter Property="Margin"
-                        Value="1" />
-                <Setter Property="OverridesDefaultStyle"
-                        Value="True" />
-                <Setter Property="VerticalContentAlignment"
-                        Value="Center" />
-                <Setter Property="HorizontalContentAlignment"
-                        Value="Stretch" />
-                <Setter Property="VerticalContentAlignment"
-                        Value="Center" />
-                <Setter Property="Background"
-                        Value="Transparent" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type ListViewItem}">
-                            <Border BorderThickness="{TemplateBinding Property=BorderThickness}"
-                                    Background="{TemplateBinding Property=Background}"
-                                    BorderBrush="{TemplateBinding Property=BorderBrush}"
-                                    Padding="0 5">
-                                <GridViewRowPresenter Content="{TemplateBinding Content}" />
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver"
-                             Value="true">
-                        <Setter Property="Background"
-                                Value="#FFE8E8E8" />
-                    </Trigger>
-                    <Trigger Property="IsSelected"
-                             Value="true">
-                        <Setter Property="Foreground"
-                                Value="{StaticResource ResourceKey=ButtonNormalForegroundBrush}" />
-                    </Trigger>
-                    <MultiTrigger>
-                        <MultiTrigger.Conditions>
-                            <Condition Property="IsSelected"
-                                       Value="true" />
-                            <Condition Property="Selector.IsSelectionActive"
-                                       Value="true" />
-                        </MultiTrigger.Conditions>
-                        <Setter Property="Background"
-                                Value="{StaticResource ResourceKey=ButtonNormalBackgroundBrush}" />
-                    </MultiTrigger>
-                    <MultiTrigger>
-                        <MultiTrigger.Conditions>
-                            <Condition Property="IsSelected"
-                                       Value="true" />
-                            <Condition Property="Selector.IsSelectionActive"
-                                       Value="false" />
-                        </MultiTrigger.Conditions>
-                        <Setter Property="Background"
-                                Value="{StaticResource ResourceKey=ButtonDisabledBackgroundBrush}" />
-                    </MultiTrigger>
-                </Style.Triggers>
-
-            </Style>
-        </ListView.ItemContainerStyle>
-
         <ListView.View>
             <GridView>
-                <GridViewColumn DisplayMemberBinding="{Binding Supplier.Name}"
+                <GridViewColumn DisplayMemberBinding="{Binding SupplierName}"
                                 Header="Supplier"
                                 Width="160" />
                 <GridViewColumn DisplayMemberBinding="{Binding Code}"
@@ -110,31 +49,45 @@
                                 Width="95" />
                 <GridViewColumn Header="Amount"
                                 Width="95">
+                    <GridViewColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <ContentPresenter HorizontalAlignment="Right"
+                                              Content="{TemplateBinding Content}" />
+                        </DataTemplate>
+                    </GridViewColumn.HeaderTemplate>
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock TextAlignment="Right"
-                                       Text="{Binding Amount, StringFormat=\{0:C2\}}" />
+                                       Text="{Binding Amount, StringFormat=\{0:N2\} €}" />
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
                 <GridViewColumn Header="Paid"
                                 Width="90">
+                    <GridViewColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              Content="{TemplateBinding Content}" />
+                        </DataTemplate>
+                    </GridViewColumn.HeaderTemplate>
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel HorizontalAlignment="Center"
                                         VerticalAlignment="Center">
                                 <Path Name="tick"
-                                      Data="{StaticResource ResourceKey=Checkmark3}"
+                                      Data="{StaticResource Checkmark3}"
                                       Stretch="Uniform"
-                                      Fill="{StaticResource ResourceKey=PaidBrush}"
+                                      Fill="{StaticResource PaidBrush}"
                                       Visibility="{Binding IsPaid, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
-                                      Height="{Binding FontSize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}" />
+                                      Height="{StaticResource ViewFontSize}"
+                                      Width="{StaticResource ViewFontSize}" />
                                 <Path Name="cross"
-                                      Data="{StaticResource ResourceKey=Close}"
+                                      Data="{StaticResource CloseGeometry}"
                                       Stretch="Uniform"
-                                      Fill="{StaticResource ResourceKey=NotPaidBrush}"
+                                      Fill="{StaticResource NotPaidBrush}"
                                       Visibility="{Binding IsNotPaid, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
-                                      Height="{Binding FontSize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}" />
+                                      Height="{StaticResource ViewFontSize}"
+                                      Width="{StaticResource ViewFontSize}" />
                             </StackPanel>
 
                             <DataTemplate.Triggers>
@@ -154,6 +107,12 @@
                 </GridViewColumn>
                 <GridViewColumn Header="Release date"
                                 Width="110">
+                    <GridViewColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              Content="{TemplateBinding Content}" />
+                        </DataTemplate>
+                    </GridViewColumn.HeaderTemplate>
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock TextAlignment="Right"
@@ -164,6 +123,12 @@
                 </GridViewColumn>
                 <GridViewColumn Header="Due date"
                                 Width="110">
+                    <GridViewColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              Content="{TemplateBinding Content}" />
+                        </DataTemplate>
+                    </GridViewColumn.HeaderTemplate>
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock TextAlignment="Right"
@@ -185,19 +150,52 @@
 
         <ListView.ContextMenu>
             <ContextMenu>
-                <MenuItem Header="Add"
-                          Command="{Binding AddNewBillCommand, Mode=OneTime}" />
-                <Separator />
-                <MenuItem Header="Edit"
-                          Command="{Binding EditBillCommand, Mode=OneTime}"
-                          CommandParameter="{Binding SelectedBillViewModel}" />
-                <MenuItem Header="Delete"
-                          Command="{Binding DeleteBillCommand, Mode=OneTime}"
-                          CommandParameter="{Binding SelectedBillViewModel}" />
-                <Separator />
+
                 <MenuItem Header="Pay"
-                          Command="{Binding PayBillCommand, Mode=OneTime}"
-                          CommandParameter="{Binding SelectedBillViewModel}" />
+                          Command="{Binding PayBillCommand, Mode=OneWay}"
+                          CommandParameter="{Binding SelectedBillViewModel}">
+                    <MenuItem.Icon>
+                        <Controls:AutoGreyableImage Source="Images/generic/pay-16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <Separator />
+
+                <MenuItem Header="Add"
+                          Command="{Binding AddNewBillCommand, Mode=OneWay}">
+                    <MenuItem.Icon>
+                        <Controls:AutoGreyableImage Source="Images/generic/add-16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <Separator />
+
+                <MenuItem Header="Edit"
+                          Command="{Binding EditBillCommand, Mode=OneWay}"
+                          CommandParameter="{Binding SelectedBillViewModel}">
+                    <MenuItem.Icon>
+                        <Controls:AutoGreyableImage Source="Images/generic/edit-16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Delete"
+                          Command="{Binding DeleteBillCommand, Mode=OneWay}"
+                          CommandParameter="{Binding SelectedBillViewModel}">
+                    <MenuItem.Icon>
+                        <Controls:AutoGreyableImage Source="Images/generic/delete-16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <Separator />
+                
+                <MenuItem Header="Details"
+                          Command="{Binding ShowBillDetailsCommand, Mode=OneWay}"
+                          CommandParameter="{Binding SelectedBillViewModel}">
+                    <MenuItem.Icon>
+                        <Controls:AutoGreyableImage Source="Images/generic/details-16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
             </ContextMenu>
         </ListView.ContextMenu>
 

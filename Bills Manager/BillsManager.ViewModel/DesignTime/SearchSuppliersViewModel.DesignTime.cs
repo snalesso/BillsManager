@@ -1,7 +1,7 @@
 ﻿using Caliburn.Micro;
 using System.Linq;
 
-namespace BillsManager.ViewModel
+namespace BillsManager.ViewModels
 {
 #if DEBUG
     public partial class SearchSuppliersViewModel

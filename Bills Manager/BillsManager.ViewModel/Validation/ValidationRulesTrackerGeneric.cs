@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 
-namespace BillsManager.ViewModel.Validation
+namespace BillsManager.ViewModels.Validation
 {
     public class ValidationRulesTracker<T>
         where T : class
@@ -29,7 +29,7 @@ namespace BillsManager.ViewModel.Validation
             {
                 ValidationAttribute[] valAtts = (ValidationAttribute[])pi.GetCustomAttributes(typeof(ValidationAttribute), true);
 
-                if (valAtts.Count() > 0)
+                if (valAtts.Count() > 0) // TODO: what if no validation rules?
                     this.validationRules.Add(pi.Name, valAtts);
             }
         }

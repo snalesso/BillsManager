@@ -5,19 +5,19 @@
         <ResourceDictionary Source="Values.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-
     <BorderGapMaskConverter x:Key="BorderGapMaskConverter" />
 
     <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}"
            TargetType="{x:Type Separator}">
+        
         <Setter Property="Foreground"
-                Value="{StaticResource ResourceKey=MenuBorderBrush}" />
+                Value="{StaticResource MenuBorderBrush}" />
+        
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Separator}">
-                    <Rectangle Fill="{TemplateBinding Property=Foreground}"
-                               Width="{TemplateBinding Property=Width}" />
+                    <Rectangle Fill="{TemplateBinding Foreground}"
+                               Width="{TemplateBinding Width}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -25,18 +25,25 @@
 
     <ControlTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type MenuItem}, ResourceId=TopLevelItemTemplateKey}"
                      TargetType="{x:Type MenuItem}">
-        <Border Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}"
-                BorderBrush="{Binding BorderBrush, RelativeSource={RelativeSource TemplatedParent}}"
-                Padding="12 6">
-            <StackPanel>
+        
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                CornerRadius="{StaticResource ViewCornerRadius}"
+                Padding="{TemplateBinding Padding}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition x:Name="middleRow"
+                                   Height="{StaticResource RegionSeparatorSize}" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
                 <ContentPresenter x:Name="Icon"
                                   ContentSource="Icon"
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Center"
-                                  Height="24"
-                                  Width="24"
-                                  Margin="0,0,0,4" />
-                <StackPanel Orientation="Horizontal"
+                                  Height="{StaticResource MenuIconSize}"
+                                  Width="{StaticResource MenuIconSize}" />
+                <!--<StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center">
                     <Path x:Name="GlyphPanel"
@@ -45,32 +52,62 @@
                           Visibility="Collapsed"
                           Margin="0,0,4,0"
                           VerticalAlignment="Center"
-                          HorizontalAlignment="Center" />
-                    <ContentPresenter ContentSource="Header"
-                                      RecognizesAccessKey="True"
-                                      VerticalAlignment="Center"
-                                      HorizontalAlignment="Center" />
-                </StackPanel>
-            </StackPanel>
+                          HorizontalAlignment="Center" />-->
+                <ContentPresenter x:Name="header"
+                                  Grid.Row="2"
+                                  ContentSource="Header"
+                                  RecognizesAccessKey="True"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center">
+                    <ContentPresenter.Margin>
+                        <Thickness Left="{StaticResource RegionSeparatorSizeValue}"
+                                   Right="{StaticResource RegionSeparatorSizeValue}" />
+                    </ContentPresenter.Margin>
+                </ContentPresenter>
+                <!--</StackPanel>-->
+            </Grid>
         </Border>
 
         <ControlTemplate.Triggers>
+
+            <Trigger Property="Command"
+                     Value="{x:Null}">
+                <Setter Property="IsEnabled"
+                        Value="False" />
+            </Trigger>
 
             <Trigger Property="Icon"
                      Value="{x:Null}">
                 <Setter TargetName="Icon"
                         Property="Visibility"
                         Value="Collapsed" />
+                <Setter TargetName="middleRow"
+                        Property="Height"
+                        Value="0" />
+            </Trigger>
+
+            <Trigger Property="Header"
+                     Value="{x:Null}">
+                <Setter TargetName="header"
+                        Property="Visibility"
+                        Value="Collapsed" />
+                <Setter TargetName="middleRow"
+                        Property="Height"
+                        Value="0" />
             </Trigger>
 
             <Trigger Property="IsChecked"
                      Value="true">
-                <Setter TargetName="GlyphPanel"
+                <!--<Setter TargetName="GlyphPanel"
                         Property="Visibility"
                         Value="Visible" />
                 <Setter TargetName="Icon"
                         Property="Visibility"
-                        Value="Collapsed" />
+                        Value="Collapsed" />-->
+                <Setter Property="Background"
+                        Value="{StaticResource MenuItemCheckedBackgroundBrush}" />
+                <Setter Property="Foreground"
+                        Value="{StaticResource MenuItemCheckedForegroundBrush}" />
             </Trigger>
 
         </ControlTemplate.Triggers>
@@ -79,25 +116,25 @@
 
     <ControlTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type MenuItem}, ResourceId=TopLevelHeaderTemplateKey}"
                      TargetType="{x:Type MenuItem}">
-        <Border Background="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}}"
-                BorderBrush="{Binding Path=BorderBrush, RelativeSource={RelativeSource TemplatedParent}}"
-                Padding="12 4">
+        
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                CornerRadius="{StaticResource ViewCornerRadius}"
+                Padding="{TemplateBinding Padding}">
             <StackPanel>
                 <ContentPresenter x:Name="icon"
                                   ContentSource="Icon"
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Center"
-                                  Height="24"
-                                  Width="24"
-                                  Margin="0,0,0,4" />
+                                  Height="{StaticResource MenuIconSize}"
+                                  Width="{StaticResource MenuIconSize}" />
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center">
                     <Path x:Name="checkamrk"
-                          Fill="{Binding Path=Foreground, RelativeSource={RelativeSource TemplatedParent}}"
-                          Data="{StaticResource ResourceKey=Checkmark}"
+                          Fill="{TemplateBinding Foreground}"
+                          Data="{StaticResource Checkmark}"
                           Visibility="Collapsed"
-                          Margin="0,0,4,0"
                           VerticalAlignment="Center"
                           HorizontalAlignment="Center" />
                     <ContentPresenter ContentSource="Header"
@@ -108,14 +145,14 @@
 
                 <Popup x:Name="PART_Popup"
                        Placement="Bottom"
-                       IsOpen="{Binding Path=IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                       IsOpen="{TemplateBinding IsSubmenuOpen}"
                        Focusable="false"
                        PopupAnimation="None"
                        AllowsTransparency="True"
                        VerticalOffset="4"
                        HorizontalOffset="-9">
-                    <Border Background="{StaticResource ResourceKey=MenuItemBackgroundBrush}"
-                            BorderBrush="{StaticResource ResourceKey=MenuBorderBrush}"
+                    <Border Background="{StaticResource MenuItemBackgroundBrush}"
+                            BorderBrush="{StaticResource MenuBorderBrush}"
                             BorderThickness="1">
                         <ScrollViewer x:Name="SubMenuScrollViewer"
                                       CanContentScroll="true"
@@ -158,8 +195,11 @@
 
     <ControlTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type MenuItem}, ResourceId=SubmenuItemTemplateKey}"
                      TargetType="{x:Type MenuItem}">
-        <Border Background="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}}"
-                BorderBrush="{Binding Path=BorderBrush, RelativeSource={RelativeSource TemplatedParent}}">
+        
+        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                CornerRadius="{StaticResource ViewCornerRadius}"
+                Padding="{TemplateBinding Padding}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"
@@ -175,19 +215,27 @@
                 <ContentPresenter x:Name="icon"
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Center"
-                                  Height="24"
-                                  Width="24"
-                                  Margin="2"
-                                  ContentSource="Icon" />
+                                  Height="{StaticResource MenuItemIconSize}"
+                                  Width="{StaticResource MenuItemIconSize}"
+                                  ContentSource="Icon">
+                    <ContentPresenter.Margin>
+                        <Thickness Right="{StaticResource MarginSizeValue}" />
+                    </ContentPresenter.Margin>
+                </ContentPresenter>
+                
                 <Path x:Name="checkmark"
                       Visibility="Hidden"
-                      Margin="2"
-                      Height="24"
-                      Width="24"
-                      Fill="{Binding Path=Foreground, RelativeSource={RelativeSource TemplatedParent}}"
-                      Data="{StaticResource ResourceKey=Checkmark}"
+                      Height="{StaticResource MenuItemIconSize}"
+                      Width="{StaticResource MenuItemIconSize}"
+                      Fill="{TemplateBinding Foreground}"
+                      Data="{StaticResource Checkmark}"
                       VerticalAlignment="Center"
-                      HorizontalAlignment="Center" />
+                      HorizontalAlignment="Center">
+                    <Path.Margin>
+                        <Thickness Right="{StaticResource MarginSizeValue}" />
+                    </Path.Margin>
+                </Path>
+                
                 <ContentPresenter Grid.Column="1"
                                   ContentSource="Header"
                                   VerticalAlignment="Center"
@@ -196,18 +244,25 @@
                 <TextBlock Grid.Column="3"
                            Text="{TemplateBinding InputGestureText}"
                            VerticalAlignment="Center"
-                           HorizontalAlignment="Right"
-                           Margin="0 0 4 0" />
+                           HorizontalAlignment="Right" />
             </Grid>
         </Border>
 
         <ControlTemplate.Triggers>
+
+            <Trigger Property="Command"
+                     Value="{x:Null}">
+                <Setter Property="IsEnabled"
+                        Value="False" />
+            </Trigger>
+
             <Trigger Property="Icon"
                      Value="{x:Null}">
                 <Setter TargetName="icon"
                         Property="Visibility"
                         Value="Hidden" />
             </Trigger>
+
             <Trigger Property="IsChecked"
                      Value="true">
                 <Setter TargetName="checkmark"
@@ -217,14 +272,16 @@
                         Property="Visibility"
                         Value="Hidden" />
             </Trigger>
+
         </ControlTemplate.Triggers>
 
     </ControlTemplate>
 
     <ControlTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type MenuItem}, ResourceId=SubmenuHeaderTemplateKey}"
                      TargetType="{x:Type MenuItem}">
-        <Border Background="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}}"
-                BorderBrush="{Binding Path=BorderBrush, RelativeSource={RelativeSource TemplatedParent}}">
+        <Border Background="{TemplateBinding Background}"
+                CornerRadius="{StaticResource ViewCornerRadius}"
+                BorderBrush="{TemplateBinding BorderBrush}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"
@@ -239,17 +296,17 @@
                 <ContentPresenter x:Name="icon"
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Center"
-                                  Height="24"
-                                  Width="24"
+                                  Height="{StaticResource MenuItemIconSize}"
+                                  Width="{StaticResource MenuItemIconSize}"
                                   Margin="2"
                                   ContentSource="Icon" />
                 <Path x:Name="checkmark"
                       Visibility="Hidden"
                       Margin="2"
-                      Height="24"
-                      Width="24"
-                      Fill="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}"
-                      Data="{StaticResource ResourceKey=Checkmark}"
+                      Height="{StaticResource MenuItemIconSize}"
+                      Width="{StaticResource MenuItemIconSize}"
+                      Fill="{TemplateBinding Foreground}"
+                      Data="{StaticResource Checkmark}"
                       VerticalAlignment="Center"
                       HorizontalAlignment="Center" />
                 <ContentPresenter Grid.Column="1"
@@ -266,19 +323,19 @@
                 <Path Grid.Column="4"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center"
-                      Fill="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}"
-                      Data="{StaticResource ResourceKey=RightArrow}"
+                      Fill="{TemplateBinding Foreground}"
+                      Data="{StaticResource RightArrow}"
                       Margin="0 0 4 0" />
 
                 <Popup x:Name="PART_Popup"
                        Placement="Right"
-                       IsOpen="{Binding Path=IsSubmenuOpen,RelativeSource={RelativeSource TemplatedParent}}"
+                       IsOpen="{TemplateBinding IsSubmenuOpen}"
                        Focusable="false"
                        PopupAnimation="None"
                        AllowsTransparency="True"
                        VerticalOffset="-1">
-                    <Border Background="{StaticResource ResourceKey=MenuItemBackgroundBrush}"
-                            BorderBrush="{StaticResource ResourceKey=MenuBorderBrush}"
+                    <Border Background="{StaticResource MenuItemBackgroundBrush}"
+                            BorderBrush="{StaticResource MenuBorderBrush}"
                             BorderThickness="1">
                         <ScrollViewer Name="SubMenuScrollViewer"
                                       CanContentScroll="true"
@@ -323,19 +380,19 @@
            TargetType="{x:Type MenuItem}">
 
         <Setter Property="Background"
-                Value="{StaticResource ResourceKey=MenuItemBackgroundBrush}" />
+                Value="{StaticResource MenuItemBackgroundBrush}" />
         <Setter Property="BorderBrush"
-                Value="{StaticResource ResourceKey=MenuItemBorderBrush}" />
+                Value="{StaticResource MenuItemBorderBrush}" />
         <Setter Property="Foreground"
-                Value="{StaticResource ResourceKey=MenuItemForegroundBrush}" />
+                Value="{StaticResource MenuItemForegroundBrush}" />
 
 
         <Setter Property="Padding"
-                Value="4 6" />
-        <Setter Property="HorizontalContentAlignment"
-                Value="{Binding Path=HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+                Value="{StaticResource ResizeBorderThickness}" />
+        <!--<Setter Property="HorizontalContentAlignment"
+                Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="VerticalContentAlignment"
-                Value="{Binding Path=VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+                Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />-->
         <Setter Property="ScrollViewer.PanningMode"
                 Value="Both" />
         <Setter Property="Stylus.IsFlicksEnabled"
@@ -370,36 +427,41 @@
                      Value="SubmenuItem">
                 <Setter Property="DockPanel.Dock"
                         Value="Top" />
+                <Setter Property="Margin">
+                    <Setter.Value>
+                        <Thickness Top="{StaticResource RegionSeparatorSizeValue}" Bottom="{StaticResource RegionSeparatorSizeValue}" />
+                    </Setter.Value>
+                </Setter>
             </Trigger>
 
             <Trigger Property="IsPressed"
                      Value="true">
                 <Setter Property="Background"
-                        Value="{StaticResource ResourceKey=MenuItemPressedBackgroundBrush}" />
+                        Value="{StaticResource MenuItemPressedBackgroundBrush}" />
                 <Setter Property="BorderBrush"
-                        Value="{StaticResource ResourceKey=MenuItemPressedBorderBrush}" />
+                        Value="{StaticResource MenuItemPressedBorderBrush}" />
                 <Setter Property="Foreground"
-                        Value="{StaticResource ResourceKey=MenuItemPressedForegroundBrush}" />
+                        Value="{StaticResource MenuItemPressedForegroundBrush}" />
             </Trigger>
 
             <Trigger Property="IsHighlighted"
                      Value="true">
                 <Setter Property="Background"
-                        Value="{StaticResource ResourceKey=MenuItemHoverBackgroundBrush}" />
+                        Value="{StaticResource MenuItemHoverBackgroundBrush}" />
                 <Setter Property="BorderBrush"
-                        Value="{StaticResource ResourceKey=MenuItemHoverBorderBrush}" />
+                        Value="{StaticResource MenuItemHoverBorderBrush}" />
                 <Setter Property="Foreground"
-                        Value="{StaticResource ResourceKey=MenuItemHoverForegroundBrush}" />
+                        Value="{StaticResource MenuItemHoverForegroundBrush}" />
             </Trigger>
 
             <Trigger Property="IsEnabled"
                      Value="false">
                 <Setter Property="Background"
-                        Value="{StaticResource ResourceKey=MenuItemDisabledBackgroundBrush}" />
+                        Value="{StaticResource MenuItemDisabledBackgroundBrush}" />
                 <Setter Property="BorderBrush"
-                        Value="{StaticResource ResourceKey=MenuItemDisabledBorderBrush}" />
+                        Value="{StaticResource MenuItemDisabledBorderBrush}" />
                 <Setter Property="Foreground"
-                        Value="{StaticResource ResourceKey=MenuItemDisabledForegroundBrush}" />
+                        Value="{StaticResource MenuItemDisabledForegroundBrush}" />
             </Trigger>
 
         </Style.Triggers>

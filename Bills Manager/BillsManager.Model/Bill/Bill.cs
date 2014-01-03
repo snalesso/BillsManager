@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BillsManager.Model
+namespace BillsManager.Models
 {
     public partial class Bill
     {

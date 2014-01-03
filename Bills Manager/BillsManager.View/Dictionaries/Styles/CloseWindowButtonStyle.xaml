@@ -1,12 +1,14 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:BillsManager.View.Controls">
+                    xmlns:Controls="clr-namespace:BillsManager.Views.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Values.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type Controls:CloseWindowButton}">
+        <Setter Property="Focusable"
+                Value="False" />
         <Setter Property="Height"
                 Value="20" />
         <Setter Property="Width"
@@ -18,7 +20,7 @@
         <Setter Property="VerticalContentAlignment"
                 Value="Stretch" />
         <Setter Property="Foreground"
-                Value="{StaticResource ResourceKey=ViewForegroundBrush}" />
+                Value="{StaticResource ResourceKey=CloseBrush}" />
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="Template">
@@ -26,7 +28,7 @@
                 <ControlTemplate TargetType="{x:Type Controls:CloseWindowButton}">
                     <Border Background="{TemplateBinding Background}"
                             Padding="{TemplateBinding Padding}">
-                        <Path Data="{StaticResource ResourceKey=Close}"
+                        <Path Data="{StaticResource ResourceKey=CloseGeometry}"
                               Fill="{TemplateBinding Foreground}"
                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -42,6 +44,11 @@
                                  Value="false">
                             <Setter Property="Foreground"
                                     Value="{StaticResource ResourceKey=ButtonDisabledForegroundBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                            <Setter Property="Foreground"
+                                    Value="{StaticResource CloseClickedBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

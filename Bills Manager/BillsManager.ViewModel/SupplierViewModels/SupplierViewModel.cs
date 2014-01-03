@@ -1,7 +1,7 @@
-﻿using BillsManager.Model;
+﻿using BillsManager.Models;
 using Caliburn.Micro;
 
-namespace BillsManager.ViewModel
+namespace BillsManager.ViewModels
 {
     public abstract class SupplierViewModel : Screen
     {
@@ -97,6 +97,18 @@ namespace BillsManager.ViewModel
             }
         }
 
+        public virtual string Fax
+        {
+            get { return this.ExposedSupplier.Fax; }
+            set
+            {
+                if (this.Fax == value) return;
+
+                this.ExposedSupplier.Fax = value;
+                this.NotifyOfPropertyChange(() => this.Fax);
+            }
+        }
+
         public virtual string Notes
         {
             get { return this.ExposedSupplier.Notes; }
@@ -106,6 +118,45 @@ namespace BillsManager.ViewModel
                 {
                     this.ExposedSupplier.Notes = value;
                     this.NotifyOfPropertyChange(() => this.Notes);
+                }
+            }
+        }
+
+        public virtual string AgentName
+        {
+            get { return this.ExposedSupplier.AgentName; }
+            set
+            {
+                if (this.AgentName != value)
+                {
+                    this.ExposedSupplier.AgentName = value;
+                    this.NotifyOfPropertyChange(() => this.AgentName);
+                }
+            }
+        }
+
+        public virtual string AgentSurname
+        {
+            get { return this.ExposedSupplier.AgentSurname; }
+            set
+            {
+                if (this.AgentSurname != value)
+                {
+                    this.ExposedSupplier.AgentSurname = value;
+                    this.NotifyOfPropertyChange(() => this.AgentSurname);
+                }
+            }
+        }
+
+        public virtual string AgentPhone
+        {
+            get { return this.ExposedSupplier.AgentPhone; }
+            set
+            {
+                if (this.AgentPhone != value)
+                {
+                    this.ExposedSupplier.AgentPhone = value;
+                    this.NotifyOfPropertyChange(() => this.AgentPhone);
                 }
             }
         }
@@ -169,7 +220,7 @@ namespace BillsManager.ViewModel
             }
         }
 
-        public virtual ushort Zip
+        public virtual string Zip
         {
             get { return this.ExposedSupplier.Zip; }
             set

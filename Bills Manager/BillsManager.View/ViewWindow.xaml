@@ -1,18 +1,19 @@
-﻿<Controls:WindowEx xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Controls:WindowEx x:Class="BillsManager.Views.ViewWindow"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                    xmlns:Shell="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
-                   xmlns:Controls="clr-namespace:BillsManager.View.Controls"
-                   x:Class="BillsManager.View.ViewWindow"
+                   xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
                    mc:Ignorable="d"
                    d:DesignHeight="320"
                    d:DesignWidth="600"
                    SizeToContent="WidthAndHeight"
-                   TextOptions.TextRenderingMode="ClearType"
-                   TextOptions.TextFormattingMode="Display"
+                   FontFamily="Segoe UI"
+                   TextOptions.TextRenderingMode="Auto"
+                   TextOptions.TextFormattingMode="Ideal"
                    TextOptions.TextHintingMode="Fixed"
-                   Icon="Images/DBM.ico">
+                   Icon="Images/Product-documentation32.png">
 
     <Controls:WindowEx.Resources>
         <ResourceDictionary>
@@ -25,24 +26,30 @@
 
                 <Setter Property="UseLayoutRounding"
                         Value="True" />
-                <Setter Property="AllowsTransparency"
-                        Value="True" />
-                <Setter Property="WindowStyle"
-                        Value="None" />
+                <!--<Setter Property="AllowsTransparency"
+                        Value="True" />-->
+                <!--<Setter Property="WindowStyle"
+                        Value="None" />-->
+                
                 <Setter Property="Background"
-                        Value="{StaticResource ResourceKey=ViewBackgroundBrush}" />
+                        Value="{StaticResource ViewBackgroundBrush}" />
                 <Setter Property="BorderBrush"
-                        Value="{StaticResource ResourceKey=ViewBorderBrush}" />
+                        Value="{StaticResource ViewBorderBrush}" />
                 <Setter Property="Foreground"
-                        Value="{StaticResource ResourceKey=ViewForegroundBrush}" />
+                        Value="{StaticResource ViewForegroundBrush}" />
+                <Setter Property="FontSize"
+                        Value="{StaticResource ViewFontSize}" />
+
+                <Setter Property="MinHeight"
+                        Value="38" />
 
                 <Setter Property="Shell:WindowChrome.WindowChrome">
                     <Setter.Value>
-                        <Shell:WindowChrome CornerRadius="0"
+                        <Shell:WindowChrome CornerRadius="{StaticResource ViewCornerRadius}"
+                                            ResizeBorderThickness="{StaticResource ResizeBorderThickness}"
+                                            NonClientFrameEdges="None"
                                             GlassFrameThickness="0"
-                                            ResizeBorderThickness="{Binding ResizeThickness, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowEx}}}"
-                                            CaptionHeight="24">
-                        </Shell:WindowChrome>
+                                            CaptionHeight="32" />
                     </Setter.Value>
                 </Setter>
 
@@ -53,14 +60,15 @@
                             <AdornerDecorator>
 
                                 <Border x:Name="WindowBorder"
-                                        BorderBrush="{StaticResource ResourceKey=ViewBorderBrush}"
-                                        Background="{StaticResource ResourceKey=ViewBackgroundBrush}"
-                                        BorderThickness="1"
-                                        Padding="6">
+                                        BorderBrush="{StaticResource ViewBorderBrush}"
+                                        Background="{StaticResource ViewBackgroundBrush}"
+                                        BorderThickness="{StaticResource BorderThickness}"
+                                        Padding="{StaticResource ViewBorderPadding}">
+                                    
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="{StaticResource ResourceKey=MarginSize}" />
+                                            <RowDefinition Height="{StaticResource MarginSize}" />
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
 
@@ -73,21 +81,36 @@
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
 
+                                            <!--<TextBlock Background="Green"
+                                                       Grid.ColumnSpan="5"
+                                                       TextAlignment="Center"
+                                                       Foreground="White"
+                                                       Text="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource Self}}" />-->
+
                                             <Image Stretch="Uniform"
-                                                   Height="24"
                                                    VerticalAlignment="Top"
                                                    HorizontalAlignment="Left"
-                                                   Source="{TemplateBinding Icon}" />
+                                                   Source="{TemplateBinding Icon}"
+                                                   Height="{StaticResource ViewIconSize}"
+                                                   Width="{StaticResource ViewIconSize}">
+                                                <Image.Margin>
+                                                    <Thickness Left="{StaticResource RegionSeparatorSizeValue}"
+                                                               Top="{StaticResource RegionSeparatorSizeValue}"
+                                                               Right="{StaticResource RegionSeparatorSizeValue}"
+                                                               Bottom="{StaticResource RegionSeparatorSizeValue}" />
+                                                </Image.Margin>
+                                            </Image>
 
-                                            <TextBlock Text="{TemplateBinding Property=Title}"
+                                            <TextBlock Text="{TemplateBinding Title}"
                                                        Foreground="{StaticResource ViewTitleBrush}"
-                                                       FontSize="{StaticResource ResourceKey=ViewTitleFontSize}"
+                                                       FontSize="{StaticResource ViewTitleFontSize}"
                                                        Grid.Column="2"
                                                        HorizontalAlignment="Stretch"
                                                        VerticalAlignment="Center"
                                                        TextAlignment="Center"
                                                        TextWrapping="NoWrap"
                                                        TextTrimming="CharacterEllipsis" />
+                                            
                                             <StackPanel Orientation="Horizontal"
                                                         x:Name="controlBox"
                                                         Grid.Column="4"
@@ -100,16 +123,22 @@
                                                 <Controls:MaximizeWindowButton x:Name="MaximizeWindowButton" />
                                                 <Controls:CloseWindowButton Visibility="{Binding CanClose, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
                                             </StackPanel>
+                                            
                                         </Grid>
 
-                                        <ContentPresenter Grid.Row="2" />
+                                        <ContentPresenter Grid.Row="2"
+                                                          Content="{TemplateBinding Content}"
+                                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                          ContentStringFormat="{TemplateBinding ContentStringFormat}"/>
 
                                     </Grid>
+                                    
                                 </Border>
 
                             </AdornerDecorator>
 
                             <ControlTemplate.Triggers>
+                                
                                 <Trigger Property="WindowState"
                                          Value="Maximized">
                                     <Setter TargetName="NormalizeWindowButton"
@@ -118,10 +147,11 @@
                                     <Setter TargetName="MaximizeWindowButton"
                                             Property="Visibility"
                                             Value="Collapsed" />
-                                    <Setter TargetName="controlBox"
+                                    <!--<Setter TargetName="controlBox"
                                             Property="Margin"
-                                            Value="0 -1 -1 0" />
+                                            Value="0 -1 -1 0" />-->
                                 </Trigger>
+                                
                                 <Trigger Property="ResizeMode"
                                          Value="NoResize">
                                     <Setter TargetName="NormalizeWindowButton"
@@ -130,7 +160,8 @@
                                     <Setter TargetName="MaximizeWindowButton"
                                             Property="Visibility"
                                             Value="Collapsed" />
-                                </Trigger>
+                                </Trigger>                                 
+                                
                             </ControlTemplate.Triggers>
 
                         </ControlTemplate>
@@ -143,7 +174,7 @@
     </Controls:WindowEx.Resources>
 
     <Controls:WindowEx.Style>
-        <Binding Mode="OneWay"
+        <Binding Mode="OneTime"
                  Source="{StaticResource ViewWindowStyle}" />
     </Controls:WindowEx.Style>
 

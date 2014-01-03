@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
-using BillsManager.Model;
+using BillsManager.Models;
 using Caliburn.Micro;
 
-namespace BillsManager.ViewModel
+namespace BillsManager.ViewModels
 {
 #if DEBUG
     public partial class SuppliersViewModel : Screen
@@ -22,7 +22,7 @@ namespace BillsManager.ViewModel
 
         #region methods
 
-        protected void LoadDesignTimeData()
+        private void LoadDesignTimeData()
         {
             var svm1 = new SupplierDetailsViewModel(new Supplier(
                 0,
@@ -30,15 +30,17 @@ namespace BillsManager.ViewModel
                 "Via Stromboli",
                 "14",
                 "Milano",
-                20144,
+                "20144",
                 "MI",
                 "Italia",
                 "faber-castell@faber-castell.it",
                 "http://www.faber-castell.it",
                 "02/43069601",
-                "sconti 10/06 - 24/09."
-                //,new[] { new Agent("Barbara", "Robecchi", "347-7892234", string.Empty) }
-            ));
+                "02/43069601",
+                "sconti 10/06 - 24/09.",
+                "Barbara", 
+            "Robecchi", 
+            "347-7892234")) { ObligationAmount = -1 };
 
             //svm1.ExposedSupplier.Bills.Add(new Bill(
             //    DateTime.Today.AddDays(-2),
@@ -56,15 +58,17 @@ namespace BillsManager.ViewModel
                 "Via Stromboli",
                 "14",
                 "Milano",
-                20144,
+                "20144",
                 "MI",
                 "Italia",
                 "faber-castell@faber-castell.it",
                 "http://www.faber-castell.it",
                 "02/43069601",
-                "sconti 10/06 - 24/09."
-                //,new[] { new Agent("Barbara", "Robecchi", "347-7892234", string.Empty) }
-            ));
+                "02/26367774",
+                "sconti 10/06 - 24/09.",
+                "Barbara",
+                "Robecchi",
+                "347-7892234"));
 
             var svm3 = new SupplierDetailsViewModel(new Supplier(
                 2,
@@ -72,15 +76,17 @@ namespace BillsManager.ViewModel
                 "Via Stromboli",
                 "14",
                 "Milano",
-                20144,
+                "20144",
                 "MI",
                 "Italia",
                 "faber-castell@faber-castell.it",
                 "http://www.faber-castell.it",
                 "02/43069601",
-                "sconti 10/06 - 24/09."
-                //,new[] { new Agent("Barbara", "Robecchi", "347-7892234", string.Empty) }
-            ));
+                "02/26367774",
+                "sconti 10/06 - 24/09.",
+                "Barbara",
+                "Robecchi",
+                "347-7892234")) { ObligationAmount = 1 }; // TODO: change obligation set way, look here below
 
             //svm3.ExposedSupplier.Bills.Add(new Bill(
             //    DateTime.Today.AddDays(-2),

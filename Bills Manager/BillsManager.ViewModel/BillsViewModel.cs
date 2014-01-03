@@ -1,44 +1,69 @@
-﻿using System;
+﻿using BillsManager.Models;
+using BillsManager.Services.Providers;
+using BillsManager.ViewModels.Commanding;
+using BillsManager.ViewModels.Messages;
+using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows;
-using BillsManager.Model;
-using BillsManager.Service.Providers;
-using BillsManager.ViewModel.Commanding;
-using BillsManager.ViewModel.Messages;
-using Caliburn.Micro;
 
-namespace BillsManager.ViewModel
+namespace BillsManager.ViewModels
 {
-    public partial class BillsViewModel :
+    public sealed partial class BillsViewModel :
         Screen,
-        IHandle<BillsNeedRefreshMessage>,
         IHandle<BillsFilterMessage>,
         IHandle<SupplierDeletedMessage>,
         IHandle<EditBillRequestMessage>
     {
         #region fields
 
-        private readonly IBillsProvider billsProvider;
         private readonly IWindowManager windowManager;
-        private readonly IEventAggregator eventAggregator;
+        //private readonly IEventAggregator globalEventAggregator;
+        private readonly IEventAggregator dbEventAggregator;
+        private readonly IBillsProvider billsProvider;
+
+        private readonly Func<IEventAggregator, Bill, BillAddEditViewModel> billAddEditViewModelFactory;
+        private readonly Func<IEventAggregator, Bill, BillDetailsViewModel> billDetailsViewModelFactory;
 
         #endregion
 
         #region ctor
 
         public BillsViewModel(
-            IBillsProvider billsProvider,
             IWindowManager windowManager,
-            IEventAggregator eventAggregator)
+            //IEventAggregator globalEventAggregator,
+            IEventAggregator dbEventaAggregator,
+            IBillsProvider billsProvider,
+            Func<IEventAggregator, Bill, BillAddEditViewModel> billAddEditViewModelFactory,
+            Func<IEventAggregator, Bill, BillDetailsViewModel> billDetailsViewModelFactory)
         {
+            // SERVICES
             this.windowManager = windowManager;
+            //this.globalEventAggregator = globalEventAggregator;
+            this.dbEventAggregator = dbEventaAggregator;
             this.billsProvider = billsProvider;
-            this.eventAggregator = eventAggregator;
 
-            this.eventAggregator.Subscribe(this);
+            // FACTORIES
+            this.billAddEditViewModelFactory = billAddEditViewModelFactory;
+            this.billDetailsViewModelFactory = billDetailsViewModelFactory;
 
+            // SUBSCRIPTIONS
+            //this.globalEventAggregator.Subscribe(this); // TODO: move to activate?
+            this.dbEventAggregator.Subscribe(this);
+
+            // HANDLERS
+            this.Deactivated +=
+                (s, e) =>
+                {
+                    if (e.WasClosed)
+                    {
+                        //this.globalEventAggregator.Unsubscribe(this);
+                        this.dbEventAggregator.Unsubscribe(this);
+                    }
+                };
+
+            // START
             this.LoadBills();
         }
 
@@ -59,7 +84,7 @@ namespace BillsManager.ViewModel
                     this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
 
                     if (!Execute.InDesignMode)
-                        this.eventAggregator.Publish(new BillsListChangedMessage(this.BillViewModels.Select(bvm => bvm.ExposedBill)));
+                        this.dbEventAggregator.Publish(new BillsListChangedMessage(this.BillViewModels.Select(bvm => bvm.ExposedBill)));
                 }
             }
 
@@ -69,12 +94,12 @@ namespace BillsManager.ViewModel
         {
             get
             {
-                if (this.BillsFilters != null)
+                if (this.Filters != null)
 
                     return new ReadOnlyObservableCollection<BillDetailsViewModel>( // TODO: check whether this is a good practice
                         new ObservableCollection<BillDetailsViewModel>(
                             this.BillViewModels
-                            .Where(this.BillsFilters)));
+                            .Where(this.Filters.Select(filter => filter.Execute))));
 
                 else
                     return new ReadOnlyObservableCollection<BillDetailsViewModel>(this.BillViewModels);
@@ -87,26 +112,42 @@ namespace BillsManager.ViewModel
             get { return this.selectedBillViewModel; }
             set
             {
-                if (this.selectedBillViewModel != value)
-                {
-                    this.selectedBillViewModel = value;
-                    this.NotifyOfPropertyChange(() => this.SelectedBillViewModel);
-                }
+                if (this.selectedBillViewModel == value) return;
+
+                this.selectedBillViewModel = value;
+                this.NotifyOfPropertyChange(() => this.SelectedBillViewModel);
+
             }
         }
 
-        private IEnumerable<Func<BillDetailsViewModel, bool>> billsFilters;
-        public IEnumerable<Func<BillDetailsViewModel, bool>> BillsFilters
+        private IEnumerable<Filter<BillDetailsViewModel>> filters;
+        public IEnumerable<Filter<BillDetailsViewModel>> Filters
         {
-            get { return this.billsFilters; }
+            get { return this.filters; }
             private set
             {
-                if (this.billsFilters != value)
+                if (this.filters == value) return;
+
+                this.filters = value;
+                this.NotifyOfPropertyChange(() => this.Filters);
+                this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
+                this.NotifyOfPropertyChange(() => this.FiltersDescription);
+            }
+        }
+
+        public string FiltersDescription
+        {
+            get
+            {
+                var filtersDescription = string.Empty;
+                if (this.Filters == null) return "All bills";
+
+                foreach (var filter in this.Filters)
                 {
-                    this.billsFilters = value;
-                    this.NotifyOfPropertyChange(() => this.BillsFilters);
-                    this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
+                    filtersDescription += ", " + filter.Description();
                 }
+
+                return "Bills" + filtersDescription.Substring(1);
             }
         }
 
@@ -116,28 +157,35 @@ namespace BillsManager.ViewModel
 
         private void LoadBills()
         {
-            this.BillViewModels = new ObservableCollection<BillDetailsViewModel>(
-                this.billsProvider.GetAll()
-                .Select(b => new BillDetailsViewModel(b, this.windowManager, this.eventAggregator)));
+            var bills = this.billsProvider.GetAllBills();
+
+            var billVMs = bills.Select(bill => this.billDetailsViewModelFactory.Invoke(this.dbEventAggregator, bill));
+
+            var sortedBillVMs =
+                billVMs.OrderBy(billVM => billVM.IsPaid)
+                .ThenBy(billVM => billVM.DueDate)
+                .ThenBy(billVM => billVM.Amount)
+                .ThenBy(billVM => billVM.SupplierName);
+
+            this.BillViewModels = new ObservableCollection<BillDetailsViewModel>(sortedBillVMs);
         }
 
         private string GetBillSummary(Bill bill)
         {
-            var supp = this.GetSupplier(bill.SupplierID);
+            var suppName = this.GetSupplierName(bill.SupplierID);
 
             return
-                (supp != null ? supp.Name : "Supplier ID: " + bill.SupplierID) + // TODO: language
+                (suppName != null ? suppName : "Supplier ID: " + bill.SupplierID) + // TODO: language
                 Environment.NewLine +
                 bill.Code +
                 Environment.NewLine +
-                string.Format("{0:C2}", bill.Amount);
+                string.Format("{0:N2} €", bill.Amount);
         }
 
-        private Supplier GetSupplier(uint supplierID)
+        private string GetSupplierName(uint supplierID)
         {
-            // TODO: move supplier logic to BillsViewModel (same for supp's obligation amount)
-            Supplier supp = null;
-            this.eventAggregator.Publish(new AskForSupplierMessage(supplierID, s => supp = s));
+            string supp = null;
+            this.dbEventAggregator.Publish(new SupplierNameRequestMessage(supplierID, s => supp = s));
             return supp;
         }
 
@@ -145,48 +193,48 @@ namespace BillsManager.ViewModel
 
         private void AddBill()
         {
-            var newBvm = new BillAddEditViewModel(new Bill(this.billsProvider.GetLastID() + 1), this.windowManager, this.eventAggregator);
+            var newBvm = this.billAddEditViewModelFactory.Invoke(this.dbEventAggregator, new Bill(this.billsProvider.GetLastBillID() + 1));
 
             //newBvm.SetupForAddEdit();
 
-            if (this.windowManager.ShowDialog(newBvm, settings: new Dictionary<String, object> { { "ResizeMode", ResizeMode.NoResize }, { "IsCloseButtonVisible", false } })
+            if (this.windowManager.ShowDialog(newBvm)
                 == true)
             {
                 // TODO: make it possible to show the view through a dialogviewmodel (evaluate the idea)
                 this.billsProvider.Add(newBvm.ExposedBill);
 
-                var newBvmDetails = new BillDetailsViewModel(newBvm.ExposedBill, this.windowManager, this.eventAggregator);
+                //var newBvmDetails = new BillDetailsViewModel(this.windowManager, this.eventAggregator, newBvm.ExposedBill);
+                var newBvmDetails = this.billDetailsViewModelFactory.Invoke(this.dbEventAggregator, newBvm.ExposedBill);
 
                 this.BillViewModels.Add(newBvmDetails);
                 this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
 
                 this.SelectedBillViewModel = newBvmDetails;
 
-                this.eventAggregator.Publish(new BillAddedMessage(newBvm.ExposedBill));
+                this.dbEventAggregator.Publish(new BillAddedMessage(newBvm.ExposedBill));
             }
         }
 
         private void EditBill(Bill bill)
         {
-            var baeVM = new BillAddEditViewModel(bill, this.windowManager, this.eventAggregator);
+            var baeVM = this.billAddEditViewModelFactory.Invoke(this.dbEventAggregator, bill);
+
             Bill oldVersion = (Bill)bill.Clone();
 
             baeVM.BeginEdit();
 
-            if (this.windowManager.ShowDialog(baeVM,
-                settings: new Dictionary<string, object> { { "ResizeMode", ResizeMode.NoResize } }) == true)
+            if (this.windowManager.ShowDialog(baeVM) == true)
             {
                 if (this.billsProvider.Edit(baeVM.ExposedBill))
                 {
                     this.BillViewModels.Single(bvm => bvm.ExposedBill == bill).Refresh();
-                    this.eventAggregator.Publish(new BillEditedMessage(baeVM.ExposedBill, oldVersion)); // TODO: move to confirm add edit command in addeditbvm
+                    this.dbEventAggregator.Publish(new BillEditedMessage(baeVM.ExposedBill, oldVersion)); // TODO: move to confirm add edit command in addeditbvm
                 }
                 else
                 {
                     this.windowManager.ShowDialog(new DialogViewModel(
-                        "Error", // TODO: language
-                        "An error has been encountered during the editing process."),
-                        settings: new Dictionary<string, object> { { "ResizeMode", ResizeMode.NoResize } });
+                        "Edit failed", // TODO: language
+                        "An error has occurred during the edit process. Please try again."));
                 }
             }
         }
@@ -194,7 +242,7 @@ namespace BillsManager.ViewModel
         private void DeleteBill(Bill bill)
         {
             var question = new DialogViewModel(
-                "Deleting bill",
+                "Delete bill",
                 "Do you really want to DELETE this bill?\n\n" + // TODO: language
                 this.GetBillSummary(bill),
                 new[]
@@ -203,9 +251,9 @@ namespace BillsManager.ViewModel
                     new DialogResponse(ResponseType.No)
                 });
 
-            this.windowManager.ShowDialog(question, settings: new Dictionary<string, object> { { "ResizeMode", ResizeMode.NoResize } });
+            this.windowManager.ShowDialog(question);
 
-            if (question.Response == ResponseType.Yes)
+            if (question.FinalResponse == ResponseType.Yes)
             {
                 this.billsProvider.Delete(bill);
 
@@ -214,26 +262,21 @@ namespace BillsManager.ViewModel
 
                 this.SelectedBillViewModel = null;
 
-                this.eventAggregator.Publish(new BillDeletedMessage(bill));
+                this.dbEventAggregator.Publish(new BillDeletedMessage(bill));
             }
         }
 
         private void PayBill(Bill bill)
         {
             var dialog = new DialogViewModel(
-                "Paying bill",
+                "Pay bill",
                 "Are you sure you want to pay this bill?" +
                 Environment.NewLine +
                 Environment.NewLine +
                 this.GetBillSummary(bill),
-                new[]
-                {
-                    new DialogResponse(ResponseType.Yes),
-                    new DialogResponse(ResponseType.No)
-                });
+                new[] { new DialogResponse(ResponseType.Yes), new DialogResponse(ResponseType.No) });
 
-            if (this.windowManager.ShowDialog(dialog,
-                settings: new Dictionary<string, object> { { "ResizeMode", ResizeMode.NoResize } }) == true)
+            if (this.windowManager.ShowDialog(dialog) == true)
             {
                 Bill oldVersion = (Bill)bill.Clone();
 
@@ -243,29 +286,25 @@ namespace BillsManager.ViewModel
 
                 this.BillViewModels.Single(bvm => bvm.ExposedBill == bill).Refresh();
 
-                this.eventAggregator.Publish(new BillEditedMessage(bill, oldVersion));
+                this.dbEventAggregator.Publish(new BillEditedMessage(bill, oldVersion));
             }
         }
 
         private void ShowBillDetails(BillDetailsViewModel billDetailsViewModel)
         {
-            this.windowManager.ShowDialog(
-                billDetailsViewModel,
-                settings: new Dictionary<String, object> { { "ResizeMode", ResizeMode.NoResize }, { "IsCloseButtonVisible", false } });
+            this.windowManager.ShowDialog(billDetailsViewModel, settings: new Dictionary<string, object>() { { "CanClose", true } });
         }
 
         #endregion
 
         #region message handlers
 
-        public void Handle(BillsNeedRefreshMessage message)
-        {
-            this.LoadBills();
-        }
-
         public void Handle(BillsFilterMessage message)
         {
-            this.BillsFilters = message.Filters;
+            this.Filters = message.Filters;
+
+            if (!this.FilteredBillViewModels.Contains(this.SelectedBillViewModel))
+                this.SelectedBillViewModel = null;
         }
 
         public void Handle(SupplierDeletedMessage message)
@@ -280,7 +319,7 @@ namespace BillsManager.ViewModel
                     throw new ApplicationException("Couldn't delete this bill: " + Environment.NewLine + Environment.NewLine + this.GetBillSummary(bvm.ExposedBill));
             }
 
-            if (this.BillsFilters == null)
+            if (this.Filters == null)
                 this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
         }
 
@@ -288,6 +327,16 @@ namespace BillsManager.ViewModel
         {
             this.EditBill(message.Bill); /* TODO: is it better to pass only the ID and let this VM to get the bill?
                                           * (this would check whether the bill is contained or is a lost one) */
+        }
+
+        #endregion
+
+        #region overrides
+
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            //this.eventAggregator.Subscribe(this);
         }
 
         #endregion

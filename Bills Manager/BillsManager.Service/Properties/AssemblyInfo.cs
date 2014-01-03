@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Le informazioni generali relative a un assembly sono controllate dal seguente 
 // set di attributi. Per modificare le informazioni associate a un assembly
 // occorre quindi modificare i valori di questi attributi.
-[assembly: AssemblyTitle("BillsManager.Service")]
+[assembly: AssemblyTitle("BillsManager.Services")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("BillsManager.Service")]
+[assembly: AssemblyProduct("BillsManager.Services")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

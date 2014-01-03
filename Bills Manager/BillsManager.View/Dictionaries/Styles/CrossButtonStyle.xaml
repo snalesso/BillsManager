@@ -11,13 +11,13 @@
            BasedOn="{StaticResource {x:Type Button}}">
         
         <Setter Property="Width"
-                Value="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}" />
+                Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
 
         <Setter Property="BorderThickness"
                 Value="0" />
 
         <Setter Property="Foreground"
-                Value="{StaticResource ResourceKey=ViewForegroundBrush}" />
+                Value="{StaticResource ViewForegroundBrush}" />
 
         <!--<Setter Property="BorderBrush"
                 Value="Transparent" />-->
@@ -35,9 +35,10 @@
                     
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="{StaticResource ViewCornerRadius}"
                             BorderThickness="{TemplateBinding BorderThickness}">
                         
-                        <Path Data="{StaticResource ResourceKey=CloseGeometry}"
+                        <Path Data="{StaticResource CloseGeometry}"
                               Fill="{TemplateBinding Foreground}"
                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -49,7 +50,7 @@
                         <Trigger Property="IsMouseOver"
                                  Value="true">
                             <Setter Property="Foreground"
-                                    Value="{StaticResource ResourceKey=CloseBrush}" />
+                                    Value="{StaticResource CloseBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                     

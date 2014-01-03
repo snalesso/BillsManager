@@ -1,8 +1,8 @@
-﻿using BillsManager.Service;
-using BillsManager.Service.Providers;
+﻿using BillsManager.Services;
+using BillsManager.Services.Providers;
 using Caliburn.Micro;
 
-namespace BillsManager.ViewModel.Factories
+namespace BillsManager.ViewModels.Factories
 {
     public class SuppliersViewModelFactory : IFactory<SuppliersViewModel>
     {
@@ -10,7 +10,6 @@ namespace BillsManager.ViewModel.Factories
 
         private readonly ISuppliersProvider suppliersProvider;
         private readonly IWindowManager windowManager;
-        //private readonly IDialogService dialogService;
         private readonly IEventAggregator eventAggregator;
 
         #endregion
@@ -18,18 +17,16 @@ namespace BillsManager.ViewModel.Factories
         public SuppliersViewModelFactory(
             ISuppliersProvider suppliersProvider,
             IWindowManager windowManager,
-            //IDialogService dialogService,
             IEventAggregator eventAggregator) // TODO: lazy if the class becomes heavy
         {
             this.suppliersProvider = suppliersProvider;
             this.windowManager = windowManager;
-            //this.dialogService = dialogService;
             this.eventAggregator = eventAggregator;
         }
 
         public SuppliersViewModel Create()
         {
-            return new SuppliersViewModel(this.suppliersProvider, this.windowManager, /*this.dialogService,*/ this.eventAggregator);
+            return new SuppliersViewModel(this.windowManager, this.eventAggregator, this.suppliersProvider);
         }
     }
 }

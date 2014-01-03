@@ -1,38 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Windows;
-using BillsManager.Model;
-using BillsManager.ViewModel.Commanding;
+﻿using BillsManager.Models;
+using BillsManager.ViewModels.Commanding;
 using Caliburn.Micro;
+using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace BillsManager.ViewModel
+namespace BillsManager.ViewModels
 {
     public partial class SupplierAddEditViewModel : SupplierViewModel
     {
         #region fields
 
-        //private readonly IDialogService dialogService;
         private readonly IWindowManager windowManager;
-        private readonly IEventAggregator eventAggregator;
+        private readonly IEventAggregator dbEventAggregator;
 
         #endregion
 
         #region ctor
 
         public SupplierAddEditViewModel(
-            Supplier supplier,
             IWindowManager windowManager,
-            IEventAggregator eventAggregator)
+            IEventAggregator dbEventAggregator,
+            Supplier supplier)
         {
             if (supplier == null)
                 throw new ArgumentNullException("supplier cannot be null.");
 
+            // SERVICES
             this.exposedSupplier = supplier;
             this.windowManager = windowManager;
-            this.eventAggregator = eventAggregator;
+            this.dbEventAggregator = dbEventAggregator;
 
-            this.eventAggregator.Subscribe(this);
+            // SUBSCRIPTIONS
+            this.dbEventAggregator.Subscribe(this);
+
+            // HANDLERS
+            this.Deactivated +=
+                (s, e) =>
+                {
+                    if (e.WasClosed)
+                    {
+                        this.dbEventAggregator.Unsubscribe(this);
+                    }
+                };
         }
 
         #endregion
@@ -44,13 +53,12 @@ namespace BillsManager.ViewModel
         [Required(ErrorMessage = "You must specify a name.")]
         public override string Name
         {
-            get { return this.ExposedSupplier.Name; }
+            get { return base.Name; }
             set
             {
                 if (this.Name != value)
                 {
-                    this.ExposedSupplier.Name = value;
-                    this.NotifyOfPropertyChange(() => this.Name);
+                    base.Name = value;
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
                 }
@@ -59,13 +67,12 @@ namespace BillsManager.ViewModel
 
         public override string eMail
         {
-            get { return this.ExposedSupplier.eMail; }
+            get { return base.eMail; }
             set
             {
                 if (this.eMail != value)
                 {
-                    this.ExposedSupplier.eMail = value;
-                    this.NotifyOfPropertyChange(() => this.eMail);
+                    base.eMail = value;
                     this.HasChanges = true;
                 }
             }
@@ -73,13 +80,12 @@ namespace BillsManager.ViewModel
 
         public override string Website
         {
-            get { return this.ExposedSupplier.Website; }
+            get { return base.Website; }
             set
             {
                 if (this.Website != value)
                 {
-                    this.ExposedSupplier.Website = value;
-                    this.NotifyOfPropertyChange(() => this.Website);
+                    base.Website = value;
                     this.HasChanges = true;
                 }
             }
@@ -87,31 +93,72 @@ namespace BillsManager.ViewModel
 
         public override string Phone
         {
-            get { return this.ExposedSupplier.Phone; }
+            get { return base.Phone; }
             set
             {
-                if (this.Phone != value)
-                {
-                    this.ExposedSupplier.Phone = value;
-                    this.NotifyOfPropertyChange(() => this.Phone);
-                    this.HasChanges = true;
-                }
+                base.Phone = value;
+                this.HasChanges = true;
             }
         }
 
-        [StringLength(100, ErrorMessage = "You cannot exceed 100 characters.")]
-        public override string Notes
+        public override string Fax
         {
-            get { return this.ExposedSupplier.Notes; }
+            get { return base.Fax; }
             set
             {
-                if (this.Notes != value)
-                {
-                    this.ExposedSupplier.Notes = value;
-                    this.NotifyOfPropertyChange(() => this.Notes);
-                    this.NotifyOfPropertyChange(() => this.IsValid);
-                    this.HasChanges = true;
-                }
+                base.Fax = value;
+                this.HasChanges = true;
+            }
+        }
+
+        [StringLength(200, ErrorMessage = "You cannot exceed 200 characters.")]
+        public override string Notes
+        {
+            get { return base.Notes; }
+            set
+            {
+                base.Notes = value;
+                this.NotifyOfPropertyChange(() => this.IsValid);
+                this.HasChanges = true;
+            }
+        }
+
+        public override string AgentName
+        {
+            get {   return base.AgentName; }
+            set
+            {
+                base.AgentName = value;
+                this.NotifyOfPropertyChange(() => this.AgentName);
+                this.HasChanges = true;
+            }
+        }
+
+        public override string AgentSurname
+        {
+            get
+            {
+                return base.AgentSurname;
+            }
+            set
+            {
+                base.AgentSurname = value;
+                this.NotifyOfPropertyChange(() => this.AgentSurname);
+                this.HasChanges = true;
+            }
+        }
+
+        public override string AgentPhone
+        {
+            get
+            {
+                return base.AgentPhone;
+            }
+            set
+            {
+                base.AgentPhone = value;
+                this.NotifyOfPropertyChange(() => this.AgentPhone);
+                this.HasChanges = true;
             }
         }
 
@@ -120,13 +167,12 @@ namespace BillsManager.ViewModel
         [Required(ErrorMessage = "You must specify a street.")]
         public override string Street
         {
-            get { return this.ExposedSupplier.Street; }
+            get { return base.Street; }
             set
             {
                 if (this.Street != value)
                 {
-                    this.ExposedSupplier.Street = value;
-                    this.NotifyOfPropertyChange(() => this.Street);
+                    base.Street = value;
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
                 }
@@ -136,13 +182,12 @@ namespace BillsManager.ViewModel
         [Required(ErrorMessage = "You must specify a number.")]
         public override string Number
         {
-            get { return this.ExposedSupplier.Number; }
+            get { return base.Number; }
             set
             {
                 if (this.Number != value)
                 {
-                    this.ExposedSupplier.Number = value;
-                    this.NotifyOfPropertyChange(() => this.Number);
+                    base.Number = value;
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
                 }
@@ -152,13 +197,12 @@ namespace BillsManager.ViewModel
         [Required(ErrorMessage = "You must specify a city.")]
         public override string City
         {
-            get { return this.ExposedSupplier.City; }
+            get { return base.City; }
             set
             {
                 if (this.City != value)
                 {
-                    this.ExposedSupplier.City = value;
-                    this.NotifyOfPropertyChange(() => this.City);
+                    base.City = value;
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
                 }
@@ -166,16 +210,16 @@ namespace BillsManager.ViewModel
         }
 
         [Required(ErrorMessage = "You must specify a zip.")]
-        [Range(10000, 99999, ErrorMessage = "The zip must be 5 characters long.")]
-        public override ushort Zip
+        [StringLength(5, MinimumLength = 5, ErrorMessage = "The zip must be 5 digits long.")]
+        //[CustomValidation(typeof(UInt32), "Parse", ErrorMessage = "The zip can only contain digits.")] // TODO: complete constraints
+        public override string Zip
         {
-            get { return this.ExposedSupplier.Zip; }
+            get { return base.Zip; }
             set
             {
                 if (this.Zip != value)
                 {
-                    this.ExposedSupplier.Zip = value;
-                    this.NotifyOfPropertyChange(() => this.Zip);
+                    base.Zip = value;
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
                 }
@@ -186,13 +230,12 @@ namespace BillsManager.ViewModel
         [StringLength(2, MinimumLength = 2, ErrorMessage = "The province abbreviation must be 2 characters long.")]
         public override string Province
         {
-            get { return this.ExposedSupplier.Province; }
+            get { return base.Province; }
             set
             {
                 if (this.Province != value)
                 {
-                    this.ExposedSupplier.Province = value;
-                    this.NotifyOfPropertyChange(() => this.Province);
+                    base.Province = value;
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
                 }
@@ -202,13 +245,12 @@ namespace BillsManager.ViewModel
         [Required(ErrorMessage = "You must specify a country.")]
         public override string Country
         {
-            get { return this.ExposedSupplier.Country; }
+            get { return base.Country; }
             set
             {
                 if (this.Country != value)
                 {
-                    this.ExposedSupplier.Country = value;
-                    this.NotifyOfPropertyChange(() => this.Country);
+                    base.Country = value;
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
                 }
@@ -223,6 +265,7 @@ namespace BillsManager.ViewModel
 
         public new string DisplayName
         {
+            // TODO: move the change to IsInEditMode & HasChanges
             get { return this.IsInEditMode ? ("Edit supplier" + (this.IsInEditMode & this.HasChanges ? " [*]" : string.Empty)) : "New supplier"; }
         }
 
@@ -231,6 +274,42 @@ namespace BillsManager.ViewModel
         #endregion
 
         #region methods
+
+        private void CancelddEditAndClose()
+        {
+            if (this.HasChanges)
+            {
+                var discardChangesDialog = new DialogViewModel(
+                    "Cancel " + (this.IsInEditMode ? "edit" : "add"),
+                    "Are you sure you want to discard all the changes?", // TODO: language
+                    new[] { new DialogResponse(ResponseType.Yes), new DialogResponse(ResponseType.No) });
+
+                this.windowManager.ShowDialog(discardChangesDialog);
+
+                if (discardChangesDialog.FinalResponse == ResponseType.Yes)
+                {
+                    if (this.IsInEditMode)
+                        this.CancelEdit();
+
+                    this.TryClose(false); // TODO: change these 2 to 1 single at the end?
+                }
+            }
+            else
+            {
+                if (this.IsInEditMode)
+                    this.CancelEdit();
+
+                this.TryClose(false);
+            }
+        }
+
+        private void ConfirmAddEditAndClose()
+        {
+            if (this.IsInEditMode)
+                this.EndEdit();
+
+            this.TryClose(true);
+        }
 
         #endregion
 
@@ -241,13 +320,9 @@ namespace BillsManager.ViewModel
         {
             get
             {
-                if (this.confirmAddEditAndCloseCommand == null) this.confirmAddEditAndCloseCommand = new RelayCommand(
-                    () =>
-                    {
-                        if (this.IsInEditMode) this.EndEdit();
-
-                        this.TryClose(true);
-                    },
+                if (this.confirmAddEditAndCloseCommand == null)
+                    this.confirmAddEditAndCloseCommand = new RelayCommand(
+                    () => this.ConfirmAddEditAndClose(),
                     () => this.IsValid);
 
                 return this.confirmAddEditAndCloseCommand;
@@ -259,42 +334,9 @@ namespace BillsManager.ViewModel
         {
             get
             {
-                if (this.cancelAddEditAndCloseCommand == null) this.cancelAddEditAndCloseCommand = new RelayCommand(
-                    () =>
-                    {
-                        if (this.HasChanges)
-                        {
-                            var question = new DialogViewModel(
-                                "Canceling " + (this.IsInEditMode ? "edit" : "add"),
-                                "Are you sure you want to discard all the changes?", // TODO: language
-                                new[]
-                            {
-                                new DialogResponse(ResponseType.Yes),
-                                new DialogResponse(ResponseType.No)
-                            });
-
-                            this.windowManager.ShowDialog(question, settings: new Dictionary<string, object> { { "ResizeMode", ResizeMode.NoResize } });
-
-                            if (question.Response == ResponseType.Yes)
-                            {
-                                if (this.IsInEditMode)
-                                {
-                                    this.CancelEdit();
-                                }
-                                
-                                this.TryClose(false);
-                            }
-                        }
-                        else
-                        {
-                            if (this.IsInEditMode)
-                            {
-                                this.CancelEdit();
-                            }
-
-                            this.TryClose(false);
-                        }
-                    });
+                if (this.cancelAddEditAndCloseCommand == null)
+                    this.cancelAddEditAndCloseCommand = new RelayCommand(
+                    () => this.CancelddEditAndClose());
 
                 return this.cancelAddEditAndCloseCommand;
             }

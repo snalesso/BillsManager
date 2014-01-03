@@ -1,8 +1,8 @@
-﻿using BillsManager.Service;
-using BillsManager.Service.Providers;
+﻿using BillsManager.Services;
+using BillsManager.Services.Providers;
 using Caliburn.Micro;
 
-namespace BillsManager.ViewModel.Factories
+namespace BillsManager.ViewModels.Factories
 {
     public class BillsViewModelFactory : IFactory<BillsViewModel>
     {
@@ -29,7 +29,7 @@ namespace BillsManager.ViewModel.Factories
 
         public BillsViewModel Create()
         {
-            return new BillsViewModel(this.billsProvider, this.windowManager, /*this.dialogService,*/ this.eventAggregator);
+            return new BillsViewModel(this.windowManager, /*this.dialogService,*/ this.eventAggregator, this.billsProvider);
         }
     }
 }

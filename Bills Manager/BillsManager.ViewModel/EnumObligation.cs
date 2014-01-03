@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace BillsManager.ViewModel
+﻿namespace BillsManager.ViewModels
 {
     public enum Obligation
     {
         Creditor = -1,
-        Null = 0,
+        None = 0,
         Debtor = 1
     }
 }

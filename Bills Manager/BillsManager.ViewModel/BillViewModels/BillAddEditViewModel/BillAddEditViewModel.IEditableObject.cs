@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
-using BillsManager.Model;
+using BillsManager.Models;
 
-namespace BillsManager.ViewModel
+namespace BillsManager.ViewModels
 {
     public partial class BillAddEditViewModel : IEditableObject
     {
