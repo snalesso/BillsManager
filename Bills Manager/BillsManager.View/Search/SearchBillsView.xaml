@@ -8,7 +8,7 @@
              d:DataContext="{d:DesignInstance Type=ViewModel:SearchBillsViewModel, IsDesignTimeCreatable=True}">
 
     <UserControl.Resources>
-        <ResourceDictionary Source="Dictionaries\Styles.xaml" />
+        <ResourceDictionary Source="/BillsManager.Views;component/Dictionaries/Styles.xaml" />
     </UserControl.Resources>
 
     <UserControl.Background>
