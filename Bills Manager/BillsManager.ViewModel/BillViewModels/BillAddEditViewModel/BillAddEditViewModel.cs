@@ -4,7 +4,9 @@ using BillsManager.ViewModels.Messages;
 using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 
 namespace BillsManager.ViewModels
@@ -63,14 +65,13 @@ namespace BillsManager.ViewModels
             get { return this.availableSuppliers; }
             protected set
             {
-                if (this.availableSuppliers != value)
-                {
-                    this.availableSuppliers = value;
-                    this.NotifyOfPropertyChange(() => this.AvailableSuppliers);
+                if (this.availableSuppliers == value) return;
 
-                    var selSupp = this.AvailableSuppliers.SingleOrDefault(s => s.ID == this.SupplierID); // TODO: move to selectedsupp get?
-                    this.SelectedSupplier = selSupp != null ? selSupp : this.AvailableSuppliers.FirstOrDefault();
-                }
+                this.availableSuppliers = value;
+                this.NotifyOfPropertyChange(() => this.AvailableSuppliers);
+
+                var selSupp = this.AvailableSuppliers.SingleOrDefault(s => s.ID == this.SupplierID);
+                this.selectedSupplier = selSupp != null ? selSupp : this.AvailableSuppliers.FirstOrDefault();
             }
         }
 
@@ -78,14 +79,19 @@ namespace BillsManager.ViewModels
         [Required(ErrorMessage = "You must select a supplier.")] // TODO: language
         public Supplier SelectedSupplier
         {
-            get { return this.selectedSupplier; }
+            get
+            {
+                return this.selectedSupplier;
+            }
             set
             {
                 if (this.selectedSupplier != value)
                 {
                     this.selectedSupplier = value;
                     this.NotifyOfPropertyChange(() => this.SelectedSupplier);
-                    this.SupplierID = this.SelectedSupplier.ID;
+                    this.NotifyOfPropertyChange(() => this.IsValid);
+                    if (value != null)
+                        this.SupplierID = this.SelectedSupplier.ID;
                 }
             }
         }
@@ -324,7 +330,6 @@ namespace BillsManager.ViewModels
 
         #region commands
 
-        // URGENT: search supplier editable combobox
         // URGENT: update datepicker style
         private RelayCommand addNewSupplierCommand;
         public RelayCommand AddNewSupplierCommand

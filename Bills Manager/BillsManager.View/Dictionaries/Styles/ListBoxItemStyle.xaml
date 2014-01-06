@@ -6,29 +6,33 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type ListBoxItem}">
-        
+
         <Setter Property="OverridesDefaultStyle"
                 Value="True" />
-        
-        <Setter Property="Margin"
-                Value="0 2 0 0" />
+
+        <Setter Property="Margin">
+            <Setter.Value>
+                <Thickness Top="{StaticResource RegionSeparatorSizeValue}" />
+            </Setter.Value>
+        </Setter>
+
         <Setter Property="Padding"
                 Value="5" />
-        
+
         <Setter Property="HorizontalContentAlignment"
                 Value="Stretch" />
         <Setter Property="VerticalContentAlignment"
                 Value="Center" />
-        
+
         <Setter Property="Background"
                 Value="Transparent" />
-        
+
         <Setter Property="BorderBrush"
                 Value="Transparent" />
-        
+
         <Setter Property="BorderThickness"
                 Value="0" />
-        
+
         <Setter Property="Foreground"
                 Value="{StaticResource ViewForegroundBrush}" />
 
@@ -47,13 +51,13 @@
         </Setter>
 
         <Style.Triggers>
-            
+
             <Trigger Property="IsMouseOver"
                      Value="true">
                 <Setter Property="Background"
                         Value="#FFF0F0F0" />
             </Trigger>
-            
+
             <Trigger Property="IsSelected"
                      Value="true">
                 <Setter Property="Background"
@@ -63,7 +67,7 @@
                 <Setter Property="Foreground"
                         Value="{StaticResource ListBoxItemNormalForegroundBrush}" />
             </Trigger>
-            
+
             <!--<MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsSelected"
@@ -97,7 +101,7 @@
                 </MultiTrigger.Setters>
                 
             </MultiTrigger>-->
-            
+
         </Style.Triggers>
 
     </Style>

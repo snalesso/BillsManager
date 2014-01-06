@@ -1,17 +1,21 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Values.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type ListViewItem}">
-        
+
         <Setter Property="OverridesDefaultStyle"
                 Value="True" />
-        
-        <Setter Property="Margin"
-                Value="0 2 0 0" />
+
+        <Setter Property="Margin">
+            <Setter.Value>
+                <Thickness Top="{StaticResource RegionSeparatorSizeValue}" />
+            </Setter.Value>
+        </Setter>
+
         <Setter Property="Padding"
                 Value="0 5" />
 
@@ -22,16 +26,16 @@
 
         <Setter Property="Background"
                 Value="Transparent" />
-        
+
         <Setter Property="BorderBrush"
                 Value="Transparent" />
-        
+
         <Setter Property="BorderThickness"
                 Value="0" />
-        
+
         <Setter Property="Foreground"
                 Value="{StaticResource ViewForegroundBrush}" />
-        
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListViewItem}">
@@ -47,13 +51,13 @@
         </Setter>
 
         <Style.Triggers>
-            
+
             <Trigger Property="IsMouseOver"
                      Value="true">
                 <Setter Property="Background"
                         Value="#FFF0F0F0" />
             </Trigger>
-            
+
             <Trigger Property="IsSelected"
                      Value="true">
                 <Setter Property="Background"
@@ -63,7 +67,7 @@
                 <Setter Property="Foreground"
                         Value="{StaticResource ButtonNormalForegroundBrush}" />
             </Trigger>
-            
+
             <!--<MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsSelected"
@@ -85,7 +89,7 @@
                 <Setter Property="Background"
                         Value="{StaticResource ButtonDisabledBackgroundBrush}" />
             </MultiTrigger>-->
-            
+
         </Style.Triggers>
 
     </Style>

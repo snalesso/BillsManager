@@ -9,7 +9,7 @@ namespace BillsManager.ViewModels
 
         private ValidationRulesTracker<BillAddEditViewModel> rulesTracker;
 
-        public bool IsValid
+        public bool IsValid // TODO: make cached?
         {
             get { return string.IsNullOrEmpty(this.Error); }
         }

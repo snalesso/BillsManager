@@ -23,14 +23,14 @@
                  Source="{StaticResource ViewBackgroundBrush}" />
     </UserControl.Background>
 
-    <ListView x:Name="lsvSuppliers"
-              VirtualizingPanel.IsVirtualizing="True"
-              ItemsSource="{Binding FilteredSupplierViewModels, IsAsync=True}"
-              SelectedItem="{Binding SelectedSupplierViewModel}"
-              SelectionMode="Single"
-              Commanding:CommandBehavior.Event="MouseDoubleClick"
-              Commanding:CommandBehavior.Command="{Binding ShowSupplierDetailsCommand}"
-              Commanding:CommandBehavior.CommandParameter="{Binding SelectedSupplierViewModel}">
+    <Controls:ListViewEx x:Name="lsvSuppliers"
+                         VirtualizingPanel.IsVirtualizing="True"
+                         ItemsSource="{Binding FilteredSupplierViewModels, IsAsync=True}"
+                         SelectedItem="{Binding SelectedSupplierViewModel}"
+                         SelectionMode="Single"
+                         Commanding:CommandBehavior.Event="MouseDoubleClick"
+                         Commanding:CommandBehavior.Command="{Binding ShowSupplierDetailsCommand}"
+                         Commanding:CommandBehavior.CommandParameter="{Binding SelectedSupplierViewModel}">
 
         <!--<ListView.ItemTemplate>
             <DataTemplate>
@@ -100,14 +100,30 @@
 
         <ListView.ContextMenu>
             <ContextMenu>
+
+                <MenuItem Header="Add bill"
+                          Command="{Binding SelectedSupplierViewModel.AddBillCommand, Mode=OneWay}">
+                    <MenuItem.Icon>
+                        <Controls:AutoGreyableImage Source="Images/bills/bill-add-24.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem Header="Show bills"
+                          Command="{Binding ShowSuppliersBillsCommand, Mode=OneWay}"
+                          CommandParameter="{Binding SelectedSupplierViewModel}">
+                    <MenuItem.Icon>
+                        <Controls:AutoGreyableImage Source="Images/generic/search-16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+
+                <Separator />
+
                 <MenuItem Header="Add"
                           Command="{Binding AddNewSupplierCommand, Mode=OneWay}">
                     <MenuItem.Icon>
                         <Controls:AutoGreyableImage Source="Images/generic/add-16.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-
-                <Separator />
 
                 <MenuItem Header="Edit"
                           Command="{Binding EditSupplierCommand, Mode=OneWay}"
@@ -135,14 +151,6 @@
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Header="Show bills"
-                          Command="{Binding ShowSuppliersBillsCommand, Mode=OneWay}"
-                          CommandParameter="{Binding SelectedSupplierViewModel}">
-                    <MenuItem.Icon>
-                        <Controls:AutoGreyableImage Source="Images/generic/search-16.png" />
-                    </MenuItem.Icon>
-                </MenuItem>
-
                 <MenuItem Header="Copy eMail"
                           Command="{Binding CopyEMailCommand, Mode=OneWay}"
                           CommandParameter="{Binding SelectedSupplierViewModel}">
@@ -154,6 +162,6 @@
             </ContextMenu>
         </ListView.ContextMenu>
 
-    </ListView>
+    </Controls:ListViewEx>
 
 </UserControl>

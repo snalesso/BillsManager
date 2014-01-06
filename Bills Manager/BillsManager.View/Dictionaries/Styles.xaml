@@ -6,9 +6,10 @@
         <ResourceDictionary Source="Styles\MenuStyle.xaml" />
         <ResourceDictionary Source="Styles\MenuScrollViewerStyle.xaml" />
         <ResourceDictionary Source="Styles\ContextMenuStyle.xaml" />
-        
+
         <ResourceDictionary Source="Styles\ButtonStyle.xaml" />
-        
+        <ResourceDictionary Source="Styles\PathButtonStyle.xaml" />
+
         <ResourceDictionary Source="Styles\ExpanderStyle.xaml" />
         
         <ResourceDictionary Source="Styles\ToolBarSeparatorStyle.xaml" />
@@ -27,6 +28,7 @@
         <ResourceDictionary Source="Styles\ListBoxItemStyle.xaml" />
 
         <ResourceDictionary Source="Styles\ListViewStyle.xaml" />
+        <ResourceDictionary Source="Styles\ListViewExStyle.xaml" />
         <ResourceDictionary Source="Styles\ListViewItemStyle.xaml" />
         <ResourceDictionary Source="Styles\GridViewColumnHeaderStyle.xaml" />
 

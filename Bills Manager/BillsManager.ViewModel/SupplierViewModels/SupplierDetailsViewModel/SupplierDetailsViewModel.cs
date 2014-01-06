@@ -195,6 +195,11 @@ namespace BillsManager.ViewModels
 
         #region methods
 
+        private void AddBill()
+        {
+            this.dbEventAggregator.Publish(new AddBillToSupplierOrder(this.ExposedSupplier));
+        }
+
         #region message handlers
 
         public void Handle(BillsListChangedMessage message)
@@ -291,6 +296,19 @@ namespace BillsManager.ViewModels
                     });
 
                 return this.closeDetailsViewCommand;
+            }
+        }
+
+        private RelayCommand addBillCommand;
+        public RelayCommand AddBillCommand
+        {
+            get
+            {
+                if (this.addBillCommand == null)
+                    this.addBillCommand = new RelayCommand(
+                        () => this.AddBill());
+
+                return this.addBillCommand;
             }
         }
 

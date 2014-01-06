@@ -3,15 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
              mc:Ignorable="d"
-             d:DesignHeight="400"
-             d:DesignWidth="300"
              Height="680"
-             Width="Auto">
+             Width="Auto"
+             d:DesignHeight="400"
+             d:DesignWidth="300">
 
     <UserControl.Resources>
         <ResourceDictionary Source="/BillsManager.Views;component/Dictionaries/Styles.xaml" />
     </UserControl.Resources>
+
+    <UserControl.Background>
+        <Binding Source="{StaticResource ViewBackgroundBrush}" />
+    </UserControl.Background>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -40,15 +45,19 @@
                       Grid.ColumnSpan="3"
                       VerticalScrollBarVisibility="Auto"
                       HorizontalScrollBarVisibility="Auto">
-            
-                <Border HorizontalAlignment="Center"
-                        Background="White"
-                        BorderThickness="1"
-                        BorderBrush="DarkGray"
-                        Margin="40 0">
-                    <ContentControl Content="{Binding CurrentPage}" />
-                </Border>
-            
+
+            <Border HorizontalAlignment="Center"
+                    Background="White"
+                    Margin="40 10">
+                <Border.Effect>
+                    <DropShadowEffect Color="#FFC3C3C3"
+                                      Direction="0"
+                                      ShadowDepth="0"
+                                      BlurRadius="10" />
+                </Border.Effect>
+                <ContentControl Content="{Binding CurrentPage}" />
+            </Border>
+
         </ScrollViewer>
 
         <Grid Grid.Row="2"
@@ -74,12 +83,16 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Button Content="First"
-                    Command="{Binding GoToFirstPageCommand, Mode=OneWay}" />
+            <Controls:PathButton Height="16"
+                                 Command="{Binding GoToFirstPageCommand, Mode=OneWay}"
+                                 Style="{StaticResource PathButtonStyle}"
+                                 Data="{StaticResource LastLeftGeometry}" />
 
-            <Button Content="Previous"
-                    Grid.Column="2"
-                    Command="{Binding GoToPreviousPageCommand, Mode=OneWay}" />
+            <Controls:PathButton Grid.Column="2"
+                                 Height="16"
+                                 Command="{Binding GoToPreviousPageCommand, Mode=OneWay}"
+                                 Style="{StaticResource PathButtonStyle}"
+                                 Data="{StaticResource LeftArrow2}" />
 
 
             <TextBlock Grid.Column="4"
@@ -96,16 +109,22 @@
                 <Run Text="{Binding PageCount, Mode=OneWay}" />
             </TextBlock>
 
-            <Button Content="Next"
-                    Grid.Column="6"
-                    Command="{Binding GoToNextPageCommand, Mode=OneWay}" />
+            <Controls:PathButton Grid.Column="6"
+                                 Height="16"
+                                 Command="{Binding GoToNextPageCommand, Mode=OneWay}"
+                                 Style="{StaticResource PathButtonStyle}"
+                                 Data="{StaticResource RightArrow2}" />
 
-            <Button Content="Last"
-                    Grid.Column="8"
-                    Command="{Binding GoToLastPageCommand, Mode=OneWay}" />
+            <Controls:PathButton Grid.Column="8"
+                                 Height="16"
+                                 Command="{Binding GoToLastPageCommand, Mode=OneWay}"
+                                 Foreground="{StaticResource ViewForegroundBrush}"
+                                 Style="{StaticResource PathButtonStyle}"
+                                 Data="{StaticResource LastRightGeometry}" />
 
             <Button Content="Print"
                     Grid.Column="15"
+                    MinWidth="80"
                     Command="{Binding PrintCommand, Mode=OneWay}" />
 
         </Grid>

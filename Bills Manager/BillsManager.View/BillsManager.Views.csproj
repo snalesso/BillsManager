@@ -78,11 +78,13 @@
       <DependentUpon>BillAddEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\AutoGreyableImage.cs" />
-    <Compile Include="Controls\CloseWindowButton.cs" />
+    <Compile Include="Controls\ControlBox\CloseWindowButton.cs" />
     <Compile Include="Controls\ListBoxEx.cs" />
-    <Compile Include="Controls\MinimizeWindowButton.cs" />
-    <Compile Include="Controls\NormalizeWindowButton.cs" />
-    <Compile Include="Controls\MaximizeWindowButton.cs" />
+    <Compile Include="Controls\ListViewEx.cs" />
+    <Compile Include="Controls\ControlBox\MinimizeWindowButton.cs" />
+    <Compile Include="Controls\ControlBox\NormalizeWindowButton.cs" />
+    <Compile Include="Controls\ControlBox\MaximizeWindowButton.cs" />
+    <Compile Include="Controls\PathButton.cs" />
     <Compile Include="Controls\WindowEx.cs" />
     <Compile Include="DataTemplates\BackupDataTemplate.xaml.cs">
       <DependentUpon>BackupDataTemplate.xaml</DependentUpon>
@@ -269,6 +271,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dictionaries\Styles\ListViewExStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dictionaries\Styles\ListViewItemStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -312,6 +318,10 @@
     <Page Include="Dictionaries\Styles\MaximizeWindowButtonStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dictionaries\Styles\PathButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dictionaries\Styles\ToolbarSeparatorStyle.xaml">
       <SubType>Designer</SubType>

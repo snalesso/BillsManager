@@ -32,28 +32,40 @@
     <Geometry x:Key="Checkmark">M 0,5.1 L 1.7,5.2 L 3.4,7.1 L 8,0.4 L 9.2,0 L 3.3,10.8 Z</Geometry>
 
     <Geometry x:Key="Checkmark2">M 0 2 L 0 4.85 L 2.5 7.4 L 7.1 2.8 L 7.1 0 L 2.5 4.6 Z</Geometry>
-    
+
     <Geometry x:Key="Checkmark3">M 0,3 L 0,6 L 3,9 L 9,3 L 9,0 L 3,6 Z</Geometry>
 
     <Geometry x:Key="Plus">M 2,0 L 4,0 L 4,2 L 6,2 L 6,4 L 4,4 L 4,6 L 2,6 L 2,4 L 0,4 L 0,2 L 2,2 L 2,0 Z</Geometry>
 
     <Geometry x:Key="Plus2">M 3,0 L 6,0 L 6,3 L 9,3 L 9,6 L 6,6 L 6,9 L 3,9 L 3,6 L 0,6 L 0,3 L 3,3 L 3,0 Z</Geometry>
-    
+
     <Geometry x:Key="Plus3">M 3.4,0 L 5.6,0 L 5.6,3.4 L 9,3.4 L 9,5.6 L 5.6,5.6 L 5.6,9 L 3.4,9 L 3.4,5.6 L 0,5.6 L 0,3.4 L 3.4,3.4 L 3.4,0 Z</Geometry>
 
-    <Geometry x:Key="UpArrow">M 0,5 L 3.5,0 L 7,5 Z</Geometry>    
-    
-    <Geometry x:Key="UpArrow2">M 0,4.5 L 4.5,0 L 9,4.5 L 9,8 L 4.5,3.5 L 0,8 Z</Geometry>
-          
+    <Geometry x:Key="UpArrow">M 0,5 L 3.5,0 L 7,5 Z</Geometry>
+
+    <Geometry x:Key="UpArrow2">M 0,0 L 0,4.5 L 4.5,0 L 9,4.5 L 9,8 L 4.5,3.5 L 0,8 L 0,4.5 Z</Geometry>
+
     <Geometry x:Key="DownArrow">M 0,0 L 9,0 L 4.5,6 Z</Geometry>
 
-    <Geometry x:Key="DownArrow2">M 0,1 L 4.5,5.5 L 9,1 L 9,4.5 L 4.5,9 L 0,4.5 Z</Geometry>
+    <Geometry x:Key="DownArrow2">M 0,0 L 0,1 L 4.5,5.5 L 9,1 L 9,4.5 L 4.5,9 L 0,4.5 L 0,1 Z</Geometry>
 
     <Geometry x:Key="RightArrow">M 0,0 L 6,4.5 L 0,9 Z</Geometry>
-    
-    <Geometry x:Key="RightArrow2">M 1,0 L 4.5,0 L 9,4.5 L 4.5,9 L 1,9 L 5.5,4.5 Z</Geometry>
+
+    <Geometry x:Key="RightArrow2">M 0,0 L 1,0 L 4.5,0 L 9,4.5 L 4.5,9 L 1,9 L 5.5,4.5 L 1,0 Z</Geometry>
+
+    <GeometryGroup x:Key="LastRightGeometry">
+        <Geometry>M 0,0 L 3.5,0 L 8,4.5 L 3.5,9 L 0,9 L 4.5,4.5 Z</Geometry>
+        <Geometry>M 8,0 L 10,0 L 10,9 L 8,9 Z</Geometry>
+    </GeometryGroup>
+
+    <GeometryGroup x:Key="LastLeftGeometry">
+        <Geometry>M 0,0 L 2,0 L 2,9 L 0,9 Z</Geometry>
+        <Geometry>M 2,4.5 L 6.5,0 L 10,0 L 5.5,4.5 L 10,9 L 6.5,9 Z</Geometry>
+    </GeometryGroup>
 
     <Geometry x:Key="LeftArrow">M 0,3.5 L 5,0 L 5,7 Z</Geometry>
+    
+    <Geometry x:Key="LeftArrow2">M 0,4.5 L 4.5,0 L 8,0 L 9,0 L 8,0 L 3.5,4.5 L 8,9 L 4.5,9 Z</Geometry>
 
     <Geometry x:Key="ExpanderLeftArrow">M 1,1.5 L 4.5,5 L 8,1.5</Geometry>
 
@@ -68,23 +80,23 @@
     <Geometry x:Key="RestoreSize">M4.3685131,23.127279L4.3685131,47.283243 47.117023,47.283243 47.117023,23.127279z M0,10.684L53.755001,10.684 53.755001,51.668001 0,51.668001z M8.5679998,0L58.668022,0 64,0 64,5.6864691 64,45.317999 58.668022,45.317999 58.668022,5.6864691 8.5679998,5.6864691z</Geometry>
 
     <Geometry x:Key="Minimize">M0,20L53.333,20 53.333,8.888 0,8.888z</Geometry>
-    
+
     <Geometry x:Key="TopRightLittleCorner">M 0,0 L 8,0 L 8,8 Z</Geometry>
 
     <GeometryGroup x:Key="SaveGeometry">
         <GeometryGroup.Children>
-            
+
             <Geometry>M 0,0 L 10,0 L 12,2 L 12,12 L 0,12 Z</Geometry>
-            
+
             <Geometry>M 1,12 L 1,5.5 L 1.5,5 L 10.5,5 L 11,5.5 L 11,12 Z</Geometry>
-            
+
             <Geometry>M 4,0 L 9,0 L 9,3 L 4,3 Z</Geometry>
 
             <Geometry>M 7,0 L 8,0 L 8,2 L 7,2 Z</Geometry>
-            
+
             <Geometry>M 1,12 L 11,12 L 11,11 L 1,11 Z</Geometry>
 
         </GeometryGroup.Children>
     </GeometryGroup>
-    
+
 </ResourceDictionary>

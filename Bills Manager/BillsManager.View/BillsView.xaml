@@ -23,15 +23,15 @@
                  Source="{StaticResource ViewBackgroundBrush}" />
     </UserControl.Background>
 
-    <ListView x:Name="lsvBills"
-              Grid.IsSharedSizeScope="True"
-              VirtualizingPanel.IsVirtualizing="True"
-              ItemsSource="{Binding FilteredBillViewModels, IsAsync=True}"
-              SelectedItem="{Binding SelectedBillViewModel}"
-              SelectionMode="Single"
-              Commanding:CommandBehavior.Event="MouseDoubleClick"
-              Commanding:CommandBehavior.Command="{Binding ShowBillDetailsCommand}"
-              Commanding:CommandBehavior.CommandParameter="{Binding SelectedBillViewModel}">
+    <Controls:ListViewEx x:Name="lsvBills"
+                         Grid.IsSharedSizeScope="True"
+                         VirtualizingPanel.IsVirtualizing="True"
+                         ItemsSource="{Binding FilteredBillViewModels, IsAsync=True}"
+                         SelectedItem="{Binding SelectedBillViewModel}"
+                         SelectionMode="Single"
+                         Commanding:CommandBehavior.Event="MouseDoubleClick"
+                         Commanding:CommandBehavior.Command="{Binding ShowBillDetailsCommand}"
+                         Commanding:CommandBehavior.CommandParameter="{Binding SelectedBillViewModel}">
 
         <!--<ListView.ItemTemplate>
             <DataTemplate>
@@ -148,6 +148,17 @@
             </GridView>
         </ListView.View>
 
+        <!--<ListView.ItemContainerStyle>
+            <Style BasedOn="{StaticResource {x:Type ListViewItem}}"
+                   TargetType="{x:Type ListViewItem}">
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ListView.ItemContainerStyle>-->
+
         <ListView.ContextMenu>
             <ContextMenu>
 
@@ -168,8 +179,6 @@
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <Separator />
-
                 <MenuItem Header="Edit"
                           Command="{Binding EditBillCommand, Mode=OneWay}"
                           CommandParameter="{Binding SelectedBillViewModel}">
@@ -187,7 +196,7 @@
                 </MenuItem>
 
                 <Separator />
-                
+
                 <MenuItem Header="Details"
                           Command="{Binding ShowBillDetailsCommand, Mode=OneWay}"
                           CommandParameter="{Binding SelectedBillViewModel}">
@@ -199,6 +208,6 @@
             </ContextMenu>
         </ListView.ContextMenu>
 
-    </ListView>
+    </Controls:ListViewEx>
 
 </UserControl>

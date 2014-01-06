@@ -86,6 +86,7 @@
     <Compile Include="DesignTime\StatusBarViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\SupplierAddEditViewModel.DesignTime.cs" />
     <Compile Include="Dialog\ProgressViewModel.cs" />
+    <Compile Include="Messages\Single database Events\Suppliers Events\AddBillToSupplierOrder.cs" />
     <Compile Include="Messages\Single database Events\Suppliers Events\SelectedSupplierChagedMessage.cs" />
     <Compile Include="Reporting\BillReportViewModel.cs" />
     <Compile Include="Search\FilterGeneric.cs" />

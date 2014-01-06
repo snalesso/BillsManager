@@ -63,6 +63,8 @@ namespace BillsManager.ViewModels
             this.Items.AddRange(range);
 
             this.ActivateItem(this.Items.FirstOrDefault());
+
+            // TODO: load first, async load of the others
         }
 
         #endregion

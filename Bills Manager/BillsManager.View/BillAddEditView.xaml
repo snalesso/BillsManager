@@ -93,7 +93,7 @@
                   HorizontalAlignment="Left"
                   IsChecked="{Binding IsPaid}"
                   TabIndex="2"
-                  VerticalAlignment="Center"/>
+                  VerticalAlignment="Center" />
 
 
         <TextBlock Grid.Column="4"
@@ -154,8 +154,13 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <ComboBox ItemsSource="{Binding AvailableSuppliers}"
+            <ComboBox x:Name="cbxSupplier"
+                      ItemsSource="{Binding AvailableSuppliers}"
                       SelectedItem="{Binding SelectedSupplier, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                      IsEditable="True"
+                      IsTextSearchCaseSensitive="False"
+                      IsTextSearchEnabled="True"
+                      TextSearch.TextPath="Name"
                       TabIndex="6">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -164,19 +169,16 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-            <Button Grid.Column="2"
-                    BorderThickness="0"
-                    Width="{Binding ActualHeight, Mode=OneWay, RelativeSource={RelativeSource Self}}"
-                    VerticalContentAlignment="Stretch"
-                    HorizontalContentAlignment="Stretch"
-                    TabIndex="7"
-                    BorderBrush="{x:Null}"
-                    Background="{x:Null}"
-                    Command="{Binding AddNewSupplierCommand, Mode=OneWay}">
-                <Button.Content>
+            <Controls:PathButton Grid.Column="2"
+                                 Background="{x:Null}"
+                                 BorderBrush="{x:Null}"
+                                 Height="22"
+                                 TabIndex="7"
+                                 Command="{Binding AddNewSupplierCommand, Mode=OneWay}">
+                <Controls:PathButton.Content>
                     <Controls:AutoGreyableImage Source="Images/suppliers/supplier-add-24.png" />
-                </Button.Content>
-            </Button>
+                </Controls:PathButton.Content>
+            </Controls:PathButton>
 
         </Grid>
 
@@ -212,7 +214,7 @@
                     Command="{Binding CancelAddEditAndCloseCommand}"
                     Content="Cancel"
                     IsCancel="True"
-                    TabIndex="10"/>
+                    TabIndex="10" />
         </StackPanel>
 
     </Grid>

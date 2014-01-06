@@ -9,19 +9,19 @@
     <Style x:Key="{x:Type TextBoxBase}"
            TargetType="{x:Type TextBoxBase}">
         <Setter Property="Background"
-                Value="{StaticResource ResourceKey=ViewBackgroundBrush}" />
+                Value="{StaticResource ViewBackgroundBrush}" />
         <Setter Property="BorderBrush"
-                Value="{StaticResource ResourceKey=ViewBorderBrush}" />
+                Value="{StaticResource ViewBorderBrush}" />
         <Setter Property="Foreground"
-                Value="{StaticResource ResourceKey=ViewForegroundBrush}" />
+                Value="{StaticResource ViewForegroundBrush}" />
         <Setter Property="BorderThickness"
-                Value="1" />
+                Value="{StaticResource BorderThickness}" />
         <Setter Property="Padding"
                 Value="1" />
         <Setter Property="KeyboardNavigation.TabNavigation"
                 Value="None" />
         <Setter Property="HorizontalContentAlignment"
-                Value="Left" />
+                Value="Stretch" />
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}" />
         <Setter Property="AllowDrop"
@@ -35,29 +35,35 @@
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
                     <Border Background="{TemplateBinding Background}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            BorderBrush="{TemplateBinding BorderBrush}">
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="{StaticResource ViewCornerRadius}"
+                            Padding="{TemplateBinding Padding}">
                         <ScrollViewer x:Name="PART_ContentHost" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        
         <Style.Triggers>
+            
             <Trigger Property="IsEnabled"
                      Value="false">
                 <Setter Property="Background"
-                        Value="{StaticResource ResourceKey=TextBoxDisabledBackgroundBrush}" />
+                        Value="{StaticResource TextBoxDisabledBackgroundBrush}" />
                 <Setter Property="BorderBrush"
-                        Value="{StaticResource ResourceKey=TextBoxDisabledBorderBrush}" />
+                        Value="{StaticResource TextBoxDisabledBorderBrush}" />
                 <Setter Property="Foreground"
-                        Value="{StaticResource ResourceKey=TextBoxDisabledForegroundBrush}" />
+                        Value="{StaticResource TextBoxDisabledForegroundBrush}" />
             </Trigger>
+            
         </Style.Triggers>
+        
     </Style>
 
     <Style TargetType="{x:Type TextBox}"
            BasedOn="{StaticResource {x:Type TextBoxBase}}">
         <Setter Property="Validation.ErrorTemplate"
-                Value="{StaticResource ResourceKey=ErrorTemplate}" />
+                Value="{StaticResource ErrorTemplate}" />
     </Style>
 
 

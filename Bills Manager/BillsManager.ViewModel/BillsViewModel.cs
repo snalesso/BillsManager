@@ -14,7 +14,8 @@ namespace BillsManager.ViewModels
         Screen,
         IHandle<BillsFilterMessage>,
         IHandle<SupplierDeletedMessage>,
-        IHandle<EditBillRequestMessage>
+        IHandle<EditBillRequestMessage>,
+        IHandle<AddBillToSupplierOrder>
     {
         #region fields
 
@@ -191,9 +192,12 @@ namespace BillsManager.ViewModels
 
         #region CRUD
 
-        private void AddBill()
+        private void AddBill(Supplier supplier = null)
         {
             var newBvm = this.billAddEditViewModelFactory.Invoke(this.dbEventAggregator, new Bill(this.billsProvider.GetLastBillID() + 1));
+
+            if (supplier != null) // TODO: safe operation? if supplier is not known by addbvm?
+                newBvm.SelectedSupplier = supplier;
 
             //newBvm.SetupForAddEdit();
 
@@ -203,10 +207,9 @@ namespace BillsManager.ViewModels
                 // TODO: make it possible to show the view through a dialogviewmodel (evaluate the idea)
                 this.billsProvider.Add(newBvm.ExposedBill);
 
-                //var newBvmDetails = new BillDetailsViewModel(this.windowManager, this.eventAggregator, newBvm.ExposedBill);
                 var newBvmDetails = this.billDetailsViewModelFactory.Invoke(this.dbEventAggregator, newBvm.ExposedBill);
 
-                this.BillViewModels.Add(newBvmDetails);
+                this.BillViewModels.Add(newBvmDetails); // TODO: use an event handler?
                 this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
 
                 this.SelectedBillViewModel = newBvmDetails;
@@ -327,6 +330,11 @@ namespace BillsManager.ViewModels
         {
             this.EditBill(message.Bill); /* TODO: is it better to pass only the ID and let this VM to get the bill?
                                           * (this would check whether the bill is contained or is a lost one) */
+        }
+
+        public void Handle(AddBillToSupplierOrder message)
+        {
+            this.AddBill(message.Supplier);
         }
 
         #endregion
