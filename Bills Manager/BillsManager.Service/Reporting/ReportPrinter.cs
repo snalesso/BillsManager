@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 
 namespace BillsManager.Services.Reporting
 {
+    // IDEA: use excel template for sums and other calculations
     public class ReportPrinter<T> : DocumentPaginator
         where T : class
     {
@@ -63,7 +64,7 @@ namespace BillsManager.Services.Reporting
 
         #region properties
 
-        private Thickness pageMargins = new Thickness(30);
+        private Thickness pageMargins = new Thickness(40);
         public Thickness PageMargins
         {
             get { return this.pageMargins; }
