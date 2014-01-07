@@ -58,7 +58,8 @@
 
             <CheckBox Content="Add and open"
                       VerticalAlignment="Center"
-                      IsChecked="{Binding AddAndOpen}">
+                      IsChecked="{Binding AddAndOpen}"
+                      Visibility="{Binding IsNotInEditMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
                 <CheckBox.Margin>
                     <Thickness Right="{StaticResource MarginSizeValue}" />
                 </CheckBox.Margin>

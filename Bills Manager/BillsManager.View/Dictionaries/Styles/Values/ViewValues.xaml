@@ -61,7 +61,7 @@
 
     <System:Double x:Key="ViewFontSize">12</System:Double>
     
-    <CornerRadius x:Key="ViewCornerRadius">0</CornerRadius>
+    <CornerRadius x:Key="ViewCornerRadius">3</CornerRadius>
 
     <Thickness x:Key="ResizeBorderThickness">8</Thickness>
 

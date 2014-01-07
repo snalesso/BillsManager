@@ -51,7 +51,7 @@ namespace BillsManager.ViewModels
                 }
             }
         }
-        
+
         private bool addAndOpen = true;
         public bool AddAndOpen
         {
@@ -63,6 +63,11 @@ namespace BillsManager.ViewModels
                 this.addAndOpen = value;
                 this.NotifyOfPropertyChange(() => this.AddAndOpen);
             }
+        }
+
+        public bool IsNotInEditMode
+        {
+            get { return string.IsNullOrWhiteSpace(this.NewDBName); }
         }
 
         //public string ForbiddenChars

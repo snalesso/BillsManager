@@ -198,7 +198,7 @@
         
         <Border Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
-                CornerRadius="{StaticResource ViewCornerRadius}"
+                CornerRadius="0"
                 Padding="{TemplateBinding Padding}">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -280,7 +280,7 @@
     <ControlTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type MenuItem}, ResourceId=SubmenuHeaderTemplateKey}"
                      TargetType="{x:Type MenuItem}">
         <Border Background="{TemplateBinding Background}"
-                CornerRadius="{StaticResource ViewCornerRadius}"
+                CornerRadius="0"
                 BorderBrush="{TemplateBinding BorderBrush}">
             <Grid>
                 <Grid.ColumnDefinitions>

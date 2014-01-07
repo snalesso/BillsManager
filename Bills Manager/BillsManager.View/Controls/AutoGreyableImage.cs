@@ -45,7 +45,7 @@ namespace BillsManager.Views.Controls
                     autoGreyScaleImg.Source = new FormatConvertedBitmap(bitmapImage, PixelFormats.Gray32Float, null, 0);
 
                     // Create Opacity Mask for greyscale image as FormatConvertedBitmap does not keep transparency info
-                    autoGreyScaleImg.OpacityMask = new ImageBrush(bitmapImage);
+                    autoGreyScaleImg.OpacityMask = new ImageBrush(bitmapImage) { Opacity = 0.5 };
                 }
                 else
                 {
