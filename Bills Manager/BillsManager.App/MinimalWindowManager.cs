@@ -216,8 +216,8 @@ namespace BillsManager.App
             }
 
             var active = Application.Current.Windows.OfType<Window>()
-                .Where(x => x.IsActive)
-                .FirstOrDefault();
+                //.Where()
+                .FirstOrDefault(x => x.IsActive);
             active = active ?? Application.Current.MainWindow;
             return active == window ? null : active;
         }
