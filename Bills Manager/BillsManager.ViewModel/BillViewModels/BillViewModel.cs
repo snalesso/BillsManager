@@ -83,11 +83,12 @@ namespace BillsManager.ViewModels
             get { return this.ExposedBill.Amount; }
             set
             {
-                if (this.Amount != value)
-                {
+                // TODO: review set logic
+                //if (this.Amount != value)
+                //{
                     this.ExposedBill.Amount = value;
                     this.NotifyOfPropertyChange(() => this.Amount);
-                }
+                //}
             }
         }
 

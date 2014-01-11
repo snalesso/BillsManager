@@ -55,7 +55,7 @@ namespace BillsManager.ViewModels
             this.DueDateFilterValue = DateTime.Today.AddDays(15);
             this.ReleaseDateFilterValue = DateTime.Today.AddDays(-22);
 
-            this.IsPaidFilterValue = true;
+            this.IsPaidFilterValue = null;
         }
 
         #endregion

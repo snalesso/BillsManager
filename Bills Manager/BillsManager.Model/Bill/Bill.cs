@@ -106,10 +106,10 @@ namespace BillsManager.Models
             get { return this.amount; }
             set
             {
-                if (this.Amount != value)
-                {
+                //if (this.Amount != value)
+                //{
                     this.amount = value;
-                }
+                //}
             }
         }
 

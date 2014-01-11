@@ -18,9 +18,10 @@
                 <AdornedElementPlaceholder x:Name="adorner"
                                            Margin="-1"
                                            HorizontalAlignment="Stretch"
-                                           VerticalAlignment="Stretch" />
+                                           VerticalAlignment="Stretch"/>
 
                 <Popup x:Name="errorPopup"
+                       AllowsTransparency="True"
                        Placement="Right"
                        VerticalOffset="-1"
                        HorizontalOffset="2">

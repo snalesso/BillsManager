@@ -102,12 +102,12 @@ namespace BillsManager.ViewModels
 
         public override DateTime RegistrationDate
         {
-            get { return this.ExposedBill.RegistrationDate; }
+            get { return base.RegistrationDate; }
             set
             {
                 if (this.RegistrationDate != value)
                 {
-                    this.ExposedBill.RegistrationDate = value;
+                    base.RegistrationDate = value;
                     this.NotifyOfPropertyChange(() => this.RegistrationDate);
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
@@ -118,12 +118,12 @@ namespace BillsManager.ViewModels
         [Required(ErrorMessage = "You must specify a due date.")] // TODO: language
         public override DateTime DueDate
         {
-            get { return this.ExposedBill.DueDate; }
+            get { return base.DueDate; }
             set
             {
                 if (this.DueDate != value)
                 {
-                    this.ExposedBill.DueDate = value;
+                    base.DueDate = value;
                     this.NotifyOfPropertyChange(() => this.DueDate);
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
@@ -133,12 +133,12 @@ namespace BillsManager.ViewModels
 
         public override DateTime? PaymentDate
         {
-            get { return this.ExposedBill.PaymentDate; }
+            get { return base.PaymentDate; }
             set
             {
                 if (this.PaymentDate != value)
                 {
-                    this.ExposedBill.PaymentDate = value;
+                    base.PaymentDate = value;
                     this.NotifyOfPropertyChange(() => this.PaymentDate);
                     this.NotifyOfPropertyChange(() => this.IsPaid);
                     this.NotifyOfPropertyChange(() => this.IsValid);
@@ -150,12 +150,12 @@ namespace BillsManager.ViewModels
         [Required(ErrorMessage = "You must specify a release date.")] // TODO: language
         public override DateTime ReleaseDate
         {
-            get { return this.ExposedBill.ReleaseDate; }
+            get { return base.ReleaseDate; }
             set
             {
                 if (this.ReleaseDate != value)
                 {
-                    this.ExposedBill.ReleaseDate = value;
+                    base.ReleaseDate = value;
                     this.NotifyOfPropertyChange(() => this.ReleaseDate);
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
@@ -166,16 +166,16 @@ namespace BillsManager.ViewModels
         [Required(ErrorMessage = "You must specify an amount.")] // TODO: language
         public override Double Amount
         {
-            get { return this.ExposedBill.Amount; }
+            get { return base.Amount; }
             set
             {
-                if (this.Amount != value)
-                {
-                    this.ExposedBill.Amount = value;
+                //if (this.Amount != value)
+                //{
+                    base.Amount = value;
                     this.NotifyOfPropertyChange(() => this.Amount);
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
-                }
+                //}
             }
         }
 
@@ -183,12 +183,12 @@ namespace BillsManager.ViewModels
         [Range(0, uint.MaxValue, ErrorMessage = "Chosen supplier ID is out of range.")] // TODO: language
         public override uint SupplierID
         {
-            get { return this.ExposedBill.SupplierID; }
+            get { return base.SupplierID; }
             set
             {
                 if (this.SupplierID != value)
                 {
-                    this.ExposedBill.SupplierID = value;
+                    base.SupplierID = value;
                     this.NotifyOfPropertyChange(() => this.SupplierID);
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
@@ -201,12 +201,12 @@ namespace BillsManager.ViewModels
         [StringLength(200, ErrorMessage = "You cannot exceed 200 characters.")] // TODO: language
         public override string Notes
         {
-            get { return this.ExposedBill.Notes; }
+            get { return base.Notes; }
             set
             {
                 if (this.Notes != value)
                 {
-                    this.ExposedBill.Notes = value;
+                    base.Notes = value;
                     this.NotifyOfPropertyChange(() => this.Notes);
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
@@ -217,12 +217,12 @@ namespace BillsManager.ViewModels
         //[Required(ErrorMessage = "You must specify a code.")] // TODO: language
         public override string Code
         {
-            get { return this.ExposedBill.Code; }
+            get { return base.Code; }
             set
             {
                 if (this.Code != value)
                 {
-                    this.ExposedBill.Code = value;
+                    base.Code = value;
                     this.NotifyOfPropertyChange(() => this.Code);
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;

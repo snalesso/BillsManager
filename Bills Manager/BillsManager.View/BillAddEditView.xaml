@@ -134,9 +134,11 @@
                  HorizontalAlignment="Stretch"
                  MaxLines="1"
                  TabIndex="4"
-                 Text="{Binding Amount, ValidatesOnDataErrors=True}"
+                 Text="{Binding Amount, StringFormat=\{0:0.00##\}, ValidatesOnDataErrors=True}"
                  TextAlignment="Right"
-                 VerticalAlignment="Center" />
+                 VerticalAlignment="Center"
+                 GotFocus="SelectAllText"
+                 GotMouseCapture="SelectAllText"/>
 
         <TextBlock Grid.Row="8"
                    HorizontalAlignment="Right"

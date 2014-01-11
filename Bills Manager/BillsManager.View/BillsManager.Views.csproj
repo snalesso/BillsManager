@@ -426,10 +426,7 @@
       <Name>BillsManager.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Attached behaviors\" />
-    <Folder Include="Behaviors\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\DBM-old.png" />
   </ItemGroup>

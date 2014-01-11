@@ -11,5 +11,19 @@ namespace BillsManager.Views
         {
             InitializeComponent();
         }
+
+        private void SelectAllText(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var txt = sender as TextBox;
+            if (txt != null)
+                txt.SelectAll();
+        }
+
+        private void SelectAllText(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            var txt = sender as TextBox;
+            if (txt != null)
+                txt.SelectAll();
+        }
     }
 }
