@@ -209,7 +209,7 @@ namespace BillsManager.ViewModels
              * so if you trydisconnect a non connected db, it just returns true and gg */
 
             if (this.IsConnected)
-                callback(this.TryDisconnectDB());
+                callback(this.DisconnectDB());
             else
                 callback(true);
         }
@@ -220,7 +220,7 @@ namespace BillsManager.ViewModels
 
         #region methods
 
-        public bool TryConnectDB()
+        public bool ConnectDB()
         {
             //var progressDialog = new ProgressViewModel("Loading '" + this.DBName + "' ...");
 
@@ -262,7 +262,7 @@ namespace BillsManager.ViewModels
             return false;
         }
 
-        public bool TryDisconnectDB()
+        public bool DisconnectDB()
         {
             if (this.IsDirty)
             {
