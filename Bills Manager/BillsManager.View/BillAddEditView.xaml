@@ -19,19 +19,22 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"
-                              MinWidth="75" />
-            <ColumnDefinition Width="{StaticResource MarginSize}" />
-            <ColumnDefinition Width="Auto"
-                              MinWidth="150" />
             <ColumnDefinition Width="{StaticResource MarginSize}" />
             <ColumnDefinition Width="Auto"
                               MinWidth="75" />
             <ColumnDefinition Width="{StaticResource MarginSize}" />
             <ColumnDefinition Width="Auto"
                               MinWidth="150" />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="Auto"
+                              MinWidth="75" />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="Auto"
+                              MinWidth="150" />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
@@ -47,6 +50,7 @@
             <RowDefinition Height="24" />
             <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
         </Grid.RowDefinitions>
 
         <!--Details-->
@@ -54,15 +58,18 @@
                    FontWeight="Bold"
                    HorizontalAlignment="Center"
                    Text="Details"
-                   VerticalAlignment="Center" />
+                   VerticalAlignment="Center"
+                   Grid.Column="1"
+                   Grid.Row="1" />
 
-        <TextBlock Grid.Row="2"
+        <TextBlock Grid.Row="3"
                    HorizontalAlignment="Right"
                    Text="Release date"
-                   VerticalAlignment="Top" />
+                   VerticalAlignment="Top"
+                   Grid.Column="1" />
         <DatePicker x:Name="dtpReleaseDate"
-                    Grid.Column="2"
-                    Grid.Row="2"
+                    Grid.Column="3"
+                    Grid.Row="3"
                     DisplayDateEnd="{Binding DisplayDateEndForPaymentDate, Mode=OneWay}"
                     HorizontalAlignment="Stretch"
                     SelectedDate="{Binding ReleaseDate}"
@@ -70,13 +77,13 @@
                     VerticalAlignment="Center" />
 
 
-        <TextBlock Grid.Column="4"
-                   Grid.Row="2"
+        <TextBlock Grid.Column="5"
+                   Grid.Row="3"
                    HorizontalAlignment="Right"
                    Text="Due date"
                    VerticalAlignment="Top" />
-        <DatePicker Grid.Column="6"
-                    Grid.Row="2"
+        <DatePicker Grid.Column="7"
+                    Grid.Row="3"
                     DisplayDateStart="{Binding ReleaseDate}"
                     HorizontalAlignment="Stretch"
                     SelectedDate="{Binding DueDate}"
@@ -84,53 +91,83 @@
                     VerticalAlignment="Center" />
 
 
-        <TextBlock Grid.Row="4"
+        <TextBlock Grid.Row="5"
                    HorizontalAlignment="Right"
                    Text="Is paid"
-                   VerticalAlignment="Top" />
-        <CheckBox Grid.Column="2"
-                  Grid.Row="4"
+                   VerticalAlignment="Top"
+                   Grid.Column="1" />
+        <CheckBox Grid.Column="3"
+                  Grid.Row="5"
                   HorizontalAlignment="Left"
                   IsChecked="{Binding IsPaid}"
                   TabIndex="2"
                   VerticalAlignment="Center" />
 
 
-        <TextBlock Grid.Column="4"
-                   Grid.Row="4"
+        <TextBlock Grid.Column="5"
+                   Grid.Row="5"
                    HorizontalAlignment="Right"
                    Text="Payment date"
                    VerticalAlignment="Top" />
-        <DatePicker Grid.Column="6"
-                    Grid.Row="4"
+        <DatePicker Grid.Column="7"
+                    Grid.Row="5"
                     DisplayDateEnd="{Binding DisplayDateEndForPaymentDate, Mode=OneWay}"
                     DisplayDateStart="{Binding ReleaseDate}"
                     HorizontalAlignment="Stretch"
                     IsEnabled="{Binding IsPaid}"
                     SelectedDate="{Binding PaymentDate}"
-                    IsDropDownOpen="{Binding IsPaid, Mode=OneWay}"
                     TabIndex="3"
                     VerticalAlignment="Center" />
 
 
-        <TextBlock Grid.Column="4"
-                   Grid.Row="6"
+        <TextBlock Grid.Column="5"
+                   Grid.Row="7"
                    HorizontalAlignment="Right"
                    Text="Code"
                    VerticalAlignment="Top" />
-        <TextBox Grid.Column="6"
-                 Grid.Row="6"
+        <TextBox Grid.Column="7"
+                 Grid.Row="7"
                  HorizontalAlignment="Stretch"
                  MaxLines="1"
                  TabIndex="5"
-                 Text="{Binding Code, UpdateSourceTrigger=PropertyChanged}" />
+                 Text="{Binding Code, UpdateSourceTrigger=PropertyChanged}"
+                 GotFocus="SelectAllText"
+                 GotMouseCapture="SelectAllText" />
 
-        <TextBlock Grid.Row="6"
+        <!--<TextBlock Text="Gain"
+                   Grid.Row="8"
                    HorizontalAlignment="Right"
-                   Text="Amount"
                    VerticalAlignment="Top" />
-        <TextBox Grid.Column="2"
-                 Grid.Row="6"
+        <DockPanel Grid.Column="2"
+                   Grid.Row="8">
+            <RadioButton x:Name="rdbGain"
+                         VerticalAlignment="Center" />
+            <TextBox MaxLines="1"
+                     VerticalAlignment="Center"
+                     TextAlignment="Right" />
+        </DockPanel>
+
+        <TextBlock Text="Expense"
+                   Grid.Row="8"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   Grid.Column="4" />
+        <DockPanel Grid.Column="6"
+                   Grid.Row="8">
+            <RadioButton x:Name="rdbExpense"
+                         VerticalAlignment="Center" />
+            <TextBox MaxLines="1"
+                     VerticalAlignment="Center"
+                     TextAlignment="Right" />
+        </DockPanel>-->
+
+        <TextBlock Grid.Row="7"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   Text="Amount"
+                   Grid.Column="1" />
+        <TextBox Grid.Column="3"
+                 Grid.Row="7"
                  HorizontalAlignment="Stretch"
                  MaxLines="1"
                  TabIndex="4"
@@ -138,59 +175,42 @@
                  TextAlignment="Right"
                  VerticalAlignment="Center"
                  GotFocus="SelectAllText"
-                 GotMouseCapture="SelectAllText"/>
+                 GotMouseCapture="SelectAllText" />
 
-        <TextBlock Grid.Row="8"
+        <TextBlock Grid.Row="9"
                    HorizontalAlignment="Right"
                    Text="Supplier"
-                   VerticalAlignment="Top" />
+                   VerticalAlignment="Top"
+                   Grid.Column="1" />
 
-        <Grid Grid.Column="2"
-              Grid.ColumnSpan="5"
-              Grid.Row="8"
-              HorizontalAlignment="Stretch"
-              VerticalAlignment="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="{StaticResource MarginSize}" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+        <ComboBox x:Name="cbxSupplier"
+                  ItemsSource="{Binding AvailableSuppliers, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding SelectedSupplier, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                  IsEditable="True"
+                  IsTextSearchCaseSensitive="False"
+                  IsTextSearchEnabled="True"
+                  TextSearch.TextPath="Name"
+                  Grid.Column="3"
+                  Grid.ColumnSpan="5"
+                  Grid.Row="9"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Center"
+                  TabIndex="6">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
 
-            <ComboBox x:Name="cbxSupplier"
-                      ItemsSource="{Binding AvailableSuppliers}"
-                      SelectedItem="{Binding SelectedSupplier, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
-                      IsEditable="True"
-                      IsTextSearchCaseSensitive="False"
-                      IsTextSearchEnabled="True"
-                      TextSearch.TextPath="Name"
-                      TabIndex="6">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Name}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-
-            <Controls:PathButton Grid.Column="2"
-                                 Background="{x:Null}"
-                                 BorderBrush="{x:Null}"
-                                 Height="22"
-                                 TabIndex="7"
-                                 Command="{Binding AddNewSupplierCommand, Mode=OneWay}">
-                <Controls:PathButton.Content>
-                    <Controls:AutoGreyableImage Source="Images/suppliers/supplier-add-24.png" />
-                </Controls:PathButton.Content>
-            </Controls:PathButton>
-
-        </Grid>
-
-        <TextBlock Grid.Row="10"
+        <TextBlock Grid.Row="11"
                    HorizontalAlignment="Right"
                    Text="Notes"
-                   VerticalAlignment="Top" />
-        <TextBox Grid.Column="2"
+                   VerticalAlignment="Top"
+                   Grid.Column="1" />
+        <TextBox Grid.Column="3"
                  Grid.ColumnSpan="5"
-                 Grid.Row="10"
+                 Grid.Row="11"
                  Height="64"
                  HorizontalAlignment="Stretch"
                  VerticalAlignment="Center"
@@ -201,9 +221,10 @@
                  TextWrapping="Wrap" />
 
         <StackPanel Grid.ColumnSpan="7"
-                    Grid.Row="14"
+                    Grid.Row="15"
                     HorizontalAlignment="Right"
-                    Orientation="Horizontal">
+                    Orientation="Horizontal"
+                    Grid.Column="1">
             <Button Width="80"
                     Command="{Binding ConfirmAddEditAndCloseCommand}"
                     Content="Ok"

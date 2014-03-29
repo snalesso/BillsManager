@@ -2,193 +2,228 @@
 using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BillsManager.ViewModels
 {
 #if DEBUG
-   public partial class DBViewModel
-   {
-       public DBViewModel()
-       {
-           if (Execute.InDesignMode)
-           {
-               this.dbConnector = new DesignTimeDBConnector();
-               this.LoadDesignTimeData();
-           }
-       }
+    public partial class DBViewModel
+    {
+        public DBViewModel()
+        {
+            if (Execute.InDesignMode)
+            {
+                this.dbConnector = new DesignTimeDBConnector();
+                this.LoadDesignTimeData();
+            }
+        }
 
-       public DBViewModel(IDBConnector dbConnector)
-       {
-           if (Execute.InDesignMode)
-           {
-               this.dbConnector = dbConnector;
-               this.LoadDesignTimeData();
-           }
-       }
+        public DBViewModel(IDBConnector dbConnector)
+        {
+            if (Execute.InDesignMode)
+            {
+                this.dbConnector = dbConnector;
+                this.LoadDesignTimeData();
+            }
+        }
 
-       public void LoadDesignTimeData()
-       {
-           this.SuppliersViewModel = new SuppliersViewModel();
-           this.BillsViewModel = new BillsViewModel();
-       }
+        public void LoadDesignTimeData()
+        {
+            this.SuppliersViewModel = new SuppliersViewModel();
+            this.BillsViewModel = new BillsViewModel();
+        }
 
-       private class DesignTimeDBConnector : IDBConnector
-       {
+        private class DesignTimeDBConnector : IDBConnector
+        {
+            #region IDBConnector Members
 
-           #region IDBConnector Members
+            public bool Open()
+            {
+                throw new NotImplementedException();
+            }
 
-           public bool Open()
-           {
-               throw new NotImplementedException();
-           }
+            public bool Save()
+            {
+                throw new NotImplementedException();
+            }
 
-           public bool Save()
-           {
-               throw new NotImplementedException();
-           }
+            public void Close()
+            {
+                throw new NotImplementedException();
+            }
 
-           public void Close()
-           {
-               throw new NotImplementedException();
-           }
+            public string DBPath
+            {
+                get { return "Design time Path"; }
+            }
 
-           public string Path
-           {
-               get { return "Design time Path"; }
-           }
+            public string DBName
+            {
+                get { return "Design time Name"; }
+            }
 
-           public string DBName
-           {
-               get { return "Design time Name"; }
-           }
+            #endregion
 
-           #endregion
+            #region IBillsProvider Members
 
-           #region IBillsProvider Members
+            public uint GetLastBillID()
+            {
+                throw new NotImplementedException();
+            }
 
-           public uint GetLastBillID()
-           {
-               throw new NotImplementedException();
-           }
+            public IEnumerable<Models.Bill> GetAllBills()
+            {
+                throw new NotImplementedException();
+            }
 
-           public IEnumerable<Models.Bill> GetAllBills()
-           {
-               throw new NotImplementedException();
-           }
+            public bool Add(Models.Bill bill)
+            {
+                throw new NotImplementedException();
+            }
 
-           public bool Add(Models.Bill bill)
-           {
-               throw new NotImplementedException();
-           }
+            public bool Edit(Models.Bill bill)
+            {
+                throw new NotImplementedException();
+            }
 
-           public bool Edit(Models.Bill bill)
-           {
-               throw new NotImplementedException();
-           }
+            public bool Edit(IEnumerable<Models.Bill> bills)
+            {
+                throw new NotImplementedException();
+            }
 
-           public bool Edit(IEnumerable<Models.Bill> bills)
-           {
-               throw new NotImplementedException();
-           }
+            public bool Delete(Models.Bill bill)
+            {
+                throw new NotImplementedException();
+            }
 
-           public bool Delete(Models.Bill bill)
-           {
-               throw new NotImplementedException();
-           }
+            public bool Delete(IEnumerable<Models.Bill> bills)
+            {
+                throw new NotImplementedException();
+            }
 
-           public bool Delete(IEnumerable<Models.Bill> bills)
-           {
-               throw new NotImplementedException();
-           }
+            #endregion
 
-           #endregion
+            #region ISuppliersProvider Members
 
-           #region ISuppliersProvider Members
+            public uint GetLastSupplierID()
+            {
+                throw new NotImplementedException();
+            }
 
-           public uint GetLastSupplierID()
-           {
-               throw new NotImplementedException();
-           }
+            public IEnumerable<Models.Supplier> GetAllSuppliers()
+            {
+                throw new NotImplementedException();
+            }
 
-           public IEnumerable<Models.Supplier> GetAllSuppliers()
-           {
-               throw new NotImplementedException();
-           }
+            public bool Add(Models.Supplier supplier)
+            {
+                throw new NotImplementedException();
+            }
 
-           public bool Add(Models.Supplier supplier)
-           {
-               throw new NotImplementedException();
-           }
+            public bool Edit(Models.Supplier supplier)
+            {
+                throw new NotImplementedException();
+            }
 
-           public bool Edit(Models.Supplier supplier)
-           {
-               throw new NotImplementedException();
-           }
+            public bool Edit(IEnumerable<Models.Supplier> suppliers)
+            {
+                throw new NotImplementedException();
+            }
 
-           public bool Edit(IEnumerable<Models.Supplier> suppliers)
-           {
-               throw new NotImplementedException();
-           }
+            public bool Delete(Models.Supplier supplier)
+            {
+                throw new NotImplementedException();
+            }
 
-           public bool Delete(Models.Supplier supplier)
-           {
-               throw new NotImplementedException();
-           }
+            public bool Delete(IEnumerable<Models.Supplier> suppliers)
+            {
+                throw new NotImplementedException();
+            }
 
-           public bool Delete(IEnumerable<Models.Supplier> suppliers)
-           {
-               throw new NotImplementedException();
-           }
+            #endregion
 
-           #endregion
+            //#region IAgentsProvider Members
+            
+            //public uint GetLastAgentID()
+            //{
+            //    throw new NotImplementedException();
+            //}
 
-           #region IAgentsProvider Members
+            //public IEnumerable<Models.Agent> GetAllAgents()
+            //{
+            //    throw new NotImplementedException();
+            //}
 
-           public uint GetLastAgentID()
-           {
-               throw new NotImplementedException();
-           }
+            //public Models.Agent GetAgentByID(uint agentID)
+            //{
+            //    throw new NotImplementedException();
+            //}
 
-           public IEnumerable<Models.Agent> GetAllAgents()
-           {
-               throw new NotImplementedException();
-           }
+            //public bool Add(Models.Agent agent)
+            //{
+            //    throw new NotImplementedException();
+            //}
 
-           public Models.Agent GetAgentByID(uint agentID)
-           {
-               throw new NotImplementedException();
-           }
+            //public bool Edit(Models.Agent agent)
+            //{
+            //    throw new NotImplementedException();
+            //}
 
-           public bool Add(Models.Agent agent)
-           {
-               throw new NotImplementedException();
-           }
+            //public bool Edit(IEnumerable<Models.Agent> agents)
+            //{
+            //    throw new NotImplementedException();
+            //}
 
-           public bool Edit(Models.Agent agent)
-           {
-               throw new NotImplementedException();
-           }
+            //public bool Delete(Models.Agent agent)
+            //{
+            //    throw new NotImplementedException();
+            //}
 
-           public bool Edit(IEnumerable<Models.Agent> agents)
-           {
-               throw new NotImplementedException();
-           }
+            //public bool Delete(IEnumerable<Models.Agent> agents)
+            //{
+            //    throw new NotImplementedException();
+            //}
 
-           public bool Delete(Models.Agent agent)
-           {
-               throw new NotImplementedException();
-           }
+            //#endregion
 
-           public bool Delete(IEnumerable<Models.Agent> agents)
-           {
-               throw new NotImplementedException();
-           }
+            #region ITagsProvider Members
 
-           #endregion
-       }
+            public uint GetLastTagID()
+            {
+                throw new NotImplementedException();
+            }
+
+            public IEnumerable<Models.Tag> GetAll()
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool Add(Models.Tag tag)
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool Edit(Models.Tag tag)
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool Edit(IEnumerable<Models.Tag> tags)
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool Delete(Models.Tag tag)
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool Delete(IEnumerable<Models.Tag> tags)
+            {
+                throw new NotImplementedException();
+            }
+
+            #endregion
+        }
     }
 #endif
 }

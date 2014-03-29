@@ -5,9 +5,9 @@ namespace BillsManager.Services.Providers
 {
     public interface IAgentsProvider
     {
-        string Path { get; }
+        string DBPath { get; }
 
-        string DBName { get; }
+        //string DBName { get; }
 
         uint GetLastAgentID();
 

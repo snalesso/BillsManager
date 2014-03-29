@@ -1,5 +1,4 @@
-﻿using Autofac.Features.OwnedInstances;
-using BillsManager.Services.Providers;
+﻿using BillsManager.Services.Providers;
 using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
 using BillsManager.ViewModels.Reporting;
@@ -12,19 +11,21 @@ namespace BillsManager.ViewModels
     public partial class DBViewModel : Conductor<Screen>.Collection.AllActive,
         IHandle<SupplierCRUDEvent>,
         IHandle<BillCRUDEvent>,
-        IHandle<ShowSuppliersBillsOrder>
+        IHandle<ShowSuppliersBillsOrder>,
+        IHandle<RollbackAuthorizationRequestMessage>
     {
         #region fields
 
         private readonly IWindowManager windowManager;
-        private readonly Owned<IEventAggregator> dbEventAggregator; // TODO: review owned<> mechanism
+        private readonly IEventAggregator globalEventAggregator;
         private readonly IDBConnector dbConnector;
 
-        private readonly Func<IEventAggregator, IBillsProvider, BillsViewModel> billsViewModelFactory;
-        private readonly Func<IEventAggregator, ISuppliersProvider, SuppliersViewModel> suppliersViewModelFactory;
+        private readonly Func<SuppliersViewModel> suppliersViewModelFactory;
+        private readonly Func<BillsViewModel> billsViewModelFactory;
+        private readonly Func<TagsViewModel> tagsViewModelFactory;
 
-        private readonly Func<IEventAggregator, SearchSuppliersViewModel> searchSuppliersViewModelFactory;
-        private readonly Func<IEventAggregator, SearchBillsViewModel> searchBillsViewModelFactory;
+        private readonly Func<SearchSuppliersViewModel> searchSuppliersViewModelFactory;
+        private readonly Func<SearchBillsViewModel> searchBillsViewModelFactory;
 
         private readonly Func<IEnumerable<BillReportViewModel>, string, string, ReportCenterViewModel> reportCenterViewModelFactory;
 
@@ -34,22 +35,25 @@ namespace BillsManager.ViewModels
 
         public DBViewModel(
             IWindowManager windowManager,
-            Owned<IEventAggregator> dbEventAggregator,
+            IEventAggregator dbEventAggregator,
             IDBConnector dbConnector,
-            Func<IEventAggregator, ISuppliersProvider, SuppliersViewModel> suppliersViewModelFactory,
-            Func<IEventAggregator, IBillsProvider, BillsViewModel> billsViewModelFactory,
-            Func<IEventAggregator, SearchSuppliersViewModel> searchSuppliersViewModelFactory,
-            Func<IEventAggregator, SearchBillsViewModel> searchBillsViewModelFactory,
+            Func<SuppliersViewModel> suppliersViewModelFactory,
+            Func<BillsViewModel> billsViewModelFactory,
+            Func<TagsViewModel> tagsViewModelFactory,
+            Func<SearchSuppliersViewModel> searchSuppliersViewModelFactory,
+            Func<SearchBillsViewModel> searchBillsViewModelFactory,
+            // IDEA: move report to tools?
             Func<IEnumerable<BillReportViewModel>, string, string, ReportCenterViewModel> reportCenterViewModelFactory)
         {
             // SERVICES
             this.windowManager = windowManager;
-            this.dbEventAggregator = dbEventAggregator;
+            this.globalEventAggregator = dbEventAggregator;
             this.dbConnector = dbConnector;
 
             // FACTORIES
             this.suppliersViewModelFactory = suppliersViewModelFactory;
             this.billsViewModelFactory = billsViewModelFactory;
+            this.tagsViewModelFactory = tagsViewModelFactory;
 
             this.searchSuppliersViewModelFactory = searchSuppliersViewModelFactory;
             this.searchBillsViewModelFactory = searchBillsViewModelFactory;
@@ -57,35 +61,25 @@ namespace BillsManager.ViewModels
             this.reportCenterViewModelFactory = reportCenterViewModelFactory;
 
             // SUBSCRIPTIONS
-            this.dbEventAggregator.Value.Subscribe(this);
+            this.globalEventAggregator.Subscribe(this);
 
             // HANDLERS
             this.Deactivated +=
                 (s, e) =>
                 {
                     if (e.WasClosed)
-                        this.dbEventAggregator.Value.Unsubscribe(this);
+                        this.globalEventAggregator.Unsubscribe(this);
                 };
+
+            //UI
+            this.DisplayName = @"Bills Manager Database";
+
+            // START
         }
 
         #endregion
 
         #region properties
-
-        public new string DisplayName
-        {
-            get { return this.DBName; }
-        }
-
-        public string Path
-        {
-            get { return this.dbConnector.Path; }
-        }
-
-        public string DBName
-        {
-            get { return this.dbConnector.DBName; }
-        }
 
         private BillsViewModel billsViewModel;
         public BillsViewModel BillsViewModel
@@ -93,11 +87,10 @@ namespace BillsManager.ViewModels
             get { return this.billsViewModel; }
             private set
             {
-                if (this.billsViewModel != value)
-                {
-                    this.billsViewModel = value;
-                    this.NotifyOfPropertyChange(() => this.BillsViewModel);
-                }
+                if (this.billsViewModel == value) return;
+
+                this.billsViewModel = value;
+                this.NotifyOfPropertyChange(() => this.BillsViewModel);
             }
         }
 
@@ -107,11 +100,23 @@ namespace BillsManager.ViewModels
             get { return this.suppliersViewModel; }
             private set
             {
-                if (this.suppliersViewModel != value)
-                {
-                    this.suppliersViewModel = value;
-                    this.NotifyOfPropertyChange(() => this.SuppliersViewModel);
-                }
+                if (this.suppliersViewModel == value) return;
+
+                this.suppliersViewModel = value;
+                this.NotifyOfPropertyChange(() => this.SuppliersViewModel);
+            }
+        }
+
+        private TagsViewModel tagsViewModel;
+        public TagsViewModel TagsViewModel
+        {
+            get { return this.tagsViewModel; }
+            private set
+            {
+                if (this.tagsViewModel == value) return;
+
+                this.tagsViewModel = value;
+                this.NotifyOfPropertyChange(() => this.TagsViewModel);
             }
         }
 
@@ -153,38 +158,26 @@ namespace BillsManager.ViewModels
             }
         }
 
-        private bool isConnected;
-        public bool IsConnected
+        private DBConnectionState dbConnectionState = DBConnectionState.Disconnected;
+        public DBConnectionState ConnectionState
         {
-            get { return this.isConnected; }
+            get { return this.dbConnectionState; }
             set
             {
-                if (this.isConnected != value)
+                if (this.dbConnectionState != value)
                 {
-                    this.isConnected = value;
-                    this.NotifyOfPropertyChange(() => this.IsConnected);
+                    this.dbConnectionState = value;
+                    this.NotifyOfPropertyChange(() => this.ConnectionState);
+                    this.globalEventAggregator.Publish(new DBConnectionStateChangedMessage(this.ConnectionState));
+
+                    this.NotifyOfPropertyChange(() => this.IsConnectionActive);
                 }
             }
         }
 
-        private bool isDirty;
-        public bool IsDirty
+        public bool IsConnectionActive
         {
-            get { return this.isDirty; }
-            private set
-            {
-                if (this.isDirty != value)
-                {
-                    this.isDirty = value;
-                    this.NotifyOfPropertyChange(() => this.IsDirty);
-                    this.NotifyOfPropertyChange(() => this.IsNotDirty);
-                }
-            }
-        }
-
-        public bool IsNotDirty
-        {
-            get { return !this.IsDirty; }
+            get { return this.ConnectionState == DBConnectionState.Connected; }
         }
 
         private bool showFilters;
@@ -204,12 +197,8 @@ namespace BillsManager.ViewModels
 
         public override void CanClose(System.Action<bool> callback)
         {
-            /* TODO: review trydisconnect order: 
-             * it should check if it is connected before trying to disconnect,
-             * so if you trydisconnect a non connected db, it just returns true and gg */
-
-            if (this.IsConnected)
-                callback(this.DisconnectDB());
+            if (this.ConnectionState != DBConnectionState.Disconnected)
+                callback(this.Disconnect());
             else
                 callback(true);
         }
@@ -220,7 +209,7 @@ namespace BillsManager.ViewModels
 
         #region methods
 
-        public bool ConnectDB()
+        public bool Connect()
         {
             //var progressDialog = new ProgressViewModel("Loading '" + this.DBName + "' ...");
 
@@ -231,13 +220,14 @@ namespace BillsManager.ViewModels
             {
                 //progressDialog.TryClose();
 
-                this.IsConnected = true;
+                this.ConnectionState = DBConnectionState.Connected;
 
-                this.SuppliersViewModel = this.suppliersViewModelFactory.Invoke(this.dbEventAggregator.Value, this.dbConnector);
-                this.BillsViewModel = this.billsViewModelFactory.Invoke(this.dbEventAggregator.Value, this.dbConnector);
+                this.SuppliersViewModel = this.suppliersViewModelFactory.Invoke();
+                this.BillsViewModel = this.billsViewModelFactory.Invoke();
+                this.TagsViewModel = this.tagsViewModelFactory.Invoke();
 
-                this.SearchSuppliersViewModel = this.searchSuppliersViewModelFactory.Invoke(this.dbEventAggregator.Value);
-                this.SearchBillsViewModel = this.searchBillsViewModelFactory.Invoke(this.dbEventAggregator.Value);
+                this.SearchSuppliersViewModel = this.searchSuppliersViewModelFactory.Invoke();
+                this.SearchBillsViewModel = this.searchBillsViewModelFactory.Invoke();
 
                 this.ActivateItem(this.SearchSuppliersViewModel);
                 this.ActivateItem(this.SearchBillsViewModel);
@@ -250,29 +240,29 @@ namespace BillsManager.ViewModels
 
             //progressDialog.TryClose();
 
-            var openErrorDialog =
+            var dbConnectionErrorDialog =
                 new DialogViewModel(
-                    "Open " + this.DBName + "' failed", // TODO: language
-                    "Database '" + this.DBName + "' couldn't be opened." +
+                    "Database load failed", // TODO: language
+                    "Database couldn't be opened." +
                     Environment.NewLine +
                     "Please try again later.");
 
-            this.windowManager.ShowDialog(openErrorDialog);
+            this.windowManager.ShowDialog(dbConnectionErrorDialog);
 
             return false;
         }
 
-        public bool DisconnectDB()
+        public bool Disconnect()
         {
-            if (this.IsDirty)
+            if (this.ConnectionState == DBConnectionState.Dirty)
             {
                 var saveRequest =
                     new DialogViewModel(
-                        "Do you wish to save '" + this.DBName + "' ?", // TODO: language
-                        "Database '" + this.DBName + "' has some changes that haven't been saved yet." +
+                        "Do you wish to save?", // TODO: language
+                        "There are some changes that haven't been saved yet." +
                         Environment.NewLine +
                         Environment.NewLine +
-                        "Do you wish to save before closing this database?",
+                        "Do you wish to save before closing?",
                         new[] { new DialogResponse(ResponseType.Yes), new DialogResponse(ResponseType.No), new DialogResponse(ResponseType.Cancel) });
 
                 this.windowManager.ShowDialog(saveRequest);
@@ -284,8 +274,8 @@ namespace BillsManager.ViewModels
                         {
                             var errorDialog =
                                 new DialogViewModel(
-                                    "Save '" + this.DBName + "' failed", // TODO: language
-                                    "Database '" + this.DBName + "' couldn't be saved." +
+                                    "Database save failed", // TODO: language
+                                    "Database couldn't be saved." +
                                     Environment.NewLine +
                                     "Please try again later.");
 
@@ -296,7 +286,7 @@ namespace BillsManager.ViewModels
                         break;
 
                     case ResponseType.No:
-                        this.IsDirty = false;
+                        this.ConnectionState = DBConnectionState.Connected;
                         break;
 
                     case ResponseType.Cancel:
@@ -306,7 +296,7 @@ namespace BillsManager.ViewModels
 
             this.dbConnector.Close();
 
-            this.IsConnected = false;
+            this.ConnectionState = DBConnectionState.Disconnected;
 
             this.SearchSuppliersViewModel.TryClose();
             this.SearchBillsViewModel.TryClose();
@@ -314,21 +304,29 @@ namespace BillsManager.ViewModels
             this.SearchSuppliersViewModel = null;
             this.SearchBillsViewModel = null;
 
+            this.TagsViewModel.TryClose();
             this.SuppliersViewModel.TryClose();
             this.BillsViewModel.TryClose(); /* TODO: review closing order, since this is an AllActive
                                              * a check is needed on whether the canclose automatically closes
                                              * activeitems or these 2 lines are required anyhow */
             this.SuppliersViewModel = null;
             this.BillsViewModel = null;
+            this.TagsViewModel = null;
 
             return true;
+        }
+
+        private void Reload()
+        {
+            this.Disconnect();
+            this.Connect();
         }
 
         private bool Save()
         {
             if (this.dbConnector.Save())
             {
-                this.IsDirty = false;
+                this.ConnectionState = DBConnectionState.Connected;
                 return true;
             }
 
@@ -344,7 +342,7 @@ namespace BillsManager.ViewModels
                 billReports.Add(new BillReportViewModel(bdvm));
             }
 
-            var header = this.DBName;
+            var header = @"Bills Manager";
             var comment = string.Empty;
             if (!string.IsNullOrWhiteSpace(this.BillsViewModel.FiltersDescription))
                 comment += this.BillsViewModel.FiltersDescription;
@@ -379,12 +377,12 @@ namespace BillsManager.ViewModels
 
         public void Handle(BillCRUDEvent message)
         {
-            this.IsDirty = true;
+            this.ConnectionState = DBConnectionState.Dirty;
         }
 
         public void Handle(SupplierCRUDEvent message)
         {
-            this.IsDirty = true;
+            this.ConnectionState = DBConnectionState.Dirty;
         }
 
         public void Handle(ShowSuppliersBillsOrder message)
@@ -393,11 +391,57 @@ namespace BillsManager.ViewModels
                 this.ShowFilters = true;
         }
 
+        public void Handle(RollbackAuthorizationRequestMessage message)
+        {
+            var canRollback = true;
+            var wasConnected = this.ConnectionState == DBConnectionState.Connected;
+
+            if (wasConnected)
+                canRollback = this.Disconnect();
+
+            if (canRollback) // TODO: check if authorization can be granted
+            {
+                message.ConfirmAuthorization();
+                if (wasConnected)
+                    this.Connect();
+            }
+            else
+                message.NegateAuthorization();
+        }
+
         #endregion
 
         #endregion
 
         #region commands
+
+        private RelayCommand connectCommand;
+        public RelayCommand ConnectCommand
+        {
+            get
+            {
+                if (this.connectCommand == null)
+                    this.connectCommand = new RelayCommand(
+                        () => this.Connect(),
+                        () => this.ConnectionState == DBConnectionState.Disconnected);
+
+                return this.connectCommand;
+            }
+        }
+
+        private RelayCommand disconnectCommand;
+        public RelayCommand DisconnectCommand
+        {
+            get
+            {
+                if (this.disconnectCommand == null)
+                    this.disconnectCommand = new RelayCommand(
+                        () => this.Disconnect(),
+                        () => this.ConnectionState != DBConnectionState.Disconnected);
+
+                return this.disconnectCommand;
+            }
+        }
 
         private RelayCommand saveCommand;
         public RelayCommand SaveCommand
@@ -407,7 +451,7 @@ namespace BillsManager.ViewModels
                 if (this.saveCommand == null)
                     this.saveCommand = new RelayCommand(
                         () => this.Save(),
-                        () => this.IsDirty);
+                        () => this.ConnectionState == DBConnectionState.Dirty);
 
                 return this.saveCommand;
             }
@@ -421,7 +465,7 @@ namespace BillsManager.ViewModels
                 if (this.showReportCenterCommand == null)
                     this.showReportCenterCommand = new RelayCommand(
                         () => this.ShowReportCenter(),
-                        () => this.IsConnected);
+                        () => this.IsConnectionActive);
 
                 return this.showReportCenterCommand;
             }

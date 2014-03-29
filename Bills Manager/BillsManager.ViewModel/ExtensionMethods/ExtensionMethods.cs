@@ -26,5 +26,13 @@ namespace BillsManager.ViewModels
                     yield return value;
             }
         }
+
+        public static ulong ULongCount<T>(this IEnumerable<T> data)
+        {
+            ulong count = 0;
+            foreach (var item in data)
+                count++;
+            return count;
+        }
     }
 }

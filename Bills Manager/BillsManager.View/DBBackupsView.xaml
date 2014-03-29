@@ -19,7 +19,7 @@
     <Controls:ListBoxEx ItemsSource="{Binding BackupViewModels}"
                         SelectedItem="{Binding SelectedBackupViewModel}"
                         ShowEmptyMessage="True"
-                        EmptyMessage="{Binding DBName, Mode=OneWay, StringFormat=No backups available for \'\{0\}\'}">
+                        EmptyMessage="No backups available">
 
         <Controls:ListBoxEx.ItemTemplate>
             <DataTemplate>

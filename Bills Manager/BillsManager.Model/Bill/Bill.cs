@@ -6,32 +6,37 @@ namespace BillsManager.Models
     {
         #region ctor
 
-        public Bill(
-            uint id)
+        public Bill(uint id)
         {
             this.id = id;
         }
 
         public Bill(
             uint id,
-            DateTime RegistrationDate,
-            DateTime DueDate,
-            DateTime? PaymentDate,
-            DateTime ReleaseDate,
-            Double Amount,
-            uint SupplierID,
-            string Notes,
-            string Code)
+            /*uint tagID,*/
+            DateTime registrationDate,
+            DateTime dueDate,
+            DateTime? paymentDate,
+            DateTime releaseDate,
+            Double amount,
+            /*Double gain,
+            Double expense,*/
+            uint supplierID,
+            string notes,
+            string code)
+            : this(id)
         {
-            this.Amount = Amount;
-            this.Code = Code;
-            this.DueDate = DueDate;
-            this.id = id;
-            this.Notes = Notes;
-            this.PaymentDate = PaymentDate;
-            this.RegistrationDate = RegistrationDate;
-            this.ReleaseDate = ReleaseDate;
-            this.SupplierID = SupplierID;
+            /*this.TagID = tagID;*/
+            this.Amount = amount;
+            this.Code = code;
+            this.DueDate = dueDate;
+            /*this.Expense = expense;
+            this.Gain = gain;*/
+            this.Notes = notes;
+            this.PaymentDate = paymentDate;
+            this.RegistrationDate = registrationDate;
+            this.ReleaseDate = releaseDate;
+            this.SupplierID = supplierID;
         }
 
         #endregion
@@ -47,6 +52,18 @@ namespace BillsManager.Models
             //    this.id = value;
             //}
         }
+
+        /*private uint tagID;
+        public uint TagID // IDEA: nullable?
+        {
+            get { return this.tagID; }
+            set
+            {
+                if (this.tagID == value) return;
+
+                this.tagID = value;
+            }
+        }*/
 
         private DateTime registrationDate = DateTime.Today;
         public DateTime RegistrationDate
@@ -93,7 +110,7 @@ namespace BillsManager.Models
             get { return this.releaseDate; }
             set
             {
-                if (this.ReleaseDate != value)
+                if (this.ReleaseDate != value) // IDEA: remove checks?
                 {
                     this.releaseDate = value;
                 }
@@ -108,10 +125,27 @@ namespace BillsManager.Models
             {
                 //if (this.Amount != value)
                 //{
-                    this.amount = value;
+                this.amount = value;
                 //}
             }
         }
+
+        /*private Double gain;
+        public Double Gain
+        {
+            get { return this.gain; }
+            set
+            {
+                this.gain = value;
+            }
+        }
+
+        private Double expense;
+        public Double Expense // URGENT: review the term
+        {
+            get { return this.expense; }
+            set { this.expense = value; }
+        }*/
 
         private uint supplierID; // TODO: find a default value that means no supplier (0 means the first created supplier)
         public uint SupplierID

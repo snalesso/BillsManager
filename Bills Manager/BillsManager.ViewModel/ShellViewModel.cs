@@ -7,17 +7,20 @@ using System.Windows;
 
 namespace BillsManager.ViewModels
 {
-    public partial class ShellViewModel : Conductor<DBsViewModel>.Collection.AllActive,
-        IHandle<ActiveDBChangedMessage>
+    public partial class ShellViewModel : Conductor<Screen>
+        //,IHandle<ActiveDBChangedMessage>
     {
         #region fields
 
         private readonly IWindowManager windowManager;
         private readonly IEventAggregator globalEventAggregator;
+        // main region
+        private readonly Func<DBViewModel> dbViewModelFactory;
+        // tools
         private readonly Func<BackupCenterViewModel> backupCenterViewModelFactory;
-        private readonly Func<string, DBsViewModel> dbsViewModelFactory;
-        private readonly Func<StatusBarViewModel> statusBarViewModelFactory;
         private readonly Func<SendFeedbackViewModel> sendFeedbackViewModelFactory;
+        // other UI regions
+        private readonly Func<StatusBarViewModel> statusBarViewModelFactory;
 
         #endregion
 
@@ -26,9 +29,9 @@ namespace BillsManager.ViewModels
         public ShellViewModel(
             IWindowManager windowManager,
             IEventAggregator globalEventAggregator,
-            Func<string, DBsViewModel> dbsViewModelFactory,
-            Func<BackupCenterViewModel> backupCenterViewModelFactory,
+            Func<DBViewModel> dbViewModelFactory,
             Func<StatusBarViewModel> statusBarViewModelFactory,
+            Func<BackupCenterViewModel> backupCenterViewModelFactory,
             Func<SendFeedbackViewModel> sendFeedbackViewModelFactory)
         {
 
@@ -38,9 +41,9 @@ namespace BillsManager.ViewModels
             this.globalEventAggregator.Subscribe(this);
 
             // FACTORIES
-            this.dbsViewModelFactory = dbsViewModelFactory;
-            this.backupCenterViewModelFactory = backupCenterViewModelFactory;
+            this.dbViewModelFactory = dbViewModelFactory;
             this.statusBarViewModelFactory = statusBarViewModelFactory;
+            this.backupCenterViewModelFactory = backupCenterViewModelFactory;
             this.sendFeedbackViewModelFactory = sendFeedbackViewModelFactory;
 
             // HANDLERS
@@ -48,40 +51,32 @@ namespace BillsManager.ViewModels
                 (s, e) =>
                 {
                     if (e.WasClosed)
-                    {
                         this.globalEventAggregator.Unsubscribe(this);
-                    }
                 };
 
             // UI
+            var sb = this.StatusBarViewModel; // initialize the status bar in order to receive db first load notifications
             this.DisplayName = "Bills Manager"; // TODO: language
 
             // START
-            this.ActivateItem(this.DBsViewModel);
+            this.ActivateItem(this.DBViewModel);
+            this.DBViewModel.Connect();
         }
 
         #endregion
 
         #region properties
 
-        private DBsViewModel dbsViewModel;
-        public DBsViewModel DBsViewModel
+        private DBViewModel dbViewModel;
+        public DBViewModel DBViewModel
         {
             get
             {
-                if (this.dbsViewModel == null)
-                    this.dbsViewModel = dbsViewModelFactory.Invoke(AppDomain.CurrentDomain.BaseDirectory + @"\Databases\");
+                if (this.dbViewModel == null)
+                    this.dbViewModel = this.dbViewModelFactory.Invoke();
 
-                return dbsViewModel;
+                return this.dbViewModel;
             }
-            //private set
-            //{
-            //    if (this.dbsViewModel != value)
-            //    {
-            //        dbsViewModel = value;
-            //        this.NotifyOfPropertyChange(() => this.DBsViewModel);
-            //    }
-            //}
         }
 
         private StatusBarViewModel statusBarViewModel;
@@ -94,14 +89,6 @@ namespace BillsManager.ViewModels
 
                 return this.statusBarViewModel;
             }
-            //private set
-            //{
-            //    if (this.statusBarViewModel != value)
-            //    {
-            //        this.statusBarViewModel = value;
-            //        this.NotifyOfPropertyChange(() => this.StatusBarViewModel);
-            //    }
-            //}
         }
 
         #endregion
@@ -132,11 +119,11 @@ namespace BillsManager.ViewModels
 
         #region message handlers
 
-        public void Handle(ActiveDBChangedMessage message)
-        {
-            var dn = "Bills Manager" + (message.ActiveDB != null ? " - " + message.ActiveDB.DisplayName : string.Empty);
-            this.DisplayName = dn;
-        }
+        //public void Handle(ActiveDBChangedMessage message)
+        //{
+        //    var dn = "Bills Manager" + (message.ActiveDB != null ? " - " + message.ActiveDB.DisplayName : string.Empty);
+        //    this.DisplayName = dn;
+        //}
 
         #endregion
 

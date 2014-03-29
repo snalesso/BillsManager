@@ -53,22 +53,21 @@
   <ItemGroup>
     <Compile Include="Feedback\EMailFeedbackSender.cs" />
     <Compile Include="Feedback\IFeedbackSender.cs" />
-    <Compile Include="Providers\DBConnector\IAgentsProvider.cs" />
-    <Compile Include="Providers\DBConnector\IDBConnector.cs" />
-    <Compile Include="Providers\BackupsProvider\XMLBackupsProvider.cs" />
-    <Compile Include="Providers\DBConnector\ISuppliersProvider.cs" />
-    <Compile Include="Providers\BackupsProvider\IBackupsProvider.cs" />
-    <Compile Include="Providers\DBConnector\IBillsProvider.cs" />
-    <Compile Include="Providers\DBsProvider\IDBsProvider.cs" />
+    <Compile Include="Data\DBConnector\IDBConnector.cs" />
+    <Compile Include="Data\BackupsProvider\XMLBackupsProvider.cs" />
+    <Compile Include="Data\DBConnector\ISuppliersProvider.cs" />
+    <Compile Include="Data\BackupsProvider\IBackupsProvider.cs" />
+    <Compile Include="Data\DBConnector\IBillsProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\DBConnector\XMLDBConnector.cs">
+    <Compile Include="Data\DBConnector\XMLDBConnector.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Providers\DBsProvider\XMLDBsProvider.cs" />
+    <Compile Include="Data\DBConnector\ITagsProvider.cs" />
     <Compile Include="Reporting\Attributes\TextAlignmentAttribute.cs" />
     <Compile Include="Reporting\IReportPrinter.cs" />
     <Compile Include="Reporting\ReportOptions.cs" />
     <Compile Include="Reporting\ReportPrinter.cs" />
+    <Compile Include="Settings\ISettingsProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BillsManager.Model\BillsManager.Models.csproj">
@@ -77,7 +76,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Providers\BackupsProvider\XMLBUProv-OLD.txt" />
+    <None Include="Data\BackupsProvider\XMLBUProv-OLD.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

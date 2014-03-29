@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using BillsManager.ViewModels.Commanding;
+﻿using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
 using Caliburn.Micro;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BillsManager.ViewModels
 {
@@ -14,7 +14,7 @@ namespace BillsManager.ViewModels
     {
         #region fields
 
-        private readonly IEventAggregator dbEventAggregator;
+        private readonly IEventAggregator globalEventAggregator;
 
         private Filter<SupplierDetailsViewModel> obligationStateFilter;
 
@@ -23,13 +23,13 @@ namespace BillsManager.ViewModels
         #region ctor
 
         public SearchSuppliersViewModel(
-            IEventAggregator dbEventAggregator)
+            IEventAggregator globalEventAggregator)
         {
             // SERVICES
-            this.dbEventAggregator = dbEventAggregator;
+            this.globalEventAggregator = globalEventAggregator;
 
             // SUBSCRIPTIONS
-            this.dbEventAggregator.Subscribe(this);
+            this.globalEventAggregator.Subscribe(this);
 
             // HANDLERS
             this.Deactivated +=
@@ -37,7 +37,7 @@ namespace BillsManager.ViewModels
                 {
                     if (e.WasClosed)
                     {
-                        this.dbEventAggregator.Unsubscribe(this);
+                        this.globalEventAggregator.Unsubscribe(this);
                     }
                 };
 
@@ -112,9 +112,9 @@ namespace BillsManager.ViewModels
             if (this.UseObligationStateFilter) filters.Add(this.obligationStateFilter);
 
             if (filters.Count > 0)
-                this.dbEventAggregator.Publish(new SuppliersFilterMessage(filters));
+                this.globalEventAggregator.Publish(new SuppliersFilterMessage(filters));
             else
-                this.dbEventAggregator.Publish(new SuppliersFilterMessage(null));
+                this.globalEventAggregator.Publish(new SuppliersFilterMessage(null));
         }
 
         void DeactivateAllFilters()

@@ -7,8 +7,8 @@
              xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
              xmlns:Caliburn="http://www.caliburnproject.org"
              mc:Ignorable="d"
-             d:DesignHeight="300"
-             d:DesignWidth="1131"
+             d:DesignHeight="200"
+             d:DesignWidth="800"
              d:DataContext="{d:DesignInstance Type=ViewModels:ShellViewModel, IsDesignTimeCreatable=True}"
              Caliburn:Bind.AtDesignTime="True">
 
@@ -29,15 +29,16 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Menu HorizontalAlignment="Left"
-              VerticalAlignment="Center">
+        <Menu HorizontalAlignment="Stretch"
+              VerticalAlignment="Center"
+              Grid.ColumnSpan="3">
 
-            <MenuItem ToolTip="New DB"
+            <!--<MenuItem ToolTip="New DB"
                       Command="{Binding DBsViewModel.CreateDBCommand, Mode=OneWay}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/db/db-add-24.png" />
                 </MenuItem.Icon>
-            </MenuItem>
+            </MenuItem>-->
 
             <!--<MenuItem Header="Open DB"
                       Command="{Binding Path=DBsViewModel.OpenDBCommand, Mode=OneTime}"
@@ -49,7 +50,7 @@
 
             <!--<Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />-->
 
-            <MenuItem ToolTip="Delete DB"
+            <!--<MenuItem ToolTip="Delete DB"
                       Command="{Binding DBsViewModel.DeleteDBCommand, Mode=OneWay}"
                       CommandParameter="{Binding DBsViewModel.SelectedDB}">
                 <MenuItem.Icon>
@@ -65,84 +66,59 @@
                 </MenuItem.Icon>
             </MenuItem>
 
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />-->
+
+            <MenuItem ToolTip="Connect"
+                      Command="{Binding DBViewModel.ConnectCommand, Mode=OneWay}">
+                <MenuItem.Icon>
+                    <Controls:AutoGreyableImage Source="Images/db/db-connect-24.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <MenuItem ToolTip="Disconnect"
+                      Command="{Binding DBViewModel.DisconnectCommand, Mode=OneWay}">
+                <MenuItem.Icon>
+                    <Controls:AutoGreyableImage Source="Images/db/db-disconnect-24.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
             <MenuItem ToolTip="Save DB"
-                      Command="{Binding DBsViewModel.SelectedDB.SaveCommand, Mode=OneWay}">
+                      Command="{Binding DBViewModel.SaveCommand, Mode=OneWay}">
                 <MenuItem.Icon>
-                    <Controls:AutoGreyableImage Source="Images/db/db-save-24.png" />
-                </MenuItem.Icon>
-            </MenuItem>
-
-            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-
-            <MenuItem ToolTip="Add bill"
-                      Command="{Binding DBsViewModel.ActiveItem.BillsViewModel.AddNewBillCommand, Mode=OneWay}">
-                <MenuItem.Icon>
-                    <Controls:AutoGreyableImage Source="Images/bills/bill-add-24.png" />
-                </MenuItem.Icon>
-            </MenuItem>
-
-            <MenuItem ToolTip="Edit bill"
-                      Command="{Binding DBsViewModel.ActiveItem.BillsViewModel.EditBillCommand, Mode=OneWay}"
-                      CommandParameter="{Binding DBsViewModel.ActiveItem.BillsViewModel.SelectedBillViewModel}">
-                <MenuItem.Icon>
-                    <Controls:AutoGreyableImage Source="Images/bills/bill-edit-24.png" />
-                </MenuItem.Icon>
-            </MenuItem>
-
-            <MenuItem ToolTip="Delete bill"
-                      Command="{Binding DBsViewModel.ActiveItem.BillsViewModel.DeleteBillCommand, Mode=OneWay}"
-                      CommandParameter="{Binding DBsViewModel.ActiveItem.BillsViewModel.SelectedBillViewModel}">
-                <MenuItem.Icon>
-                    <Controls:AutoGreyableImage Source="Images/bills/bill-delete-24.png" />
-                </MenuItem.Icon>
-            </MenuItem>
-
-            <MenuItem ToolTip="Pay bill"
-                      Command="{Binding DBsViewModel.ActiveItem.BillsViewModel.PayBillCommand, Mode=OneWay}"
-                      CommandParameter="{Binding DBsViewModel.ActiveItem.BillsViewModel.SelectedBillViewModel}">
-                <MenuItem.Icon>
-                    <Controls:AutoGreyableImage Source="Images/bills/bill-pay-cash-24.png" />
-                </MenuItem.Icon>
-            </MenuItem>
-
-            <MenuItem ToolTip="Bill details"
-                      Command="{Binding DBsViewModel.ActiveItem.BillsViewModel.ShowBillDetailsCommand, Mode=OneWay}"
-                      CommandParameter="{Binding DBsViewModel.ActiveItem.BillsViewModel.SelectedBillViewModel}">
-                <MenuItem.Icon>
-                    <Controls:AutoGreyableImage Source="Images/bills/bill-info-24.png" />
+                    <Controls:AutoGreyableImage Source="Images/db/save-24.png" />
                 </MenuItem.Icon>
             </MenuItem>
 
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
             <MenuItem ToolTip="Add supplier"
-                      Command="{Binding DBsViewModel.ActiveItem.SuppliersViewModel.AddNewSupplierCommand, Mode=OneWay}">
+                      Command="{Binding DBViewModel.SuppliersViewModel.AddNewSupplierCommand, Mode=OneWay}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/suppliers/supplier-add-24.png" />
                 </MenuItem.Icon>
             </MenuItem>
 
             <MenuItem ToolTip="Edit supplier"
-                      Command="{Binding DBsViewModel.ActiveItem.SuppliersViewModel.EditSupplierCommand, Mode=OneWay}"
-                      CommandParameter="{Binding DBsViewModel.ActiveItem.SuppliersViewModel.SelectedSupplierViewModel}">
+                      Command="{Binding DBViewModel.SuppliersViewModel.EditSupplierCommand, Mode=OneWay}"
+                      CommandParameter="{Binding DBViewModel.SuppliersViewModel.SelectedSupplierViewModel}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/suppliers/supplier-edit-24.png" />
                 </MenuItem.Icon>
             </MenuItem>
 
             <MenuItem ToolTip="Delete supplier"
-                      Command="{Binding DBsViewModel.ActiveItem.SuppliersViewModel.DeleteSupplierCommand, Mode=OneWay}"
-                      CommandParameter="{Binding DBsViewModel.ActiveItem.SuppliersViewModel.SelectedSupplierViewModel}">
+                      Command="{Binding DBViewModel.SuppliersViewModel.DeleteSupplierCommand, Mode=OneWay}"
+                      CommandParameter="{Binding DBViewModel.SuppliersViewModel.SelectedSupplierViewModel}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/suppliers/supplier-delete-24.png" />
                 </MenuItem.Icon>
             </MenuItem>
 
             <MenuItem ToolTip="Supplier details"
-                      Command="{Binding DBsViewModel.ActiveItem.SuppliersViewModel.ShowSupplierDetailsCommand, Mode=OneWay}"
-                      CommandParameter="{Binding DBsViewModel.ActiveItem.SuppliersViewModel.SelectedSupplierViewModel}">
+                      Command="{Binding DBViewModel.SuppliersViewModel.ShowSupplierDetailsCommand, Mode=OneWay}"
+                      CommandParameter="{Binding DBViewModel.SuppliersViewModel.SelectedSupplierViewModel}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/suppliers/supplier-details-24.png" />
                 </MenuItem.Icon>
@@ -150,9 +126,50 @@
 
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
+            <MenuItem ToolTip="Add bill"
+                      Command="{Binding DBViewModel.BillsViewModel.AddNewBillCommand, Mode=OneWay}">
+                <MenuItem.Icon>
+                    <Controls:AutoGreyableImage Source="Images/bills/bill-add-24.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <MenuItem ToolTip="Edit bill"
+                      Command="{Binding DBViewModel.BillsViewModel.EditBillCommand, Mode=OneWay}"
+                      CommandParameter="{Binding DBViewModel.BillsViewModel.SelectedBillViewModel}">
+                <MenuItem.Icon>
+                    <Controls:AutoGreyableImage Source="Images/bills/bill-edit-24.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <MenuItem ToolTip="Delete bill"
+                      Command="{Binding DBViewModel.BillsViewModel.DeleteBillCommand, Mode=OneWay}"
+                      CommandParameter="{Binding DBViewModel.BillsViewModel.SelectedBillViewModel}">
+                <MenuItem.Icon>
+                    <Controls:AutoGreyableImage Source="Images/bills/bill-delete-24.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <MenuItem ToolTip="Pay bill"
+                      Command="{Binding DBViewModel.BillsViewModel.PayBillCommand, Mode=OneWay}"
+                      CommandParameter="{Binding DBViewModel.BillsViewModel.SelectedBillViewModel}">
+                <MenuItem.Icon>
+                    <Controls:AutoGreyableImage Source="Images/bills/bill-pay-cash-24.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <MenuItem ToolTip="Bill details"
+                      Command="{Binding DBViewModel.BillsViewModel.ShowBillDetailsCommand, Mode=OneWay}"
+                      CommandParameter="{Binding DBViewModel.BillsViewModel.SelectedBillViewModel}">
+                <MenuItem.Icon>
+                    <Controls:AutoGreyableImage Source="Images/bills/bill-info-24.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+
             <MenuItem ToolTip="Show filters"
-                      IsChecked="{Binding DBsViewModel.ActiveItem.ShowFilters, Mode=OneWay}"
-                      Command="{Binding DBsViewModel.ActiveItem.ToggleShowFiltersCommand, Mode=OneWay}">
+                      IsChecked="{Binding DBViewModel.ShowFilters, Mode=OneWay}"
+                      Command="{Binding DBViewModel.ToggleShowFiltersCommand, Mode=OneWay}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/filters/search-24.png" />
                 </MenuItem.Icon>
@@ -160,7 +177,7 @@
 
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
-            <MenuItem Command="{Binding DBsViewModel.ActiveItem.ShowReportCenterCommand, Mode=OneWay}"
+            <MenuItem Command="{Binding DBViewModel.ShowReportCenterCommand, Mode=OneWay}"
                       ToolTip="Report center">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/tools/report/print-green-24.png" />
@@ -182,11 +199,12 @@
             </MenuItem>
         </Menu>
 
-        <ContentControl x:Name="DBsViewModel"
+        <ContentControl x:Name="DBViewModel"
                         Grid.Row="2" />
 
         <ContentControl x:Name="StatusBarViewModel"
-                        Grid.Row="3" />
+                        Grid.Row="3"
+                        Grid.ColumnSpan="3" />
 
     </Grid>
 

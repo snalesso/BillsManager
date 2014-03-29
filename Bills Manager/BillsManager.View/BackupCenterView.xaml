@@ -10,7 +10,7 @@
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=ViewModel:BackupCenterViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="300"
-             d:DesignWidth="550"
+             d:DesignWidth="420"
              Width="Auto">
 
     <UserControl.Resources>
@@ -24,9 +24,9 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="{StaticResource RegionSeparatorSize}" />
-            <ColumnDefinition />
+            <ColumnDefinition Width="77*" />
+            <ColumnDefinition Width="{StaticResource RegionSeparatorSize}" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -34,8 +34,8 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <Menu Grid.ColumnSpan="3">
-            
+        <Menu Grid.Column="1">
+
             <!--<MenuItem Header="Refresh"
                       Command="{Binding RefreshBackupGroupsCommand, Mode=OneWay}" />
 
@@ -60,30 +60,9 @@
 
         </Menu>
 
-        <Controls:ListBoxEx Grid.Row="2"
-                            ItemsSource="{Binding Items}"
-                            SelectedItem="{Binding ActiveItem, Mode=TwoWay}">
-
-            <Controls:ListBoxEx.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="42" />
-                        </Grid.ColumnDefinitions>
-                        
-                        <TextBlock Text="{Binding DBName}" />
-                        
-                    </Grid>
-                </DataTemplate>
-            </Controls:ListBoxEx.ItemTemplate>
-
-        </Controls:ListBoxEx>
-
         <ContentControl x:Name="ActiveItem"
-                        Grid.Row="2"
-                        Grid.Column="2" />
+                        Grid.Column="1"
+                        Grid.Row="3" />
 
     </Grid>
-
 </UserControl>

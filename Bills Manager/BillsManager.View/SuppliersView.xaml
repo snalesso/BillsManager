@@ -67,6 +67,13 @@
 
                             <DataTemplate.Triggers>
 
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}"
+                                             Value="True">
+                                    <Setter TargetName="obg"
+                                            Property="CornerRadius"
+                                            Value="0" />
+                                </DataTrigger>
+
                                 <DataTrigger Binding="{Binding ObligationState}"
                                              Value="Creditor">
                                     <Setter TargetName="obg"

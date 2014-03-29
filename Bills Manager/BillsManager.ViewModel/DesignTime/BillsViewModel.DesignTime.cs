@@ -38,50 +38,62 @@ namespace BillsManager.ViewModels
                 "02/43069601",
                 "02/43069601",
                 "sconti 10/06 - 24/09.",
-                "Barbara", 
-                "Robecchi", 
+                "Barbara",
+                "Robecchi",
                 "347-7892234");
 
             Bill newBill = new Bill(
                 0,
+                //21,
                 DateTime.Today,
                 DateTime.Today.AddDays(14),
                 DateTime.Today,
                 DateTime.Today.AddDays(-2),
                 723.61,
+                /*0,
+                21.3,*/
                 supp.ID,
                 "call agent for reduction",
                 "X3V-KDM");
 
             Bill newBill2 = new Bill(
                 1,
+                //64,
                 DateTime.Today.AddDays(-30),
                 DateTime.Today.AddDays(-20),
                 null,
                 DateTime.Today.AddDays(-32),
                 54.06,
+                /*0,
+                0.5,*/
                 supp.ID,
                 "ask for catalog",
                 "DK23595");
 
             Bill newBill3 = new Bill(
                 2,
+                //3,
                 DateTime.Today,
                 DateTime.Today.AddDays(7),
                 null,
                 DateTime.Today.AddDays(-3),
                 54.06,
+                /*9,
+                0,*/
                 supp.ID,
                 "call agent for reductions and new winter orders",
                 "AZ381EY");
 
             Bill newBill4 = new Bill(
                 3,
+                //22,
                 DateTime.Today.AddDays(-30),
                 DateTime.Today.AddDays(-1),
                 null,
                 DateTime.Today.AddDays(-32),
                 54.06,
+                /*15.7,
+                 0,*/
                 supp.ID,
                 "ask for catalog",
                 "DK23595");
@@ -99,6 +111,6 @@ namespace BillsManager.ViewModels
         }
 
         #endregion
-    } 
+    }
 #endif
 }

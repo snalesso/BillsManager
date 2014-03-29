@@ -9,10 +9,10 @@
 
     <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}"
            TargetType="{x:Type Separator}">
-        
+
         <Setter Property="Foreground"
                 Value="{StaticResource MenuBorderBrush}" />
-        
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Separator}">
@@ -25,8 +25,9 @@
 
     <ControlTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type MenuItem}, ResourceId=TopLevelItemTemplateKey}"
                      TargetType="{x:Type MenuItem}">
-        
-        <Border Background="{TemplateBinding Background}"
+
+        <Border x:Name="border"
+                Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
                 CornerRadius="{StaticResource ViewCornerRadius}"
                 Padding="{TemplateBinding Padding}">
@@ -104,7 +105,8 @@
                 <Setter TargetName="Icon"
                         Property="Visibility"
                         Value="Collapsed" />-->
-                <Setter Property="Background"
+                <Setter TargetName="border"
+                        Property="Background"
                         Value="{StaticResource MenuItemCheckedBackgroundBrush}" />
                 <Setter Property="Foreground"
                         Value="{StaticResource MenuItemCheckedForegroundBrush}" />
@@ -116,7 +118,7 @@
 
     <ControlTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type MenuItem}, ResourceId=TopLevelHeaderTemplateKey}"
                      TargetType="{x:Type MenuItem}">
-        
+
         <Border Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
                 CornerRadius="{StaticResource ViewCornerRadius}"
@@ -195,7 +197,7 @@
 
     <ControlTemplate x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type MenuItem}, ResourceId=SubmenuItemTemplateKey}"
                      TargetType="{x:Type MenuItem}">
-        
+
         <Border Background="{TemplateBinding Background}"
                 BorderBrush="{TemplateBinding BorderBrush}"
                 CornerRadius="0"
@@ -222,7 +224,7 @@
                         <Thickness Right="{StaticResource MarginSizeValue}" />
                     </ContentPresenter.Margin>
                 </ContentPresenter>
-                
+
                 <Path x:Name="checkmark"
                       Visibility="Hidden"
                       Height="{StaticResource MenuItemIconSize}"
@@ -235,7 +237,7 @@
                         <Thickness Right="{StaticResource MarginSizeValue}" />
                     </Path.Margin>
                 </Path>
-                
+
                 <ContentPresenter Grid.Column="1"
                                   ContentSource="Header"
                                   VerticalAlignment="Center"
@@ -407,12 +409,16 @@
                      Value="TopLevelHeader">
                 <Setter Property="Template"
                         Value="{StaticResource {ComponentResourceKey TypeInTargetAssembly={x:Type MenuItem}, ResourceId=TopLevelHeaderTemplateKey}}" />
+                <Setter Property="Background"
+                        Value="Transparent" />
             </Trigger>
 
             <Trigger Property="Role"
                      Value="TopLevelItem">
                 <Setter Property="Template"
                         Value="{StaticResource {ComponentResourceKey TypeInTargetAssembly={x:Type MenuItem}, ResourceId=TopLevelItemTemplateKey}}" />
+                <Setter Property="Background"
+                        Value="Transparent" />
             </Trigger>
 
             <Trigger Property="Role"
@@ -429,7 +435,8 @@
                         Value="Top" />
                 <Setter Property="Margin">
                     <Setter.Value>
-                        <Thickness Top="{StaticResource RegionSeparatorSizeValue}" Bottom="{StaticResource RegionSeparatorSizeValue}" />
+                        <Thickness Top="{StaticResource RegionSeparatorSizeValue}"
+                                   Bottom="{StaticResource RegionSeparatorSizeValue}" />
                     </Setter.Value>
                 </Setter>
             </Trigger>

@@ -7,6 +7,7 @@ namespace BillsManager.Views
     /// </summary>
     public partial class BillAddEditView : UserControl
     {
+        // URGENT: update datepicker style
         public BillAddEditView()
         {
             InitializeComponent();

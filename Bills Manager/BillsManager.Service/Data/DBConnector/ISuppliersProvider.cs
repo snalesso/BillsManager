@@ -5,9 +5,9 @@ namespace BillsManager.Services.Providers
 {
     public interface ISuppliersProvider
     {
-        string Path { get; }
+        //string DBPath { get; } // TODO: obsolete?
 
-        string DBName { get; }
+        //string DBName { get; } // TODO: obsolete?
 
         uint GetLastSupplierID();
 

@@ -38,7 +38,7 @@ namespace BillsManager.App.Bootstrappers
             //this.container.Singleton<IBillsProvider, XMLBillsProvider>();
             //this.container.Singleton<ISuppliersProvider, XMLSuppliersProvider>();
             //this.container.Singleton<IBackupsProvider, XMLBackupsProvider>();
-            this.container.Singleton<IDBsProvider, XMLDBsProvider>();
+            //this.container.Singleton<IDBsProvider, XMLDBsProvider>();
 
             // Factories
             //this.container.Singleton<IFactory<BillsViewModel>, BillsViewModelFactory>(); --> excluded

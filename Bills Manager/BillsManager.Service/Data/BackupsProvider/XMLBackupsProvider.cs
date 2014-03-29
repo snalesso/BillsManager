@@ -16,14 +16,20 @@ namespace BillsManager.Services.Providers
 
         //private const string BILLS_DB_FILENAME = @"Bills";
         //private const string SUPPLIERS_DB_FILENAME = @"Suppliers";
+        private const string DB_NAME = @"db";
+        private const string DB_DIRECTORY_NAME = @"DB";
         private const string DB_EXTENSION = @"bmdb";
         private const string DB_DOT_EXTENSION = @".bmdb";
+        private const string BACKUP_NAME_FORMAT = @"{0:00}-{1:00}-{2:00}_{3:00}.{4:00}.{5:00}";
         private const string BACKUP_EXTENSION = @"bmbu";
         private const string BACKUP_DOT_EXTENSION = @".bmbu";
         private const string BACKUPS_DIRECTORY_NAME = @"Backups";
         private const string DB_TEMP_FOLDER_NAME = @"Temp";
 
-        private readonly string dbDirectoryPath;
+        private const string NS_DATABASE = @"Database";
+        private const string NS_BILLS = @"Bills";
+        private const string NS_SUPPLIERS = @"Suppliers";
+
         private readonly string dbFilePath;
         private readonly string backupsDirectoryPath;
 
@@ -32,12 +38,11 @@ namespace BillsManager.Services.Providers
         #region ctor
 
         public XMLBackupsProvider(
-            string dbFilePath)
+            string backupsDirectoryPath)
         {
-            this.dbFilePath = dbFilePath; // TODO: clenaup
-            this.dbDirectoryPath = System.IO.Path.GetDirectoryName(dbFilePath);
-            this.backupsDirectoryPath = System.IO.Path.Combine(this.dbDirectoryPath, BACKUPS_DIRECTORY_NAME);
-            this.dbName = System.IO.Path.GetFileNameWithoutExtension(dbFilePath);
+            this.backupsDirectoryPath = backupsDirectoryPath;
+            this.dbFilePath = Path.Combine(Path.GetDirectoryName(backupsDirectoryPath.Substring(0, backupsDirectoryPath.Length - 1)), @"DB", DB_NAME + DB_DOT_EXTENSION); // TODO: cleanup unused variables
+            this.dbName = Path.GetFileNameWithoutExtension(backupsDirectoryPath); // TODO: dbname is obsolete (location too)
         }
 
         #endregion
@@ -61,7 +66,7 @@ namespace BillsManager.Services.Providers
 
         private bool IsBackupFile(string path)
         {
-            var ext = System.IO.Path.GetExtension(path);
+            var ext = Path.GetExtension(path);
             return ext.ToLowerInvariant() == BACKUP_DOT_EXTENSION;
         }
 
@@ -69,7 +74,7 @@ namespace BillsManager.Services.Providers
         {
             var backups = new List<Backup>();
 
-            if (System.IO.Directory.Exists(this.backupsDirectoryPath))
+            if (Directory.Exists(this.backupsDirectoryPath))
             {
                 backups.AddRange(
                     System.IO.Directory.GetFiles(this.backupsDirectoryPath)
@@ -98,7 +103,7 @@ namespace BillsManager.Services.Providers
 
         public bool CreateNew()
         {
-            if (System.IO.File.Exists(this.dbFilePath))
+            if (File.Exists(this.dbFilePath))
             {
                 DateTime creationTime = DateTime.Now;
 
@@ -111,13 +116,16 @@ namespace BillsManager.Services.Providers
 
                 this.EnsureBackupsDirectoryExists();
 
-                string newBackupName = string.Empty;
-                newBackupName += creationTime.Date.Day + "-" + creationTime.Date.Month + "-" + creationTime.Date.Year;
-                newBackupName += "_";
-                newBackupName += creationTime.TimeOfDay.Hours + "." + creationTime.TimeOfDay.Minutes + "." + creationTime.TimeOfDay.Seconds;
-                //newBackupName += BACKUP_DOT_EXTENSION;
+                string newBackupName = string.Format(
+                    BACKUP_NAME_FORMAT,
+                    creationTime.Date.Day,
+                    creationTime.Date.Month,
+                    creationTime.Date.Year,
+                    creationTime.TimeOfDay.Hours,
+                    creationTime.TimeOfDay.Minutes,
+                    creationTime.TimeOfDay.Seconds);
 
-                string newBackupSavePath = System.IO.Path.Combine(this.backupsDirectoryPath, newBackupName + BACKUP_DOT_EXTENSION);
+                string newBackupSavePath = Path.Combine(this.backupsDirectoryPath, newBackupName + BACKUP_DOT_EXTENSION);
 
                 xmlBackup.Save(newBackupSavePath);
 
@@ -139,18 +147,19 @@ namespace BillsManager.Services.Providers
 
         public bool Rollback(Backup backup)
         {
-            if (System.IO.File.Exists(backup.Path))
+            if (File.Exists(backup.Path))
             {
                 /* create a temp copy of the toOverwriteDB in order to prevent data loss
                  * so if it is half-overwritten it isn't lost */
 
                 /* create the temp folder */
-                string tempDirectoryPath = System.IO.Path.Combine(this.dbDirectoryPath, DB_TEMP_FOLDER_NAME);
-                System.IO.Directory.CreateDirectory(tempDirectoryPath);
+                string dbDirectoryPath = Path.GetDirectoryName(backupsDirectoryPath);
+                string tempDirectoryPath = Path.Combine(dbDirectoryPath, DB_TEMP_FOLDER_NAME);
+                Directory.CreateDirectory(tempDirectoryPath);
 
                 /* create the temp file */
-                string tempDBBackupFilePath = System.IO.Path.Combine(tempDirectoryPath, System.IO.Path.GetFileName(this.dbFilePath));
-                System.IO.File.Copy(this.dbFilePath, tempDBBackupFilePath, true);
+                string tempDBBackupFilePath = Path.Combine(tempDirectoryPath, Path.GetFileName(this.dbFilePath));
+                File.Copy(this.dbFilePath, tempDBBackupFilePath, true);
 
                 try
                 {
@@ -158,7 +167,11 @@ namespace BillsManager.Services.Providers
                     XDocument xmlDB = new XDocument();
 
                     xmlDB.Declaration = new XDeclaration("1.0", "utf-8", null);
-                    xmlDB.Add(new XElement("Database", xmlBackup.Root.Elements()));
+                    xmlDB.Add(new XElement(
+                        "Database",
+                        xmlBackup.Root.Element(NS_DATABASE),
+                        xmlBackup.Root.Element(NS_SUPPLIERS),
+                        xmlBackup.Root.Element(NS_BILLS)));
                     xmlDB.Save(this.dbFilePath);
 
                     this.AddRollbackDate(xmlBackup, DateTime.Now);
@@ -170,8 +183,8 @@ namespace BillsManager.Services.Providers
                 }
 
                 /* delete temp data */
-                if (System.IO.Directory.Exists(tempDirectoryPath))
-                    System.IO.Directory.Delete(tempDirectoryPath, true);
+                if (Directory.Exists(tempDirectoryPath))
+                    Directory.Delete(tempDirectoryPath, true);
 
                 return true;
             }
@@ -181,9 +194,9 @@ namespace BillsManager.Services.Providers
 
         public bool Delete(Backup backup)
         {
-            if (System.IO.File.Exists(backup.Path))
+            if (File.Exists(backup.Path))
             {
-                System.IO.File.Delete(backup.Path); // TODO: change to move to recycle bin
+                File.Delete(backup.Path); // TODO: change to move to recycle bin
                 return true;
             }
             else

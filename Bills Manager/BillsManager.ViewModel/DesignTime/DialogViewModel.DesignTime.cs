@@ -18,10 +18,9 @@ namespace BillsManager.ViewModels
                 // TODO: move to a designdata project
                 this.responses = new[]
                 {
-                    new DialogResponse(ResponseType.Yes, ".. go on!", "I wish to ..."),
+                    new DialogResponse(ResponseType.Yes, "go on", "Confirm"),
                     new DialogResponse(ResponseType.No, "Nein", "I say") {IsEnabled = true},
                     new DialogResponse(ResponseType.Retry, 10),
-                    new DialogResponse(ResponseType.Abort, "Abort!", 3),
                     new DialogResponse(ResponseType.Cancel),
                 };
 

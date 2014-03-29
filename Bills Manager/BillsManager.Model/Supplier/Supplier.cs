@@ -27,9 +27,8 @@
             string agentName,
             string agentSurname,
             string agentPhone)
+            : this(id)
         {
-            this.id = id;
-
             this.Name = name;
             this.eMail = eMail;
             this.Website = webSite;
@@ -92,7 +91,7 @@
         //        }
         //    }
         //}
-        
+
         private string agentName;
         public string AgentName
         {
@@ -105,7 +104,7 @@
                 }
             }
         }
-        
+
         private string agentSurname;
         public string AgentSurname
         {
@@ -118,7 +117,7 @@
                 }
             }
         }
-                
+
         private string agentPhone;
         public string AgentPhone
         {
@@ -177,7 +176,7 @@
                 }
             }
         }
-        
+
         private string fax;
         public string Fax
         {

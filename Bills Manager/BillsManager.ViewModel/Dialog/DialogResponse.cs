@@ -4,6 +4,7 @@ namespace BillsManager.ViewModels
 {
     public class DialogResponse : PropertyChangedBase
     {
+        // TODO: fix buttons spacing in dialog view (first or last has useless margin)
         #region ctor
 
         // TODO: review ctors gerarchy

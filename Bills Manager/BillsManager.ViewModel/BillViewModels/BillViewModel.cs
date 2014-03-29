@@ -26,6 +26,23 @@ namespace BillsManager.ViewModels
 
         #region wrapped from bill
 
+        public uint ID
+        {
+            get { return this.ExposedBill.ID; }
+        }
+
+        /*public virtual uint TagID
+        {
+            get { return this.ExposedBill.TagID; }
+            set
+            {
+                if (this.TagID == value) return;
+
+                this.ExposedBill.TagID = value;
+                this.NotifyOfPropertyChange(() => this.TagID);
+            }
+        }*/
+
         public virtual DateTime RegistrationDate
         {
             get { return this.ExposedBill.RegistrationDate; }
@@ -86,11 +103,35 @@ namespace BillsManager.ViewModels
                 // TODO: review set logic
                 //if (this.Amount != value)
                 //{
-                    this.ExposedBill.Amount = value;
-                    this.NotifyOfPropertyChange(() => this.Amount);
+                this.ExposedBill.Amount = value;
+                this.NotifyOfPropertyChange(() => this.Amount);
                 //}
             }
         }
+
+        /*public virtual Double Gain
+        {
+            get { return this.ExposedBill.Gain; }
+            set
+            {
+                if (this.ExposedBill.Gain == value) return;
+
+                this.ExposedBill.Gain = value;
+                this.NotifyOfPropertyChange(() => this.Gain);
+            }
+        }
+
+        public virtual Double Expense
+        {
+            get { return this.ExposedBill.Expense; }
+            set
+            {
+                if (this.ExposedBill.Expense == value) return;
+
+                this.ExposedBill.Expense = value;
+                this.NotifyOfPropertyChange(() => this.Expense);
+            }
+        }*/
 
         public virtual uint SupplierID
         {
@@ -108,7 +149,7 @@ namespace BillsManager.ViewModels
         public virtual string Notes
         {
             get { return this.ExposedBill.Notes; }
-             set
+            set
             {
                 if (this.Notes != value)
                 {

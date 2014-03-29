@@ -13,40 +13,51 @@
         <ResourceDictionary Source="Dictionaries\Styles.xaml" />
     </UserControl.Resources>
 
-    <StatusBar Foreground="{StaticResource ViewForegroundBrush}"
-               FontSize="{StaticResource ViewFontSize}"
-               Background="{StaticResource ViewBackgroundBrush}">
+    <StatusBar Foreground="{StaticResource ViewBackgroundBrush}"
+               FontSize="{StaticResource ViewFontSize}">
 
-        <StackPanel Orientation="Horizontal"
-                    Visibility="{Binding HasActiveDB, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
-            <TextBlock Text="{Binding ActiveDBViewModel.Name, Mode=OneWay}" />
+        <TextBlock Text="{Binding ConnectionState, Mode=OneWay}" />
 
-            <TextBlock Text="       " />
+        <TextBlock Text="{Binding ActiveDBViewModel.BillsViewModel.FiltersDescription, Mode=OneWay}" />
 
-            <TextBlock>
-                <Run Text="{Binding ActiveDBViewModel.BillsViewModel.BillViewModels.Count, Mode=OneWay}" />
-                <Run Text="bills" />
-            </TextBlock>
+        <TextBlock Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Run Text="{Binding SuppliersCount}" />
+            <Run Text=" suppliers" />
+        </TextBlock>
 
-            <TextBlock Text="       " />
+        <TextBlock Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Run Text="{Binding BillsCount}" />
+            <Run Text=" bills" />
+        </TextBlock>
 
-            <TextBlock>
-                <Run Text="{Binding ActiveDBViewModel.SuppliersViewModel.SupplierViewModels.Count, Mode=OneWay}" />
-                <Run Text="suppliers" />
-            </TextBlock>
+        <StatusBar.Style>
+            <Style TargetType="{x:Type StatusBar}">
+                <Setter Property="Background"
+                        Value="{StaticResource DBNotConnectedBrush}" />
 
-            <TextBlock Text="       " />
+                <Style.Triggers>
 
-            <TextBlock Text="Saved"
-                       Visibility="{Binding ActiveDBViewModel.IsNotDirty, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
-            <TextBlock Text="Edited"
-                       Visibility="{Binding ActiveDBViewModel.IsDirty, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+                    <DataTrigger Binding="{Binding ConnectionState, Mode=OneWay}"
+                                 Value="NotConnected">
+                        <Setter Property="Background"
+                                Value="{StaticResource DBNotConnectedBrush}" />
+                    </DataTrigger>
 
-            <TextBlock Text="       " />
+                    <DataTrigger Binding="{Binding ConnectionState, Mode=OneWay}"
+                                 Value="Connected">
+                        <Setter Property="Background"
+                                Value="{StaticResource DBConnectedBrush}" />
+                    </DataTrigger>
+                    
+                    <DataTrigger Binding="{Binding ConnectionState, Mode=OneWay}"
+                                 Value="Dirty">
+                        <Setter Property="Background"
+                                Value="{StaticResource DBDirtyBrush}" />
+                    </DataTrigger>
 
-            <TextBlock Text="{Binding ActiveDBViewModel.BillsViewModel.FiltersDescription, Mode=OneWay}" />
-
-        </StackPanel>
+                </Style.Triggers>
+            </Style>
+        </StatusBar.Style>
 
     </StatusBar>
 

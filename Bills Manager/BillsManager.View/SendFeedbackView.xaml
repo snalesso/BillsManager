@@ -15,42 +15,51 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
             <ColumnDefinition Width="Auto"
                               MinWidth="75" />
             <ColumnDefinition Width="{StaticResource MarginSize}" />
             <ColumnDefinition />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition />
             <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
         </Grid.RowDefinitions>
 
         <TextBlock Text="Subject"
                    HorizontalAlignment="Right"
-                   VerticalAlignment="Top" />
+                   VerticalAlignment="Top"
+                   Grid.Column="1"
+                   Grid.Row="1" />
         <TextBox Text="{Binding Subject, UpdateSourceTrigger=PropertyChanged}"
                  MaxLines="1"
-                 Grid.Column="2" />
+                 Grid.Column="3"
+                 Grid.Row="1" />
 
-        <TextBlock Grid.Row="2"
+        <TextBlock Grid.Row="3"
                    Text="Message"
                    HorizontalAlignment="Right"
-                   VerticalAlignment="Top" />
-        <TextBox Grid.Row="2"
+                   VerticalAlignment="Top"
+                   Grid.Column="1" />
+        <TextBox Grid.Row="3"
                  Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"
-                 Grid.Column="2"
+                 Grid.Column="3"
                  AcceptsTab="True"
                  AcceptsReturn="True"
                  VerticalScrollBarVisibility="Auto"
                  HorizontalScrollBarVisibility="Auto" />
 
-        <StackPanel Grid.Row="4"
+        <StackPanel Grid.Row="5"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
-                    Grid.ColumnSpan="3">
+                    Grid.ColumnSpan="3"
+                    Grid.Column="1">
 
             <CheckBox Content="Send and close"
                       VerticalAlignment="Center"
@@ -60,7 +69,8 @@
                 </CheckBox.Margin>
             </CheckBox>
 
-            <Button Content="Send feedback" MinWidth="80"
+            <Button Content="Send feedback"
+                    MinWidth="80"
                     Command="{Binding SendFeedbackCommand}">
                 <Button.Margin>
                     <Thickness Right="{StaticResource MarginSizeValue}" />

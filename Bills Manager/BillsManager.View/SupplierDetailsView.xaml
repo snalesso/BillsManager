@@ -19,6 +19,7 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
@@ -40,128 +41,143 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="24" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="{StaticResource MarginSize}" />
             <ColumnDefinition />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="Name"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}" />
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Grid.Column="1"
+                   Grid.Row="1" />
         <TextBlock Text="{Binding Path=Name}"
-                   Grid.Column="2"
+                   Grid.Column="3"
                    TextAlignment="Right"
                    VerticalAlignment="Center"
-                   HorizontalAlignment="Left" />
+                   HorizontalAlignment="Left"
+                   Grid.Row="1" />
 
         <TextBlock Text="Address"
-                   Grid.Row="2"
+                   Grid.Row="3"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}" />
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Grid.Column="1" />
         <TextBlock Text="{Binding FullAddress}"
-                   Grid.Column="2"
-                   Grid.Row="2"
+                   Grid.Column="3"
+                   Grid.Row="3"
                    VerticalAlignment="Center" />
 
         <TextBlock Text="Obligation"
-                   Grid.Row="4"
+                   Grid.Row="5"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}" />
-        <TextBlock Grid.Column="2"
-                   Grid.Row="4"
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Grid.Column="1" />
+        <TextBlock Grid.Column="3"
+                   Grid.Row="5"
                    VerticalAlignment="Center">
             <Run Text="{Binding ObligationState, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
             <Run Text="  " />
             <Run Text="{Binding ObligationAmount, StringFormat=\{0:N2\} €, UpdateSourceTrigger=PropertyChanged}" />
         </TextBlock>
 
-        <TextBlock Grid.Row="6"
+        <TextBlock Grid.Row="7"
                    Text="Agent"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}" />
-        <TextBlock Grid.Column="2"
-                   Grid.Row="6"
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Grid.Column="1" />
+        <TextBlock Grid.Column="3"
+                   Grid.Row="7"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center">
             <Run Text="{Binding AgentName}" />
             <Run Text="{Binding AgentSurname}" />
         </TextBlock>
 
-        <TextBlock Grid.Row="8"
+        <TextBlock Grid.Row="9"
                    Text="Agent phone"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}" />
-        <TextBlock Grid.Column="2"
-                   Grid.Row="8"
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Grid.Column="1" />
+        <TextBlock Grid.Column="3"
+                   Grid.Row="9"
                    Text="{Binding AgentPhone}"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center" />
 
         <TextBlock Text="Phone"
-                   Grid.Row="10"
+                   Grid.Row="11"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}" />
-        <TextBlock Grid.Column="2"
-                   Grid.Row="10"
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Grid.Column="1" />
+        <TextBlock Grid.Column="3"
+                   Grid.Row="11"
                    Text="{Binding Phone}"
                    VerticalAlignment="Center" />
 
         <TextBlock Text="Fax"
-                   Grid.Row="12"
+                   Grid.Row="13"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}" />
-        <TextBlock Grid.Column="2"
-                   Grid.Row="12"
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Grid.Column="1" />
+        <TextBlock Grid.Column="3"
+                   Grid.Row="13"
                    Text="{Binding Fax}"
                    VerticalAlignment="Center" />
 
         <TextBlock Text="eMail"
-                   Grid.Row="14"
+                   Grid.Row="15"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}" />
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Grid.Column="1" />
         <TextBlock Text="{Binding eMail}"
-                   Grid.Column="2"
-                   Grid.Row="14"
+                   Grid.Column="3"
+                   Grid.Row="15"
                    VerticalAlignment="Center" />
 
         <TextBlock Text="Website"
-                   Grid.Row="16"
+                   Grid.Row="17"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}" />
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Grid.Column="1" />
         <TextBlock Text="{Binding Website}"
-                   Grid.Column="2"
-                   Grid.Row="16"
+                   Grid.Column="3"
+                   Grid.Row="17"
                    VerticalAlignment="Center" />
 
         <TextBlock Text="Notes"
-                   Grid.Row="18"
+                   Grid.Row="19"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}" />
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Grid.Column="1" />
         <TextBlock Text="{Binding Notes}"
-                   Grid.Column="2"
-                   Grid.Row="18"
+                   Grid.Column="3"
+                   Grid.Row="19"
                    TextWrapping="Wrap"
                    TextTrimming="CharacterEllipsis"
                    VerticalAlignment="Center"
@@ -169,8 +185,9 @@
 
         <StackPanel Orientation="Horizontal"
                     Grid.ColumnSpan="3"
-                    Grid.Row="20"
-                    HorizontalAlignment="Right">
+                    Grid.Row="21"
+                    HorizontalAlignment="Right"
+                    Grid.Column="1">
 
             <Button Content="Edit"
                     MinWidth="80"

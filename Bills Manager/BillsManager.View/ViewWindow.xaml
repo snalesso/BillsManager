@@ -45,7 +45,7 @@
 
                 <Setter Property="Shell:WindowChrome.WindowChrome">
                     <Setter.Value>
-                        <Shell:WindowChrome CornerRadius="{StaticResource ViewCornerRadius}"
+                        <Shell:WindowChrome CornerRadius="{StaticResource ViewWindowCornerRadius}"
                                             ResizeBorderThickness="{StaticResource ResizeBorderThickness}"
                                             NonClientFrameEdges="None"
                                             GlassFrameThickness="0"
@@ -141,6 +141,9 @@
                                 
                                 <Trigger Property="WindowState"
                                          Value="Maximized">
+                                    <Setter TargetName="WindowBorder"
+                                            Property="Padding"
+                                            Value="{StaticResource MaximizedViewBorderPadding}" />
                                     <Setter TargetName="NormalizeWindowButton"
                                             Property="Visibility"
                                             Value="Visible" />

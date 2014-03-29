@@ -49,12 +49,15 @@ namespace BillsManager.ViewModels
 
             this.ExposedBill = new Bill(
                 0,
+                //9,
                 DateTime.Today.AddDays(-2),
                 DateTime.Today.AddDays(14),
                 DateTime.Today,
                 DateTime.Today.AddDays(-8),
                 723.61,
-                4,
+                66,
+                /*0,
+                4,*/
                 "call agent for reduction @additional comments to trigger validation rule",
                 "X3V-KDM");
 

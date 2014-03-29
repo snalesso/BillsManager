@@ -25,8 +25,8 @@ namespace BillsManager.ViewModels
         private readonly IEventAggregator dbEventAggregator;
         private readonly ISuppliersProvider suppliersProvider;
 
-        private readonly Func<IEventAggregator, Supplier, SupplierAddEditViewModel> supplierAddEditViewModelFactory;
-        private readonly Func<IEventAggregator, Supplier, SupplierDetailsViewModel> supplierDetailsViewModelFactory;
+        private readonly Func<Supplier, SupplierAddEditViewModel> supplierAddEditViewModelFactory;
+        private readonly Func<Supplier, SupplierDetailsViewModel> supplierDetailsViewModelFactory;
 
         #endregion
 
@@ -34,15 +34,15 @@ namespace BillsManager.ViewModels
 
         public SuppliersViewModel(
             IWindowManager windowManager,
-            IEventAggregator dbEventAggregator,
+            IEventAggregator globalEventAggregator,
             ISuppliersProvider suppliersProvider,
-            Func<IEventAggregator, Supplier, SupplierAddEditViewModel> supplierAddEditViewModelFactory,
-            Func<IEventAggregator, Supplier, SupplierDetailsViewModel> supplierDetailsViewModelFactory)
+            Func<Supplier, SupplierAddEditViewModel> supplierAddEditViewModelFactory,
+            Func<Supplier, SupplierDetailsViewModel> supplierDetailsViewModelFactory)
         {
             // SERVICES
             this.suppliersProvider = suppliersProvider;
             this.windowManager = windowManager;
-            this.dbEventAggregator = dbEventAggregator;
+            this.dbEventAggregator = globalEventAggregator;
 
             // FACTORIES
             this.supplierAddEditViewModelFactory = supplierAddEditViewModelFactory;
@@ -140,7 +140,7 @@ namespace BillsManager.ViewModels
         {
             var supps = this.suppliersProvider.GetAllSuppliers();
 
-            var suppVMs = supps.Select(supplier => this.supplierDetailsViewModelFactory.Invoke(this.dbEventAggregator, supplier));
+            var suppVMs = supps.Select(supplier => this.supplierDetailsViewModelFactory.Invoke(supplier));
 
             var sortedSupps =
                 suppVMs.OrderBy(supplier => supplier.Name);
@@ -168,7 +168,7 @@ namespace BillsManager.ViewModels
         {
             {
                 //var newVM = new SupplierAddEditViewModel(this.windowManager, this.dbEventAggregator, new Supplier(this.suppliersProvider.GetLastSupplierID() + 1));
-                var newVM = this.supplierAddEditViewModelFactory.Invoke(this.dbEventAggregator, new Supplier(this.suppliersProvider.GetLastSupplierID() + 1));
+                var newVM = this.supplierAddEditViewModelFactory.Invoke(new Supplier(this.suppliersProvider.GetLastSupplierID() + 1));
 
             tryAdd: // TODO: optimize
                 if (this.windowManager.ShowDialog(newVM) == true)
@@ -176,7 +176,7 @@ namespace BillsManager.ViewModels
                     if (this.suppliersProvider.Add(newVM.ExposedSupplier))
                     {
                         //this.SupplierViewModels.Add(new SupplierDetailsViewModel(this.windowManager, this.globalEventAggregator, newVM.ExposedSupplier));
-                        this.SupplierViewModels.Add(this.supplierDetailsViewModelFactory.Invoke(this.dbEventAggregator, newVM.ExposedSupplier));
+                        this.SupplierViewModels.Add(this.supplierDetailsViewModelFactory.Invoke(newVM.ExposedSupplier));
 
                         this.dbEventAggregator.Publish(new SupplierAddedMessage(newVM.ExposedSupplier));
                     }
@@ -195,7 +195,7 @@ namespace BillsManager.ViewModels
         {
             Supplier oldSupplier = (Supplier)supplier.Clone();
             //var editVM = new SupplierAddEditViewModel(this.windowManager, this.dbEventAggregator, supplier);
-            var editVM = this.supplierAddEditViewModelFactory.Invoke(this.dbEventAggregator, supplier);
+            var editVM = this.supplierAddEditViewModelFactory.Invoke(supplier);
 
             editVM.BeginEdit();
 

@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--dark red #FFA70000-->
+    <!--dark violet #FF8282A7-->
+    <!--light violet #FF9A73D6-->
+    <SolidColorBrush x:Key="DBNotConnectedBrush"
+                     Color="#FF9A73D6" />
+
+    <!--#FF00A500-->
+    <SolidColorBrush x:Key="DBConnectedBrush"
+                     Color="#FF1C97EA" />
+    <!--#FFE26C00-->
+    <SolidColorBrush x:Key="DBDirtyBrush"
+                     Color="#FFFF8900" />
+
+</ResourceDictionary>

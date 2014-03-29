@@ -56,18 +56,22 @@
     
     <SolidColorBrush x:Key="WarningForegroundBrush"
                      Color="White" />
-    
-    
+
+
 
     <System:Double x:Key="ViewFontSize">12</System:Double>
-    
+
     <CornerRadius x:Key="ViewCornerRadius">3</CornerRadius>
+
+    <CornerRadius x:Key="ViewWindowCornerRadius">0</CornerRadius>
 
     <Thickness x:Key="ResizeBorderThickness">8</Thickness>
 
     <Thickness x:Key="BorderThickness">1</Thickness>
 
-    <Thickness x:Key="ViewBorderPadding">7</Thickness>
+    <Thickness x:Key="ViewBorderPadding">0</Thickness>
+    
+    <Thickness x:Key="MaximizedViewBorderPadding">7</Thickness>
 
     <GridLength x:Key="MarginSize">10</GridLength>
 

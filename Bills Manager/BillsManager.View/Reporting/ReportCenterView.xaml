@@ -48,13 +48,15 @@
 
             <Border HorizontalAlignment="Center"
                     Background="White"
-                    Margin="40 10">
-                <Border.Effect>
+                    Margin="40 10"
+                    BorderThickness="1"
+                    BorderBrush="#FFC3C3C3">
+                <!--<Border.Effect>
                     <DropShadowEffect Color="#FFC3C3C3"
                                       Direction="0"
                                       ShadowDepth="0"
                                       BlurRadius="10" />
-                </Border.Effect>
+                </Border.Effect>-->
                 <ContentControl Content="{Binding CurrentPage}" />
             </Border>
 

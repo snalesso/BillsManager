@@ -39,6 +39,7 @@
             <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
         </Grid.RowDefinitions>
 
         <TextBlock Text="{Binding Message}"
@@ -49,10 +50,11 @@
                    Grid.Row="2" />
 
         <DockPanel Focusable="False"
-                   Grid.Row="6"
                    LastChildFill="True"
                    HorizontalAlignment="Right"
-                   Grid.ColumnSpan="7">
+                   Grid.Row="6"
+                   Grid.Column="1"
+                   Grid.ColumnSpan="6">
 
             <ItemsControl ItemsSource="{Binding Responses}">
 
@@ -73,7 +75,7 @@
                                       IsChecked="{Binding IsEnabled}"
                                       Visibility="{Binding UseConfirmCheck, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <CheckBox.Margin>
-                                    <Thickness Right="{StaticResource MarginSizeValue}" />
+                                    <Thickness Left="{StaticResource MarginSizeValue}" />
                                 </CheckBox.Margin>
                             </CheckBox>
                             <Button MinWidth="80"

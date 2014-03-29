@@ -1,5 +1,5 @@
-﻿using System.ComponentModel;
-using BillsManager.Models;
+﻿using BillsManager.Models;
+using System.ComponentModel;
 
 namespace BillsManager.ViewModels
 {
@@ -47,14 +47,18 @@ namespace BillsManager.ViewModels
 
         private void RevertChanges()
         {
+            // TODO: check for full coverage
             this.Amount = this.exposedBillBackup.Amount;
             this.Code = this.exposedBillBackup.Code;
             this.DueDate = this.exposedBillBackup.DueDate;
+            /*this.Expense = this.exposedBillBackup.Expense;
+            this.Gain = this.exposedBillBackup.Gain;*/
             this.Notes = this.exposedBillBackup.Notes;
             this.PaymentDate = this.exposedBillBackup.PaymentDate;
             this.RegistrationDate = this.exposedBillBackup.RegistrationDate;
             this.ReleaseDate = this.exposedBillBackup.ReleaseDate;
-            this.SupplierID = this.exposedBillBackup.SupplierID; 
+            this.SupplierID = this.exposedBillBackup.SupplierID;
+            /*this.TagID = this.exposedBillBackup.TagID;*/
         }
 
         public void CancelEdit()

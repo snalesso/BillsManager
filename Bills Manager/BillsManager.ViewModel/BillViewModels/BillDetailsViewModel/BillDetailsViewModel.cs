@@ -6,7 +6,8 @@ using System;
 
 namespace BillsManager.ViewModels
 {
-    // TODO: add cell color for remaining due time in details view
+    // IDEA: make properties read only?
+    // IDEA: add cell color for remaining due time in details view
     public partial class BillDetailsViewModel :
         BillViewModel,
         IHandle<SupplierEditedMessage>
@@ -14,8 +15,7 @@ namespace BillsManager.ViewModels
         #region fields
 
         protected readonly IWindowManager windowManager;
-        //protected readonly IEventAggregator globalEventAggregator;
-        protected readonly IEventAggregator dbEventAggregator;
+        protected readonly IEventAggregator globalEventAggregator;
 
         #endregion
 
@@ -23,8 +23,7 @@ namespace BillsManager.ViewModels
 
         public BillDetailsViewModel(
             IWindowManager windowManager,
-            //IEventAggregator globalEventAggregator,
-            IEventAggregator dbEventAggregator,
+            IEventAggregator globalEventAggregator,
             Bill bill)
         {
             if (bill == null)
@@ -33,11 +32,9 @@ namespace BillsManager.ViewModels
             this.exposedBill = bill;
 
             this.windowManager = windowManager;
-            //this.globalEventAggregator = globalEventAggregator;
-            this.dbEventAggregator = dbEventAggregator;
+            this.globalEventAggregator = globalEventAggregator;
 
-            //this.globalEventAggregator.Subscribe(this);
-            this.dbEventAggregator.Subscribe(this);
+            this.globalEventAggregator.Subscribe(this);
 
             //this.SupplierName = this.GetSupplierName(this.SupplierID);
 
@@ -46,8 +43,7 @@ namespace BillsManager.ViewModels
                 {
                     if (e.WasClosed)
                     {
-                        //this.globalEventAggregator.Unsubscribe(this);
-                        this.dbEventAggregator.Unsubscribe(this);
+                        this.globalEventAggregator.Unsubscribe(this);
                     }
                 };
         }
@@ -94,6 +90,8 @@ namespace BillsManager.ViewModels
 
         #region added
 
+        /* IDEA: make property of type SupplierDetailsViewModel?
+         * think about the Tag property, all details should be available from here too */
         public string SupplierName
         {
             get
@@ -107,12 +105,10 @@ namespace BillsManager.ViewModels
             get { return this.PaymentDate.HasValue; }
             set
             {
-                if (this.IsPaid != value)
-                {
-                    if (value) this.PaymentDate = DateTime.Today;
-                    else this.PaymentDate = null;
-                    // changing only PaymentDate will Refresh IsPaid and similars
-                }
+                if (this.IsPaid == value) return;
+
+                this.PaymentDate = value ? DateTime.Today : (DateTime?)null;
+                // changing only PaymentDate will Refresh IsPaid and similars                
             }
         }
 
@@ -171,14 +167,14 @@ namespace BillsManager.ViewModels
         {
             // TODO: move supplier logic to BillsViewModel (same for supp's obligation amount)
             string supp = string.Empty;
-            this.dbEventAggregator.Publish(new SupplierNameRequestMessage(this.SupplierID, s => supp = s));
+            this.globalEventAggregator.Publish(new SupplierNameRequestMessage(this.SupplierID, s => supp = s));
             return supp;
         }
 
         private void SwitchToEdit()
         {
             this.TryClose();
-            this.dbEventAggregator.Publish(new EditBillRequestMessage(this.ExposedBill));
+            this.globalEventAggregator.Publish(new EditBillRequestMessage(this.ExposedBill));
         }
 
         #region message handlers

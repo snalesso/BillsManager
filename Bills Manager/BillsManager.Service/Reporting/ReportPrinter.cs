@@ -363,7 +363,7 @@ namespace BillsManager.Services.Reporting
             rootGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(this.FooterRenderHeight, GridUnitType.Pixel) });
             var footer = this.GetFooter(pageNumber);
             Grid.SetRow(footer, rootGrid.RowDefinitions.Count - 1);
-            Grid.SetColumnSpan(footer, rootGrid.ColumnDefinitions.Count);
+            Grid.SetColumnSpan(footer, rootGrid.ColumnDefinitions.Count - 1); // URGENT: fix side cutting for footer page number
             rootGrid.Children.Add(footer);
 
             rootGrid.Measure(this.PageSize);
@@ -482,7 +482,7 @@ namespace BillsManager.Services.Reporting
             };
         }
 
-        private Grid GetFooter(int pageNumber)
+        private Grid GetFooter(int pageIndex)
         {
             var footer = new Grid();
 
@@ -500,11 +500,10 @@ namespace BillsManager.Services.Reporting
             footer.ColumnDefinitions.Add(new ColumnDefinition());
 
             // page info
-            footer.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(ROW_SEPARATOR_HEIGHT, GridUnitType.Pixel) });
             footer.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
             var pageInfo = new TextBlock()
             {
-                Text = (pageNumber + 1) + @"/" + this.PageCount,
+                Text = (pageIndex + 1) + @"/" + this.PageCount,
                 VerticalAlignment = VerticalAlignment.Center
             };
             Grid.SetColumn(pageInfo, footer.ColumnDefinitions.Count - 1);

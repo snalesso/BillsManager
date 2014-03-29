@@ -12,13 +12,14 @@ using System.Linq;
 namespace BillsManager.ViewModels
 {
     public partial class BillAddEditViewModel :
-        BillViewModel,
-        IHandle<SuppliersListChangedMessage>
+        BillViewModel/*,
+        IHandle<SuppliersListChangedMessage>,
+        IHandle<SupplierAddedMessage>*/
     {
         #region fields
 
         protected readonly IWindowManager windowManager;
-        protected readonly IEventAggregator dbEventAggregator;
+        protected readonly IEventAggregator globalEventAggregator;
 
         #endregion
 
@@ -26,30 +27,28 @@ namespace BillsManager.ViewModels
 
         public BillAddEditViewModel(
             IWindowManager windowManager,
-            IEventAggregator dbEventAggregator,
+            IEventAggregator globalEventAggregator,
+            IEnumerable<Supplier> availableSuppliers,
             Bill bill)
         {
             if (bill == null)
-                throw new ArgumentNullException("bill cannot be null");
+                throw new ArgumentNullException("bill cannot be null"); // TODO: is check needed? any other point to do it?
 
             this.exposedBill = bill;
 
             this.windowManager = windowManager;
-            this.dbEventAggregator = dbEventAggregator;
+            this.globalEventAggregator = globalEventAggregator;
 
-            this.dbEventAggregator.Subscribe(this);
+            this.globalEventAggregator.Subscribe(this);
 
-            this.AvailableSuppliers = this.GetAvailableSuppliers(); /* TODO: make injected? dependencies should be provided
-                                                                     * but the handler is needed anyway */
-            this.HasChanges = false; // TODO: check if mandatory
+            this.AvailableSuppliers = availableSuppliers; // IDEA: inject SuppliersViewModel?
+            //this.HasChanges = false; // TODO: check if mandatory
 
             this.Deactivated +=
                 (s, e) =>
                 {
                     if (e.WasClosed)
-                    {
-                        this.dbEventAggregator.Unsubscribe(this);
-                    }
+                        this.globalEventAggregator.Unsubscribe(this);
                 };
         }
 
@@ -65,13 +64,11 @@ namespace BillsManager.ViewModels
             get { return this.availableSuppliers; }
             protected set
             {
-                if (this.availableSuppliers == value) return;
+                if (this.availableSuppliers == value)
+                    return;
 
                 this.availableSuppliers = value;
                 this.NotifyOfPropertyChange(() => this.AvailableSuppliers);
-
-                var selSupp = this.AvailableSuppliers.SingleOrDefault(s => s.ID == this.SupplierID);
-                this.selectedSupplier = selSupp != null ? selSupp : this.AvailableSuppliers.FirstOrDefault();
             }
         }
 
@@ -79,20 +76,16 @@ namespace BillsManager.ViewModels
         [Required(ErrorMessage = "You must select a supplier.")] // TODO: language
         public Supplier SelectedSupplier
         {
-            get
-            {
-                return this.selectedSupplier;
-            }
+            get { return this.selectedSupplier; }
             set
             {
-                if (this.selectedSupplier != value)
-                {
-                    this.selectedSupplier = value;
-                    this.NotifyOfPropertyChange(() => this.SelectedSupplier);
-                    this.NotifyOfPropertyChange(() => this.IsValid);
-                    if (value != null)
-                        this.SupplierID = this.SelectedSupplier.ID;
-                }
+                if (this.selectedSupplier == value) return;
+
+                this.selectedSupplier = value;
+                this.NotifyOfPropertyChange(() => this.SelectedSupplier);
+                this.NotifyOfPropertyChange(() => this.IsValid);
+                if (value != null)
+                    this.SupplierID = this.SelectedSupplier.ID;
             }
         }
 
@@ -100,18 +93,34 @@ namespace BillsManager.ViewModels
 
         #region wrapped from bill
 
+        /*[Required(ErrorMessage = "You must specify a tag.")] // TODO: language
+        public override uint TagID
+        {
+            get { return base.TagID; }
+            set
+            {
+                if (this.TagID == value) return;
+
+                this.TagID = value;
+                this.NotifyOfPropertyChange(() => this.TagID);
+                this.NotifyOfPropertyChange(() => this.IsValid);
+                this.HasChanges = true;
+            }
+        }*/
+
+        /* TODO: registration date should be read only
+         *       this means no validatio and no override here */
         public override DateTime RegistrationDate
         {
             get { return base.RegistrationDate; }
             set
             {
-                if (this.RegistrationDate != value)
-                {
-                    base.RegistrationDate = value;
-                    this.NotifyOfPropertyChange(() => this.RegistrationDate);
-                    this.NotifyOfPropertyChange(() => this.IsValid);
-                    this.HasChanges = true;
-                }
+                if (this.RegistrationDate == value) return;
+
+                base.RegistrationDate = value;
+                this.NotifyOfPropertyChange(() => this.RegistrationDate);
+                this.NotifyOfPropertyChange(() => this.IsValid);
+                this.HasChanges = true;
             }
         }
 
@@ -171,13 +180,41 @@ namespace BillsManager.ViewModels
             {
                 //if (this.Amount != value)
                 //{
-                    base.Amount = value;
-                    this.NotifyOfPropertyChange(() => this.Amount);
-                    this.NotifyOfPropertyChange(() => this.IsValid);
-                    this.HasChanges = true;
+                base.Amount = value;
+                this.NotifyOfPropertyChange(() => this.Amount);
+                this.NotifyOfPropertyChange(() => this.IsValid);
+                this.HasChanges = true;
                 //}
             }
         }
+
+        /*public override double Gain
+        {
+            get { return base.Gain; }
+            set
+            {
+                base.Gain = value;
+                this.NotifyOfPropertyChange(() => this.Gain);
+                this.HasChanges = true;
+
+                if (value != 0)
+                    this.Expense = 0;
+            }
+        }
+
+        public override double Expense
+        {
+            get { return base.Expense; }
+            set
+            {
+                base.Expense = value;
+                this.NotifyOfPropertyChange(() => this.Expense);
+                this.HasChanges = true;
+
+                if (value != 0)
+                    this.Gain = 0;
+            }
+        }*/
 
         [Required(ErrorMessage = "You must specify a supplier.")] // TODO: language
         [Range(0, uint.MaxValue, ErrorMessage = "Chosen supplier ID is out of range.")] // TODO: language
@@ -262,20 +299,15 @@ namespace BillsManager.ViewModels
 
         #region methods
 
-        private IEnumerable<Supplier> GetAvailableSuppliers()
-        {
-            IEnumerable<Supplier> suppliers = null;
+        //private IEnumerable<Supplier> GetAvailableSuppliers()
+        //{
+        //    IEnumerable<Supplier> suppliers = null;
 
-            this.dbEventAggregator.Publish(new AvailableSuppliersRequestMessage(s => suppliers = s));
+        //    this.globalEventAggregator.Publish(new AvailableSuppliersRequestMessage(s => suppliers = s));
 
-            return suppliers;
-        }
-
-        private void AddNewSupplier()
-        {
-            this.dbEventAggregator.Publish(new AddNewSupplierOrder());
-        }
-
+        //    return suppliers;
+        //}
+        
         private void ConfirmAddEditAndClose()
         {
             if (this.IsInEditMode)
@@ -319,30 +351,22 @@ namespace BillsManager.ViewModels
 
         #region message handlers
 
-        public void Handle(SuppliersListChangedMessage message)
-        {
-            this.AvailableSuppliers = message.Suppliers;
-        }
+        //public void Handle(SuppliersListChangedMessage message)
+        //{
+        //    this.AvailableSuppliers = message.Suppliers;
+        //}
+
+        //public void Handle(SupplierAddedMessage message)
+        //{
+        //    // available suppliers references to the same instance of suppliersvm
+        //    this.NotifyOfPropertyChange(() => this.AvailableSuppliers);
+        //}
 
         #endregion
 
         #endregion
 
         #region commands
-
-        // URGENT: update datepicker style
-        private RelayCommand addNewSupplierCommand;
-        public RelayCommand AddNewSupplierCommand
-        {
-            get
-            {
-                if (this.addNewSupplierCommand == null)
-                    this.addNewSupplierCommand = new RelayCommand(
-                        () => this.AddNewSupplier());
-
-                return this.addNewSupplierCommand;
-            }
-        }
 
         protected RelayCommand confirmAddEditAndCloseCommand;
         public RelayCommand ConfirmAddEditAndCloseCommand

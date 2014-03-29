@@ -9,6 +9,7 @@
         <ResourceDictionary Source="Values\MenuItemValues.xaml" />
         <ResourceDictionary Source="Values\TextBoxValues.xaml" />
         <ResourceDictionary Source="Values\ObligationValues.xaml" />
+        <ResourceDictionary Source="Values\DBConnectionStateValues.xaml" />
         <ResourceDictionary Source="Values\CheckBoxValues.xaml" />
         <ResourceDictionary Source="Values\ListBoxItemValues.xaml" />
     </ResourceDictionary.MergedDictionaries>

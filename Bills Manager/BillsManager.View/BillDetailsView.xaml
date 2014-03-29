@@ -19,6 +19,7 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
@@ -36,55 +37,64 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="24" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="{StaticResource MarginSize}" />
             <ColumnDefinition />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="Amount"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}" />
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Grid.Column="1"
+                   Grid.Row="1" />
         <TextBlock Text="{Binding Amount, StringFormat=\{0:N2\} €}"
-                   Grid.Column="2"
+                   Grid.Column="3"
                    TextAlignment="Right"
                    VerticalAlignment="Center"
-                   HorizontalAlignment="Left" />
+                   HorizontalAlignment="Left"
+                   Grid.Row="1" />
 
         <TextBlock Text="Supplier"
-                   Grid.Row="2"
+                   Grid.Row="3"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}" />
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Grid.Column="1" />
         <TextBlock Text="{Binding SupplierName}"
-                   Grid.Column="2"
-                   Grid.Row="2"
+                   Grid.Column="3"
+                   Grid.Row="3"
                    VerticalAlignment="Center" />
 
         <TextBlock Text="Code"
-                   Grid.Row="4"
+                   Grid.Row="5"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}" />
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Grid.Column="1" />
         <TextBlock Text="{Binding Code}"
-                   Grid.Column="2"
-                   Grid.Row="4"
+                   Grid.Column="3"
+                   Grid.Row="5"
                    VerticalAlignment="Center" />
 
         <TextBlock Text="Payment"
-                   Grid.Row="6"
+                   Grid.Row="7"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}" />
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Grid.Column="1" />
         <StackPanel Orientation="Horizontal"
-                    Grid.Column="2"
-                    Grid.Row="6">
+                    Grid.Column="3"
+                    Grid.Row="7">
             <TextBlock Text="{Binding PaymentDate, StringFormat=Paid on \{0:D\}}"
                        Visibility="{Binding IsPaid, Converter={StaticResource BooleanToVisibilityConverter}}"
                        VerticalAlignment="Center" />
@@ -93,49 +103,53 @@
         </StackPanel>
 
         <TextBlock Text="Dues on"
-                   Grid.Row="8"
+                   Grid.Row="9"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}" />
-        <TextBlock Grid.Column="2"
-                   Grid.Row="8"
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Grid.Column="1" />
+        <TextBlock Grid.Column="3"
+                   Grid.Row="9"
                    VerticalAlignment="Center">
             <Run Text="{Binding DueDate, StringFormat=\{0:D\}}" />
             <Run Text="{Binding DuesIn, Mode=OneWay, StringFormat=(\{0\})}" />
         </TextBlock>
 
         <TextBlock Text="Released on"
-                   Grid.Row="10"
+                   Grid.Row="11"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}" />
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Grid.Column="1" />
         <TextBlock Text="{Binding ReleaseDate, StringFormat=\{0:D\}}"
-                   Grid.Column="2"
-                   Grid.Row="10"
+                   Grid.Column="3"
+                   Grid.Row="11"
                    VerticalAlignment="Center" />
 
         <TextBlock Text="Registered on"
-                   Grid.Row="12"
+                   Grid.Row="13"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}" />
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Grid.Column="1" />
         <TextBlock Text="{Binding RegistrationDate, StringFormat=\{0:D\}}"
-                   Grid.Column="2"
-                   Grid.Row="12"
+                   Grid.Column="3"
+                   Grid.Row="13"
                    VerticalAlignment="Center" />
 
         <TextBlock Text="Notes"
-                   Grid.Row="14"
+                   Grid.Row="15"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}" />
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Grid.Column="1" />
         <TextBlock Text="{Binding Notes}"
-                   Grid.Column="2"
-                   Grid.Row="14"
+                   Grid.Column="3"
+                   Grid.Row="15"
                    TextWrapping="Wrap"
                    TextTrimming="CharacterEllipsis"
                    VerticalAlignment="Center"
@@ -143,8 +157,9 @@
 
         <StackPanel Orientation="Horizontal"
                     Grid.ColumnSpan="3"
-                    Grid.Row="16"
-                    HorizontalAlignment="Right">
+                    Grid.Row="17"
+                    HorizontalAlignment="Right"
+                    Grid.Column="1">
             <Button Content="Edit"
                     MinWidth="80"
                     Command="{Binding SwitchToEditCommand, Mode=OneTime}"

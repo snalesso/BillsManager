@@ -18,6 +18,7 @@
 
     <Grid Grid.IsSharedSizeScope="True">
         <Grid.RowDefinitions>
+            <RowDefinition Height="{StaticResource MarginSize}" />
             <!--0-->
             <RowDefinition Height="Auto"
                            SharedSizeGroup="row" />
@@ -88,21 +89,24 @@
             <RowDefinition Height="24" />
             <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
             <!--35-->
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"
-                              MinWidth="75" />
-            <ColumnDefinition Width="{StaticResource MarginSize}" />
-            <ColumnDefinition Width="Auto"
-                              MinWidth="150" />
             <ColumnDefinition Width="{StaticResource MarginSize}" />
             <ColumnDefinition Width="Auto"
                               MinWidth="75" />
             <ColumnDefinition Width="{StaticResource MarginSize}" />
             <ColumnDefinition Width="Auto"
                               MinWidth="150" />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="Auto"
+                              MinWidth="75" />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="Auto"
+                              MinWidth="150" />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
         </Grid.ColumnDefinitions>
 
         <!--Details-->
@@ -110,28 +114,32 @@
                    FontWeight="Bold"
                    HorizontalAlignment="Center"
                    Text="Details"
-                   VerticalAlignment="Center" />
+                   VerticalAlignment="Center"
+                   Grid.Row="1"
+                   Grid.Column="1" />
 
-        <TextBlock Grid.Row="2"
+        <TextBlock Grid.Row="3"
                    HorizontalAlignment="Right"
                    Text="Name"
-                   VerticalAlignment="Top" />
-        <TextBox Grid.Column="2"
+                   VerticalAlignment="Top"
+                   Grid.Column="1" />
+        <TextBox Grid.Column="3"
                  Grid.ColumnSpan="5"
                  HorizontalAlignment="Stretch"
-                 Grid.Row="2"
+                 Grid.Row="3"
                  MaxLines="1"
                  TabIndex="0"
                  Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                  VerticalAlignment="Center" />
 
-        <TextBlock Grid.Row="4"
+        <TextBlock Grid.Row="5"
                    HorizontalAlignment="Right"
                    Text="Notes"
-                   VerticalAlignment="Top" />
-        <TextBox Grid.Column="2"
+                   VerticalAlignment="Top"
+                   Grid.Column="1" />
+        <TextBox Grid.Column="3"
                  Grid.ColumnSpan="5"
-                 Grid.Row="4"
+                 Grid.Row="5"
                  Height="64"
                  HorizontalAlignment="Stretch"
                  HorizontalScrollBarVisibility="Disabled"
@@ -145,84 +153,90 @@
 
         <!--Contacts-->
         <TextBlock Grid.ColumnSpan="7"
-                   Grid.Row="8"
+                   Grid.Row="9"
                    FontWeight="Bold"
                    HorizontalAlignment="Center"
                    Text="Address"
-                   VerticalAlignment="Center" />
+                   VerticalAlignment="Center"
+                   Grid.Column="1" />
 
-        <TextBlock Grid.Row="20"
+        <TextBlock Grid.Row="21"
                    HorizontalAlignment="Right"
                    Text="Agent name"
-                   VerticalAlignment="Top" />
-        <TextBox Grid.Row="20"
-                 Grid.Column="2"
+                   VerticalAlignment="Top"
+                   Grid.Column="1" />
+        <TextBox Grid.Row="21"
+                 Grid.Column="3"
                  TabIndex="8"
                  Text="{Binding AgentName}" />
 
-        <TextBlock Grid.Row="20"
-                   Grid.Column="4"
+        <TextBlock Grid.Row="21"
+                   Grid.Column="5"
                    HorizontalAlignment="Right"
                    Text="Agent surname"
                    VerticalAlignment="Top" />
-        <TextBox Grid.Row="20"
-                 Grid.Column="6"
+        <TextBox Grid.Row="21"
+                 Grid.Column="7"
                  TabIndex="9"
                  Text="{Binding AgentSurname}" />
 
-        <TextBlock Grid.Row="22"
+        <TextBlock Grid.Row="23"
                    HorizontalAlignment="Right"
                    Text="Agent phone"
-                   VerticalAlignment="Top" />
-        <TextBox Grid.Row="22"
-                 Grid.Column="2"
+                   VerticalAlignment="Top"
+                   Grid.Column="1" />
+        <TextBox Grid.Row="23"
+                 Grid.Column="3"
                  TabIndex="10"
                  Text="{Binding AgentPhone}" />
 
-        <TextBlock Grid.Row="26"
+        <TextBlock Grid.Row="27"
                    HorizontalAlignment="Right"
                    Text="Phone"
-                   VerticalAlignment="Top" />
-        <TextBox Grid.Column="2"
-                 Grid.Row="26"
+                   VerticalAlignment="Top"
+                   Grid.Column="1" />
+        <TextBox Grid.Column="3"
+                 Grid.Row="27"
                  Width="150"
                  MaxLines="1"
                  TabIndex="11"
                  Text="{Binding Path=Phone, UpdateSourceTrigger=PropertyChanged}"
                  VerticalAlignment="Center" />
 
-        <TextBlock Grid.Row="26"
-                   Grid.Column="4"
+        <TextBlock Grid.Row="27"
+                   Grid.Column="5"
                    HorizontalAlignment="Right"
                    Text="Fax"
                    VerticalAlignment="Top" />
-        <TextBox Grid.Column="6"
-                 Grid.Row="26"
+        <TextBox Grid.Column="7"
+                 Grid.Row="27"
                  Width="150"
                  MaxLines="1"
                  TabIndex="12"
                  Text="{Binding Fax, UpdateSourceTrigger=PropertyChanged}"
                  VerticalAlignment="Center" />
 
-        <TextBlock Grid.Row="30"
+        <TextBlock Grid.Row="31"
                    HorizontalAlignment="Right"
                    Text="Website"
-                   VerticalAlignment="Top" />
-        <TextBox Grid.Column="2"
+                   VerticalAlignment="Top"
+                   Grid.Column="1" />
+        <TextBox Grid.Column="3"
                  Grid.ColumnSpan="5"
-                 Grid.Row="30"
+                 Grid.Row="31"
                  MaxLines="1"
                  TabIndex="14"
                  Text="{Binding Path=Website, UpdateSourceTrigger=PropertyChanged}"
                  VerticalAlignment="Center" />
 
-        <TextBlock Grid.Row="28"
+        <TextBlock Grid.Row="29"
                    HorizontalAlignment="Right"
                    Text="eMail"
-                   VerticalAlignment="Top" />
-        <TextBox Grid.Column="2"
+                   VerticalAlignment="Top"
+                   Grid.Column="1" />
+        <TextBox Grid.Column="3"
                  Grid.ColumnSpan="5"
-                 Grid.Row="28"
+                 Grid.Row="29"
                  MaxLines="1"
                  TabIndex="13"
                  Text="{Binding Path=eMail, UpdateSourceTrigger=PropertyChanged}"
@@ -232,56 +246,59 @@
 
         <!--Address-->
         <TextBlock Grid.ColumnSpan="7"
-                   Grid.Row="18"
+                   Grid.Row="19"
                    FontWeight="Bold"
                    HorizontalAlignment="Center"
                    Text="Contacts"
-                   VerticalAlignment="Center" />
+                   VerticalAlignment="Center"
+                   Grid.Column="1" />
 
-        <TextBlock Grid.Row="10"
+        <TextBlock Grid.Row="11"
                    HorizontalAlignment="Right"
                    Text="City"
-                   VerticalAlignment="Center" />
-        <TextBox Grid.Column="2"
-                 Grid.Row="10"
+                   VerticalAlignment="Center"
+                   Grid.Column="1" />
+        <TextBox Grid.Column="3"
+                 Grid.Row="11"
                  Width="150"
                  MaxLines="1"
                  TabIndex="2"
                  Text="{Binding Path=City, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                  VerticalAlignment="Center" />
 
-        <TextBlock Grid.Column="4"
-                   Grid.Row="12"
+        <TextBlock Grid.Column="5"
+                   Grid.Row="13"
                    HorizontalAlignment="Right"
                    Text="Country"
                    VerticalAlignment="Top" />
-        <TextBox Grid.Column="6"
-                 Grid.Row="12"
+        <TextBox Grid.Column="7"
+                 Grid.Row="13"
                  Width="150"
                  MaxLines="1"
                  TabIndex="5"
                  Text="{Binding Path=Country, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                  VerticalAlignment="Center" />
 
-        <TextBlock Grid.Column="4"
-                   Grid.Row="14"
+        <TextBlock Grid.Column="5"
+                   Grid.Row="15"
                    HorizontalAlignment="Right"
                    Text="Number"
                    VerticalAlignment="Top" />
-        <TextBox Grid.Column="6"
-                 Grid.Row="14"
+        <TextBox Grid.Column="7"
+                 Grid.Row="15"
                  Width="150"
                  MaxLines="1"
                  TabIndex="7"
                  Text="{Binding Path=Number, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                  VerticalAlignment="Center" />
 
-        <TextBlock Grid.Row="12"
+        <TextBlock Grid.Row="13"
                    HorizontalAlignment="Right"
                    Text="Province"
-                   VerticalAlignment="Top" />
-        <TextBox Grid.Column="2"
-                 Grid.Row="12"
+                   VerticalAlignment="Top"
+                   Grid.Column="1" />
+        <TextBox Grid.Column="3"
+                 Grid.Row="13"
                  Width="150"
                  MaxLength="2"
                  MaxLines="1"
@@ -289,25 +306,26 @@
                  Text="{Binding Path=Province, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                  VerticalAlignment="Center" />
 
-        <TextBlock Grid.Row="14"
+        <TextBlock Grid.Row="15"
                    HorizontalAlignment="Right"
                    Text="Street"
-                   VerticalAlignment="Top" />
-        <TextBox Grid.Column="2"
-                 Grid.Row="14"
+                   VerticalAlignment="Top"
+                   Grid.Column="1" />
+        <TextBox Grid.Column="3"
+                 Grid.Row="15"
                  Width="150"
                  MaxLines="1"
                  TabIndex="6"
                  Text="{Binding Path=Street, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                  VerticalAlignment="Center" />
 
-        <TextBlock Grid.Column="4"
-                   Grid.Row="10"
+        <TextBlock Grid.Column="5"
+                   Grid.Row="11"
                    HorizontalAlignment="Right"
                    Text="Zip"
                    VerticalAlignment="Top" />
-        <TextBox Grid.Column="6"
-                 Grid.Row="10"
+        <TextBox Grid.Column="7"
+                 Grid.Row="11"
                  Width="150"
                  MaxLines="1"
                  TabIndex="3"
@@ -369,10 +387,11 @@
                     Width="80" />
         </StackPanel>-->
 
-        <StackPanel Grid.Row="34"
+        <StackPanel Grid.Row="35"
                     Grid.ColumnSpan="7"
                     HorizontalAlignment="Right"
-                    Orientation="Horizontal">
+                    Orientation="Horizontal"
+                    Grid.Column="1">
 
             <Button Command="{Binding Path=ConfirmAddEditAndCloseCommand}"
                     Content="Ok"

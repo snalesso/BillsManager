@@ -5,9 +5,9 @@ namespace BillsManager.Services.Providers
 {
     public interface IBackupsProvider
     {
-        string DBName { get; }
+        string DBName { get; } // TODO: obsolete?
 
-        string Location { get; }
+        string Location { get; } // TODO: obsolete?
 
         IEnumerable<Backup> GetAll();
 

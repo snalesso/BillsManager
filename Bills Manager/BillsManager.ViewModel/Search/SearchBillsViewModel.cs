@@ -21,7 +21,7 @@ namespace BillsManager.ViewModels
     {
         #region fields
 
-        private IEventAggregator dbEventAggregator;
+        private IEventAggregator globalEventAggregator;
 
         private Filter<BillDetailsViewModel> supplierNameFilter;
 
@@ -38,13 +38,13 @@ namespace BillsManager.ViewModels
 
         // TODO: should available suppliers be injected?
         public SearchBillsViewModel(
-            IEventAggregator dbEventAggregator)
+            IEventAggregator globalEventAggregator)
         {
             // SERVICES
-            this.dbEventAggregator = dbEventAggregator;
+            this.globalEventAggregator = globalEventAggregator;
 
             // SUBSCRIPTIONS
-            this.dbEventAggregator.Subscribe(this);
+            this.globalEventAggregator.Subscribe(this);
 
             // FILTERS
             this.ConfigureFilters();
@@ -58,7 +58,7 @@ namespace BillsManager.ViewModels
                 (s, e) =>
                 {
                     if (e.WasClosed)
-                        this.dbEventAggregator.Unsubscribe(this);
+                        this.globalEventAggregator.Unsubscribe(this);
                 };
         }
 
@@ -115,7 +115,7 @@ namespace BillsManager.ViewModels
             get
             {
                 if (this.availableSuppliers == null)
-                    this.dbEventAggregator.Publish(new AvailableSuppliersRequestMessage(suppliers => this.availableSuppliers = suppliers));
+                    this.globalEventAggregator.Publish(new AvailableSuppliersRequestMessage(suppliers => this.availableSuppliers = suppliers));
 
                 return this.availableSuppliers;
             }
@@ -251,9 +251,9 @@ namespace BillsManager.ViewModels
             if (this.UseDueDateFilter) filters.Add(this.dueDateFilter);
 
             if (filters.Count > 0)
-                this.dbEventAggregator.Publish(new BillsFilterMessage(filters));
+                this.globalEventAggregator.Publish(new BillsFilterMessage(filters));
             else
-                this.dbEventAggregator.Publish(new BillsFilterMessage(null));
+                this.globalEventAggregator.Publish(new BillsFilterMessage(null));
         }
 
         private void DeactivateAllFilters()

@@ -6,6 +6,7 @@ using Caliburn.Micro;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 namespace BillsManager.ViewModels
@@ -42,9 +43,7 @@ namespace BillsManager.ViewModels
                 (s, e) =>
                 {
                     if (e.WasClosed)
-                    {
                         this.globalEventAggregator.Unsubscribe(this);
-                    }
                 };
 
             // START
@@ -105,15 +104,13 @@ namespace BillsManager.ViewModels
 
         private void RefreshBackups()
         {
-            this.BackupViewModels = new ObservableCollection<BackupViewModel>();
-
             var all = this.backupsProvider.GetAll();
 
-            var ordAll = all.OrderByDescending(b => b.CreationTime);
+            var allSorted = all.OrderByDescending(b => b.CreationTime);
 
-            var vms = ordAll.Select(b => new BackupViewModel(b)); // TODO: factory?
+            var vms = allSorted.Select(b => new BackupViewModel(b)); // TODO: factory?
 
-            vms.Apply(vm => this.BackupViewModels.Add(vm));
+            this.BackupViewModels = new ObservableCollection<BackupViewModel>(vms);
         }
 
         private void CreateBackup()
@@ -138,12 +135,7 @@ namespace BillsManager.ViewModels
 
         private void Rollback(BackupViewModel backupViewModel)
         {
-            this.globalEventAggregator.Publish(
-                new RollbackAuthorizationRequestMessage(
-                    this.DBName,
-                    () =>
-                    {
-                        var question = new DialogViewModel(
+            var rollbackQuestion = new DialogViewModel(
                             "Rollback",
                             "Are you sure you want to ROLLBACK to the following backup?" + // TODO: language
                             Environment.NewLine +
@@ -154,24 +146,37 @@ namespace BillsManager.ViewModels
                                 new DialogResponse(ResponseType.No)
                             });
 
-                        this.windowManager.ShowDialog(question);
+            this.windowManager.ShowDialog(rollbackQuestion);
 
-                        if (question.FinalResponse == ResponseType.Yes)
+            if (rollbackQuestion.FinalResponse == ResponseType.Yes)
+            {
+                this.globalEventAggregator.Publish(
+                    new RollbackAuthorizationRequestMessage(
+                        this.DBName,
+                        () =>
                         {
-                            this.backupsProvider.Rollback(backupViewModel.ExposedBackup);
-                            this.RefreshBackups();
-                        }
-                    },
-                () =>
-                {
-                    this.windowManager.ShowDialog(
-                        new DialogViewModel(
-                            "Rollback failed", // TODO: language
-                            "Couldn't execute rollback on '" + this.DBName + "' because the database is opened." +
-                            Environment.NewLine +
-                            Environment.NewLine +
-                            "Please close it and retry."));
-                }));
+                            if (this.backupsProvider.Rollback(backupViewModel.ExposedBackup))
+                            {
+                                this.RefreshBackups();
+                                this.windowManager.ShowDialog(
+                                    new DialogViewModel(
+                                        "Rollback completed", // TODO: language
+                                        "Rollback has completed successfully."));
+                            }
+                            else
+                                this.windowManager.ShowDialog(
+                                    new DialogViewModel(
+                                        "Rollback failed", // TODO: language
+                                        "Rollback has failed. Please try again."));
+                        },
+                        () =>
+                        {
+                            this.windowManager.ShowDialog(
+                                new DialogViewModel(
+                                    "Rollback canceled", // TODO: language
+                                    "Rollback has been canceled."));
+                        }));
+            }
         }
 
         private void DeleteBackup(BackupViewModel backupViewModel)
@@ -192,7 +197,7 @@ namespace BillsManager.ViewModels
 
             if (question.FinalResponse == ResponseType.Yes)
             {
-                this.backupsProvider.Rollback(backupViewModel.ExposedBackup);
+                this.backupsProvider.Delete(backupViewModel.ExposedBackup);
                 this.RefreshBackups();
             }
         }
@@ -209,7 +214,7 @@ namespace BillsManager.ViewModels
 
         private void OpenBackupsFolder()
         {
-            if (System.IO.Directory.Exists(this.backupsProvider.Location))
+            if (Directory.Exists(this.backupsProvider.Location))
                 Process.Start(this.backupsProvider.Location);
         }
 
@@ -266,8 +271,7 @@ namespace BillsManager.ViewModels
             {
                 if (this.openBackupsFolderCommand == null)
                     this.openBackupsFolderCommand = new RelayCommand(
-                        () => this.OpenBackupsFolder(),
-                        () => System.IO.Directory.Exists(this.backupsProvider.Location));
+                        () => this.OpenBackupsFolder());
 
                 return this.openBackupsFolderCommand;
             }

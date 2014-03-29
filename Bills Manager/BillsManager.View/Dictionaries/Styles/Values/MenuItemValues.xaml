@@ -32,7 +32,7 @@
     
     
     <SolidColorBrush x:Key="MenuItemDisabledBackgroundBrush"
-                     Color="White" />
+                     Color="Transparent" />
 
     <SolidColorBrush x:Key="MenuItemDisabledBorderBrush"
                      Color="White" />

@@ -52,11 +52,14 @@ namespace BillsManager.ViewModels
 
             this.ExposedBill = new Bill(
                 0,
+                //7,
                 DateTime.Today.AddDays(-2),
                 DateTime.Today.AddDays(14),
                 DateTime.Today,
                 DateTime.Today.AddDays(-8),
                 723.61,
+                /*32,
+                0,*/
                 supp.ID,
                 "call agent for reduction @additional comments to trigger validation rule",
                 string.Empty);

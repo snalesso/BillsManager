@@ -73,19 +73,17 @@
     <Compile Include="BillViewModels\BillAddEditViewModel\BillAddEditViewModel.IDataErrorInfo.cs" />
     <Compile Include="BillViewModels\BillDetailsViewModel\BillDetailsViewModel.cs" />
     <Compile Include="BillViewModels\BillViewModel.cs" />
-    <Compile Include="DBsViewModel\DBsViewModel.cs" />
-    <Compile Include="DBViewModels\DBAddEditViewModel.cs" />
-    <Compile Include="DBViewModels\DBViewModel.cs" />
+    <Compile Include="DBViewModel.cs" />
     <Compile Include="DesignTime\BackupCenterViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\BillAddEditViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\BillDetailsViewModel.DesignTime.cs" />
-    <Compile Include="DesignTime\DBsViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\DBViewModel.DesignTime.cs" />
-    <Compile Include="DesignTime\DBAddViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\ProgressViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\StatusBarViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\SupplierAddEditViewModel.DesignTime.cs" />
     <Compile Include="Dialog\ProgressViewModel.cs" />
+    <Compile Include="EnumDBConnectionState.cs" />
+    <Compile Include="Messages\DBState\DBConnectionStateChangedMessage.cs" />
     <Compile Include="Messages\Single database Events\Suppliers Events\AddBillToSupplierOrder.cs" />
     <Compile Include="Messages\Single database Events\Suppliers Events\SelectedSupplierChagedMessage.cs" />
     <Compile Include="Reporting\BillReportViewModel.cs" />
@@ -125,6 +123,8 @@
     </Compile>
     <Compile Include="SupplierViewModels\SupplierDetailsViewModel\SupplierDetailsViewModel.cs" />
     <Compile Include="SupplierViewModels\SupplierViewModel.cs" />
+    <Compile Include="TagsViewModel.cs" />
+    <Compile Include="TagViewModels\TagViewModel.cs" />
     <Compile Include="Validation\ValidationRulesTrackerGeneric.cs" />
     <Compile Include="Messages\Single database Events\Searches Events\BillsFilterMessage.cs" />
     <Compile Include="Messages\Single database Events\Searches Events\SuppliersFilterMessage.cs" />
@@ -166,7 +166,9 @@
       <Name>BillsManager.Services</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DBViewModels\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

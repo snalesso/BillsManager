@@ -5,20 +5,20 @@ namespace BillsManager.Services.Providers
 {
     public interface IBillsProvider
     {
-        string Path { get; }
+        //string DBPath { get; } // TODO: obsolete?
 
-        string DBName { get; }
+        //string DBName { get; } // TODO: obsolete?
 
         uint GetLastBillID();
 
         IEnumerable<Bill> GetAllBills();
 
-        bool Add(Bill bill);
+        bool Add(Bill bill); // TODO: change name to New/CreateNew
 
         bool Edit(Bill bill);
-        bool Edit(IEnumerable<Bill> bills);
+        bool Edit(IEnumerable<Bill> bills); // TODO: unused?
 
         bool Delete(Bill bill);
-        bool Delete(IEnumerable<Bill> bills);
+        bool Delete(IEnumerable<Bill> bills); // TODO: unused?
     }
 }

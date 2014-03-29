@@ -98,11 +98,11 @@
     <Compile Include="DataTemplates\SupplierDataTemplate.xaml.cs">
       <DependentUpon>SupplierDataTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataTemplates\TagDataTemplate.xaml.cs">
+      <DependentUpon>TagDataTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DBBackupsView.xaml.cs">
       <DependentUpon>DBBackupsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DBsView.xaml.cs">
-      <DependentUpon>DBsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DBView.xaml.cs">
       <DependentUpon>DBView.xaml</DependentUpon>
@@ -120,9 +120,6 @@
       <DependentUpon>Geometries.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Helpers\WindowHelper.cs" />
-    <Compile Include="DBAddEditView.xaml.cs">
-      <DependentUpon>DBAddEditView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -159,6 +156,9 @@
     </Compile>
     <Compile Include="SupplierAddEditView.xaml.cs">
       <DependentUpon>SupplierAddEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TagsView.xaml.cs">
+      <DependentUpon>TagsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewWindow.xaml.cs">
       <DependentUpon>ViewWindow.xaml</DependentUpon>
@@ -199,11 +199,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DBBackupsView.xaml">
+    <Page Include="DataTemplates\TagDataTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DBsView.xaml">
+    <Page Include="DBBackupsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -339,6 +339,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dictionaries\Styles\Values\DBConnectionStateValues.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dictionaries\Styles\Values\Geometries.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -368,10 +372,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dictionaries\Styles\Values\ViewValues.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="DBAddEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -415,6 +415,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="TagsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ViewWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -426,15 +430,11 @@
       <Name>BillsManager.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\db\save-24.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\DBM-old.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DBsView-SPLIT.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DBsView-TAB.txt" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\suppliers\supplier-details-24.png" />
@@ -542,6 +542,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\generic\budget-16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\db\db-connect-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\db\db-disconnect-24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
