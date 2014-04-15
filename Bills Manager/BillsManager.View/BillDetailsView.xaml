@@ -1,12 +1,14 @@
 ﻿<UserControl x:Class="BillsManager.Views.BillDetailsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ViewModel="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
-             mc:Ignorable="d"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:gl="clr-namespace:System.Globalization;assembly=mscorlib"
+             xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              MinWidth="400"
-             d:DataContext="{d:DesignInstance Type=ViewModel:BillDetailsViewModel, IsDesignTimeCreatable=True}">
+             d:DataContext="{d:DesignInstance Type=ViewModel:BillDetailsViewModel, IsDesignTimeCreatable=True}"
+             mc:Ignorable="d">
 
     <UserControl.Resources>
         <ResourceDictionary Source="Dictionaries\Styles.xaml" />
@@ -47,130 +49,133 @@
             <ColumnDefinition Width="{StaticResource MarginSize}" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Amount"
-                   HorizontalAlignment="Right"
-                   VerticalAlignment="Top"
-                   FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}"
+        <TextBlock Grid.Row="1"
                    Grid.Column="1"
-                   Grid.Row="1" />
-        <TextBlock Text="{Binding Amount, StringFormat=\{0:N2\} €}"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Text="{loc:Translate Amount}" />
+        <TextBlock Grid.Row="1"
                    Grid.Column="3"
-                   TextAlignment="Right"
-                   VerticalAlignment="Center"
                    HorizontalAlignment="Left"
-                   Grid.Row="1" />
+                   VerticalAlignment="Center"
+                   Text="{Binding Amount, StringFormat=\{0:N2\} €}"
+                   TextAlignment="Right" />
 
-        <TextBlock Text="Supplier"
-                   Grid.Row="3"
+        <TextBlock Grid.Row="3"
+                   Grid.Column="1"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Grid.Column="1" />
-        <TextBlock Text="{Binding SupplierName}"
+                   Text="{loc:Translate Supplier}" />
+        <TextBlock Grid.Row="3"
                    Grid.Column="3"
-                   Grid.Row="3"
-                   VerticalAlignment="Center" />
+                   VerticalAlignment="Center"
+                   Text="{Binding SupplierName}" />
 
-        <TextBlock Text="Code"
-                   Grid.Row="5"
+        <TextBlock Grid.Row="5"
+                   Grid.Column="1"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Grid.Column="1" />
-        <TextBlock Text="{Binding Code}"
+                   Text="{loc:Translate Code}" />
+        <TextBlock Grid.Row="5"
                    Grid.Column="3"
-                   Grid.Row="5"
-                   VerticalAlignment="Center" />
+                   VerticalAlignment="Center"
+                   Text="{Binding Code}" />
 
-        <TextBlock Text="Payment"
-                   Grid.Row="7"
+        <TextBlock Grid.Row="7"
+                   Grid.Column="1"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Grid.Column="1" />
-        <StackPanel Orientation="Horizontal"
+                   Text="{loc:Translate Payment}" />
+        <StackPanel Grid.Row="7"
                     Grid.Column="3"
-                    Grid.Row="7">
-            <TextBlock Text="{Binding PaymentDate, StringFormat=Paid on \{0:D\}}"
-                       Visibility="{Binding IsPaid, Converter={StaticResource BooleanToVisibilityConverter}}"
-                       VerticalAlignment="Center" />
-            <TextBlock Text="Not paid"
+                    Orientation="Horizontal">
+            <TextBlock VerticalAlignment="Center"
+                       Text="{loc:Translate Paid_Female}"
+                       Visibility="{Binding IsPaid, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <TextBlock VerticalAlignment="Center"
+                       Text="{Binding PaymentDate, StringFormat=' \{0:D\}'}"
+                       Visibility="{Binding IsPaid, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <TextBlock Text="{loc:Translate NotPaid_Female}"
                        Visibility="{Binding IsNotPaid, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </StackPanel>
 
-        <TextBlock Text="Dues on"
-                   Grid.Row="9"
+        <TextBlock Grid.Row="9"
+                   Grid.Column="1"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Grid.Column="1" />
-        <TextBlock Grid.Column="3"
-                   Grid.Row="9"
+                   Text="{loc:Translate DuesOn}" />
+        <TextBlock Grid.Row="9"
+                   Grid.Column="3"
                    VerticalAlignment="Center">
-            <Run Text="{Binding DueDate, StringFormat=\{0:D\}}" />
-            <Run Text="{Binding DuesIn, Mode=OneWay, StringFormat=(\{0\})}" />
+            <Run Text="{Binding DueDate, StringFormat=\{0:D\}, ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}" />
+            <Run Text="{Binding DuesIn, Mode=OneWay, StringFormat=({0}), ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}" />
         </TextBlock>
 
-        <TextBlock Text="Released on"
-                   Grid.Row="11"
+        <TextBlock Grid.Row="11"
+                   Grid.Column="1"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Grid.Column="1" />
-        <TextBlock Text="{Binding ReleaseDate, StringFormat=\{0:D\}}"
+                   Text="{loc:Translate ReleasedOn_Female}" />
+        <TextBlock Grid.Row="11"
                    Grid.Column="3"
-                   Grid.Row="11"
-                   VerticalAlignment="Center" />
-
-        <TextBlock Text="Registered on"
-                   Grid.Row="13"
-                   HorizontalAlignment="Right"
-                   VerticalAlignment="Top"
-                   FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}"
-                   Grid.Column="1" />
-        <TextBlock Text="{Binding RegistrationDate, StringFormat=\{0:D\}}"
-                   Grid.Column="3"
-                   Grid.Row="13"
-                   VerticalAlignment="Center" />
-
-        <TextBlock Text="Notes"
-                   Grid.Row="15"
-                   HorizontalAlignment="Right"
-                   VerticalAlignment="Top"
-                   FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}"
-                   Grid.Column="1" />
-        <TextBlock Text="{Binding Notes}"
-                   Grid.Column="3"
-                   Grid.Row="15"
-                   TextWrapping="Wrap"
-                   TextTrimming="CharacterEllipsis"
                    VerticalAlignment="Center"
-                   MaxWidth="390" />
+                   Text="{Binding ReleaseDate, StringFormat=\{0:D\}, ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}" />
 
-        <StackPanel Orientation="Horizontal"
+        <TextBlock Grid.Row="13"
+                   Grid.Column="1"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Text="{loc:Translate RegisteredOn_Female}" />
+        <TextBlock Grid.Row="13"
+                   Grid.Column="3"
+                   VerticalAlignment="Center"
+                   Text="{Binding RegistrationDate, StringFormat=\{0:D\}, ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}" />
+
+        <TextBlock Grid.Row="15"
+                   Grid.Column="1"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Text="{loc:Translate Notes}" />
+        <TextBlock Grid.Row="15"
+                   Grid.Column="3"
+                   MaxWidth="390"
+                   VerticalAlignment="Center"
+                   Text="{Binding Notes}"
+                   TextTrimming="CharacterEllipsis"
+                   TextWrapping="Wrap" />
+
+        <StackPanel Grid.Row="17"
+                    Grid.Column="1"
                     Grid.ColumnSpan="3"
-                    Grid.Row="17"
                     HorizontalAlignment="Right"
-                    Grid.Column="1">
-            <Button Content="Edit"
-                    MinWidth="80"
+                    Orientation="Horizontal">
+            <Button MinWidth="80"
                     Command="{Binding SwitchToEditCommand, Mode=OneTime}"
+                    Content="{loc:Translate Edit}"
                     IsDefault="True">
                 <Button.Margin>
                     <Thickness Right="{StaticResource MarginSizeValue}" />
                 </Button.Margin>
             </Button>
-            <Button Content="Close"
-                    MinWidth="80"
+            <Button MinWidth="80"
                     Command="{Binding CloseDetailsViewCommand, Mode=OneTime}"
+                    Content="{loc:Translate Close}"
                     IsCancel="True" />
         </StackPanel>
 

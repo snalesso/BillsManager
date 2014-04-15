@@ -8,7 +8,7 @@ using System.Windows.Media;
 
 namespace BillsManager.ViewModels.Reporting
 {
-    public class ReportCenterViewModel/*<T>*/ : Screen
+    public class PrintReportViewModel/*<T>*/ : Screen
     /*where T : class*/
     {
         #region fields
@@ -20,7 +20,7 @@ namespace BillsManager.ViewModels.Reporting
 
         #region ctor
 
-        public ReportCenterViewModel(
+        public PrintReportViewModel(
             Func<IEnumerable<BillReportViewModel>, ReportPrinter<BillReportViewModel>> reportPrinterFactory,
             IEnumerable<BillReportViewModel> billReportList,
             string header,

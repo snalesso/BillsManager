@@ -7,10 +7,10 @@
              xmlns:DataTemplates="clr-namespace:BillsManager.Views.DataTemplates"
              xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
              xmlns:Caliburn="http://www.caliburnproject.org"
+             xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=ViewModel:BackupCenterViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="300"
-             d:DesignWidth="420"
              Width="Auto">
 
     <UserControl.Resources>
@@ -41,21 +41,21 @@
 
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />-->
 
-            <MenuItem Header="Rollback"
+            <MenuItem Header="{loc:Translate Rollback}"
                       Command="{Binding ActiveItem.RollbackCommand, Mode=OneWay}"
                       CommandParameter="{Binding ActiveItem.SelectedBackupViewModel}" />
 
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
-            <MenuItem Header="New backup"
+            <MenuItem Header="{loc:Translate NewBackup}"
                       Command="{Binding ActiveItem.CreateNewBackupCommand, Mode=OneWay}" />
-            <MenuItem Header="Delete backup"
+            <MenuItem Header="{loc:Translate DeleteBackup}"
                       Command="{Binding ActiveItem.DeleteBackupCommand, Mode=OneWay}"
                       CommandParameter="{Binding ActiveItem.SelectedBackupViewModel}" />
 
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
-            <MenuItem Header="Open backups folder"
+            <MenuItem Header="{loc:Translate OpenBackupsFolder}"
                       Command="{Binding ActiveItem.OpenBackupsFolderCommand, Mode=OneWay}" />
 
         </Menu>

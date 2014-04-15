@@ -27,7 +27,7 @@ namespace BillsManager.ViewModels
         private readonly Func<SearchSuppliersViewModel> searchSuppliersViewModelFactory;
         private readonly Func<SearchBillsViewModel> searchBillsViewModelFactory;
 
-        private readonly Func<IEnumerable<BillReportViewModel>, string, string, ReportCenterViewModel> reportCenterViewModelFactory;
+        private readonly Func<IEnumerable<BillReportViewModel>, string, string, PrintReportViewModel> reportCenterViewModelFactory;
 
         #endregion
 
@@ -43,7 +43,7 @@ namespace BillsManager.ViewModels
             Func<SearchSuppliersViewModel> searchSuppliersViewModelFactory,
             Func<SearchBillsViewModel> searchBillsViewModelFactory,
             // IDEA: move report to tools?
-            Func<IEnumerable<BillReportViewModel>, string, string, ReportCenterViewModel> reportCenterViewModelFactory)
+            Func<IEnumerable<BillReportViewModel>, string, string, PrintReportViewModel> reportCenterViewModelFactory)
         {
             // SERVICES
             this.windowManager = windowManager;

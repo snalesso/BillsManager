@@ -41,8 +41,9 @@ namespace BillsManager.ViewModels
 
             this.globalEventAggregator.Subscribe(this);
 
-            this.AvailableSuppliers = availableSuppliers; // IDEA: inject SuppliersViewModel?
+            this.AvailableSuppliers = availableSuppliers; // IDEA: inject SuppliersViewModel? overkill?
             //this.HasChanges = false; // TODO: check if mandatory
+            this.SelectedSupplier = this.AvailableSuppliers.SingleOrDefault(s => s.ID == this.SupplierID); // TODO: beware: there's no 0 ID for supps/bills
 
             this.Deactivated +=
                 (s, e) =>

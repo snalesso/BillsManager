@@ -7,6 +7,7 @@
              xmlns:Caliburn="http://www.caliburnproject.org"
              xmlns:Commanding="clr-namespace:BillsManager.ViewModels.Commanding;assembly=BillsManager.ViewModels"
              xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
+             xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              x:Class="BillsManager.Views.BillsView"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type ViewModel:BillsViewModel}}"
@@ -42,12 +43,12 @@
         <ListView.View>
             <GridView>
                 <GridViewColumn DisplayMemberBinding="{Binding SupplierName}"
-                                Header="Supplier"
+                                Header="{loc:Translate Supplier}"
                                 Width="160" />
                 <GridViewColumn DisplayMemberBinding="{Binding Code}"
-                                Header="Code"
+                                Header="{loc:Translate Code}"
                                 Width="95" />
-                <GridViewColumn Header="Amount"
+                <GridViewColumn Header="{loc:Translate Amount}"
                                 Width="95">
                     <GridViewColumn.HeaderTemplate>
                         <DataTemplate>
@@ -62,7 +63,7 @@
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
-                <GridViewColumn Header="Paid"
+                <GridViewColumn Header="{loc:Translate Payment}"
                                 Width="90">
                     <GridViewColumn.HeaderTemplate>
                         <DataTemplate>
@@ -105,7 +106,7 @@
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
-                <GridViewColumn Header="Release date"
+                <GridViewColumn Header="{loc:Translate ReleaseDate}"
                                 Width="110">
                     <GridViewColumn.HeaderTemplate>
                         <DataTemplate>
@@ -121,7 +122,7 @@
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
-                <GridViewColumn Header="Due date"
+                <GridViewColumn Header="{loc:Translate DueDate}"
                                 Width="110">
                     <GridViewColumn.HeaderTemplate>
                         <DataTemplate>
@@ -137,7 +138,7 @@
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
-                <GridViewColumn Header="Notes"
+                <GridViewColumn Header="{loc:Translate Notes}"
                                 Width="Auto">
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
@@ -162,7 +163,7 @@
         <ListView.ContextMenu>
             <ContextMenu>
 
-                <MenuItem Header="Pay"
+                <MenuItem Header="{loc:Translate Pay}"
                           Command="{Binding PayBillCommand, Mode=OneWay}"
                           CommandParameter="{Binding SelectedBillViewModel}">
                     <MenuItem.Icon>
@@ -172,14 +173,14 @@
 
                 <Separator />
 
-                <MenuItem Header="Add"
+                <MenuItem Header="{loc:Translate Add}"
                           Command="{Binding AddNewBillCommand, Mode=OneWay}">
                     <MenuItem.Icon>
                         <Controls:AutoGreyableImage Source="Images/generic/add-16.png" />
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Header="Edit"
+                <MenuItem Header="{loc:Translate Edit}"
                           Command="{Binding EditBillCommand, Mode=OneWay}"
                           CommandParameter="{Binding SelectedBillViewModel}">
                     <MenuItem.Icon>
@@ -187,7 +188,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Header="Delete"
+                <MenuItem Header="{loc:Translate Delete}"
                           Command="{Binding DeleteBillCommand, Mode=OneWay}"
                           CommandParameter="{Binding SelectedBillViewModel}">
                     <MenuItem.Icon>
@@ -197,7 +198,7 @@
 
                 <Separator />
 
-                <MenuItem Header="Details"
+                <MenuItem Header="{loc:Translate Details}"
                           Command="{Binding ShowBillDetailsCommand, Mode=OneWay}"
                           CommandParameter="{Binding SelectedBillViewModel}">
                     <MenuItem.Icon>

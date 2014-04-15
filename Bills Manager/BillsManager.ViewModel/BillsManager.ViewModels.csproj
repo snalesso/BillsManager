@@ -113,7 +113,7 @@
     <Compile Include="Messages\Single database Events\Suppliers Events\SupplierCRUDEvent.cs" />
     <Compile Include="Messages\Single database Events\Suppliers Events\SupplierDeletedMessage.cs" />
     <Compile Include="Messages\Single database Events\Suppliers Events\SupplierEditedMessage.cs" />
-    <Compile Include="Reporting\ReportCenterViewModel.cs" />
+    <Compile Include="Reporting\PrintReportViewModel.cs" />
     <Compile Include="StatusBarViewModel.cs" />
     <Compile Include="SupplierViewModels\SupplierAddEditViewModel\SupplierAddEditViewModel.IDataErrorInfo.cs">
       <SubType>Code</SubType>
@@ -166,9 +166,7 @@
       <Name>BillsManager.Services</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DBViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Globalization;
+using System.Reflection;
 using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -15,6 +16,7 @@ using System.Windows;
 [assembly: AssemblyCopyright("Copyright © Nalesso Sergio 2010 - 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: NeutralResourcesLanguage("it-IT")]
 
 // Se si imposta ComVisible su false, i tipi in questo assembly non saranno visibili 
 // ai componenti COM. Se è necessario accedere a un tipo in questo assembly da 

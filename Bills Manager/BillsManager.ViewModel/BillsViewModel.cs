@@ -23,7 +23,7 @@ namespace BillsManager.ViewModels
         private readonly IEventAggregator globalEventAggregator;
         private readonly IBillsProvider billsProvider;
 
-        private readonly Func<Bill, BillAddEditViewModel> billAddEditViewModelFactory;
+        private readonly Func<IEnumerable<Supplier>, Bill, BillAddEditViewModel> billAddEditViewModelFactory;
         private readonly Func<Bill, BillDetailsViewModel> billDetailsViewModelFactory;
 
         #endregion
@@ -34,7 +34,7 @@ namespace BillsManager.ViewModels
             IWindowManager windowManager,
             IEventAggregator globalEventAggregator,
             IBillsProvider billsProvider,
-            Func<Bill, BillAddEditViewModel> billAddEditViewModelFactory,
+            Func<IEnumerable<Supplier>, Bill, BillAddEditViewModel> billAddEditViewModelFactory,
             Func<Bill, BillDetailsViewModel> billDetailsViewModelFactory)
         {
             // SERVICES
@@ -191,7 +191,8 @@ namespace BillsManager.ViewModels
         // URGENT: add and edit -> update bills sorting
         private void AddBill(Supplier supplier = null)
         {
-            var newBvm = this.billAddEditViewModelFactory.Invoke(new Bill(this.billsProvider.GetLastBillID() + 1));
+            var supps = this.GetAvailableSuppliers();
+            var newBvm = this.billAddEditViewModelFactory.Invoke(supps, new Bill(this.billsProvider.GetLastBillID() + 1));
 
             if (supplier != null) // TODO: safe operation? if supplier is not known by addbvm?
                 newBvm.SelectedSupplier = supplier;
@@ -217,7 +218,8 @@ namespace BillsManager.ViewModels
 
         private void EditBill(Bill bill)
         {
-            var baeVM = this.billAddEditViewModelFactory.Invoke(bill);
+            var supps = this.GetAvailableSuppliers();
+            var baeVM = this.billAddEditViewModelFactory.Invoke(supps, bill);
 
             Bill oldVersion = (Bill)bill.Clone();
 
@@ -342,6 +344,17 @@ namespace BillsManager.ViewModels
         {
             base.OnActivate();
             //this.eventAggregator.Subscribe(this);
+        }
+
+        #endregion
+
+        #region support
+
+        private IEnumerable<Supplier> GetAvailableSuppliers()
+        {
+            IEnumerable<Supplier> supps = Enumerable.Empty<Supplier>();
+            this.globalEventAggregator.Publish(new AvailableSuppliersRequestMessage((s) => supps = s));
+            return supps;
         }
 
         #endregion

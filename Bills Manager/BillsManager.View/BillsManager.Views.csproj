@@ -113,6 +113,11 @@
     <Compile Include="Dialog\ProgressView.xaml.cs">
       <DependentUpon>ProgressView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Languages\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="SendFeedbackView.xaml.cs">
       <DependentUpon>SendFeedbackView.xaml</DependentUpon>
     </Compile>
@@ -123,18 +128,13 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Reporting\ReportCenterView.xaml.cs">
-      <DependentUpon>ReportCenterView.xaml</DependentUpon>
+    <Compile Include="Reporting\PrintReportView.xaml.cs">
+      <DependentUpon>PrintReportView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Search\SearchBillsView.xaml.cs">
       <DependentUpon>SearchBillsView.xaml</DependentUpon>
@@ -163,8 +163,9 @@
     <Compile Include="ViewWindow.xaml.cs">
       <DependentUpon>ViewWindow.xaml</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+    <EmbeddedResource Include="Languages\Resources.en-US.resx" />
+    <EmbeddedResource Include="Languages\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -383,7 +384,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Reporting\ReportCenterView.xaml">
+    <Page Include="Reporting\PrintReportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -425,6 +426,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BillsManager.Localization\BillsManager.Localization.csproj">
+      <Project>{5387db3b-6ec1-42cf-a72b-cef5adfb541a}</Project>
+      <Name>BillsManager.Localization</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BillsManager.ViewModel\BillsManager.ViewModels.csproj">
       <Project>{127368A5-65A5-46C6-A203-33ABC22B1EDD}</Project>
       <Name>BillsManager.ViewModels</Name>

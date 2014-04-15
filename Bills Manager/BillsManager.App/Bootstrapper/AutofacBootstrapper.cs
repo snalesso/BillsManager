@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using BillsManager.Localization;
 using BillsManager.Models;
 using BillsManager.Services.Feedback;
 //using BillsManager.App.Modules;
@@ -10,17 +11,29 @@ using BillsManager.Views;
 using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
+using System.Threading;
+using System.Windows;
+using System.Windows.Markup;
 
 namespace BillsManager.App.Bootstrappers
 {
-    // TODO: https://code.google.com/p/autofac/wiki/RelationshipTypes
+    // TIP: https://code.google.com/p/autofac/wiki/RelationshipTypes
     public class AutofacBootstrapper : BootstrapperEx<ShellViewModel>
     {
         protected override void ConfigureContainer(ContainerBuilder builder)
         {
             base.ConfigureContainer(builder);
+
+            // READ SETTINGS (better place..?)
+
+            // DEPLOY SETTINGS
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("it-IT");
+            FrameworkElement.LanguageProperty.OverrideMetadata( // TODO: move to TranslationManager
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(Thread.CurrentThread.CurrentUICulture.IetfLanguageTag)));
 
             // EXTRA MODULES
             // builder.RegisterModule<EventAggregationAutoUnsubscriptionModule>();
@@ -35,6 +48,13 @@ namespace BillsManager.App.Bootstrappers
 
             builder.RegisterType<EMailFeedbackSender>().As<IFeedbackSender>().SingleInstance();
 
+            var aqn =  typeof(BillsManager.Views.Languages.Resources).FullName;
+
+            builder.RegisterInstance(
+                new ResxTranslationProvider(
+                    aqn,
+                    Assembly.GetAssembly(typeof(BillsManager.Views.ShellView)))).As<ITranslationProvider>().SingleInstance();
+            builder.RegisterInstance(TranslationManager.Instance).AsSelf().PropertiesAutowired().AutoActivate();
 
             // VIEWMODELS
             builder.RegisterType<ShellViewModel>().AsSelf().SingleInstance();
@@ -56,7 +76,7 @@ namespace BillsManager.App.Bootstrappers
 
             builder.RegisterType<SearchBillsViewModel>().InstancePerDependency();
 
-            builder.Register<Func<IEnumerable<BillReportViewModel>, string, string, ReportCenterViewModel>>(
+            builder.Register<Func<IEnumerable<BillReportViewModel>, string, string, PrintReportViewModel>>(
                 c =>
                 {
                     var ctx = c.Resolve<IComponentContext>();
@@ -65,7 +85,7 @@ namespace BillsManager.App.Bootstrappers
                         (bills, header, comment) =>
                         {
                             return
-                                new ReportCenterViewModel(
+                                new PrintReportViewModel(
                                     ctx.Resolve<Func<IEnumerable<BillReportViewModel>, ReportPrinter<BillReportViewModel>>>(),
                                     bills,
                                     header,
@@ -74,36 +94,36 @@ namespace BillsManager.App.Bootstrappers
                 });
 
 
-            builder.Register<Func<Bill, BillDetailsViewModel>>(
-                c =>
-                {
-                    var ctx = c.Resolve<IComponentContext>();
+            //builder.Register<Func<Bill, BillDetailsViewModel>>(
+            //    c =>
+            //    {
+            //        var ctx = c.Resolve<IComponentContext>();
 
-                    return
-                        (b) =>
-                        {
-                            return new BillDetailsViewModel(
-                                ctx.Resolve<IWindowManager>(),
-                                ctx.Resolve<IEventAggregator>(),
-                                b);
-                        };
-                });
+            //        return
+            //            (b) =>
+            //            {
+            //                return new BillDetailsViewModel(
+            //                    ctx.Resolve<IWindowManager>(),
+            //                    ctx.Resolve<IEventAggregator>(),
+            //                    b);
+            //            };
+            //    });
 
-            builder.Register<Func<IEnumerable<Supplier>, Bill, BillAddEditViewModel>>(
-                c =>
-                {
-                    var ctx = c.Resolve<IComponentContext>();
+            //builder.Register<Func<IEnumerable<Supplier>, Bill, BillAddEditViewModel>>( // TODO: check whether this registration is needed
+            //    c =>
+            //    {
+            //        var ctx = c.Resolve<IComponentContext>();
 
-                    return
-                        (avsupps, b) =>
-                        {
-                            return new BillAddEditViewModel(
-                                ctx.Resolve<IWindowManager>(),
-                                ctx.Resolve<IEventAggregator>(),
-                                avsupps,
-                                b);
-                        };
-                });
+            //        return
+            //            (avsupps, b) =>
+            //            {
+            //                return new BillAddEditViewModel(
+            //                    ctx.Resolve<IWindowManager>(),
+            //                    ctx.Resolve<IEventAggregator>(),
+            //                    avsupps,
+            //                    b);
+            //            };
+            //    });
 
             builder.Register<Func<DBBackupsViewModel>>(
                 c =>

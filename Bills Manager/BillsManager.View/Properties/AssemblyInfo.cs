@@ -15,6 +15,7 @@ using System.Windows;
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: NeutralResourcesLanguage("it-IT")]
 
 // Se si imposta ComVisible su false, i tipi in questo assembly non saranno visibili 
 // ai componenti COM. Se è necessario accedere a un tipo in questo assembly da 

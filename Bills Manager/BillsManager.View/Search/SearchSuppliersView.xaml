@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ViewModel="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
+             xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=ViewModel:SearchSuppliersViewModel, IsDesignTimeCreatable=True}">
 
@@ -31,7 +32,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Obligation"
+        <TextBlock Text="{loc:Translate Obligation}"
                    Margin="0 2"
                    Foreground="{StaticResource ViewTitleBrush}" />
 
@@ -52,7 +53,7 @@
                       HorizontalAlignment="Left" />
         </StackPanel>
 
-        <Button Content="Filter"
+        <Button Content="{loc:Translate Filter}"
                 Grid.Column="2"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Left"
@@ -61,7 +62,7 @@
                 Focusable="False" />
 
         <Button Command="{Binding ExitSearchCommand}"
-                Content="Show all"
+                Content="{loc:Translate ShowAll}"
                 Grid.Column="4"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Left"

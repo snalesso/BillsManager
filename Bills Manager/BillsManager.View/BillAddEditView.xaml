@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ViewModel="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
              xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
+             xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=ViewModel:BillAddEditViewModel, IsDesignTimeCreatable=True}">
 
@@ -57,14 +58,14 @@
         <TextBlock Grid.ColumnSpan="7"
                    FontWeight="Bold"
                    HorizontalAlignment="Center"
-                   Text="Details"
+                   Text="{loc:Translate Details}"
                    VerticalAlignment="Center"
                    Grid.Column="1"
                    Grid.Row="1" />
 
         <TextBlock Grid.Row="3"
                    HorizontalAlignment="Right"
-                   Text="Release date"
+                   Text="{loc:Translate ReleaseDate}"
                    VerticalAlignment="Top"
                    Grid.Column="1" />
         <DatePicker x:Name="dtpReleaseDate"
@@ -80,7 +81,7 @@
         <TextBlock Grid.Column="5"
                    Grid.Row="3"
                    HorizontalAlignment="Right"
-                   Text="Due date"
+                   Text="{loc:Translate DueDate}"
                    VerticalAlignment="Top" />
         <DatePicker Grid.Column="7"
                     Grid.Row="3"
@@ -93,7 +94,7 @@
 
         <TextBlock Grid.Row="5"
                    HorizontalAlignment="Right"
-                   Text="Is paid"
+                   Text="{loc:Translate Paid_Female}"
                    VerticalAlignment="Top"
                    Grid.Column="1" />
         <CheckBox Grid.Column="3"
@@ -107,7 +108,7 @@
         <TextBlock Grid.Column="5"
                    Grid.Row="5"
                    HorizontalAlignment="Right"
-                   Text="Payment date"
+                   Text="{loc:Translate PaymentDate}"
                    VerticalAlignment="Top" />
         <DatePicker Grid.Column="7"
                     Grid.Row="5"
@@ -123,7 +124,7 @@
         <TextBlock Grid.Column="5"
                    Grid.Row="7"
                    HorizontalAlignment="Right"
-                   Text="Code"
+                   Text="{loc:Translate Code}"
                    VerticalAlignment="Top" />
         <TextBox Grid.Column="7"
                  Grid.Row="7"
@@ -164,7 +165,7 @@
         <TextBlock Grid.Row="7"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="Amount"
+                   Text="{loc:Translate Amount}"
                    Grid.Column="1" />
         <TextBox Grid.Column="3"
                  Grid.Row="7"
@@ -179,7 +180,7 @@
 
         <TextBlock Grid.Row="9"
                    HorizontalAlignment="Right"
-                   Text="Supplier"
+                   Text="{loc:Translate Supplier}"
                    VerticalAlignment="Top"
                    Grid.Column="1" />
 
@@ -205,7 +206,7 @@
 
         <TextBlock Grid.Row="11"
                    HorizontalAlignment="Right"
-                   Text="Notes"
+                   Text="{loc:Translate Notes}"
                    VerticalAlignment="Top"
                    Grid.Column="1" />
         <TextBox Grid.Column="3"
@@ -227,7 +228,7 @@
                     Grid.Column="1">
             <Button Width="80"
                     Command="{Binding ConfirmAddEditAndCloseCommand}"
-                    Content="Ok"
+                    Content="{loc:Translate Ok}"
                     TabIndex="9">
                 <Button.Margin>
                     <Thickness Right="{StaticResource MarginSizeValue}" />
@@ -235,7 +236,7 @@
             </Button>
             <Button Width="80"
                     Command="{Binding CancelAddEditAndCloseCommand}"
-                    Content="Cancel"
+                    Content="{loc:Translate Cancel}"
                     IsCancel="True"
                     TabIndex="10" />
         </StackPanel>

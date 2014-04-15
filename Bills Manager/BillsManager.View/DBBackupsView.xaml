@@ -7,6 +7,7 @@
              xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
              xmlns:Datatemplates="clr-namespace:BillsManager.Views.DataTemplates"
              xmlns:Caliburn="http://www.caliburnproject.org"
+             xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300"
@@ -19,7 +20,7 @@
     <Controls:ListBoxEx ItemsSource="{Binding BackupViewModels}"
                         SelectedItem="{Binding SelectedBackupViewModel}"
                         ShowEmptyMessage="True"
-                        EmptyMessage="No backups available">
+                        EmptyMessage="{loc:Translate NoBackupsAvailable}">
 
         <Controls:ListBoxEx.ItemTemplate>
             <DataTemplate>

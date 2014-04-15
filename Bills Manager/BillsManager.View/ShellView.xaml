@@ -1,16 +1,17 @@
 ﻿<UserControl x:Class="BillsManager.Views.ShellView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:ViewModels="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
-             xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
              xmlns:Caliburn="http://www.caliburnproject.org"
-             mc:Ignorable="d"
+             xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
+             xmlns:ViewModels="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             Caliburn:Bind.AtDesignTime="True"
+             d:DataContext="{d:DesignInstance Type=ViewModels:ShellViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="200"
              d:DesignWidth="800"
-             d:DataContext="{d:DesignInstance Type=ViewModels:ShellViewModel, IsDesignTimeCreatable=True}"
-             Caliburn:Bind.AtDesignTime="True">
+             mc:Ignorable="d">
 
     <UserControl.Resources>
         <ResourceDictionary Source="Dictionaries\Styles.xaml" />
@@ -29,54 +30,60 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Menu HorizontalAlignment="Stretch"
-              VerticalAlignment="Center"
-              Grid.ColumnSpan="3">
+        <Menu Grid.ColumnSpan="3"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Center">
 
-            <!--<MenuItem ToolTip="New DB"
-                      Command="{Binding DBsViewModel.CreateDBCommand, Mode=OneWay}">
+            <!--
+                <MenuItem ToolTip="New DB"
+                Command="{Binding DBsViewModel.CreateDBCommand, Mode=OneWay}">
                 <MenuItem.Icon>
-                    <Controls:AutoGreyableImage Source="Images/db/db-add-24.png" />
+                <Controls:AutoGreyableImage Source="Images/db/db-add-24.png" />
                 </MenuItem.Icon>
-            </MenuItem>-->
+                </MenuItem>
+            -->
 
-            <!--<MenuItem Header="Open DB"
-                      Command="{Binding Path=DBsViewModel.OpenDBCommand, Mode=OneTime}"
-                      CommandParameter="{Binding DBsViewModel.SelectedNotOpenedDB}" />
-            
-            <MenuItem Header="Close DB"
-                      Command="{Binding Path=DBsViewModel.CloseDBCommand, Mode=OneTime}"
-                      CommandParameter="{Binding DBsViewModel.ActiveItem}" />-->
+            <!--
+                <MenuItem Header="Open DB"
+                Command="{Binding Path=DBsViewModel.OpenDBCommand, Mode=OneTime}"
+                CommandParameter="{Binding DBsViewModel.SelectedNotOpenedDB}" />
+                
+                <MenuItem Header="Close DB"
+                Command="{Binding Path=DBsViewModel.CloseDBCommand, Mode=OneTime}"
+                CommandParameter="{Binding DBsViewModel.ActiveItem}" />
+            -->
 
-            <!--<Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />-->
+            <!--  <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />  -->
 
-            <!--<MenuItem ToolTip="Delete DB"
-                      Command="{Binding DBsViewModel.DeleteDBCommand, Mode=OneWay}"
-                      CommandParameter="{Binding DBsViewModel.SelectedDB}">
+            <!--
+                <MenuItem ToolTip="Delete DB"
+                Command="{Binding DBsViewModel.DeleteDBCommand, Mode=OneWay}"
+                CommandParameter="{Binding DBsViewModel.SelectedDB}">
                 <MenuItem.Icon>
-                    <Controls:AutoGreyableImage Source="Images/db/db-delete-24.png" />
+                <Controls:AutoGreyableImage Source="Images/db/db-delete-24.png" />
                 </MenuItem.Icon>
-            </MenuItem>
-
-            <MenuItem ToolTip="Rename DB"
-                      Command="{Binding DBsViewModel.RenameDBCommand, Mode=OneWay}"
-                      CommandParameter="{Binding DBsViewModel.SelectedDB}">
+                </MenuItem>
+                
+                <MenuItem ToolTip="Rename DB"
+                Command="{Binding DBsViewModel.RenameDBCommand, Mode=OneWay}"
+                CommandParameter="{Binding DBsViewModel.SelectedDB}">
                 <MenuItem.Icon>
-                    <Controls:AutoGreyableImage Source="Images/db/db-rename-24.png" />
+                <Controls:AutoGreyableImage Source="Images/db/db-rename-24.png" />
                 </MenuItem.Icon>
-            </MenuItem>
+                </MenuItem>
+                
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+            -->
 
-            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />-->
-
-            <MenuItem ToolTip="Connect"
-                      Command="{Binding DBViewModel.ConnectCommand, Mode=OneWay}">
+            <MenuItem Command="{Binding DBViewModel.ConnectCommand, Mode=OneWay}"
+                      ToolTip="{loc:Translate Connect}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/db/db-connect-24.png" />
                 </MenuItem.Icon>
             </MenuItem>
 
-            <MenuItem ToolTip="Disconnect"
-                      Command="{Binding DBViewModel.DisconnectCommand, Mode=OneWay}">
+            <MenuItem Command="{Binding DBViewModel.DisconnectCommand, Mode=OneWay}"
+                      ToolTip="{loc:Translate Disconnect}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/db/db-disconnect-24.png" />
                 </MenuItem.Icon>
@@ -84,8 +91,8 @@
 
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
-            <MenuItem ToolTip="Save DB"
-                      Command="{Binding DBViewModel.SaveCommand, Mode=OneWay}">
+            <MenuItem Command="{Binding DBViewModel.SaveCommand, Mode=OneWay}"
+                      ToolTip="{loc:Translate Save}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/db/save-24.png" />
                 </MenuItem.Icon>
@@ -93,32 +100,32 @@
 
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
-            <MenuItem ToolTip="Add supplier"
-                      Command="{Binding DBViewModel.SuppliersViewModel.AddNewSupplierCommand, Mode=OneWay}">
+            <MenuItem Command="{Binding DBViewModel.SuppliersViewModel.AddNewSupplierCommand, Mode=OneWay}"
+                      ToolTip="{loc:Translate AddSupplier}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/suppliers/supplier-add-24.png" />
                 </MenuItem.Icon>
             </MenuItem>
 
-            <MenuItem ToolTip="Edit supplier"
-                      Command="{Binding DBViewModel.SuppliersViewModel.EditSupplierCommand, Mode=OneWay}"
-                      CommandParameter="{Binding DBViewModel.SuppliersViewModel.SelectedSupplierViewModel}">
+            <MenuItem Command="{Binding DBViewModel.SuppliersViewModel.EditSupplierCommand, Mode=OneWay}"
+                      CommandParameter="{Binding DBViewModel.SuppliersViewModel.SelectedSupplierViewModel}"
+                      ToolTip="{loc:Translate EditSupplier}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/suppliers/supplier-edit-24.png" />
                 </MenuItem.Icon>
             </MenuItem>
 
-            <MenuItem ToolTip="Delete supplier"
-                      Command="{Binding DBViewModel.SuppliersViewModel.DeleteSupplierCommand, Mode=OneWay}"
-                      CommandParameter="{Binding DBViewModel.SuppliersViewModel.SelectedSupplierViewModel}">
+            <MenuItem Command="{Binding DBViewModel.SuppliersViewModel.DeleteSupplierCommand, Mode=OneWay}"
+                      CommandParameter="{Binding DBViewModel.SuppliersViewModel.SelectedSupplierViewModel}"
+                      ToolTip="{loc:Translate DeleteSupplier}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/suppliers/supplier-delete-24.png" />
                 </MenuItem.Icon>
             </MenuItem>
 
-            <MenuItem ToolTip="Supplier details"
-                      Command="{Binding DBViewModel.SuppliersViewModel.ShowSupplierDetailsCommand, Mode=OneWay}"
-                      CommandParameter="{Binding DBViewModel.SuppliersViewModel.SelectedSupplierViewModel}">
+            <MenuItem Command="{Binding DBViewModel.SuppliersViewModel.ShowSupplierDetailsCommand, Mode=OneWay}"
+                      CommandParameter="{Binding DBViewModel.SuppliersViewModel.SelectedSupplierViewModel}"
+                      ToolTip="{loc:Translate SupplierDetails}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/suppliers/supplier-details-24.png" />
                 </MenuItem.Icon>
@@ -126,40 +133,40 @@
 
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
-            <MenuItem ToolTip="Add bill"
-                      Command="{Binding DBViewModel.BillsViewModel.AddNewBillCommand, Mode=OneWay}">
+            <MenuItem Command="{Binding DBViewModel.BillsViewModel.AddNewBillCommand, Mode=OneWay}"
+                      ToolTip="{loc:Translate AddBill}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/bills/bill-add-24.png" />
                 </MenuItem.Icon>
             </MenuItem>
 
-            <MenuItem ToolTip="Edit bill"
-                      Command="{Binding DBViewModel.BillsViewModel.EditBillCommand, Mode=OneWay}"
-                      CommandParameter="{Binding DBViewModel.BillsViewModel.SelectedBillViewModel}">
+            <MenuItem Command="{Binding DBViewModel.BillsViewModel.EditBillCommand, Mode=OneWay}"
+                      CommandParameter="{Binding DBViewModel.BillsViewModel.SelectedBillViewModel}"
+                      ToolTip="{loc:Translate EditBill}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/bills/bill-edit-24.png" />
                 </MenuItem.Icon>
             </MenuItem>
 
-            <MenuItem ToolTip="Delete bill"
-                      Command="{Binding DBViewModel.BillsViewModel.DeleteBillCommand, Mode=OneWay}"
-                      CommandParameter="{Binding DBViewModel.BillsViewModel.SelectedBillViewModel}">
+            <MenuItem Command="{Binding DBViewModel.BillsViewModel.DeleteBillCommand, Mode=OneWay}"
+                      CommandParameter="{Binding DBViewModel.BillsViewModel.SelectedBillViewModel}"
+                      ToolTip="{loc:Translate DeleteBill}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/bills/bill-delete-24.png" />
                 </MenuItem.Icon>
             </MenuItem>
 
-            <MenuItem ToolTip="Pay bill"
-                      Command="{Binding DBViewModel.BillsViewModel.PayBillCommand, Mode=OneWay}"
-                      CommandParameter="{Binding DBViewModel.BillsViewModel.SelectedBillViewModel}">
+            <MenuItem Command="{Binding DBViewModel.BillsViewModel.PayBillCommand, Mode=OneWay}"
+                      CommandParameter="{Binding DBViewModel.BillsViewModel.SelectedBillViewModel}"
+                      ToolTip="{loc:Translate PayBill}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/bills/bill-pay-cash-24.png" />
                 </MenuItem.Icon>
             </MenuItem>
 
-            <MenuItem ToolTip="Bill details"
-                      Command="{Binding DBViewModel.BillsViewModel.ShowBillDetailsCommand, Mode=OneWay}"
-                      CommandParameter="{Binding DBViewModel.BillsViewModel.SelectedBillViewModel}">
+            <MenuItem Command="{Binding DBViewModel.BillsViewModel.ShowBillDetailsCommand, Mode=OneWay}"
+                      CommandParameter="{Binding DBViewModel.BillsViewModel.SelectedBillViewModel}"
+                      ToolTip="{loc:Translate BillDetails}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/bills/bill-info-24.png" />
                 </MenuItem.Icon>
@@ -167,9 +174,9 @@
 
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
-            <MenuItem ToolTip="Show filters"
+            <MenuItem Command="{Binding DBViewModel.ToggleShowFiltersCommand, Mode=OneWay}"
                       IsChecked="{Binding DBViewModel.ShowFilters, Mode=OneWay}"
-                      Command="{Binding DBViewModel.ToggleShowFiltersCommand, Mode=OneWay}">
+                      ToolTip="{loc:Translate Find}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/filters/search-24.png" />
                 </MenuItem.Icon>
@@ -178,21 +185,21 @@
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
             <MenuItem Command="{Binding DBViewModel.ShowReportCenterCommand, Mode=OneWay}"
-                      ToolTip="Report center">
+                      ToolTip="{loc:Translate PrintReport}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/tools/report/print-green-24.png" />
                 </MenuItem.Icon>
             </MenuItem>
 
             <MenuItem Command="{Binding ShowBackupCenterCommand, Mode=OneWay}"
-                      ToolTip="Backup center">
+                      ToolTip="{loc:Translate BackupCenter}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/tools/backup/backup-center-24.png" />
                 </MenuItem.Icon>
             </MenuItem>
 
             <MenuItem Command="{Binding ShowSendFeedbackCommand, Mode=OneWay}"
-                      ToolTip="Send feedback">
+                      ToolTip="{loc:Translate SendFeedback}">
                 <MenuItem.Icon>
                     <Controls:AutoGreyableImage Source="Images/tools/feedback/feedback-24.png" />
                 </MenuItem.Icon>

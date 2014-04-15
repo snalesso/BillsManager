@@ -3,11 +3,11 @@
 namespace BillsManager.Views.Reporting
 {
     /// <summary>
-    /// Interaction logic for ReportCenterView.xaml
+    /// Interaction logic for PrintReportView.xaml
     /// </summary>
-    public partial class ReportCenterView : UserControl
+    public partial class PrintReportView : UserControl
     {
-        public ReportCenterView()
+        public PrintReportView()
         {
             InitializeComponent();
         }
