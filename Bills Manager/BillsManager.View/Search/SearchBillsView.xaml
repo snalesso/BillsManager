@@ -52,7 +52,7 @@
         <CheckBox Grid.Row="2"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
-                  Content="Not paid"
+                  Content="{loc:Translate NotPaid_toBill}"
                   Visibility="Hidden" />
 
 

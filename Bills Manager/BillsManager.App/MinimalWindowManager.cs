@@ -1,4 +1,5 @@
-﻿using BillsManager.Views;
+﻿using BillsManager.Localization;
+using BillsManager.Views;
 using BillsManager.Views.Controls;
 using Caliburn.Micro;
 using System;
@@ -133,6 +134,8 @@ namespace BillsManager.App
             if (haveDisplayName != null && !ConventionManager.HasBinding(view, WindowEx.TitleProperty))
             {
                 var binding = new Binding("DisplayName");
+                //var te = new TranslateExtension(rootModel.GetType().GetProperty("DisplayName").GetValue(rootModel).ToString());
+                //var binding = 
                 if (rootModel.GetType().GetProperty("DisplayName").CanWrite)
                     binding.Mode = BindingMode.TwoWay;
                 else

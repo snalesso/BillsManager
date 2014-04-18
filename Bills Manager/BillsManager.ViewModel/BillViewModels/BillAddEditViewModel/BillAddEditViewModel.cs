@@ -1,4 +1,5 @@
-﻿using BillsManager.Models;
+﻿using BillsManager.Localization;
+using BillsManager.Models;
 using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
 using Caliburn.Micro;
@@ -291,7 +292,12 @@ namespace BillsManager.ViewModels
 
         public new string DisplayName
         {
-            get { return this.IsInEditMode ? ("Edit bill" + (this.IsInEditMode & this.HasChanges ? " [*]" : string.Empty)) : "New bill"; } // TODO: language
+            get
+            {
+                return this.IsInEditMode
+                    ? (TranslationManager.Instance.Translate("EditBill").ToString() + (this.IsInEditMode & this.HasChanges ? " [*]" : string.Empty))
+                    : TranslationManager.Instance.Translate("NewBill").ToString();
+            }
         }
 
         #endregion
@@ -308,7 +314,7 @@ namespace BillsManager.ViewModels
 
         //    return suppliers;
         //}
-        
+
         private void ConfirmAddEditAndClose()
         {
             if (this.IsInEditMode)
@@ -323,8 +329,11 @@ namespace BillsManager.ViewModels
             if (this.HasChanges)
             {
                 var question = new DialogViewModel(
-                       "Cancel " + (this.IsInEditMode ? "edit" : "add"), // TODO: language
-                       "Are you sure you want to discard all the changes?",
+                    TranslationManager.Instance.Translate("Cancel").ToString() + " " +
+                    (this.IsInEditMode ?
+                    TranslationManager.Instance.Translate("Add").ToString().ToLower(TranslationManager.Instance.CurrentLanguage) :
+                    TranslationManager.Instance.Translate("Edit").ToString().ToLower(TranslationManager.Instance.CurrentLanguage)),
+                    TranslationManager.Instance.Translate("DiscardChangesQuestion").ToString(),
                        new[]
                        {
                            new DialogResponse(ResponseType.Yes),

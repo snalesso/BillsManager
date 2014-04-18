@@ -79,9 +79,11 @@
     <Compile Include="DesignTime\BillDetailsViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\DBViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\ProgressViewModel.DesignTime.cs" />
+    <Compile Include="DesignTime\SettingsViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\StatusBarViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\SupplierAddEditViewModel.DesignTime.cs" />
     <Compile Include="Dialog\ProgressViewModel.cs" />
+    <Compile Include="DueAlert.cs" />
     <Compile Include="EnumDBConnectionState.cs" />
     <Compile Include="Messages\DBState\DBConnectionStateChangedMessage.cs" />
     <Compile Include="Messages\Single database Events\Suppliers Events\AddBillToSupplierOrder.cs" />
@@ -114,6 +116,7 @@
     <Compile Include="Messages\Single database Events\Suppliers Events\SupplierDeletedMessage.cs" />
     <Compile Include="Messages\Single database Events\Suppliers Events\SupplierEditedMessage.cs" />
     <Compile Include="Reporting\PrintReportViewModel.cs" />
+    <Compile Include="SettingsViewModel.cs" />
     <Compile Include="StatusBarViewModel.cs" />
     <Compile Include="SupplierViewModels\SupplierAddEditViewModel\SupplierAddEditViewModel.IDataErrorInfo.cs">
       <SubType>Code</SubType>
@@ -157,6 +160,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BillsManager.Localization\BillsManager.Localization.csproj">
+      <Project>{5387db3b-6ec1-42cf-a72b-cef5adfb541a}</Project>
+      <Name>BillsManager.Localization</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BillsManager.Model\BillsManager.Models.csproj">
       <Project>{888F670B-4396-4660-8C5A-0D43FB2C0A1D}</Project>
       <Name>BillsManager.Models</Name>

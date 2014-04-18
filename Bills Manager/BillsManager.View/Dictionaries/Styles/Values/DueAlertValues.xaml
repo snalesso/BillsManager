@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <SolidColorBrush x:Key="NoneDueAlertBrush"
+                     Color="Transparent" />
+
+    <SolidColorBrush x:Key="LowDueAlertBrush"
+                     Color="#FF00B400" />
+
+    <SolidColorBrush x:Key="MediumDueAlertBrush"
+                     Color="#FFFF8900" />
+
+    <SolidColorBrush x:Key="HighDueAlertBrush"
+                     Color="#FFEA0000" />
+
+</ResourceDictionary>

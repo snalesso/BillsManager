@@ -1,4 +1,5 @@
-﻿using BillsManager.Models;
+﻿using BillsManager.Localization;
+using BillsManager.Models;
 using BillsManager.Services.Providers;
 using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
@@ -116,11 +117,13 @@ namespace BillsManager.ViewModels
         private void CreateBackup()
         {
             var question = new DialogViewModel(
-                "Create backup",
-                "Are you sure you want to create a new backup?", // TODO: language
+                TranslationManager.Instance.Translate("CreateBackup").ToString(),
+                TranslationManager.Instance.Translate("CreateBackupQuestion").ToString() +
+                Environment.NewLine +
+                TranslationManager.Instance.Translate("OperationMayTakeAWhile").ToString(),
                 new[]
                 {
-                    new DialogResponse(ResponseType.Yes, "Create new backup"),
+                    new DialogResponse(ResponseType.Yes, TranslationManager.Instance.Translate("CreateBackup").ToString()),
                     new DialogResponse(ResponseType.No)
                 });
 
@@ -136,17 +139,24 @@ namespace BillsManager.ViewModels
         private void Rollback(BackupViewModel backupViewModel)
         {
             var rollbackQuestion = new DialogViewModel(
-                            "Rollback",
-                            "Are you sure you want to ROLLBACK to the following backup?" + // TODO: language
+                            TranslationManager.Instance.Translate("Rollback").ToString(),
+                            TranslationManager.Instance.Translate("ConfirmRollbackQuestion").ToString() +
                             Environment.NewLine +
                             Environment.NewLine + this.GetBackupInfo(backupViewModel.ExposedBackup),
                             new[]
                             {
-                                new DialogResponse(ResponseType.Yes, "Rollback", "Confirm rollback"),
-                                new DialogResponse(ResponseType.No)
+                                new DialogResponse(
+                                    ResponseType.Yes, 
+                                    TranslationManager.Instance.Translate("Rollback").ToString(), 
+                                    TranslationManager.Instance.Translate("ConfirmRollback").ToString()),
+                                new DialogResponse(
+                                    ResponseType.No,
+                                    TranslationManager.Instance.Translate("Cancel").ToString())
                             });
 
             this.windowManager.ShowDialog(rollbackQuestion);
+
+            // URGENT: rollback failed protection
 
             if (rollbackQuestion.FinalResponse == ResponseType.Yes)
             {
@@ -160,21 +170,21 @@ namespace BillsManager.ViewModels
                                 this.RefreshBackups();
                                 this.windowManager.ShowDialog(
                                     new DialogViewModel(
-                                        "Rollback completed", // TODO: language
-                                        "Rollback has completed successfully."));
+                                        TranslationManager.Instance.Translate("RollbackCompleted").ToString(),
+                                        TranslationManager.Instance.Translate("RollbackCompletedMessage").ToString()));
                             }
                             else
                                 this.windowManager.ShowDialog(
                                     new DialogViewModel(
-                                        "Rollback failed", // TODO: language
-                                        "Rollback has failed. Please try again."));
+                                        TranslationManager.Instance.Translate("RollbackFailed").ToString(),
+                                        TranslationManager.Instance.Translate("RollbackFailedMessage").ToString()));
                         },
                         () =>
                         {
                             this.windowManager.ShowDialog(
                                 new DialogViewModel(
-                                    "Rollback canceled", // TODO: language
-                                    "Rollback has been canceled."));
+                                    TranslationManager.Instance.Translate("RollbackCanceled").ToString(),
+                                    TranslationManager.Instance.Translate("RollbackCanceledMessage").ToString()));
                         }));
             }
         }
@@ -182,15 +192,20 @@ namespace BillsManager.ViewModels
         private void DeleteBackup(BackupViewModel backupViewModel)
         {
             var question = new DialogViewModel(
-                "Delete backup",
-                "Are you sure you want to DELETE the following backup?" +
+                TranslationManager.Instance.Translate("DeletBackup").ToString(),
+                TranslationManager.Instance.Translate("DeletBackupQuestion").ToString() +
                 Environment.NewLine +
                 Environment.NewLine +
                 this.GetBackupInfo(backupViewModel.ExposedBackup),
                 new[]
                 {
-                    new DialogResponse(ResponseType.Yes, "Delete", "Confirm delete"),
-                    new DialogResponse(ResponseType.No)
+                    new DialogResponse(
+                        ResponseType.Yes,
+                        TranslationManager.Instance.Translate("DeleteBackup").ToString(),
+                        TranslationManager.Instance.Translate("IConfirm").ToString()),
+                    new DialogResponse(
+                        ResponseType.No,
+                        TranslationManager.Instance.Translate("Cancel").ToString())
                 });
 
             this.windowManager.ShowDialog(question);
@@ -204,12 +219,15 @@ namespace BillsManager.ViewModels
 
         private string GetBackupInfo(Backup backup)
         {
+            // TODO: review informations layout
             return backup.CreationTime.ToLongDateString() + "   " + backup.CreationTime.ToLongTimeString() +
                    Environment.NewLine +
                    Environment.NewLine +
-                   backup.BillsCount + " bills" + // TODO: language
+                   backup.BillsCount + " " +
+                   TranslationManager.Instance.Translate("Bills").ToString().ToLower(TranslationManager.Instance.CurrentLanguage) +
                    Environment.NewLine +
-                   backup.SuppliersCount + " suppliers";
+                   backup.SuppliersCount + " " +
+                   TranslationManager.Instance.Translate("Suppliers").ToString().ToLower(TranslationManager.Instance.CurrentLanguage);
         }
 
         private void OpenBackupsFolder()

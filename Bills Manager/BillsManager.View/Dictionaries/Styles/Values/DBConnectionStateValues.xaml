@@ -10,7 +10,7 @@
     <SolidColorBrush x:Key="DBConnectedBrush"
                      Color="#FF1C97EA" />
     <!--#FFE26C00-->
-    <SolidColorBrush x:Key="DBDirtyBrush"
+    <SolidColorBrush x:Key="DBUnsavedBrush"
                      Color="#FFFF8900" />
 
 </ResourceDictionary>

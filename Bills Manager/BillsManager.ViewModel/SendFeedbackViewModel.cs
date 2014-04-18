@@ -1,4 +1,5 @@
-﻿using BillsManager.Services.Feedback;
+﻿using BillsManager.Localization;
+using BillsManager.Services.Feedback;
 using BillsManager.ViewModels.Commanding;
 using Caliburn.Micro;
 
@@ -22,7 +23,7 @@ namespace BillsManager.ViewModels
             this.windowManager = windowManager;
             this.feedbackSender = feedbackSender;
 
-            this.DisplayName = "Feedback";
+            this.DisplayName = TranslationManager.Instance.Translate("SendFeedback").ToString();
         }
 
         #endregion
@@ -78,8 +79,8 @@ namespace BillsManager.ViewModels
             {
                 this.windowManager.ShowDialog(
                     new DialogViewModel(
-                        "Feedback sent", // TODO: language
-                        "Your feedback has been sent successfully."));
+                        TranslationManager.Instance.Translate("FeedbackSent").ToString(),
+                        TranslationManager.Instance.Translate("FeedbackSentMessage").ToString()));
 
                 if (this.CloseAfterSend)
                     this.TryClose();
@@ -88,8 +89,8 @@ namespace BillsManager.ViewModels
                 // TODO: feedback serialization for delayed send in case of error. send retry at new start
                 this.windowManager.ShowDialog(
                     new DialogViewModel(
-                        "Feedback not sent", // TODO: language
-                        "An error has occurred. Your feedback hasn't been sent. Please check your connection and try again."));
+                        TranslationManager.Instance.Translate("FeedbackNotSent").ToString(),
+                        TranslationManager.Instance.Translate("FeedbackNotSentMessage").ToString()));
         }
 
         #endregion

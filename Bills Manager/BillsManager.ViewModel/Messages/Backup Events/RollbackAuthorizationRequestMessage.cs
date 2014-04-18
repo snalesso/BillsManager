@@ -4,6 +4,7 @@ namespace BillsManager.ViewModels.Messages
 {
     public class RollbackAuthorizationRequestMessage // TODO: request or message?
     {
+        // TODO: dbName == obsolete
         public RollbackAuthorizationRequestMessage(string dbName, Action confirm, Action negate)
         {
             this.dbName = dbName;

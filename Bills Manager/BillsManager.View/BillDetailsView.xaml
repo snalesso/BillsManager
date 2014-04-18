@@ -98,12 +98,12 @@
                     Grid.Column="3"
                     Orientation="Horizontal">
             <TextBlock VerticalAlignment="Center"
-                       Text="{loc:Translate Paid_Female}"
+                       Text="{loc:Translate Paid_toBill}"
                        Visibility="{Binding IsPaid, Converter={StaticResource BooleanToVisibilityConverter}}" />
             <TextBlock VerticalAlignment="Center"
                        Text="{Binding PaymentDate, StringFormat=' \{0:D\}'}"
                        Visibility="{Binding IsPaid, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            <TextBlock Text="{loc:Translate NotPaid_Female}"
+            <TextBlock Text="{loc:Translate NotPaid_toBill}"
                        Visibility="{Binding IsNotPaid, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </StackPanel>
 

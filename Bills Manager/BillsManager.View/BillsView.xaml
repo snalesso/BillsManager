@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:ViewModel="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
+             xmlns:ViewModels="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
              xmlns:DataTemplates="clr-namespace:BillsManager.Views.DataTemplates"
              xmlns:Caliburn="http://www.caliburnproject.org"
              xmlns:Commanding="clr-namespace:BillsManager.ViewModels.Commanding;assembly=BillsManager.ViewModels"
@@ -10,7 +10,7 @@
              xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              x:Class="BillsManager.Views.BillsView"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type ViewModel:BillsViewModel}}"
+             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type ViewModels:BillsViewModel}}"
              Caliburn:Bind.AtDesignTime="True"
              d:DesignHeight="250"
              d:DesignWidth="900">
@@ -132,9 +132,61 @@
                     </GridViewColumn.HeaderTemplate>
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock TextAlignment="Right"
-                                       HorizontalAlignment="Center"
-                                       Text="{Binding DueDate, StringFormat=\{0:d\}}" />
+
+                            <Border x:Name="border"
+                                    Margin="-5"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    CornerRadius="{StaticResource ViewCornerRadius}"
+                                    Padding="5">
+                                <TextBlock x:Name="dueDate"
+                                           TextAlignment="Right"
+                                           HorizontalAlignment="Center"
+                                           Text="{Binding DueDate, StringFormat=\{0:d\}}" />
+                            </Border>
+                            <DataTemplate.Triggers>
+                                
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}"
+                                             Value="True">
+                                    <Setter TargetName="border"
+                                            Property="CornerRadius"
+                                            Value="0" />
+                                </DataTrigger>
+
+                                <!--{x:Static ViewModels:DueAlert.Low}-->
+                                <DataTrigger Binding="{Binding DueAlert, Mode=OneWay}"
+                                             Value="Low">
+                                    <Setter TargetName="border"
+                                            Property="Background"
+                                            Value="{StaticResource LowDueAlertBrush}" />
+                                    <Setter TargetName="dueDate"
+                                            Property="Foreground"
+                                            Value="{StaticResource ButtonNormalForegroundBrush}" />
+                                </DataTrigger>
+
+
+                                <DataTrigger Binding="{Binding DueAlert, Mode=OneWay}"
+                                             Value="Medium">
+                                    <Setter TargetName="border"
+                                            Property="Background"
+                                            Value="{StaticResource MediumDueAlertBrush}" />
+                                    <Setter TargetName="dueDate"
+                                            Property="Foreground"
+                                            Value="{StaticResource ButtonNormalForegroundBrush}" />
+                                </DataTrigger>
+
+                                <DataTrigger Binding="{Binding DueAlert, Mode=OneWay}"
+                                             Value="High">
+                                    <Setter TargetName="border"
+                                            Property="Background"
+                                            Value="{StaticResource HighDueAlertBrush}" />
+                                    <Setter TargetName="dueDate"
+                                            Property="Foreground"
+                                            Value="{StaticResource ButtonNormalForegroundBrush}" />
+                                </DataTrigger>
+                                
+                            </DataTemplate.Triggers>
+
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>

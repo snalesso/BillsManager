@@ -1,3 +1,5 @@
+using BillsManager.Localization;
+using BillsManager.Services.Settings;
 using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
 using Caliburn.Micro;
@@ -8,17 +10,19 @@ using System.Windows;
 namespace BillsManager.ViewModels
 {
     public partial class ShellViewModel : Conductor<Screen>
-        //,IHandle<ActiveDBChangedMessage>
+    //,IHandle<ActiveDBChangedMessage>
     {
         #region fields
 
         private readonly IWindowManager windowManager;
         private readonly IEventAggregator globalEventAggregator;
+        private readonly ISettingsProvider settingsProvider;
         // main region
         private readonly Func<DBViewModel> dbViewModelFactory;
         // tools
         private readonly Func<BackupCenterViewModel> backupCenterViewModelFactory;
         private readonly Func<SendFeedbackViewModel> sendFeedbackViewModelFactory;
+        private readonly Func<SettingsViewModel> settingsViewModelFactory;
         // other UI regions
         private readonly Func<StatusBarViewModel> statusBarViewModelFactory;
 
@@ -29,22 +33,28 @@ namespace BillsManager.ViewModels
         public ShellViewModel(
             IWindowManager windowManager,
             IEventAggregator globalEventAggregator,
+            ISettingsProvider settingsProvider,
             Func<DBViewModel> dbViewModelFactory,
             Func<StatusBarViewModel> statusBarViewModelFactory,
             Func<BackupCenterViewModel> backupCenterViewModelFactory,
-            Func<SendFeedbackViewModel> sendFeedbackViewModelFactory)
+            Func<SendFeedbackViewModel> sendFeedbackViewModelFactory,
+            Func<SettingsViewModel> settingsViewModelFactory)
         {
 
             // SERVICES
             this.windowManager = windowManager;
             this.globalEventAggregator = globalEventAggregator;
-            this.globalEventAggregator.Subscribe(this);
+            this.settingsProvider = settingsProvider;
 
             // FACTORIES
             this.dbViewModelFactory = dbViewModelFactory;
             this.statusBarViewModelFactory = statusBarViewModelFactory;
             this.backupCenterViewModelFactory = backupCenterViewModelFactory;
             this.sendFeedbackViewModelFactory = sendFeedbackViewModelFactory;
+            this.settingsViewModelFactory = settingsViewModelFactory;
+
+            // SUBSCRIPTIONS
+            this.globalEventAggregator.Subscribe(this);
 
             // HANDLERS
             this.Deactivated +=
@@ -56,11 +66,13 @@ namespace BillsManager.ViewModels
 
             // UI
             var sb = this.StatusBarViewModel; // initialize the status bar in order to receive db first load notifications
-            this.DisplayName = "Bills Manager"; // TODO: language
+            this.DisplayName = TranslationManager.Instance.Translate("BillsManager").ToString();
 
             // START
             this.ActivateItem(this.DBViewModel);
-            this.DBViewModel.Connect();
+
+            if (this.settingsProvider.Settings.StartupDBLoad)
+                this.DBViewModel.Connect();
         }
 
         #endregion
@@ -117,6 +129,16 @@ namespace BillsManager.ViewModels
                 });
         }
 
+        private void ShowSettings()
+        {
+            this.windowManager.ShowDialog(
+                this.settingsViewModelFactory.Invoke(),
+                settings: new Dictionary<string, object>()
+                {
+                    {"CanClose", false}
+                });
+        }
+
         #region message handlers
 
         //public void Handle(ActiveDBChangedMessage message)
@@ -154,6 +176,19 @@ namespace BillsManager.ViewModels
                         () => this.ShowSendFeedback());
 
                 return this.showSendFeedbackCommand;
+            }
+        }
+
+        private RelayCommand showSettingsCommand;
+        public RelayCommand ShowSettingsCommand
+        {
+            get
+            {
+                if (this.showSettingsCommand == null)
+                    this.showSettingsCommand = new RelayCommand(
+                        () => this.ShowSettings());
+
+                return this.showSettingsCommand;
             }
         }
 

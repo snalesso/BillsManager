@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -23,17 +24,22 @@ namespace BillsManager.Localization
 
             this.availableLanguages = CultureInfo.GetCultures(CultureTypes.SpecificCultures)
                 .Where(c =>
+                {
+                    try
                     {
-                        try
-                        {
-                            assembly.GetSatelliteAssembly(c);
-                            return true;
-                        }
-                        catch
-                        {
-                            return false;
-                        }
-                    });
+                        assembly.GetSatelliteAssembly(c);
+                        return true;
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+                })
+                .Concat(
+                new CultureInfo[]
+                { 
+                    CultureInfo.GetCultureInfo(Assembly.GetEntryAssembly().GetCustomAttribute<NeutralResourcesLanguageAttribute>().CultureName)
+                });
         }
 
         #endregion
@@ -43,7 +49,7 @@ namespace BillsManager.Localization
         public object Translate(string key)
         {
             var value = resourceManager.GetString(key, Thread.CurrentThread.CurrentUICulture);
-            return value ;
+            return value;
         }
 
         #endregion
@@ -55,9 +61,6 @@ namespace BillsManager.Localization
         {
             get
             {
-                // TODO: Resolve the available languages
-                //yield return new CultureInfo("de");
-                //yield return new CultureInfo("en");
                 return this.availableLanguages;
             }
         }

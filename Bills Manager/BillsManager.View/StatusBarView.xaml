@@ -1,10 +1,10 @@
 ﻿<UserControl x:Class="BillsManager.Views.StatusBarView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ViewModels="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DataContext="{d:DesignInstance Type=ViewModels:StatusBarViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="30"
              d:DesignWidth="600"
@@ -17,7 +17,7 @@
     <StatusBar FontSize="{StaticResource ViewFontSize}"
                Foreground="{StaticResource ViewBackgroundBrush}">
 
-        <TextBlock Text="{Binding ConnectionState, Mode=OneWay}" />
+        <TextBlock Text="{Binding ConnectionStateString, Mode=OneWay}" />
 
         <TextBlock Text="{Binding ActiveDBViewModel.BillsViewModel.FiltersDescription, Mode=OneWay}" />
 
@@ -38,18 +38,18 @@
                 <Style.Triggers>
 
                     <DataTrigger Binding="{Binding ConnectionState, Mode=OneWay}"
-                                 Value="NotConnected">
+                                 Value="{x:Static ViewModels:DBConnectionState.Disconnected}">
                         <Setter Property="Background" Value="{StaticResource DBNotConnectedBrush}" />
                     </DataTrigger>
 
                     <DataTrigger Binding="{Binding ConnectionState, Mode=OneWay}"
-                                 Value="Connected">
+                                 Value="{x:Static ViewModels:DBConnectionState.Connected}">
                         <Setter Property="Background" Value="{StaticResource DBConnectedBrush}" />
                     </DataTrigger>
 
                     <DataTrigger Binding="{Binding ConnectionState, Mode=OneWay}"
-                                 Value="Dirty">
-                        <Setter Property="Background" Value="{StaticResource DBDirtyBrush}" />
+                                 Value="{x:Static ViewModels:DBConnectionState.Unsaved}">
+                        <Setter Property="Background" Value="{StaticResource DBUnsavedBrush}" />
                     </DataTrigger>
 
                 </Style.Triggers>

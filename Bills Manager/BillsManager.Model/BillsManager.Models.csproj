@@ -54,9 +54,13 @@
     <Compile Include="Bill\Bill.ICloneable.cs" />
     <Compile Include="Database\Database.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\Settings.cs" />
     <Compile Include="Supplier\Supplier.cs" />
     <Compile Include="Supplier\Supplier.ICloneable.cs" />
     <Compile Include="Tag\Tag.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Settings\Settings.ICloneable.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

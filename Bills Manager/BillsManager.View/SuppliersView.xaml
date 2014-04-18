@@ -66,8 +66,7 @@
                                     CornerRadius="{StaticResource ViewCornerRadius}"
                                     Padding="5">
                                 <TextBlock x:Name="text"
-                                           Grid.Column="2"
-                                           Text="{Binding ObligationState}" />
+                                           Text="{Binding ObligationStateString}" />
                             </Border>
 
                             <DataTemplate.Triggers>
@@ -78,15 +77,20 @@
                                 </DataTrigger>
 
                                 <DataTrigger Binding="{Binding ObligationState}"
-                                             Value="Creditor">
+                                             Value="{x:Static ViewModel:Obligation.Creditor}">
                                     <Setter TargetName="obg" Property="Background" Value="{StaticResource CreditorObligationBrush}" />
                                     <Setter TargetName="text" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
                                 </DataTrigger>
 
                                 <DataTrigger Binding="{Binding ObligationState}"
-                                             Value="Debtor">
+                                             Value="{x:Static ViewModel:Obligation.Debtor}">
                                     <Setter TargetName="obg" Property="Background" Value="{StaticResource DebtorObligationBrush}" />
                                     <Setter TargetName="text" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
+                                </DataTrigger>
+
+                                <DataTrigger Binding="{Binding ObligationState}"
+                                             Value="{x:Static ViewModel:Obligation.None}">
+                                    <Setter TargetName="text" Property="Visibility" Value="Collapsed" />
                                 </DataTrigger>
 
                             </DataTemplate.Triggers>

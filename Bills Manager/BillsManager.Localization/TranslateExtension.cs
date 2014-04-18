@@ -3,13 +3,19 @@ using System.Linq.Expressions;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Markup;
-using System.Xaml;
 
 namespace BillsManager.Localization
 {
     public class TranslateExtension : MarkupExtension
     {
         #region ctor
+
+//#if DEBUG
+
+//        private static ITranslationProvider traslationProvider = new ResxTranslationProvider(
+//            Assembly.GetAssembly(typeof(;
+
+//#endif
 
         public TranslateExtension(string key)
         {

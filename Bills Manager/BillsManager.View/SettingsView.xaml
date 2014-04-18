@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="BillsManager.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ViewModel="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DataContext="{Binding Source={d:DesignInstance Type=ViewModel:SettingsViewModel, IsDesignTimeCreatable=True}}"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary Source="Dictionaries\Styles.xaml" />
+    </UserControl.Resources>
+
+    <UserControl.Background>
+        <Binding Mode="OneTime"
+                 Source="{StaticResource ViewBackgroundBrush}" />
+    </UserControl.Background>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition />
+            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition />
+            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition />
+            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition />
+            <RowDefinition Height="{StaticResource MarginSize}" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition MinWidth="75" />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition MinWidth="150" />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="1"
+                   Grid.Column="1"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   Text="{loc:Translate Language}" />
+
+        <ComboBox Grid.Row="1"
+                  Grid.Column="3"
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Center"
+                  ItemsSource="{Binding AvailableLanguages}"
+                  SelectedItem="{Binding CurrentLanguage}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <Run Text="{Binding NativeName, Mode=OneTime}" />
+                        <Run Text="-" />
+                        <Run Text="{Binding EnglishName, Mode=OneTime}" />
+                    </TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <TextBlock Grid.Row="3"
+                   Grid.Column="1"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   Text="Connect to database automatically" />
+
+        <CheckBox Grid.Row="3"
+                  Grid.Column="3"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Center"
+                  IsChecked="{Binding StartupDBLoad}" />
+
+        <TextBlock Grid.Row="5"
+                   Grid.Column="1"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   Text="{loc:Translate FeedbackAddressee}" />
+
+        <TextBox Grid.Row="5"
+                 Grid.Column="3"
+                 HorizontalAlignment="Stretch"
+                 VerticalAlignment="Center"
+                 Text="{Binding FeedbackToEmailAddress}" />
+
+        <StackPanel Grid.Row="7"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="3"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+            <Button Command="{Binding SaveAndCloseCommand, Mode=OneWay}"
+                    Content="{loc:Translate Save}">
+                <Button.Margin>
+                    <Thickness Right="{StaticResource MarginSizeValue}" />
+                </Button.Margin>
+            </Button>
+            <Button Command="{Binding CancelAndCloseCommand, Mode=OneWay}"
+                    Content="{loc:Translate Cancel}" />
+        </StackPanel>
+
+    </Grid>
+</UserControl>

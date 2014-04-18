@@ -1,4 +1,5 @@
-﻿using BillsManager.Services.Reporting;
+﻿using BillsManager.Localization;
+using BillsManager.Services.Reporting;
 using BillsManager.ViewModels.Commanding;
 using Caliburn.Micro;
 using System;
@@ -32,7 +33,7 @@ namespace BillsManager.ViewModels.Reporting
             this.reportPrinter.Header = header;
             this.reportPrinter.Comment = comment;
 
-            this.DisplayName = "Report Center";
+            this.DisplayName = TranslationManager.Instance.Translate("PrintReport").ToString();
 
             //this.Deactivated +=
             //    (s, e) =>
@@ -104,7 +105,11 @@ namespace BillsManager.ViewModels.Reporting
 
         public bool CanGoToNextPage
         {
-            get { return this.CurrentPageNumber < this.reportPrinter.PageCount; }
+            get
+            {
+                var can = (this.CurrentPageNumber < this.reportPrinter.PageCount);
+                return can;
+            }
         }
 
         #endregion
@@ -196,7 +201,7 @@ namespace BillsManager.ViewModels.Reporting
                 if (this.goToLastPageCommand == null)
                     this.goToLastPageCommand = new RelayCommand(
                         () => this.GoToLastPage(),
-                        () => this.CanGoToNextPage);
+                        () => this.CanGoToNextPage); // TODO: fix: at last/firt-unique page gotolast is enabled
 
                 return this.goToLastPageCommand;
             }

@@ -1,4 +1,5 @@
-﻿using BillsManager.Models;
+﻿using BillsManager.Localization;
+using BillsManager.Models;
 using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
 using Caliburn.Micro;
@@ -163,14 +164,14 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                switch (this.IsPaidFilterValue) // TODO: language
+                switch (this.IsPaidFilterValue) // TODO: localize enum
                 {
                     case true:
-                        return "Paid";
+                        return  TranslationManager.Instance.Translate("Paid_toBill").ToString();
                     case false:
-                        return "Not paid";
+                        return TranslationManager.Instance.Translate("NotPaid_toBill").ToString();
                     default:
-                        return "All";
+                        return TranslationManager.Instance.Translate("All_toBill").ToString();
                 }
             }
         }

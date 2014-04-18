@@ -16,7 +16,7 @@ namespace BillsManager.Services.Providers
 
         private const short START_INDEX = 0;
 
-        private const string NS_DATABASE = @"Database";
+        private const string NS_DATABASE_ROOT = @"Database";
 
         private const string NS_BILLS = @"Bills";
         private const string ITEM_BILL = @"Bill";
@@ -481,12 +481,12 @@ namespace BillsManager.Services.Providers
 
             var newXDoc = new XDocument();
 
-            try
+            try // TODO: try catch needed?
             {
                 newXDoc.Declaration = new XDeclaration("1.0", "utf-8", null);
                 newXDoc.Add(
                     new XElement(
-                        NS_DATABASE,
+                        NS_DATABASE_ROOT,
                         new XAttribute(ATT_CREATION_DATE, DateTime.Today),
                         new XElement(NS_BILLS, new XAttribute(ATT_LAST_ID, START_INDEX)),
                         new XElement(NS_SUPPLIERS, new XAttribute(ATT_LAST_ID, START_INDEX)),

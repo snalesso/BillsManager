@@ -1,8 +1,10 @@
-﻿using BillsManager.Models;
+﻿using BillsManager.Localization;
+using BillsManager.Models;
 using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
 using Caliburn.Micro;
 using System;
+using System.Linq;
 
 namespace BillsManager.ViewModels
 {
@@ -145,6 +147,39 @@ namespace BillsManager.ViewModels
                     if (timeleft.TotalDays == -1) return "Overdue yesterday";
                     return "Overdue " + (timeleft.TotalDays * -1).ToString() + " days ago";
                 }
+            }
+        }
+
+        public DueAlert DueAlert
+        {
+            get
+            {
+                if (this.IsPaid)
+                    return ViewModels.DueAlert.None;
+
+                var remDays = (this.DueDate - DateTime.Today).TotalDays;
+
+                if (remDays >= 15)
+                    return ViewModels.DueAlert.None;
+                else if (remDays >= 7)
+                    return ViewModels.DueAlert.Low;
+                else if (remDays >= 3)
+                    return ViewModels.DueAlert.Medium;
+                else
+                    return DueAlert.High;
+            }
+        }
+
+        public string DueLevelString
+        {
+            get
+            {
+                return
+                    TranslationManager.Instance.Translate(
+                    typeof(ViewModels.DueAlert)
+                    .GetMember(this.DueAlert.ToString())[0]
+                    .GetAttributes<LocalizeAttribute>(true).FirstOrDefault().Key
+                    ).ToString();
             }
         }
 

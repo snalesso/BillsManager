@@ -29,6 +29,7 @@ namespace BillsManager.Services.Providers
         private const string NS_DATABASE = @"Database";
         private const string NS_BILLS = @"Bills";
         private const string NS_SUPPLIERS = @"Suppliers";
+        private const string NS_TAGS = @"Tags";
 
         private readonly string dbFilePath;
         private readonly string backupsDirectoryPath;
@@ -171,7 +172,8 @@ namespace BillsManager.Services.Providers
                         "Database",
                         xmlBackup.Root.Element(NS_DATABASE),
                         xmlBackup.Root.Element(NS_SUPPLIERS),
-                        xmlBackup.Root.Element(NS_BILLS)));
+                        xmlBackup.Root.Element(NS_BILLS),
+                        xmlBackup.Root.Element(NS_TAGS)));
                     xmlDB.Save(this.dbFilePath);
 
                     this.AddRollbackDate(xmlBackup, DateTime.Now);

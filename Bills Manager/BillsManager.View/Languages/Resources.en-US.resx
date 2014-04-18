@@ -180,7 +180,7 @@
   <data name="Paid_Male" xml:space="preserve">
     <value>Paid</value>
   </data>
-  <data name="Paid_Female" xml:space="preserve">
+  <data name="Paid_toBill" xml:space="preserve">
     <value>Paid</value>
   </data>
   <data name="Ok" xml:space="preserve">
@@ -349,7 +349,7 @@
     <value>Backup Center</value>
   </data>
   <data name="BackupRestoreTimes_Format" xml:space="preserve">
-    <value>Used {0} times to rollback</value>
+    <value>{0} rollbacks</value>
   </data>
   <data name="BillDetails" xml:space="preserve">
     <value>Bill details</value>
@@ -372,7 +372,7 @@
   <data name="DeleteSupplier" xml:space="preserve">
     <value>Delete supplier</value>
   </data>
-  <data name="Disconnected" xml:space="preserve">
+  <data name="Disconnected_toDB" xml:space="preserve">
     <value>Disconnected</value>
   </data>
   <data name="DueDate" xml:space="preserve">
@@ -396,7 +396,7 @@
   <data name="NoBackupsAvailable" xml:space="preserve">
     <value>No backups available</value>
   </data>
-  <data name="NotPaid_Female" xml:space="preserve">
+  <data name="NotPaid_toBill" xml:space="preserve">
     <value>Not paid</value>
   </data>
   <data name="OpenBackupsFolder" xml:space="preserve">
@@ -435,7 +435,115 @@
   <data name="Connected_Female" xml:space="preserve">
     <value>Connected</value>
   </data>
-  <data name="Connected_Male" xml:space="preserve">
+  <data name="Connected_toDB" xml:space="preserve">
     <value>Connected</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="DiscardChangesQuestion" xml:space="preserve">
+    <value>Are you sure you want to discard all the changes?</value>
+  </data>
+  <data name="CancelAdd" xml:space="preserve">
+    <value>Cancel add</value>
+  </data>
+  <data name="CancelEdit" xml:space="preserve">
+    <value>Cancel edit</value>
+  </data>
+  <data name="_currency_format" xml:space="preserve">
+    <value>{0.00:N2} $</value>
+  </data>
+  <data name="CreateBackup" xml:space="preserve">
+    <value>Create backup</value>
+  </data>
+  <data name="CreateBackupQuestion" xml:space="preserve">
+    <value>Are you sure you want to create a new backup?</value>
+  </data>
+  <data name="OperationMayTakeAWhile" xml:space="preserve">
+    <value>This operation may take a while</value>
+  </data>
+  <data name="ConfirmRollback" xml:space="preserve">
+    <value>Confirm rollback</value>
+  </data>
+  <data name="RollbackCanceled" xml:space="preserve">
+    <value>Rollback canceled</value>
+  </data>
+  <data name="RollbackCompleted" xml:space="preserve">
+    <value>Rollback completed</value>
+  </data>
+  <data name="RollbackFailed" xml:space="preserve">
+    <value>Rollback failed</value>
+  </data>
+  <data name="RollbackCompletedMessage" xml:space="preserve">
+    <value>Rollback has completed successfully!</value>
+  </data>
+  <data name="RollbackFailedMessage" xml:space="preserve">
+    <value>Rollback has failed</value>
+  </data>
+  <data name="TryAgain" xml:space="preserve">
+    <value>Please try again</value>
+  </data>
+  <data name="RollbackCanceledMessage" xml:space="preserve">
+    <value>Rollback has been canceled</value>
+  </data>
+  <data name="ConfirmRollbackQuestion" xml:space="preserve">
+    <value>Are you sure you want to rollback to the following backup?</value>
+  </data>
+  <data name="DeleteBackupQuestion" xml:space="preserve">
+    <value>Do you really want to delete the following backup?</value>
+  </data>
+  <data name="IConfirm" xml:space="preserve">
+    <value>I confirm</value>
+  </data>
+  <data name="FeedbackSent" xml:space="preserve">
+    <value>Feedback sent</value>
+  </data>
+  <data name="FeedbackSentMessage" xml:space="preserve">
+    <value>Your feedback has been sent</value>
+  </data>
+  <data name="FeedbackNotSent" xml:space="preserve">
+    <value>Feedback not sent</value>
+  </data>
+  <data name="FeedbackNotSentMessage" xml:space="preserve">
+    <value>An error has occurred while sending your feedback</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="FeedbackAddressee" xml:space="preserve">
+    <value>Feedback addressee</value>
+  </data>
+  <data name="EditFailedMessage" xml:space="preserve">
+    <value>An error has occurred while saving the edits</value>
+  </data>
+  <data name="SaveQuestion" xml:space="preserve">
+    <value>Do you wish to save?</value>
+  </data>
+  <data name="ChangesNotSavedMessage" xml:space="preserve">
+    <value>There are some changes that haven't been saved yet</value>
+  </data>
+  <data name="SaveBeforeClosingQuestion" xml:space="preserve">
+    <value>Do you wish to save before closing?</value>
+  </data>
+  <data name="All_toBill" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="Unsaved_toDB" xml:space="preserve">
+    <value>Unsaved</value>
+  </data>
+  <data name="CancelExit" xml:space="preserve">
+    <value>Cancel closing</value>
+  </data>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Creditor_toSupplier" xml:space="preserve">
+    <value>Creditor</value>
+  </data>
+  <data name="Debtor_toSupplier" xml:space="preserve">
+    <value>Debtor</value>
+  </data>
+  <data name="None_toSupplier" xml:space="preserve">
+    <value>None</value>
   </data>
 </root>

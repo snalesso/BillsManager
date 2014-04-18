@@ -4,11 +4,17 @@ namespace BillsManager.Services.Feedback
 {
     public class EMailFeedbackSender : IFeedbackSender
     {
+        #region fields
+
+        private readonly string toEmailAddress;
+
+        #endregion
+
         #region ctor
 
-        public EMailFeedbackSender()
+        public EMailFeedbackSender(string toEmailAddress)
         {
-
+            this.toEmailAddress = toEmailAddress;
         }
 
         #endregion
@@ -21,11 +27,11 @@ namespace BillsManager.Services.Feedback
             {
                 using (var mail = new MailMessage())
                 {
-                    mail.Sender = new MailAddress("nalesso.sergio@gmail.com", "Nalesso Sergio");
-                    mail.From = new MailAddress("feedback@billsmanager.com","Bills Manager Feedback");
+                    //mail.Sender = new MailAddress("nalesso.sergio@gmail.com");
+                    mail.From = new MailAddress("feedback@billsmanager.com", "Bills Manager Feedback");
                     mail.Body = message;
                     mail.Subject = subject;
-                    mail.To.Add(new MailAddress("nalesso.sergio@gmail.com", "Nalesso Sergio"));
+                    mail.To.Add(new MailAddress(toEmailAddress));
                     mail.Priority = MailPriority.High;
 
                     using (var mailSender = new SmtpClient())

@@ -1,4 +1,5 @@
-﻿using BillsManager.Models;
+﻿using BillsManager.Localization;
+using BillsManager.Models;
 using BillsManager.Services.Providers;
 using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
@@ -58,6 +59,9 @@ namespace BillsManager.ViewModels
                     if (e.WasClosed)
                         this.dbEventAggregator.Unsubscribe(this);
                 };
+
+            // UI
+            this.DisplayName = @"Suppliers";
 
             // START
             this.LoadSuppliers();
@@ -136,7 +140,7 @@ namespace BillsManager.ViewModels
 
         #region methods
 
-        private void LoadSuppliers()
+        public void LoadSuppliers()
         {
             var supps = this.suppliersProvider.GetAllSuppliers();
 
@@ -209,9 +213,10 @@ namespace BillsManager.ViewModels
                 }
                 else
                 {
+                    // URGENT: dont exit if changes are not saved
                     this.windowManager.ShowDialog(new DialogViewModel(
-                        "Edit failed", // TODO: language
-                        "Error during editing."));
+                        TranslationManager.Instance.Translate("EditFailed").ToString(),
+                        TranslationManager.Instance.Translate("EditFailedMessage").ToString()));
                 }
             }
         }
@@ -219,14 +224,17 @@ namespace BillsManager.ViewModels
         private void DeleteSupplier(Supplier supplier)
         {
             var question = new DialogViewModel(
-                "Delete supplier", // TODO: language
-                "Do you really want to DELETE this supplier?" +
+                TranslationManager.Instance.Translate("DeleteSupplier").ToString(),
+                "Do you really want to DELETE this supplier?" + // TODO: language
                 Environment.NewLine +
                 Environment.NewLine +
                 this.GetSupplierSummary(supplier),
                 new[]
                 {
-                    new DialogResponse(ResponseType.Yes, "Delete", "Confirm delete"),
+                    new DialogResponse(
+                        ResponseType.Yes, 
+                        TranslationManager.Instance.Translate("Delete").ToString(), 
+                        TranslationManager.Instance.Translate("Confirm delete").ToString()),
                     new DialogResponse(ResponseType.No)
                 });
 

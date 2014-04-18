@@ -1,4 +1,5 @@
-﻿using BillsManager.Models;
+﻿using BillsManager.Localization;
+using BillsManager.Models;
 using BillsManager.ViewModels.Commanding;
 using Caliburn.Micro;
 using System;
@@ -125,7 +126,7 @@ namespace BillsManager.ViewModels
 
         public override string AgentName
         {
-            get {   return base.AgentName; }
+            get { return base.AgentName; }
             set
             {
                 base.AgentName = value;
@@ -280,8 +281,10 @@ namespace BillsManager.ViewModels
             if (this.HasChanges)
             {
                 var discardChangesDialog = new DialogViewModel(
-                    "Cancel " + (this.IsInEditMode ? "edit" : "add"),
-                    "Are you sure you want to discard all the changes?", // TODO: language
+                    (this.IsInEditMode ?
+                    TranslationManager.Instance.Translate("CancelEdit").ToString() :
+                    TranslationManager.Instance.Translate("CancelAdd").ToString()),
+                    TranslationManager.Instance.Translate("DiscardChangesQuestion").ToString(),
                     new[] { new DialogResponse(ResponseType.Yes), new DialogResponse(ResponseType.No) });
 
                 this.windowManager.ShowDialog(discardChangesDialog);

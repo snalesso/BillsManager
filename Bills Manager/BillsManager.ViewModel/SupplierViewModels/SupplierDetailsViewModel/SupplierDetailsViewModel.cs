@@ -1,8 +1,10 @@
-﻿using BillsManager.Models;
+﻿using BillsManager.Localization;
+using BillsManager.Models;
 using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
 using Caliburn.Micro;
 using System;
+using System.Linq;
 
 namespace BillsManager.ViewModels
 {
@@ -152,6 +154,7 @@ namespace BillsManager.ViewModels
                     this.obligationAmount = value;
                     this.NotifyOfPropertyChange(() => this.ObligationAmount);
                     this.NotifyOfPropertyChange(() => this.ObligationState);
+                    this.NotifyOfPropertyChange(() => this.ObligationStateString);
                 }
             }
         }
@@ -163,6 +166,19 @@ namespace BillsManager.ViewModels
                 if (this.ObligationAmount < 0) return Obligation.Creditor;
                 if (this.ObligationAmount > 0) return Obligation.Debtor;
                 return Obligation.None;
+            }
+        }
+
+        public string ObligationStateString
+        {
+            get
+            {
+                return
+                    TranslationManager.Instance.Translate(
+                    typeof(Obligation)
+                    .GetMember(this.ObligationState.ToString())[0]
+                    .GetAttributes<LocalizeAttribute>(true).FirstOrDefault().Key
+                    ).ToString();
             }
         }
 

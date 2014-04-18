@@ -1,4 +1,5 @@
-﻿using BillsManager.Services.Providers;
+﻿using BillsManager.Localization;
+using BillsManager.Services.Providers;
 using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
 using BillsManager.ViewModels.Reporting;
@@ -75,6 +76,11 @@ namespace BillsManager.ViewModels
             this.DisplayName = @"Bills Manager Database";
 
             // START
+            //if (this.settingsProvider.Settings.StartupDBLoad)
+            //{
+            //    this.SuppliersViewModel.LoadSuppliers();
+            //    this.BillsViewModel.LoadBills();
+            //}
         }
 
         #endregion
@@ -245,7 +251,7 @@ namespace BillsManager.ViewModels
                     "Database load failed", // TODO: language
                     "Database couldn't be opened." +
                     Environment.NewLine +
-                    "Please try again later.");
+                    TranslationManager.Instance.Translate("TryAgain").ToString());
 
             this.windowManager.ShowDialog(dbConnectionErrorDialog);
 
@@ -254,16 +260,26 @@ namespace BillsManager.ViewModels
 
         public bool Disconnect()
         {
-            if (this.ConnectionState == DBConnectionState.Dirty)
+            if (this.ConnectionState == DBConnectionState.Unsaved)
             {
                 var saveRequest =
                     new DialogViewModel(
-                        "Do you wish to save?", // TODO: language
-                        "There are some changes that haven't been saved yet." +
+                        TranslationManager.Instance.Translate("SaveQuestion").ToString(),
+                        TranslationManager.Instance.Translate("ChangesNotSavedMessage").ToString() +
                         Environment.NewLine +
                         Environment.NewLine +
-                        "Do you wish to save before closing?",
-                        new[] { new DialogResponse(ResponseType.Yes), new DialogResponse(ResponseType.No), new DialogResponse(ResponseType.Cancel) });
+                        TranslationManager.Instance.Translate("SaveBeforeClosingQuestion").ToString(),
+                        new[]
+                        {
+                            new DialogResponse(
+                                ResponseType.Yes,
+                                TranslationManager.Instance.Translate("Yes").ToString()),
+                            new DialogResponse(
+                                ResponseType.No,
+                                TranslationManager.Instance.Translate("No").ToString()),
+                            new DialogResponse(ResponseType.Cancel,
+                                TranslationManager.Instance.Translate("CancelExit").ToString())
+                        });
 
                 this.windowManager.ShowDialog(saveRequest);
 
@@ -277,7 +293,7 @@ namespace BillsManager.ViewModels
                                     "Database save failed", // TODO: language
                                     "Database couldn't be saved." +
                                     Environment.NewLine +
-                                    "Please try again later.");
+                                    TranslationManager.Instance.Translate("TryAgain").ToString());
 
                             this.windowManager.ShowDialog(errorDialog);
 
@@ -377,12 +393,12 @@ namespace BillsManager.ViewModels
 
         public void Handle(BillCRUDEvent message)
         {
-            this.ConnectionState = DBConnectionState.Dirty;
+            this.ConnectionState = DBConnectionState.Unsaved;
         }
 
         public void Handle(SupplierCRUDEvent message)
         {
-            this.ConnectionState = DBConnectionState.Dirty;
+            this.ConnectionState = DBConnectionState.Unsaved;
         }
 
         public void Handle(ShowSuppliersBillsOrder message)
@@ -451,7 +467,7 @@ namespace BillsManager.ViewModels
                 if (this.saveCommand == null)
                     this.saveCommand = new RelayCommand(
                         () => this.Save(),
-                        () => this.ConnectionState == DBConnectionState.Dirty);
+                        () => this.ConnectionState == DBConnectionState.Unsaved);
 
                 return this.saveCommand;
             }

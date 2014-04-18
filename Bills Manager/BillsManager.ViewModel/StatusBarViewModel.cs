@@ -1,12 +1,19 @@
-﻿using BillsManager.ViewModels.Messages;
+﻿using BillsManager.Localization;
+using BillsManager.ViewModels.Messages;
 using Caliburn.Micro;
+using System;
+using System.Linq;
 
 namespace BillsManager.ViewModels
 {
     public partial class StatusBarViewModel : Screen,
         IHandle<DBConnectionStateChangedMessage>,
         IHandle<SuppliersListChangedMessage>,
-        IHandle<BillsListChangedMessage>
+        IHandle<BillsListChangedMessage>,
+        IHandle<BillAddedMessage>,
+        IHandle<BillDeletedMessage>,
+        IHandle<SupplierAddedMessage>,
+        IHandle<SupplierDeletedMessage>
     {
         #region fields
 
@@ -42,9 +49,23 @@ namespace BillsManager.ViewModels
 
                 this.connectionState = value;
                 this.NotifyOfPropertyChange(() => this.ConnectionState);
+                this.NotifyOfPropertyChange(() => this.ConnectionStateString);
 
                 this.NotifyOfPropertyChange(() => this.IsConnected);
                 this.NotifyOfPropertyChange(() => this.IsDirty);
+            }
+        }
+
+        public string ConnectionStateString
+        {
+            get
+            {
+                return
+                    TranslationManager.Instance.Translate(
+                    typeof(DBConnectionState)
+                    .GetMember(this.ConnectionState.ToString())[0]
+                    .GetAttributes<LocalizeAttribute>(true).FirstOrDefault().Key
+                    ).ToString();
             }
         }
 
@@ -55,7 +76,7 @@ namespace BillsManager.ViewModels
 
         public bool IsDirty
         {
-            get { return this.ConnectionState != DBConnectionState.Dirty; }
+            get { return this.ConnectionState != DBConnectionState.Unsaved; }
         }
 
         private ulong suppliersCount;
@@ -103,6 +124,26 @@ namespace BillsManager.ViewModels
         public void Handle(BillsListChangedMessage message)
         {
             this.BillsCount = message.Bills.ULongCount();
+        }
+
+        public void Handle(BillAddedMessage message)
+        {
+            this.BillsCount++;
+        }
+
+        public void Handle(BillDeletedMessage message)
+        {
+            this.BillsCount--;
+        }
+
+        public void Handle(SupplierAddedMessage message)
+        {
+            this.SuppliersCount++;
+        }
+
+        public void Handle(SupplierDeletedMessage message)
+        {
+            this.SuppliersCount--;
         }
 
         #endregion

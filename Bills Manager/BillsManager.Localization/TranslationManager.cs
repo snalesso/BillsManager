@@ -41,6 +41,9 @@ namespace BillsManager.Localization
                 {
                     Thread.CurrentThread.CurrentUICulture = value;
                     this.OnLanguageChanged();
+                    FrameworkElement.LanguageProperty.OverrideMetadata(
+                        typeof(FrameworkElement),
+                        new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(value.IetfLanguageTag)));
                 }
             }
         }

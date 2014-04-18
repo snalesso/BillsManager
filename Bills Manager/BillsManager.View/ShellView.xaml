@@ -184,6 +184,13 @@
 
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
+            <MenuItem Command="{Binding ShowSettingsCommand, Mode=OneWay}"
+                      ToolTip="{loc:Translate Settings}">
+                <MenuItem.Icon>
+                    <Controls:AutoGreyableImage Source="Images/tools/settings/settings-24.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+
             <MenuItem Command="{Binding DBViewModel.ShowReportCenterCommand, Mode=OneWay}"
                       ToolTip="{loc:Translate PrintReport}">
                 <MenuItem.Icon>

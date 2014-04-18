@@ -1,4 +1,5 @@
-﻿using BillsManager.Models;
+﻿using BillsManager.Localization;
+using BillsManager.Models;
 using BillsManager.Services.Providers;
 using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
@@ -57,11 +58,11 @@ namespace BillsManager.ViewModels
                         this.globalEventAggregator.Unsubscribe(this);
                 };
 
+            // UI
+            this.DisplayName = TranslationManager.Instance.Translate("Bills").ToString();
+
             // START
             this.LoadBills();
-
-            // UI
-            this.DisplayName = "Bills";
         }
 
         #endregion
@@ -152,7 +153,7 @@ namespace BillsManager.ViewModels
 
         #region methods
 
-        private void LoadBills()
+        public void LoadBills()
         {
             var bills = this.billsProvider.GetAllBills();
 
@@ -169,14 +170,12 @@ namespace BillsManager.ViewModels
 
         private string GetBillSummary(Bill bill)
         {
-            var suppName = this.GetSupplierName(bill.SupplierID);
-
             return
-                (suppName != null ? suppName : "Supplier ID: " + bill.SupplierID) + // TODO: language
+                this.GetSupplierName(bill.SupplierID) +
                 Environment.NewLine +
                 bill.Code +
                 Environment.NewLine +
-                string.Format("{0:N2} €", bill.Amount);
+                string.Format(TranslationManager.Instance.Translate("_currency_format").ToString(), bill.Amount);
         }
 
         private string GetSupplierName(uint supplierID)
@@ -244,12 +243,17 @@ namespace BillsManager.ViewModels
         private void DeleteBill(Bill bill)
         {
             var question = new DialogViewModel(
-                "Delete bill",
-                "Do you really want to DELETE this bill?\n\n" + // TODO: language
+                TranslationManager.Instance.Translate("DeleteBill").ToString(),
+                "Do you really want to DELETE this bill?" +
+                Environment.NewLine +
+                Environment.NewLine + // TODO: language
                 this.GetBillSummary(bill),
                 new[]
                 {
-                    new DialogResponse(ResponseType.Yes, "Delete", "Confirm delete"), // TODO: language
+                    new DialogResponse(
+                        ResponseType.Yes, 
+                        TranslationManager.Instance.Translate("Delete").ToString(), 
+                        TranslationManager.Instance.Translate("ConfirmDelete").ToString()),
                     new DialogResponse(ResponseType.No)
                 });
 

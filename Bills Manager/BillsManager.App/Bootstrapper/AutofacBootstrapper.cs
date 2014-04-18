@@ -1,10 +1,10 @@
 ﻿using Autofac;
 using BillsManager.Localization;
-using BillsManager.Models;
 using BillsManager.Services.Feedback;
 //using BillsManager.App.Modules;
 using BillsManager.Services.Providers;
 using BillsManager.Services.Reporting;
+using BillsManager.Services.Settings;
 using BillsManager.ViewModels;
 using BillsManager.ViewModels.Reporting;
 using BillsManager.Views;
@@ -26,35 +26,38 @@ namespace BillsManager.App.Bootstrappers
         protected override void ConfigureContainer(ContainerBuilder builder)
         {
             base.ConfigureContainer(builder);
-
-            // READ SETTINGS (better place..?)
-
-            // DEPLOY SETTINGS
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("it-IT");
-            FrameworkElement.LanguageProperty.OverrideMetadata( // TODO: move to TranslationManager
-                typeof(FrameworkElement),
-                new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(Thread.CurrentThread.CurrentUICulture.IetfLanguageTag)));
-
+            
             // EXTRA MODULES
             // builder.RegisterModule<EventAggregationAutoUnsubscriptionModule>();
 
             // SERVICES
-            // URGENT: settings for db path
+            builder.RegisterType<XMLSettingsProvider>().As<ISettingsProvider>().SingleInstance();
+
             builder.RegisterInstance(new XMLDBConnector(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"DB\db.bmdb"))).AsImplementedInterfaces().SingleInstance();
 
             builder.RegisterType<XMLBackupsProvider>().As<IBackupsProvider>().SingleInstance();
 
             builder.RegisterGeneric(typeof(ReportPrinter<>)).As(typeof(ReportPrinter<>)).InstancePerDependency();
 
-            builder.RegisterType<EMailFeedbackSender>().As<IFeedbackSender>().SingleInstance();
-
-            var aqn =  typeof(BillsManager.Views.Languages.Resources).FullName;
+            builder.Register<EMailFeedbackSender>(
+                ctx => new EMailFeedbackSender(ctx.Resolve<ISettingsProvider>().Settings.FeedbackToEmailAddress))
+                .As<IFeedbackSender>().SingleInstance();
 
             builder.RegisterInstance(
                 new ResxTranslationProvider(
-                    aqn,
+                    typeof(BillsManager.Views.Languages.Resources).FullName,
                     Assembly.GetAssembly(typeof(BillsManager.Views.ShellView)))).As<ITranslationProvider>().SingleInstance();
-            builder.RegisterInstance(TranslationManager.Instance).AsSelf().PropertiesAutowired().AutoActivate();
+
+            builder.RegisterInstance(TranslationManager.Instance)
+                .AsSelf()
+                //.PropertiesAutowired()
+                .AutoActivate()
+                .OnActivated(
+                (tm) =>
+                {
+                    tm.Instance.CurrentLanguage = tm.Context.Resolve<ISettingsProvider>().Settings.Language;
+                    tm.Instance.TranslationProvider = tm.Context.Resolve<ITranslationProvider>();
+                });
 
             // VIEWMODELS
             builder.RegisterType<ShellViewModel>().AsSelf().SingleInstance();

@@ -32,6 +32,7 @@
             <RowDefinition />
             <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
         </Grid.RowDefinitions>
 
         <!--<TextBlock Text="Header"

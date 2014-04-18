@@ -68,6 +68,7 @@
     <Compile Include="Reporting\ReportOptions.cs" />
     <Compile Include="Reporting\ReportPrinter.cs" />
     <Compile Include="Settings\ISettingsProvider.cs" />
+    <Compile Include="Settings\XMLSettingsProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BillsManager.Model\BillsManager.Models.csproj">

@@ -1,4 +1,5 @@
-﻿using Caliburn.Micro;
+﻿using BillsManager.Localization;
+using Caliburn.Micro;
 using System;
 
 namespace BillsManager.ViewModels
@@ -43,7 +44,7 @@ namespace BillsManager.ViewModels
                 };
 
             // UI
-            this.DisplayName = "Backup Center"; // TODO: language
+            this.DisplayName = TranslationManager.Instance.Translate("BackupCenter").ToString();
 
             // START
             this.ActivateItem(this.DBBackupsViewModel);
