@@ -5,6 +5,8 @@
     <SolidColorBrush x:Key="NoneDueAlertBrush"
                      Color="Transparent" />
 
+    <!--  FF00B400    green  -->
+    <!--  FF74B400    rotten green  -->
     <SolidColorBrush x:Key="LowDueAlertBrush"
                      Color="#FF00B400" />
 
