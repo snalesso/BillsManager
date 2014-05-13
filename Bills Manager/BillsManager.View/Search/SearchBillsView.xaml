@@ -52,7 +52,7 @@
         <CheckBox Grid.Row="2"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
-                  Content="{loc:Translate NotPaid_toBill}"
+                  Content="{loc:Translate NotPaid_toBills}"
                   Visibility="Hidden" />
 
 
@@ -126,7 +126,7 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Command="{Binding SendFilterCommand}"
-                Content="{loc:Translate Filter}"
+                Content="{loc:Translate DoFilter}"
                 Focusable="False" />
 
         <Button Grid.Row="2"

@@ -11,12 +11,8 @@ using BillsManager.Views;
 using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Reflection;
-using System.Threading;
-using System.Windows;
-using System.Windows.Markup;
 
 namespace BillsManager.App.Bootstrappers
 {

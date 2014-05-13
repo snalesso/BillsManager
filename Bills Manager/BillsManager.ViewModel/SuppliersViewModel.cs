@@ -144,12 +144,11 @@ namespace BillsManager.ViewModels
         {
             var supps = this.suppliersProvider.GetAllSuppliers();
 
-            var suppVMs = supps.Select(supplier => this.supplierDetailsViewModelFactory.Invoke(supplier));
+            var suppVMs = supps.Select(supplier => this.supplierDetailsViewModelFactory.Invoke(supplier)).ToList();
 
-            var sortedSupps =
-                suppVMs.OrderBy(supplier => supplier.Name);
+            suppVMs.Sort();
 
-            this.SupplierViewModels = new ObservableCollection<SupplierDetailsViewModel>(sortedSupps);
+            this.SupplierViewModels = new ObservableCollection<SupplierDetailsViewModel>(suppVMs);
         }
 
         private string GetSupplierSummary(Supplier supplier)
@@ -172,17 +171,21 @@ namespace BillsManager.ViewModels
         {
             {
                 //var newVM = new SupplierAddEditViewModel(this.windowManager, this.dbEventAggregator, new Supplier(this.suppliersProvider.GetLastSupplierID() + 1));
-                var newVM = this.supplierAddEditViewModelFactory.Invoke(new Supplier(this.suppliersProvider.GetLastSupplierID() + 1));
+                var newSvm = this.supplierAddEditViewModelFactory.Invoke(new Supplier(this.suppliersProvider.GetLastSupplierID() + 1));
 
             tryAdd: // TODO: optimize
-                if (this.windowManager.ShowDialog(newVM) == true)
+                if (this.windowManager.ShowDialog(newSvm) == true)
                 {
-                    if (this.suppliersProvider.Add(newVM.ExposedSupplier))
+                    if (this.suppliersProvider.Add(newSvm.ExposedSupplier))
                     {
-                        //this.SupplierViewModels.Add(new SupplierDetailsViewModel(this.windowManager, this.globalEventAggregator, newVM.ExposedSupplier));
-                        this.SupplierViewModels.Add(this.supplierDetailsViewModelFactory.Invoke(newVM.ExposedSupplier));
+                        var newSuppDetVM = this.supplierDetailsViewModelFactory.Invoke(newSvm.ExposedSupplier);
 
-                        this.dbEventAggregator.Publish(new SupplierAddedMessage(newVM.ExposedSupplier));
+                        this.SupplierViewModels.AddSorted(newSuppDetVM);
+                        this.NotifyOfPropertyChange(() => this.FilteredSupplierViewModels);
+
+                        this.SelectedSupplierViewModel = newSuppDetVM;
+
+                        this.dbEventAggregator.Publish(new SupplierAddedMessage(newSvm.ExposedSupplier));
                     }
                     else // TODO: reshow the dialog with this suppVM
                     {
@@ -208,7 +211,13 @@ namespace BillsManager.ViewModels
                 if (this.suppliersProvider.Edit(editVM.ExposedSupplier))
                 {
                     // TODO: move to this.EditSupplier
-                    this.SupplierViewModels.Single(svm => svm.ExposedSupplier == supplier).Refresh();
+                    var editedSuppVM = this.SupplierViewModels.Single(svm => svm.ExposedSupplier == supplier);
+                    var wasSelected = this.SelectedSupplierViewModel == editedSuppVM;
+                    this.SupplierViewModels.SortEdited(editedSuppVM);
+
+                    if (wasSelected) // TODO: not working
+                        this.SelectedSupplierViewModel = editedSuppVM;
+
                     this.dbEventAggregator.Publish(new SupplierEditedMessage(editVM.ExposedSupplier, oldSupplier));
                 }
                 else
@@ -225,17 +234,19 @@ namespace BillsManager.ViewModels
         {
             var question = new DialogViewModel(
                 TranslationManager.Instance.Translate("DeleteSupplier").ToString(),
-                "Do you really want to DELETE this supplier?" + // TODO: language
+                TranslationManager.Instance.Translate("DeleteSupplierQuestion").ToString() +
                 Environment.NewLine +
                 Environment.NewLine +
                 this.GetSupplierSummary(supplier),
                 new[]
                 {
                     new DialogResponse(
-                        ResponseType.Yes, 
-                        TranslationManager.Instance.Translate("Delete").ToString(), 
-                        TranslationManager.Instance.Translate("Confirm delete").ToString()),
-                    new DialogResponse(ResponseType.No)
+                        ResponseType.Yes,
+                        TranslationManager.Instance.Translate("Delete").ToString(),
+                        TranslationManager.Instance.Translate("Yes").ToString()),
+                    new DialogResponse(
+                        ResponseType.No, 
+                        TranslationManager.Instance.Translate("No").ToString())
                 });
 
             this.windowManager.ShowDialog(question);

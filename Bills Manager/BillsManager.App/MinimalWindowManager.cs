@@ -196,6 +196,7 @@ namespace BillsManager.App
             if (isDialog)
             {
                 window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                //window.SizeToContent = SizeToContent.Manual;
                 window.ResizeMode = ResizeMode.NoResize;
                 window.WindowStyle = WindowStyle.None;
                 window.AllowsTransparency = true;

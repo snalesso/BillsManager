@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace BillsManager.ViewModels
 {
@@ -33,6 +34,32 @@ namespace BillsManager.ViewModels
             foreach (var item in data)
                 count++;
             return count;
+        }
+
+        public static void AddSorted<T>(this IList<T> list, T item, IComparer<T> comparer = null)
+        {
+            if (comparer == null)
+                comparer = Comparer<T>.Default;
+
+            int i = 0;
+            while (i < list.Count && comparer.Compare(list[i], item) < 0)
+                i++;
+
+            list.Insert(i, item);
+        }
+
+        public static void SortEdited<T>(this IList<T> list, T item, IComparer<T> comparer = null)
+        {
+            if (comparer == null)
+                comparer = Comparer<T>.Default;
+
+            list.Remove(item);
+
+            int i = 0;
+            while (i < list.Count && comparer.Compare(list[i], item) < 0)
+                i++;
+
+            list.AddSorted(item, comparer);
         }
     }
 }

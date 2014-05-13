@@ -53,7 +53,7 @@
                       HorizontalAlignment="Left" />
         </StackPanel>
 
-        <Button Content="{loc:Translate Filter}"
+        <Button Content="{loc:Translate DoFilter}"
                 Grid.Column="2"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Left"

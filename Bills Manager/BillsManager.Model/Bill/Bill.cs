@@ -2,6 +2,7 @@
 
 namespace BillsManager.Models
 {
+    // URGENT: add aggio/spese
     public partial class Bill
     {
         #region ctor

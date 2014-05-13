@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ViewModels="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
              xmlns:Caliburn="http://www.caliburnproject.org"
+             xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
              mc:Ignorable="d"
              d:DesignHeight="200"
              d:DesignWidth="700"
@@ -22,7 +23,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="{StaticResource RegionSeparatorSize}" />
+            <ColumnDefinition Width="{StaticResource MarginSize}" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
@@ -48,9 +49,9 @@
         <ContentControl x:Name="SuppliersViewModel"
                         Grid.Row="1" />
 
-        <GridSplitter Grid.Column="1"
-                      Grid.RowSpan="3"
-                      VerticalAlignment="Stretch" />
+        <Controls:GridSplitterEx Grid.Column="1"
+                                 Grid.RowSpan="3"
+                                 VerticalAlignment="Stretch" />
 
         <ContentControl x:Name="BillsViewModel"
                         Grid.Column="2"

@@ -329,16 +329,15 @@ namespace BillsManager.ViewModels
             if (this.HasChanges)
             {
                 var question = new DialogViewModel(
-                    TranslationManager.Instance.Translate("Cancel").ToString() + " " +
-                    (this.IsInEditMode ?
-                    TranslationManager.Instance.Translate("Add").ToString().ToLower(TranslationManager.Instance.CurrentLanguage) :
-                    TranslationManager.Instance.Translate("Edit").ToString().ToLower(TranslationManager.Instance.CurrentLanguage)),
+                    this.IsInEditMode ?
+                    TranslationManager.Instance.Translate("CancelEdit").ToString() :
+                    TranslationManager.Instance.Translate("CancelAdd").ToString(),
                     TranslationManager.Instance.Translate("DiscardChangesQuestion").ToString(),
-                       new[]
-                       {
-                           new DialogResponse(ResponseType.Yes),
-                           new DialogResponse(ResponseType.No)
-                       });
+                    new[]
+                    {
+                        new DialogResponse(ResponseType.Yes, TranslationManager.Instance.Translate("Yes").ToString()),
+                        new DialogResponse(ResponseType.No, TranslationManager.Instance.Translate("No").ToString())
+                    });
 
                 this.windowManager.ShowDialog(question);
 

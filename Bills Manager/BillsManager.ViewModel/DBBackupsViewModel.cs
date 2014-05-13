@@ -124,7 +124,7 @@ namespace BillsManager.ViewModels
                 new[]
                 {
                     new DialogResponse(ResponseType.Yes, TranslationManager.Instance.Translate("CreateBackup").ToString()),
-                    new DialogResponse(ResponseType.No)
+                    new DialogResponse(ResponseType.No, TranslationManager.Instance.Translate("No").ToString())
                 });
 
             this.windowManager.ShowDialog(question);
@@ -148,10 +148,10 @@ namespace BillsManager.ViewModels
                                 new DialogResponse(
                                     ResponseType.Yes, 
                                     TranslationManager.Instance.Translate("Rollback").ToString(), 
-                                    TranslationManager.Instance.Translate("ConfirmRollback").ToString()),
+                                    TranslationManager.Instance.Translate("Yes").ToString()),
                                 new DialogResponse(
                                     ResponseType.No,
-                                    TranslationManager.Instance.Translate("Cancel").ToString())
+                                    TranslationManager.Instance.Translate("No").ToString())
                             });
 
             this.windowManager.ShowDialog(rollbackQuestion);
@@ -192,8 +192,8 @@ namespace BillsManager.ViewModels
         private void DeleteBackup(BackupViewModel backupViewModel)
         {
             var question = new DialogViewModel(
-                TranslationManager.Instance.Translate("DeletBackup").ToString(),
-                TranslationManager.Instance.Translate("DeletBackupQuestion").ToString() +
+                TranslationManager.Instance.Translate("DeleteBackup").ToString(),
+                TranslationManager.Instance.Translate("DeleteBackupQuestion").ToString() +
                 Environment.NewLine +
                 Environment.NewLine +
                 this.GetBackupInfo(backupViewModel.ExposedBackup),
@@ -201,11 +201,11 @@ namespace BillsManager.ViewModels
                 {
                     new DialogResponse(
                         ResponseType.Yes,
-                        TranslationManager.Instance.Translate("DeleteBackup").ToString(),
-                        TranslationManager.Instance.Translate("IConfirm").ToString()),
+                        TranslationManager.Instance.Translate("Delete").ToString(),
+                        TranslationManager.Instance.Translate("Yes").ToString()),
                     new DialogResponse(
                         ResponseType.No,
-                        TranslationManager.Instance.Translate("Cancel").ToString())
+                        TranslationManager.Instance.Translate("No").ToString())
                 });
 
             this.windowManager.ShowDialog(question);

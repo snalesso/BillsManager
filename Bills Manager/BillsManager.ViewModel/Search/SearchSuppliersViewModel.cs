@@ -53,7 +53,7 @@ namespace BillsManager.ViewModels
                     sdvm => sdvm.ObligationState == this.ObligationStateFilterValue,
                     () =>
                         this.ObligationStateFilterValue != Obligation.None ?
-                        this.ObligationStateFilterValue.ToString() + "s" :
+                        this.ObligationStateFilterValue.ToString() + "s" : // TODO: language
                         "indifferent"); // TODO: find a more appropriate term
         }
 

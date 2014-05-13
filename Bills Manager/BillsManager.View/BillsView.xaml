@@ -46,7 +46,7 @@
                                 Header="{loc:Translate Supplier}"
                                 Width="160" />
                 <GridViewColumn DisplayMemberBinding="{Binding Code}"
-                                Header="{loc:Translate Code}"
+                                Header="{loc:Translate Number}"
                                 Width="95" />
                 <GridViewColumn Header="{loc:Translate Amount}"
                                 Width="95">

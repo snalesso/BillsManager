@@ -1,4 +1,5 @@
-﻿using Caliburn.Micro;
+﻿using BillsManager.Localization;
+using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +61,7 @@ namespace BillsManager.ViewModels
         }
 
         public DialogViewModel(string caption, string message)
-            : this(caption, message, new[] { new DialogResponse(ResponseType.Ok) })
+            : this(caption, message, new[] { new DialogResponse(ResponseType.Ok, TranslationManager.Instance.Translate("Ok").ToString()) })
         {
         }
 

@@ -171,10 +171,7 @@
   <data name="Pay" xml:space="preserve">
     <value>Pay</value>
   </data>
-  <data name="PaidOn_Male" xml:space="preserve">
-    <value>Paid on</value>
-  </data>
-  <data name="PaidOn_Female" xml:space="preserve">
+  <data name="PaidOn_toBill" xml:space="preserve">
     <value>Paid on</value>
   </data>
   <data name="Paid_Male" xml:space="preserve">
@@ -201,7 +198,7 @@
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
-  <data name="New_Male" xml:space="preserve">
+  <data name="New_toSupplier" xml:space="preserve">
     <value>New</value>
   </data>
   <data name="Debtor" xml:space="preserve">
@@ -249,7 +246,7 @@
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="New_Female" xml:space="preserve">
+  <data name="New_toBill" xml:space="preserve">
     <value>New</value>
   </data>
   <data name="Country" xml:space="preserve">
@@ -273,10 +270,7 @@
   <data name="Province" xml:space="preserve">
     <value>Province</value>
   </data>
-  <data name="RegisteredOn_Female" xml:space="preserve">
-    <value>Registered on</value>
-  </data>
-  <data name="RegisteredOn_Male" xml:space="preserve">
+  <data name="RegisteredOn_toBill" xml:space="preserve">
     <value>Registered on</value>
   </data>
   <data name="Registering" xml:space="preserve">
@@ -284,12 +278,6 @@
   </data>
   <data name="Release" xml:space="preserve">
     <value>Release</value>
-  </data>
-  <data name="ReleasedOn_Female" xml:space="preserve">
-    <value>Released on</value>
-  </data>
-  <data name="ReleasedOn_Male" xml:space="preserve">
-    <value>Released on</value>
   </data>
   <data name="Report" xml:space="preserve">
     <value>Report</value>
@@ -348,7 +336,7 @@
   <data name="BackupCenter" xml:space="preserve">
     <value>Backup Center</value>
   </data>
-  <data name="BackupRestoreTimes_Format" xml:space="preserve">
+  <data name="_rollbacksCount_format" xml:space="preserve">
     <value>{0} rollbacks</value>
   </data>
   <data name="BillDetails" xml:space="preserve">
@@ -432,9 +420,6 @@
   <data name="SupplierDetails" xml:space="preserve">
     <value>Supplier details</value>
   </data>
-  <data name="Connected_Female" xml:space="preserve">
-    <value>Connected</value>
-  </data>
   <data name="Connected_toDB" xml:space="preserve">
     <value>Connected</value>
   </data>
@@ -461,9 +446,6 @@
   </data>
   <data name="OperationMayTakeAWhile" xml:space="preserve">
     <value>This operation may take a while</value>
-  </data>
-  <data name="ConfirmRollback" xml:space="preserve">
-    <value>Confirm rollback</value>
   </data>
   <data name="RollbackCanceled" xml:space="preserve">
     <value>Rollback canceled</value>
@@ -525,17 +507,11 @@
   <data name="SaveBeforeClosingQuestion" xml:space="preserve">
     <value>Do you wish to save before closing?</value>
   </data>
-  <data name="All_toBill" xml:space="preserve">
-    <value>All</value>
-  </data>
   <data name="Unsaved_toDB" xml:space="preserve">
     <value>Unsaved</value>
   </data>
   <data name="CancelExit" xml:space="preserve">
     <value>Cancel closing</value>
-  </data>
-  <data name="ConfirmDelete" xml:space="preserve">
-    <value>Delete</value>
   </data>
   <data name="Creditor_toSupplier" xml:space="preserve">
     <value>Creditor</value>
@@ -545,5 +521,56 @@
   </data>
   <data name="None_toSupplier" xml:space="preserve">
     <value>None</value>
+  </data>
+  <data name="DoFilter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="Paid_toBills" xml:space="preserve">
+    <value>Paid</value>
+  </data>
+  <data name="NotPaid_toBills" xml:space="preserve">
+    <value>Not paid</value>
+  </data>
+  <data name="NewBill" xml:space="preserve">
+    <value>New bill</value>
+  </data>
+  <data name="All_toBills" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="PayBillQuestion" xml:space="preserve">
+    <value>Are you sure you want to pay this bill?</value>
+  </data>
+  <data name="DeleteBillQuestion" xml:space="preserve">
+    <value>Do you really want to delete this bill?</value>
+  </data>
+  <data name="DeleteSupplierQuestion" xml:space="preserve">
+    <value>Do you really want to delete this supplier?</value>
+  </data>
+  <data name="NewSupplier" xml:space="preserve">
+    <value>New supplier</value>
+  </data>
+  <data name="ConnectAutomatically" xml:space="preserve">
+    <value>Connect automatically</value>
+  </data>
+  <data name="By" xml:space="preserve">
+    <value>By</value>
+  </data>
+  <data name="DuedOn_toBill" xml:space="preserve">
+    <value>Dued on</value>
+  </data>
+  <data name="ReleasedOn_toBill" xml:space="preserve">
+    <value>Released on</value>
+  </data>
+  <data name="AllTheBills" xml:space="preserve">
+    <value>All the bills</value>
+  </data>
+  <data name="DuedOn_toBills" xml:space="preserve">
+    <value>Dued on</value>
+  </data>
+  <data name="ReleasedOn_toBills" xml:space="preserve">
+    <value>Released on</value>
+  </data>
+  <data name="_shortDate_format" xml:space="preserve">
+    <value>{0:MM/dd/yyyy}</value>
   </data>
 </root>

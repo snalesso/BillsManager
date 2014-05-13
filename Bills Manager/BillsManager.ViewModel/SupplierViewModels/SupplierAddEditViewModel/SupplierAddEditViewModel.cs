@@ -7,6 +7,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BillsManager.ViewModels
 {
+    // TODO: cap database support
+    // TODO: country database (3chars?)
     public partial class SupplierAddEditViewModel : SupplierViewModel
     {
         #region fields
@@ -165,7 +167,6 @@ namespace BillsManager.ViewModels
 
         #region address
 
-        [Required(ErrorMessage = "You must specify a street.")]
         public override string Street
         {
             get { return base.Street; }
@@ -180,7 +181,6 @@ namespace BillsManager.ViewModels
             }
         }
 
-        [Required(ErrorMessage = "You must specify a number.")]
         public override string Number
         {
             get { return base.Number; }
@@ -195,7 +195,6 @@ namespace BillsManager.ViewModels
             }
         }
 
-        [Required(ErrorMessage = "You must specify a city.")]
         public override string City
         {
             get { return base.City; }
@@ -210,7 +209,7 @@ namespace BillsManager.ViewModels
             }
         }
 
-        [Required(ErrorMessage = "You must specify a zip.")]
+        //[Required(ErrorMessage = "You must specify a zip.")]
         [StringLength(5, MinimumLength = 5, ErrorMessage = "The zip must be 5 digits long.")]
         //[CustomValidation(typeof(UInt32), "Parse", ErrorMessage = "The zip can only contain digits.")] // TODO: complete constraints
         public override string Zip
@@ -227,7 +226,7 @@ namespace BillsManager.ViewModels
             }
         }
 
-        [Required(ErrorMessage = "You must specify a province.")]
+        //[Required(ErrorMessage = "You must specify a province.")]
         [StringLength(2, MinimumLength = 2, ErrorMessage = "The province abbreviation must be 2 characters long.")]
         public override string Province
         {
@@ -243,7 +242,6 @@ namespace BillsManager.ViewModels
             }
         }
 
-        [Required(ErrorMessage = "You must specify a country.")]
         public override string Country
         {
             get { return base.Country; }
@@ -267,7 +265,12 @@ namespace BillsManager.ViewModels
         public new string DisplayName
         {
             // TODO: move the change to IsInEditMode & HasChanges
-            get { return this.IsInEditMode ? ("Edit supplier" + (this.IsInEditMode & this.HasChanges ? " [*]" : string.Empty)) : "New supplier"; }
+            get
+            {
+                return this.IsInEditMode
+                    ? (TranslationManager.Instance.Translate("EditSupplier").ToString() + (this.IsInEditMode & this.HasChanges ? " [*]" : string.Empty))
+                    : TranslationManager.Instance.Translate("NewSupplier").ToString();
+            }
         }
 
         #endregion
@@ -281,11 +284,15 @@ namespace BillsManager.ViewModels
             if (this.HasChanges)
             {
                 var discardChangesDialog = new DialogViewModel(
-                    (this.IsInEditMode ?
+                    this.IsInEditMode ?
                     TranslationManager.Instance.Translate("CancelEdit").ToString() :
-                    TranslationManager.Instance.Translate("CancelAdd").ToString()),
+                    TranslationManager.Instance.Translate("CancelAdd").ToString(),
                     TranslationManager.Instance.Translate("DiscardChangesQuestion").ToString(),
-                    new[] { new DialogResponse(ResponseType.Yes), new DialogResponse(ResponseType.No) });
+                    new[]
+                    {
+                        new DialogResponse(ResponseType.Yes, TranslationManager.Instance.Translate("Yes").ToString()),
+                        new DialogResponse(ResponseType.No, TranslationManager.Instance.Translate("No").ToString())
+                    });
 
                 this.windowManager.ShowDialog(discardChangesDialog);
 

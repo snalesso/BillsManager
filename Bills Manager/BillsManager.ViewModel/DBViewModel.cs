@@ -6,6 +6,7 @@ using BillsManager.ViewModels.Reporting;
 using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace BillsManager.ViewModels
 {
@@ -367,10 +368,12 @@ namespace BillsManager.ViewModels
                 this.reportCenterViewModelFactory.Invoke(billReports, header, comment),
                 settings: new Dictionary<string, object>()
                 {
-                    { "CanClose", true }/*,
+                    { "CanClose", true },
+                    { "WindowState", WindowState.Maximized},
+                    { "SizeToContent", SizeToContent.Manual},
                     { "ResizeMode", ResizeMode.CanResize },
                     { "AllowsTransparency", false },
-                    { "WindowStyle", WindowStyle.SingleBorderWindow }*/
+                    { "WindowStyle", WindowStyle.SingleBorderWindow }
                 });
         }
 

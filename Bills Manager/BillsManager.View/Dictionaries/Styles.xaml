@@ -41,8 +41,9 @@
         <ResourceDictionary Source="Styles\CheckBoxStyle.xaml" />
 
         <ResourceDictionary Source="Styles\GridSplitterStyle.xaml" />
+        <ResourceDictionary Source="Styles\GridSplitterExStyle.xaml" />
 
-        <!--  <ResourceDictionary Source="Styles\WindowExStyle.xaml" />  -->
+        <!--<ResourceDictionary Source="Styles\WindowExStyle.xaml" />-->
 
     </ResourceDictionary.MergedDictionaries>
 

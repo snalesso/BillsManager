@@ -2,6 +2,7 @@
 
 namespace BillsManager.Models
 {
+    // TODO: add digits separator style
     public partial class Settings
     {
         public Settings(

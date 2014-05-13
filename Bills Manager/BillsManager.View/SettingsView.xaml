@@ -64,7 +64,7 @@
                    Grid.Column="1"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="Connect to database automatically" />
+                   Text="{loc:Translate ConnectAutomatically}" />
 
         <CheckBox Grid.Row="3"
                   Grid.Column="3"
@@ -90,13 +90,15 @@
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
             <Button Command="{Binding SaveAndCloseCommand, Mode=OneWay}"
-                    Content="{loc:Translate Save}">
+                    Content="{loc:Translate Save}"
+                    MinWidth="80">
                 <Button.Margin>
                     <Thickness Right="{StaticResource MarginSizeValue}" />
                 </Button.Margin>
             </Button>
             <Button Command="{Binding CancelAndCloseCommand, Mode=OneWay}"
-                    Content="{loc:Translate Cancel}" />
+                    Content="{loc:Translate Cancel}"
+                    MinWidth="80" />
         </StackPanel>
 
     </Grid>

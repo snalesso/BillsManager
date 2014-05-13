@@ -10,9 +10,11 @@ namespace BillsManager.App
     /// </summary>
     public partial class App : Application, ISingleInstanceApp
     {
+        private readonly AutofacBootstrapper boot;
+
         public App()
         {
-            new AutofacBootstrapper();
+            this.boot = new AutofacBootstrapper();
         }
 
         private const string Unique = "My_Unique_Application_String";
@@ -33,6 +35,7 @@ namespace BillsManager.App
         {
             // handle command line arguments of second instance
             // ...
+            // TODO: bring to front
             return true;
         }
     }

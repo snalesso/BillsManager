@@ -22,7 +22,7 @@ namespace BillsManager.Localization
         {
             resourceManager = new ResourceManager(baseName, assembly);
 
-            this.availableLanguages = CultureInfo.GetCultures(CultureTypes.SpecificCultures)
+            var avLangs = CultureInfo.GetCultures(CultureTypes.SpecificCultures)
                 .Where(c =>
                 {
                     try
@@ -39,7 +39,10 @@ namespace BillsManager.Localization
                 new CultureInfo[]
                 { 
                     CultureInfo.GetCultureInfo(Assembly.GetEntryAssembly().GetCustomAttribute<NeutralResourcesLanguageAttribute>().CultureName)
-                });
+                })
+                /*.ToList()*/;
+
+            this.availableLanguages = avLangs;
         }
 
         #endregion

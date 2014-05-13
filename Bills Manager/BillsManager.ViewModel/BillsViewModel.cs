@@ -138,14 +138,14 @@ namespace BillsManager.ViewModels
             get
             {
                 var filtersDescription = string.Empty;
-                if (this.Filters == null) return "All bills";
+                if (this.Filters == null) return TranslationManager.Instance.Translate("AllTheBills").ToString();
 
                 foreach (var filter in this.Filters)
                 {
-                    filtersDescription += ", " + filter.Description();
+                    filtersDescription += ", " + filter.Description().ToLower(TranslationManager.Instance.CurrentLanguage);
                 }
 
-                return "Bills" + filtersDescription.Substring(1);
+                return TranslationManager.Instance.Translate("Bills").ToString() + filtersDescription.Substring(1);
             }
         }
 
@@ -157,15 +157,11 @@ namespace BillsManager.ViewModels
         {
             var bills = this.billsProvider.GetAllBills();
 
-            var billVMs = bills.Select(bill => this.billDetailsViewModelFactory.Invoke(bill));
+            var billVMs = bills.Select(bill => this.billDetailsViewModelFactory.Invoke(bill)).ToList();
 
-            var sortedBillVMs =
-                billVMs.OrderBy(billVM => billVM.IsPaid)
-                .ThenBy(billVM => billVM.DueDate)
-                .ThenBy(billVM => billVM.Amount)
-                .ThenBy(billVM => billVM.SupplierName)/**/;
+            billVMs.Sort();
 
-            this.BillViewModels = new ObservableCollection<BillDetailsViewModel>(sortedBillVMs);
+            this.BillViewModels = new ObservableCollection<BillDetailsViewModel>(billVMs);
         }
 
         private string GetBillSummary(Bill bill)
@@ -187,7 +183,6 @@ namespace BillsManager.ViewModels
 
         #region CRUD
 
-        // URGENT: add and edit -> update bills sorting
         private void AddBill(Supplier supplier = null)
         {
             var supps = this.GetAvailableSuppliers();
@@ -197,21 +192,28 @@ namespace BillsManager.ViewModels
                 newBvm.SelectedSupplier = supplier;
 
             //newBvm.SetupForAddEdit();
-
-            if (this.windowManager.ShowDialog(newBvm)
-                == true)
+        tryAdd:
+            if (this.windowManager.ShowDialog(newBvm) == true)
             {
                 // TODO: make it possible to show the view through a dialogviewmodel (evaluate the idea)
-                this.billsProvider.Add(newBvm.ExposedBill);
+                if (this.billsProvider.Add(newBvm.ExposedBill))
+                {
+                    var newBillDetVM = this.billDetailsViewModelFactory.Invoke(newBvm.ExposedBill);
 
-                var newBvmDetails = this.billDetailsViewModelFactory.Invoke(newBvm.ExposedBill);
+                    this.BillViewModels.AddSorted(newBillDetVM);
+                    this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
 
-                this.BillViewModels.Add(newBvmDetails); // TODO: use an event handler?
-                this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
+                    this.SelectedBillViewModel = newBillDetVM;
 
-                this.SelectedBillViewModel = newBvmDetails;
-
-                this.globalEventAggregator.Publish(new BillAddedMessage(newBvm.ExposedBill));
+                    this.globalEventAggregator.Publish(new BillAddedMessage(newBvm.ExposedBill));
+                }
+                else
+                {
+                    this.windowManager.ShowDialog(new DialogViewModel(
+                        "Add failed", // TODO: language
+                        "Couldn't save the new bill. Please try again."));
+                    goto tryAdd;
+                }
             }
         }
 
@@ -228,7 +230,13 @@ namespace BillsManager.ViewModels
             {
                 if (this.billsProvider.Edit(baeVM.ExposedBill))
                 {
-                    this.BillViewModels.Single(bvm => bvm.ExposedBill == bill).Refresh();
+                    var editedBillVM = this.BillViewModels.Single(bvm => bvm.ExposedBill == bill);
+                    var wasSelected = this.SelectedBillViewModel == editedBillVM;
+                    this.BillViewModels.SortEdited(editedBillVM);
+
+                    if (wasSelected) // TODO: not working
+                        this.SelectedBillViewModel = editedBillVM;
+
                     this.globalEventAggregator.Publish(new BillEditedMessage(baeVM.ExposedBill, oldVersion)); // TODO: move to confirm add edit command in addeditbvm
                 }
                 else
@@ -244,17 +252,17 @@ namespace BillsManager.ViewModels
         {
             var question = new DialogViewModel(
                 TranslationManager.Instance.Translate("DeleteBill").ToString(),
-                "Do you really want to DELETE this bill?" +
+                TranslationManager.Instance.Translate("DeleteBillQuestion").ToString() +
                 Environment.NewLine +
-                Environment.NewLine + // TODO: language
+                Environment.NewLine +
                 this.GetBillSummary(bill),
                 new[]
                 {
                     new DialogResponse(
-                        ResponseType.Yes, 
-                        TranslationManager.Instance.Translate("Delete").ToString(), 
-                        TranslationManager.Instance.Translate("ConfirmDelete").ToString()),
-                    new DialogResponse(ResponseType.No)
+                        ResponseType.Yes,
+                        TranslationManager.Instance.Translate("Delete").ToString(),
+                        TranslationManager.Instance.Translate("Yes").ToString()),
+                    new DialogResponse(ResponseType.No,TranslationManager.Instance.Translate("No").ToString())
                 });
 
             this.windowManager.ShowDialog(question);
@@ -275,12 +283,20 @@ namespace BillsManager.ViewModels
         private void PayBill(Bill bill)
         {
             var dialog = new DialogViewModel(
-                "Pay bill",
-                "Are you sure you want to pay this bill?" +
+                TranslationManager.Instance.Translate("PayBill").ToString(),
+                TranslationManager.Instance.Translate("PayBillQuestion").ToString() +
                 Environment.NewLine +
                 Environment.NewLine +
                 this.GetBillSummary(bill),
-                new[] { new DialogResponse(ResponseType.Yes), new DialogResponse(ResponseType.No) });
+                new[] 
+                { 
+                    new DialogResponse(
+                        ResponseType.Yes,
+                        TranslationManager.Instance.Translate("PayBill").ToString()),
+                    new DialogResponse(
+                        ResponseType.No,
+                        TranslationManager.Instance.Translate("No").ToString()) 
+                });
 
             if (this.windowManager.ShowDialog(dialog) == true)
             {
@@ -290,7 +306,12 @@ namespace BillsManager.ViewModels
 
                 this.billsProvider.Edit(bill);
 
-                this.BillViewModels.Single(bvm => bvm.ExposedBill == bill).Refresh();
+                var editedVM = this.BillViewModels.Single(bvm => bvm.ExposedBill == bill);
+                var wasSelected = this.SelectedBillViewModel == editedVM;
+                this.BillViewModels.SortEdited(editedVM);
+
+                if (wasSelected)
+                    this.SelectedBillViewModel = editedVM;
 
                 this.globalEventAggregator.Publish(new BillEditedMessage(bill, oldVersion));
             }

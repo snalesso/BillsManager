@@ -68,25 +68,28 @@ namespace BillsManager.ViewModels
             this.supplierNameFilter =
                 new Filter<BillDetailsViewModel>(
                     bdvm => bdvm.SupplierID == this.SelectedSupplier.ID,
-                    () => "by " + this.SelectedSupplier.Name);
+                    () =>
+                        TranslationManager.Instance.Translate("By").ToString().ToLower(TranslationManager.Instance.CurrentLanguage) +
+                        " " + this.SelectedSupplier.Name); // TODO: language
 
             this.isPaidFilter =
                 new Filter<BillDetailsViewModel>(
                     bdvm => bdvm.IsPaid == this.IsPaidFilterValue,
                     () =>
                         this.IsPaidFilterValue.HasValue ?
-                        (this.IsPaidFilterValue == true ? "paid" : "not paid")
-                        : "all");
+                        (this.IsPaidFilterValue == true ? TranslationManager.Instance.Translate("Paid_toBills").ToString() :
+                        TranslationManager.Instance.Translate("NotPaid_toBills").ToString()) :
+                        TranslationManager.Instance.Translate("All_toBills").ToString());
 
             this.dueDateFilter =
                 new Filter<BillDetailsViewModel>(
                     bdvm => bdvm.DueDate == this.DueDateFilterValue,
-                    () => "dued on " + this.DueDateFilterValue.Value.ToShortDateString());
+                    () => TranslationManager.Instance.Translate("DuedOn_toBills").ToString() + " " + this.DueDateFilterValue.Value.ToShortDateString()); // TODO: language
 
             this.releaseDateFilter =
                 new Filter<BillDetailsViewModel>(
                     bdvm => bdvm.ReleaseDate == this.ReleaseDateFilterValue,
-                    () => "released on " + this.ReleaseDateFilterValue.Value.ToShortDateString());
+                    () => TranslationManager.Instance.Translate("ReleasedOn_toBills").ToString() + " " + this.ReleaseDateFilterValue.Value.ToShortDateString()); // TODO: language
         }
 
         #endregion
@@ -116,7 +119,8 @@ namespace BillsManager.ViewModels
             get
             {
                 if (this.availableSuppliers == null)
-                    this.globalEventAggregator.Publish(new AvailableSuppliersRequestMessage(suppliers => this.availableSuppliers = suppliers));
+                    this.globalEventAggregator.Publish(
+                        new AvailableSuppliersRequestMessage(suppliers => this.availableSuppliers = suppliers));
 
                 return this.availableSuppliers;
             }
@@ -167,11 +171,11 @@ namespace BillsManager.ViewModels
                 switch (this.IsPaidFilterValue) // TODO: localize enum
                 {
                     case true:
-                        return  TranslationManager.Instance.Translate("Paid_toBill").ToString();
+                        return TranslationManager.Instance.Translate("Paid_toBills").ToString();
                     case false:
-                        return TranslationManager.Instance.Translate("NotPaid_toBill").ToString();
+                        return TranslationManager.Instance.Translate("NotPaid_toBills").ToString();
                     default:
-                        return TranslationManager.Instance.Translate("All_toBill").ToString();
+                        return TranslationManager.Instance.Translate("All_toBills").ToString();
                 }
             }
         }
@@ -308,7 +312,7 @@ namespace BillsManager.ViewModels
                 this.AvailableSuppliers.FirstOrDefault() :
                 this.SelectedSupplier);
         }
-        
+
 
         public void Handle(BillEditedMessage message)
         {

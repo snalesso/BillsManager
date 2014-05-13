@@ -38,6 +38,7 @@ namespace BillsManager.Services.Settings
             else
             {
                 this.xmlSettings = this.CreateDefaultXSettings();
+                this.Settings = this.ExtractSettings(this.xmlSettings);
                 this.Save();
             }
 
@@ -62,7 +63,7 @@ namespace BillsManager.Services.Settings
             }
             catch (Exception)
             {
-                return this.CreateDefaultXSettings();
+                return this.CreateDefaultXSettings(); // TODO: needed?
             }
         }
 

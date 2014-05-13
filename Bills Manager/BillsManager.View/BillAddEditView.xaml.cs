@@ -2,6 +2,8 @@
 
 namespace BillsManager.Views
 {
+    // TODO: combobox drop down border needs to be not rounded on top, and cbx botcorn when radius != 0
+    // TODO: localize validation error popups
     /// <summary>
     /// Logica di interazione per BillView.xaml
     /// </summary>

@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackupCenterViewModel.cs" />
+    <Compile Include="BillViewModels\BillDetailsViewModel\BillDetailsViewModel.IComparable.cs" />
     <Compile Include="Commanding\EventToCommand\BehaviorBinding.cs" />
     <Compile Include="Commanding\EventToCommand\CommandBehavior.cs" />
     <Compile Include="Commanding\EventToCommand\CommandBehaviorBinding.cs" />
@@ -83,7 +84,7 @@
     <Compile Include="DesignTime\StatusBarViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\SupplierAddEditViewModel.DesignTime.cs" />
     <Compile Include="Dialog\ProgressViewModel.cs" />
-    <Compile Include="DueAlert.cs" />
+    <Compile Include="EnumDueAlert.cs" />
     <Compile Include="EnumDBConnectionState.cs" />
     <Compile Include="Messages\DBState\DBConnectionStateChangedMessage.cs" />
     <Compile Include="Messages\Single database Events\Suppliers Events\AddBillToSupplierOrder.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="SupplierViewModels\SupplierAddEditViewModel\SupplierAddEditViewModel.IEditableObject.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="SupplierViewModels\SupplierDetailsViewModel\SupplierDetailsViewModel.IComparable.cs" />
     <Compile Include="SupplierViewModels\SupplierDetailsViewModel\SupplierDetailsViewModel.cs" />
     <Compile Include="SupplierViewModels\SupplierViewModel.cs" />
     <Compile Include="TagsViewModel.cs" />

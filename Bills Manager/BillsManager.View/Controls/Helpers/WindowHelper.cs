@@ -5,6 +5,7 @@ using System.Windows.Interop;
 
 namespace BillsManager.Views.Controls
 {
+    // URGENT: adapt to screen size
     public class WindowHelper
     {
         #region constants

@@ -31,8 +31,7 @@
             <!--  5  -->
 
             <RowDefinition Height="{StaticResource MarginSize}" />
-            <RowDefinition Height="24" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="18" />
             <RowDefinition Height="Auto"
                            SharedSizeGroup="row" />
             <RowDefinition Height="{StaticResource MarginSize}" />
@@ -49,8 +48,7 @@
             <!--  15  -->
 
             <RowDefinition Height="{StaticResource MarginSize}" />
-            <RowDefinition Height="24" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="18" />
             <RowDefinition Height="Auto"
                            SharedSizeGroup="row" />
             <RowDefinition Height="{StaticResource MarginSize}" />
@@ -60,7 +58,7 @@
             <RowDefinition Height="Auto"
                            SharedSizeGroup="row" />
             <RowDefinition Height="{StaticResource MarginSize}" />
-            <RowDefinition Height="24" />
+            <RowDefinition Height="18" />
             <RowDefinition Height="{StaticResource MarginSize}" />
             <!--  20  -->
 
@@ -70,8 +68,6 @@
             <RowDefinition Height="Auto"
                            SharedSizeGroup="row" />
             <RowDefinition Height="{StaticResource MarginSize}" />
-            <RowDefinition Height="Auto"
-                           SharedSizeGroup="row" />
             <!--  25  -->
 
             <!--
@@ -90,9 +86,7 @@
                 <RowDefinition Height="Auto"
                 SharedSizeGroup="row" />
             -->
-            <RowDefinition Height="{StaticResource MarginSize}" />
-            <RowDefinition Height="24" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="18" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="{StaticResource MarginSize}" />
             <!--  35  -->
@@ -145,7 +139,7 @@
         <TextBox Grid.Row="5"
                  Grid.Column="3"
                  Grid.ColumnSpan="5"
-                 Height="64"
+                 Height="48"
                  HorizontalAlignment="Stretch"
                  VerticalAlignment="Center"
                  HorizontalScrollBarVisibility="Disabled"
@@ -157,7 +151,7 @@
 
 
         <!--  Contacts  -->
-        <TextBlock Grid.Row="9"
+        <TextBlock Grid.Row="8"
                    Grid.Column="1"
                    Grid.ColumnSpan="7"
                    HorizontalAlignment="Center"
@@ -165,83 +159,79 @@
                    FontWeight="Bold"
                    Text="{loc:Translate Address}" />
 
-        <TextBlock Grid.Row="21"
+        <TextBlock Grid.Row="19"
                    Grid.Column="1"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate AgentName}" />
-        <TextBox Grid.Row="21"
+        <TextBox Grid.Row="19"
                  Grid.Column="3"
                  TabIndex="8"
                  Text="{Binding AgentName}" />
 
-        <TextBlock Grid.Row="21"
+        <TextBlock Grid.Row="19"
                    Grid.Column="5"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate AgentSurname}" />
-        <TextBox Grid.Row="21"
+        <TextBox Grid.Row="19"
                  Grid.Column="7"
                  TabIndex="9"
                  Text="{Binding AgentSurname}" />
 
-        <TextBlock Grid.Row="23"
+        <TextBlock Grid.Row="21"
                    Grid.Column="1"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate AgentPhone}" />
-        <TextBox Grid.Row="23"
+        <TextBox Grid.Row="21"
                  Grid.Column="3"
                  TabIndex="10"
                  Text="{Binding AgentPhone}" />
 
-        <TextBlock Grid.Row="27"
+        <TextBlock Grid.Row="25"
                    Grid.Column="1"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate Phone}" />
-        <TextBox Grid.Row="27"
+        <TextBox Grid.Row="25"
                  Grid.Column="3"
-                 Width="150"
                  VerticalAlignment="Center"
                  MaxLines="1"
                  TabIndex="11"
                  Text="{Binding Path=Phone, UpdateSourceTrigger=PropertyChanged}" />
 
-        <TextBlock Grid.Row="27"
+        <TextBlock Grid.Row="25"
                    Grid.Column="5"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate Fax}" />
-        <TextBox Grid.Row="27"
+        <TextBox Grid.Row="25"
                  Grid.Column="7"
-                 Width="150"
                  VerticalAlignment="Center"
                  MaxLines="1"
                  TabIndex="12"
                  Text="{Binding Fax, UpdateSourceTrigger=PropertyChanged}" />
 
-        <TextBlock Grid.Row="31"
-                   Grid.Column="1"
+        <TextBlock Grid.Row="27"
+                   Grid.Column="5"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate Website}" />
-        <TextBox Grid.Row="31"
-                 Grid.Column="3"
-                 Grid.ColumnSpan="5"
+        <TextBox Grid.Row="27"
+                 Grid.Column="7"
                  VerticalAlignment="Center"
                  MaxLines="1"
                  TabIndex="14"
                  Text="{Binding Path=Website, UpdateSourceTrigger=PropertyChanged}" />
 
-        <TextBlock Grid.Row="29"
+        <TextBlock Grid.Row="27"
                    Grid.Column="1"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate Email}" />
-        <TextBox Grid.Row="29"
+        <TextBox Grid.Row="27"
                  Grid.Column="3"
-                 Grid.ColumnSpan="5"
                  VerticalAlignment="Center"
                  MaxLines="1"
                  TabIndex="13"
@@ -250,7 +240,7 @@
 
 
         <!--  Address  -->
-        <TextBlock Grid.Row="19"
+        <TextBlock Grid.Row="17"
                    Grid.Column="1"
                    Grid.ColumnSpan="7"
                    HorizontalAlignment="Center"
@@ -258,51 +248,48 @@
                    FontWeight="Bold"
                    Text="{loc:Translate Contacts}" />
 
-        <TextBlock Grid.Row="11"
+        <TextBlock Grid.Row="10"
                    Grid.Column="1"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Center"
                    Text="{loc:Translate City}" />
-        <TextBox Grid.Row="11"
+        <TextBox Grid.Row="10"
                  Grid.Column="3"
-                 Width="150"
                  VerticalAlignment="Center"
                  MaxLines="1"
                  TabIndex="2"
                  Text="{Binding Path=City, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
-        <TextBlock Grid.Row="13"
+        <TextBlock Grid.Row="12"
                    Grid.Column="5"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate Country}" />
-        <TextBox Grid.Row="13"
+        <TextBox Grid.Row="12"
                  Grid.Column="7"
-                 Width="150"
                  VerticalAlignment="Center"
                  MaxLines="1"
                  TabIndex="5"
                  Text="{Binding Path=Country, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
-        <TextBlock Grid.Row="15"
+        <TextBlock Grid.Row="14"
                    Grid.Column="5"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate Number}" />
-        <TextBox Grid.Row="15"
+        <TextBox Grid.Row="14"
                  Grid.Column="7"
-                 Width="150"
                  VerticalAlignment="Center"
                  MaxLines="1"
                  TabIndex="7"
                  Text="{Binding Path=Number, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
-        <TextBlock Grid.Row="13"
+        <TextBlock Grid.Row="12"
                    Grid.Column="1"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate Province}" />
-        <TextBox Grid.Row="13"
+        <TextBox Grid.Row="12"
                  Grid.Column="3"
                  Width="150"
                  VerticalAlignment="Center"
@@ -311,12 +298,12 @@
                  TabIndex="4"
                  Text="{Binding Path=Province, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
-        <TextBlock Grid.Row="15"
+        <TextBlock Grid.Row="14"
                    Grid.Column="1"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate Street}" />
-        <TextBox Grid.Row="15"
+        <TextBox Grid.Row="14"
                  Grid.Column="3"
                  Width="150"
                  VerticalAlignment="Center"
@@ -324,12 +311,12 @@
                  TabIndex="6"
                  Text="{Binding Path=Street, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
 
-        <TextBlock Grid.Row="11"
+        <TextBlock Grid.Row="10"
                    Grid.Column="5"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate Zip}" />
-        <TextBox Grid.Row="11"
+        <TextBox Grid.Row="10"
                  Grid.Column="7"
                  Width="150"
                  VerticalAlignment="Center"
@@ -394,7 +381,7 @@
             </StackPanel>
         -->
 
-        <StackPanel Grid.Row="35"
+        <StackPanel Grid.Row="30"
                     Grid.Column="1"
                     Grid.ColumnSpan="7"
                     HorizontalAlignment="Right"

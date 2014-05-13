@@ -156,7 +156,7 @@
   <data name="BackupCenter" xml:space="preserve">
     <value>Centro Backup</value>
   </data>
-  <data name="BackupRestoreTimes_Format" xml:space="preserve">
+  <data name="_rollbacksCount_format" xml:space="preserve">
     <value>{0} rollbacks</value>
   </data>
   <data name="Backups" xml:space="preserve">
@@ -291,10 +291,10 @@
   <data name="NewBackup" xml:space="preserve">
     <value>Nuovo backup</value>
   </data>
-  <data name="New_Female" xml:space="preserve">
+  <data name="New_toBill" xml:space="preserve">
     <value>Nuova</value>
   </data>
-  <data name="New_Male" xml:space="preserve">
+  <data name="New_toSupplier" xml:space="preserve">
     <value>Nuovo</value>
   </data>
   <data name="No" xml:space="preserve">
@@ -324,11 +324,8 @@
   <data name="OpenBackupsFolder" xml:space="preserve">
     <value>Apri cartella dei backups</value>
   </data>
-  <data name="PaidOn_Female" xml:space="preserve">
+  <data name="PaidOn_toBill" xml:space="preserve">
     <value>Pagata il</value>
-  </data>
-  <data name="PaidOn_Male" xml:space="preserve">
-    <value>Pagato il</value>
   </data>
   <data name="Paid_toBill" xml:space="preserve">
     <value>Pagata</value>
@@ -357,11 +354,8 @@
   <data name="Province" xml:space="preserve">
     <value>Provincia</value>
   </data>
-  <data name="RegisteredOn_Female" xml:space="preserve">
+  <data name="RegisteredOn_toBill" xml:space="preserve">
     <value>Registrata il</value>
-  </data>
-  <data name="RegisteredOn_Male" xml:space="preserve">
-    <value>Registrato il</value>
   </data>
   <data name="Registering" xml:space="preserve">
     <value>Registrazione</value>
@@ -371,12 +365,6 @@
   </data>
   <data name="ReleaseDate" xml:space="preserve">
     <value>Data di rilascio</value>
-  </data>
-  <data name="ReleasedOn_Female" xml:space="preserve">
-    <value>Rilasciata il</value>
-  </data>
-  <data name="ReleasedOn_Male" xml:space="preserve">
-    <value>Rilasciato il</value>
   </data>
   <data name="Report" xml:space="preserve">
     <value>Report</value>
@@ -432,9 +420,6 @@
   <data name="Zip" xml:space="preserve">
     <value>Cap</value>
   </data>
-  <data name="Connected_Female" xml:space="preserve">
-    <value>Connessa</value>
-  </data>
   <data name="Connected_toDB" xml:space="preserve">
     <value>Connesso</value>
   </data>
@@ -461,9 +446,6 @@
   </data>
   <data name="OperationMayTakeAWhile" xml:space="preserve">
     <value>Questa operazione potrebbe richiedere del tempo</value>
-  </data>
-  <data name="ConfirmRollback" xml:space="preserve">
-    <value>Conferma rollback</value>
   </data>
   <data name="RollbackCompleted" xml:space="preserve">
     <value>Rollback completato</value>
@@ -525,17 +507,11 @@
   <data name="SaveBeforeClosingQuestion" xml:space="preserve">
     <value>Desideri salvare prima di uscire?</value>
   </data>
-  <data name="All_toBill" xml:space="preserve">
-    <value>Tutte</value>
-  </data>
   <data name="Unsaved_toDB" xml:space="preserve">
     <value>Non salvato</value>
   </data>
   <data name="CancelExit" xml:space="preserve">
     <value>Non uscire</value>
-  </data>
-  <data name="ConfirmDelete" xml:space="preserve">
-    <value>Elimina</value>
   </data>
   <data name="Creditor_toSupplier" xml:space="preserve">
     <value>Creditore</value>
@@ -545,5 +521,56 @@
   </data>
   <data name="None_toSupplier" xml:space="preserve">
     <value>Nessuna</value>
+  </data>
+  <data name="DoFilter" xml:space="preserve">
+    <value>Filtra</value>
+  </data>
+  <data name="Paid_toBills" xml:space="preserve">
+    <value>Pagate</value>
+  </data>
+  <data name="NotPaid_toBills" xml:space="preserve">
+    <value>Non pagate</value>
+  </data>
+  <data name="NewBill" xml:space="preserve">
+    <value>Nuova fattura</value>
+  </data>
+  <data name="All_toBills" xml:space="preserve">
+    <value>Tutte</value>
+  </data>
+  <data name="PayBillQuestion" xml:space="preserve">
+    <value>Sei sicuro di voler pagare questa fattura?</value>
+  </data>
+  <data name="DeleteBillQuestion" xml:space="preserve">
+    <value>Sei sicuro di voler eliminare questa fattura?</value>
+  </data>
+  <data name="DeleteSupplierQuestion" xml:space="preserve">
+    <value>Sei sicuro di voler eliminare questo fornitore?</value>
+  </data>
+  <data name="NewSupplier" xml:space="preserve">
+    <value>Nuovo fornitore</value>
+  </data>
+  <data name="ConnectAutomatically" xml:space="preserve">
+    <value>Connetti automaticamente</value>
+  </data>
+  <data name="By" xml:space="preserve">
+    <value>Da</value>
+  </data>
+  <data name="DuedOn_toBill" xml:space="preserve">
+    <value>Scaduta il</value>
+  </data>
+  <data name="ReleasedOn_toBill" xml:space="preserve">
+    <value>Rilasciata il</value>
+  </data>
+  <data name="AllTheBills" xml:space="preserve">
+    <value>Tutte le fatture</value>
+  </data>
+  <data name="DuedOn_toBills" xml:space="preserve">
+    <value>Scadute il</value>
+  </data>
+  <data name="ReleasedOn_toBills" xml:space="preserve">
+    <value>Rilasciate il</value>
+  </data>
+  <data name="_shortDate_format" xml:space="preserve">
+    <value>{0:dd/MM/yyyy}</value>
   </data>
 </root>

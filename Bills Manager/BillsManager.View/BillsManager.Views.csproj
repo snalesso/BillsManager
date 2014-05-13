@@ -79,6 +79,7 @@
     </Compile>
     <Compile Include="Controls\AutoGreyableImage.cs" />
     <Compile Include="Controls\ControlBox\CloseWindowButton.cs" />
+    <Compile Include="Controls\GridSplitterEx.cs" />
     <Compile Include="Controls\ListBoxEx.cs" />
     <Compile Include="Controls\ListViewEx.cs" />
     <Compile Include="Controls\ControlBox\MinimizeWindowButton.cs" />
@@ -259,6 +260,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dictionaries\Styles\ErrorTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dictionaries\Styles\GridSplitterExStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

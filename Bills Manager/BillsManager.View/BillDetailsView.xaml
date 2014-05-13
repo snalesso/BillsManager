@@ -81,7 +81,7 @@
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Code}" />
+                   Text="{loc:Translate Number}" />
         <TextBlock Grid.Row="5"
                    Grid.Column="3"
                    VerticalAlignment="Center"
@@ -127,7 +127,7 @@
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate ReleasedOn_Female}" />
+                   Text="{loc:Translate ReleasedOn_toBill}" />
         <TextBlock Grid.Row="11"
                    Grid.Column="3"
                    VerticalAlignment="Center"
@@ -139,7 +139,7 @@
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate RegisteredOn_Female}" />
+                   Text="{loc:Translate RegisteredOn_toBill}" />
         <TextBlock Grid.Row="13"
                    Grid.Column="3"
                    VerticalAlignment="Center"
