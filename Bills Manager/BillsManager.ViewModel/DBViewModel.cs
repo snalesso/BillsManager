@@ -184,7 +184,10 @@ namespace BillsManager.ViewModels
 
         public bool IsConnectionActive
         {
-            get { return this.ConnectionState == DBConnectionState.Connected; }
+            get
+            {
+                return this.ConnectionState != DBConnectionState.Disconnected;
+            }
         }
 
         private bool showFilters;
