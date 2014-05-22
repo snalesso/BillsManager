@@ -143,7 +143,7 @@ namespace BillsManager.ViewModels
 
         #region added
 
-        private double obligationAmount = double.NaN;
+        private double obligationAmount = 0;
         public double ObligationAmount
         {
             get { return obligationAmount; }
@@ -186,6 +186,7 @@ namespace BillsManager.ViewModels
         {
             get
             {
+                // TODO: fix format
                 return
                     this.Street +
                     " " + this.Number +
@@ -211,6 +212,7 @@ namespace BillsManager.ViewModels
 
         #region methods
 
+        // TODO: evaluate move to SuppliersViewModel.cs
         private void AddBill()
         {
             this.dbEventAggregator.Publish(new AddBillToSupplierOrder(this.ExposedSupplier));
