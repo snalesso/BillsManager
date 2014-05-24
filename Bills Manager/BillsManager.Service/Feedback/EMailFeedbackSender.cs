@@ -27,7 +27,6 @@ namespace BillsManager.Services.Feedback
             {
                 using (var mail = new MailMessage())
                 {
-                    //mail.Sender = new MailAddress("nalesso.sergio@gmail.com");
                     mail.From = new MailAddress("feedback@billsmanager.com", "Bills Manager Feedback");
                     mail.Body = message;
                     mail.Subject = subject;
@@ -40,7 +39,7 @@ namespace BillsManager.Services.Feedback
                         //mailSender.EnableSsl = true;
                         mailSender.Port = 25;
 
-                        // URGENT: check on mail success required
+                        // URGENT: check on send success required
                         mailSender.Send(mail);
 
                         return true;

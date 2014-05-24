@@ -43,64 +43,124 @@
 
         <ListView.View>
             <GridView>
-                <GridViewColumn Width="160"
-                                DisplayMemberBinding="{Binding Name}"
-                                Header="{loc:Translate Name}" />
-                <GridViewColumn Width="100"
-                                Header="{loc:Translate Obligation}">
+                <GridViewColumn Width="Auto"
+                                Header="{loc:Translate Name}">
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
-                            <!--
-                                <Path Name="obg"
-                                Data="{StaticResource NullObligationGeometry}"
-                                Fill="{StaticResource NullObligationBrush}"
-                                Stretch="Uniform"
-                                Height="{StaticResource ViewFontSize}"
-                                Width="{StaticResource ViewFontSize}"
-                                VerticalAlignment="Center" />
-                            -->
                             <Border x:Name="obg"
-                                    Margin="-5"
+                                    Margin="0 -5"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
                                     CornerRadius="{StaticResource ViewCornerRadius}"
                                     Padding="5">
                                 <TextBlock x:Name="text"
-                                           Text="{Binding ObligationStateString}" />
+                                           Text="{Binding Name}" />
                             </Border>
 
                             <DataTemplate.Triggers>
 
                                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}"
                                              Value="True">
-                                    <Setter TargetName="obg" Property="CornerRadius" Value="0" />
+                                    <Setter TargetName="obg"
+                                            Property="CornerRadius">
+                                        <Setter.Value>
+                                            <CornerRadius BottomLeft="0"
+                                                          TopLeft="0"
+                                                          TopRight="0"
+                                                          BottomRight="0" />
+                                        </Setter.Value>
+                                    </Setter>
                                 </DataTrigger>
 
                                 <DataTrigger Binding="{Binding ObligationState}"
                                              Value="{x:Static ViewModel:Obligation.Creditor}">
-                                    <Setter TargetName="obg" Property="Background" Value="{StaticResource CreditorObligationBrush}" />
-                                    <Setter TargetName="text" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
+                                    <Setter TargetName="obg"
+                                            Property="Background"
+                                            Value="{StaticResource CreditorObligationBrush}" />
+                                    <Setter TargetName="text"
+                                            Property="Foreground"
+                                            Value="{StaticResource ButtonNormalForegroundBrush}" />
                                 </DataTrigger>
 
                                 <DataTrigger Binding="{Binding ObligationState}"
                                              Value="{x:Static ViewModel:Obligation.Debtor}">
-                                    <Setter TargetName="obg" Property="Background" Value="{StaticResource DebtorObligationBrush}" />
-                                    <Setter TargetName="text" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
+                                    <Setter TargetName="obg"
+                                            Property="Background"
+                                            Value="{StaticResource DebtorObligationBrush}" />
+                                    <Setter TargetName="text"
+                                            Property="Foreground"
+                                            Value="{StaticResource ButtonNormalForegroundBrush}" />
                                 </DataTrigger>
 
                                 <DataTrigger Binding="{Binding ObligationState}"
                                              Value="{x:Static ViewModel:Obligation.None}">
-                                    <Setter TargetName="text" Property="Visibility" Value="Collapsed" />
+                                    <!--  <Setter TargetName="text" Property="Visibility" Value="Collapsed" />  -->
                                 </DataTrigger>
 
                             </DataTemplate.Triggers>
-
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
-                <GridViewColumn Width="Auto"
-                                DisplayMemberBinding="{Binding Notes}"
-                                Header="{loc:Translate Notes}" />
+
+                <!--
+                    <GridViewColumn Width="100"
+                    Header="{loc:Translate Obligation}">
+                    <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                -->
+                <!--
+                    <Path Name="obg"
+                    Data="{StaticResource NullObligationGeometry}"
+                    Fill="{StaticResource NullObligationBrush}"
+                    Stretch="Uniform"
+                    Height="{StaticResource ViewFontSize}"
+                    Width="{StaticResource ViewFontSize}"
+                    VerticalAlignment="Center" />
+                -->
+                <!--
+                    <Border x:Name="obg"
+                    Margin="-5"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    CornerRadius="{StaticResource ViewCornerRadius}"
+                    Padding="5">
+                    <TextBlock x:Name="text"
+                    Text="{Binding ObligationStateString}" />
+                    </Border>
+                    
+                    <DataTemplate.Triggers>
+                    
+                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}"
+                    Value="True">
+                    <Setter TargetName="obg" Property="CornerRadius" Value="0" />
+                    </DataTrigger>
+                    
+                    <DataTrigger Binding="{Binding ObligationState}"
+                    Value="{x:Static ViewModel:Obligation.Creditor}">
+                    <Setter TargetName="obg" Property="Background" Value="{StaticResource CreditorObligationBrush}" />
+                    <Setter TargetName="text" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
+                    </DataTrigger>
+                    
+                    <DataTrigger Binding="{Binding ObligationState}"
+                    Value="{x:Static ViewModel:Obligation.Debtor}">
+                    <Setter TargetName="obg" Property="Background" Value="{StaticResource DebtorObligationBrush}" />
+                    <Setter TargetName="text" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
+                    </DataTrigger>
+                    
+                    <DataTrigger Binding="{Binding ObligationState}"
+                    Value="{x:Static ViewModel:Obligation.None}">
+                    <Setter TargetName="text" Property="Visibility" Value="Collapsed" />
+                    </DataTrigger>
+                    
+                    </DataTemplate.Triggers>
+                    
+                    </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto"
+                    DisplayMemberBinding="{Binding Notes}"
+                    Header="{loc:Translate Notes}" />
+                -->
             </GridView>
         </ListView.View>
 

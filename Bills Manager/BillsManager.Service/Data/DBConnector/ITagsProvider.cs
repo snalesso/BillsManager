@@ -12,9 +12,9 @@ namespace BillsManager.Services.Providers
         bool Add(Tag tag);
 
         bool Edit(Tag tag);
-        bool Edit(IEnumerable<Tag> tags); // TODO: unused?
+        bool Edit(IEnumerable<Tag> tags); // TODO: obsolete?
 
         bool Delete(Tag tag);
-        bool Delete(IEnumerable<Tag> tags); // TODO: unused?
+        bool Delete(IEnumerable<Tag> tags); // TODO: obsolete?
     }
 }         

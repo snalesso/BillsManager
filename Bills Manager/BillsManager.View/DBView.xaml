@@ -49,9 +49,9 @@
         <ContentControl x:Name="SuppliersViewModel"
                         Grid.Row="1" />
 
-        <Controls:GridSplitterEx Grid.Column="1"
+        <!--<Controls:GridSplitterEx Grid.Column="1"
                                  Grid.RowSpan="3"
-                                 VerticalAlignment="Stretch" />
+                                 VerticalAlignment="Stretch" />-->
 
         <ContentControl x:Name="BillsViewModel"
                         Grid.Column="2"

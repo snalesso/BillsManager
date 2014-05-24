@@ -9,7 +9,6 @@ using System.Windows.Media;
 
 namespace BillsManager.ViewModels.Reporting
 {
-    // URGENT: adapt to screen size
     public class PrintReportViewModel/*<T>*/ : Screen
     /*where T : class*/
     {

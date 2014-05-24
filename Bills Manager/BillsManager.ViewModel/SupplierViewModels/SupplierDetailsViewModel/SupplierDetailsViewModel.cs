@@ -186,14 +186,31 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                // TODO: fix format
-                return
-                    this.Street +
-                    " " + this.Number +
-                    ", " + this.Zip +
-                    " " + this.City +
-                    " (" + this.Province + ")" +
-                    " - " + this.Country;
+                var fullAddress = string.Empty;
+
+                fullAddress += this.Street;
+
+                fullAddress += (fullAddress.Length > 0 & !string.IsNullOrWhiteSpace(this.Number)) ? " " : string.Empty;
+                fullAddress += this.Number;
+
+                fullAddress +=
+                    (fullAddress.Length > 0 & (!string.IsNullOrWhiteSpace(this.Zip) | !string.IsNullOrWhiteSpace(this.City))) ?
+                    ", " : string.Empty;
+                fullAddress += this.Zip;
+
+                fullAddress +=
+                    (fullAddress.Length > 0 & !string.IsNullOrWhiteSpace(this.City) & !string.IsNullOrWhiteSpace(this.Zip)) ?
+                    " " : string.Empty;
+                fullAddress += this.City;
+
+                var hasProv = !string.IsNullOrWhiteSpace(this.Province);
+                fullAddress += (fullAddress.Length > 0 & hasProv) ? " " : string.Empty;
+                if (hasProv) fullAddress += "(" + this.Province + ")";
+
+                fullAddress += (fullAddress.Length > 0 & !string.IsNullOrWhiteSpace(this.Country)) ? " - " : string.Empty;
+                fullAddress += this.Country;
+
+                return fullAddress;
             }
         }
 

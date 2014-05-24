@@ -5,9 +5,26 @@
     {
         #region ctor
 
+        // TODO: choose ZIP and Country from db
         public Supplier(uint id)
+            : this(
+            id,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "Italia",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null)
         {
-            this.id = id;
         }
 
         public Supplier(
@@ -27,8 +44,9 @@
             string agentName,
             string agentSurname,
             string agentPhone)
-            : this(id)
         {
+            this.id = id;
+
             this.Name = name;
             this.eMail = eMail;
             this.Website = webSite;

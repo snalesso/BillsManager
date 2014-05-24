@@ -35,6 +35,8 @@ namespace BillsManager.ViewModels
             {
                 if (this.Name != value)
                 {
+                    if (value == string.Empty)
+                        value = null;
                     this.ExposedSupplier.Name = value;
                     this.NotifyOfPropertyChange(() => this.Name);
                 }
@@ -48,6 +50,8 @@ namespace BillsManager.ViewModels
             {
                 if (this.eMail != value)
                 {
+                    if (value == string.Empty)
+                        value = null;
                     this.ExposedSupplier.eMail = value;
                     this.NotifyOfPropertyChange(() => this.eMail);
                 }
@@ -61,6 +65,8 @@ namespace BillsManager.ViewModels
             {
                 if (this.Website != value)
                 {
+                    if (value == string.Empty)
+                        value = null;
                     this.ExposedSupplier.Website = value;
                     this.NotifyOfPropertyChange(() => this.Website);
                 }
@@ -91,6 +97,8 @@ namespace BillsManager.ViewModels
             {
                 if (this.Phone != value)
                 {
+                    if (value == string.Empty)
+                        value = null;
                     this.ExposedSupplier.Phone = value;
                     this.NotifyOfPropertyChange(() => this.Phone);
                 }
@@ -104,6 +112,8 @@ namespace BillsManager.ViewModels
             {
                 if (this.Fax == value) return;
 
+                if (value == string.Empty)
+                    value = null;
                 this.ExposedSupplier.Fax = value;
                 this.NotifyOfPropertyChange(() => this.Fax);
             }
@@ -116,6 +126,8 @@ namespace BillsManager.ViewModels
             {
                 if (this.Notes != value)
                 {
+                    if (value == string.Empty)
+                        value = null;
                     this.ExposedSupplier.Notes = value;
                     this.NotifyOfPropertyChange(() => this.Notes);
                 }
@@ -129,6 +141,8 @@ namespace BillsManager.ViewModels
             {
                 if (this.AgentName != value)
                 {
+                    if (value == string.Empty)
+                        value = null;
                     this.ExposedSupplier.AgentName = value;
                     this.NotifyOfPropertyChange(() => this.AgentName);
                 }
@@ -142,6 +156,8 @@ namespace BillsManager.ViewModels
             {
                 if (this.AgentSurname != value)
                 {
+                    if (value == string.Empty)
+                        value = null;
                     this.ExposedSupplier.AgentSurname = value;
                     this.NotifyOfPropertyChange(() => this.AgentSurname);
                 }
@@ -155,6 +171,8 @@ namespace BillsManager.ViewModels
             {
                 if (this.AgentPhone != value)
                 {
+                    if (value == string.Empty)
+                        value = null;
                     this.ExposedSupplier.AgentPhone = value;
                     this.NotifyOfPropertyChange(() => this.AgentPhone);
                 }
@@ -188,6 +206,8 @@ namespace BillsManager.ViewModels
             {
                 if (this.Street != value)
                 {
+                    if (value == string.Empty)
+                        value = null;
                     this.ExposedSupplier.Street = value;
                     this.NotifyOfPropertyChange(() => this.Street);
                 }
@@ -201,6 +221,8 @@ namespace BillsManager.ViewModels
             {
                 if (this.Number != value)
                 {
+                    if (value == string.Empty)
+                        value = null;
                     this.ExposedSupplier.Number = value;
                     this.NotifyOfPropertyChange(() => this.Number);
                 }
@@ -214,6 +236,8 @@ namespace BillsManager.ViewModels
             {
                 if (this.City != value)
                 {
+                    if (value == string.Empty)
+                        value = null;
                     this.ExposedSupplier.City = value;
                     this.NotifyOfPropertyChange(() => this.City);
                 }
@@ -227,6 +251,8 @@ namespace BillsManager.ViewModels
             {
                 if (this.Zip != value)
                 {
+                    if (value == string.Empty)
+                        value = null;
                     this.ExposedSupplier.Zip = value;
                     this.NotifyOfPropertyChange(() => this.Zip);
                 }
@@ -240,6 +266,8 @@ namespace BillsManager.ViewModels
             {
                 if (this.Province != value)
                 {
+                    if (value == string.Empty)
+                        value = null;
                     this.ExposedSupplier.Province = value;
                     this.NotifyOfPropertyChange(() => this.Province);
                 }
@@ -253,6 +281,8 @@ namespace BillsManager.ViewModels
             {
                 if (this.Country != value)
                 {
+                    if (value == string.Empty)
+                        value = null;
                     this.ExposedSupplier.Country = value;
                     this.NotifyOfPropertyChange(() => this.Country);
                 }

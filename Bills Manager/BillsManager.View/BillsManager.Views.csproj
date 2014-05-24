@@ -367,6 +367,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dictionaries\Styles\Values\ListItemValues.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dictionaries\Styles\Values\MenuItemValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

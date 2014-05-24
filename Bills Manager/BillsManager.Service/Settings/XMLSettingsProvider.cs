@@ -21,7 +21,7 @@ namespace BillsManager.Services.Settings
         private const string ITEM_FEEDBACK_TO_EMAIL_ADDRESS = "feedback_to_email_address";
 
         // DEFAULT VALUES
-        private const string DV_FEEDBACK_TO_EMAIL_ADDRESS = "nalesso.sergio@gmail.com";
+        private const string DV_FEEDBACK_TO_EMAIL_ADDRESS = string.Empty;
         private readonly string DV_LANGUAGE = "it-IT";
         private const bool DV_STARTUP_DB_LOAD = true;
 

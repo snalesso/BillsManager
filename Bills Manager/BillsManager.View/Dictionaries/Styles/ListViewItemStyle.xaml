@@ -66,6 +66,10 @@
                         Value="{StaticResource ButtonNormalBorderBrush}" />
                 <Setter Property="Foreground"
                         Value="{StaticResource ButtonNormalForegroundBrush}" />
+                <!--<Setter Property="BorderThickness"
+                        Value="{StaticResource ListItemSelectedBorderThickness}" />-->
+                <!--<Setter Property="BorderBrush"
+                        Value="{StaticResource ListItemSelectedBorderBrush}" />-->
             </Trigger>
 
             <!--<MultiTrigger>
