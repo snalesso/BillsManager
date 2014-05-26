@@ -364,7 +364,7 @@ namespace BillsManager.Services.Reporting
             var footer = this.GetFooter(pageNumber);
             Grid.SetRow(footer, rootGrid.RowDefinitions.Count - 1);
             Grid.SetColumn(footer, 0);
-            Grid.SetColumnSpan(footer, rootGrid.ColumnDefinitions.Count /*- 1*/); // URGENT: fix side cutting for footer page number
+            Grid.SetColumnSpan(footer, rootGrid.ColumnDefinitions.Count);
             rootGrid.Children.Add(footer);
 
             rootGrid.Measure(this.PageSize);
