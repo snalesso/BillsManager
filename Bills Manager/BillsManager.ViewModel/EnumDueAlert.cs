@@ -4,13 +4,13 @@ namespace BillsManager.ViewModels
 {
     public enum DueAlert
     {
-        [Localize("None_toDueLevel")]
+        [LocalizedDisplayName("None_toDueLevel")]
         None = 0,
-        [Localize("Low_toDueLevel")]
+        [LocalizedDisplayName("Low_toDueLevel")]
         Low = 1,
-        [Localize("Medium_toDueLevel")]
+        [LocalizedDisplayName("Medium_toDueLevel")]
         Medium = 2,
-        [Localize("High_toDueLevel")]
+        [LocalizedDisplayName("High_toDueLevel")]
         High = 3
     }
 }

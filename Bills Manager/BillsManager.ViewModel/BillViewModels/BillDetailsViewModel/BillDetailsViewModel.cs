@@ -175,11 +175,11 @@ namespace BillsManager.ViewModels
             get
             {
                 return
-                    TranslationManager.Instance.Translate(
+                    /*TranslationManager.Instance.Translate(*/
                     typeof(ViewModels.DueAlert)
                     .GetMember(this.DueAlert.ToString())[0]
-                    .GetAttributes<LocalizeAttribute>(true).FirstOrDefault().Key
-                    ).ToString();
+                    .GetAttributes<LocalizedDisplayNameAttribute>(true).FirstOrDefault().DisplayName
+                    /*).ToString()*/;
             }
         }
 

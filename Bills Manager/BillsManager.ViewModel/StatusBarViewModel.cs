@@ -61,11 +61,11 @@ namespace BillsManager.ViewModels
             get
             {
                 return
-                    TranslationManager.Instance.Translate(
+                    /*TranslationManager.Instance.Translate(*/
                     typeof(DBConnectionState)
                     .GetMember(this.ConnectionState.ToString())[0]
-                    .GetAttributes<LocalizeAttribute>(true).FirstOrDefault().Key
-                    ).ToString();
+                    .GetAttributes<LocalizedDisplayNameAttribute>(true).FirstOrDefault().DisplayName
+                    /*).ToString()*/;
             }
         }
 

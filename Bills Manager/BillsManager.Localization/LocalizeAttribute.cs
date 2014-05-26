@@ -3,8 +3,9 @@
 namespace BillsManager.Localization
 {
     // TODO: review modality -> string == null ? use type : use provided key -> .Translation
+    [Obsolete]
     [AttributeUsage(AttributeTargets.Enum | AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false)]
-    public class LocalizeAttribute : Attribute
+    class LocalizeAttribute : Attribute
     {
         public LocalizeAttribute(string key)
         {
@@ -15,6 +16,14 @@ namespace BillsManager.Localization
         public string Key
         {
             get { return this.key; }
+        }
+
+        public string Translation
+        {
+            get
+            {
+                return TranslationManager.Instance.Translate(this.Key) as string;
+            }
         }
     }
 }

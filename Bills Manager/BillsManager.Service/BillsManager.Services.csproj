@@ -71,6 +71,10 @@
     <Compile Include="Settings\XMLSettingsProvider.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BillsManager.Localization\BillsManager.Localization.csproj">
+      <Project>{5387db3b-6ec1-42cf-a72b-cef5adfb541a}</Project>
+      <Name>BillsManager.Localization</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BillsManager.Model\BillsManager.Models.csproj">
       <Project>{888F670B-4396-4660-8C5A-0D43FB2C0A1D}</Project>
       <Name>BillsManager.Models</Name>

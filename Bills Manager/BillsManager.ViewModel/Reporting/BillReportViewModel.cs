@@ -1,4 +1,5 @@
-﻿using BillsManager.Services.Reporting;
+﻿using BillsManager.Localization;
+using BillsManager.Services.Reporting;
 using System.ComponentModel;
 using System.Windows;
 
@@ -24,13 +25,13 @@ namespace BillsManager.ViewModels.Reporting
 
         #region properties
 
-        [DisplayName("Supplier")]
+        [LocalizedDisplayName("Supplier")]
         public string SupplierName
         {
             get { return this.billDetailsViewModel.SupplierName; }
         }
 
-        [DisplayName("Code")]
+        [LocalizedDisplayName("Code")]
         [TextAlignment(TextAlignment.Center)]
         public string Code
         {
@@ -42,14 +43,14 @@ namespace BillsManager.ViewModels.Reporting
             }
         }
 
-        [DisplayName("Amount")]
+        [LocalizedDisplayName("Amount")]
         [TextAlignment(TextAlignment.Right)]
         public string Amount
         {
             get { return string.Format("{0:N2} €", this.billDetailsViewModel.Amount); }
         }
 
-        [DisplayName("Payment date")]
+        [LocalizedDisplayName("PaymentDate")]
         [TextAlignment(TextAlignment.Center)]
         public string PaymentDate
         {
@@ -62,14 +63,14 @@ namespace BillsManager.ViewModels.Reporting
             }
         }
 
-        [DisplayName("Due date")]
+        [LocalizedDisplayName("DueDate")]
         [TextAlignment(TextAlignment.Center)]
         public string DueDate
         {
             get { return this.billDetailsViewModel.DueDate.ToShortDateString(); }
         }
 
-        [DisplayName("Release date")]
+        [LocalizedDisplayName("ReleaseDate")]
         [TextAlignment(TextAlignment.Center)]
         public string ReleaseDate
         {
