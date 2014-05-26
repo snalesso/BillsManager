@@ -9,7 +9,6 @@ using System.Linq;
 namespace BillsManager.ViewModels
 {
     // IDEA: make properties read only?
-    // IDEA: add cell color for remaining due time in details view
     public partial class BillDetailsViewModel :
         BillViewModel,
         IHandle<SupplierEditedMessage>
@@ -96,10 +95,7 @@ namespace BillsManager.ViewModels
          * think about the Tag property, all details should be available from here too */
         public string SupplierName
         {
-            get
-            {
-                return this.GetSupplierName();
-            }
+            get { return this.GetSupplierName(); }
         }
 
         public bool IsPaid
@@ -189,7 +185,7 @@ namespace BillsManager.ViewModels
 
         public new string DisplayName
         {
-            get { return this.Code + " - " + this.SupplierName; } // TODO: fix
+            get { return this.Code + " - " + this.SupplierName; }
         }
 
         #endregion

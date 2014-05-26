@@ -80,17 +80,8 @@
         private string name;
         public string Name
         {
-            get
-            {
-                return this.name;
-            }
-            set
-            {
-                if (this.Name != value)
-                {
-                    this.name = value;
-                }
-            }
+            get { return this.name; }
+            set { this.name = value; }
         }
 
         //private Address address; // TODO: AgentViewModel con validazione dell'indirizzo
@@ -114,113 +105,64 @@
         public string AgentName
         {
             get { return this.agentName; }
-            set
-            {
-                if (this.agentName != value)
-                {
-                    this.agentName = value;
-                }
-            }
+            set { this.agentName = value; }
         }
 
         private string agentSurname;
         public string AgentSurname
         {
             get { return this.agentSurname; }
-            set
-            {
-                if (this.agentSurname != value)
-                {
-                    this.agentSurname = value;
-                }
-            }
+            set { this.agentSurname = value; }
         }
 
         private string agentPhone;
         public string AgentPhone
         {
             get { return this.agentPhone; }
-            set
-            {
-                if (this.agentPhone != value) // TODO: cleanup worthless if's
-                {
-                    this.agentPhone = value;
-                }
-            }
+            set { this.agentPhone = value; }
         }
 
         private string email;
         public string eMail
         {
-            get
-            {
-                return this.email;
-            }
+            get { return this.email; }
             set
             {
-                if (this.eMail == value) return;
-
-                this.email = value.ToLower();
+                if (value != null)
+                    this.email = value.ToLower();
             }
         }
 
         private string webSite;
         public string Website
         {
-            get
-            {
-                return this.webSite;
-            }
+            get { return this.webSite; }
             set
             {
-                if (this.Website == value) return;
-
-                this.webSite = value.ToLower();
+                if (value != null)
+                    this.webSite = value.ToLower();
             }
         }
 
         private string phone;
         public string Phone
         {
-            get
-            {
-                return this.phone;
-            }
-            set
-            {
-                if (this.phone != value)
-                {
-                    this.phone = value;
-                }
-            }
+            get { return this.phone; }
+            set { this.phone = value; }
         }
 
         private string fax;
         public string Fax
         {
             get { return this.fax; }
-            set
-            {
-                if (this.fax == value) return;
-
-                this.fax = value;
-            }
+            set { this.fax = value; }
         }
 
         private string notes;
         public string Notes
         {
-            get
-            {
-                return this.notes;
-            }
-            set
-            {
-                if (this.Notes != value)
-                {
-                    this.notes = value;
-                }
-            }
+            get { return this.notes; }
+            set { this.notes = value; }
         }
 
         #region address
@@ -229,51 +171,28 @@
         public string Street
         {
             get { return this.street; }
-            set
-            {
-                if (this.Street != value)
-                {
-                    this.street = value;
-                }
-            }
+            set { this.street = value; }
         }
 
         private string number;
         public string Number
         {
             get { return this.number; }
-            set
-            {
-                if (this.Number != value)
-                {
-                    this.number = value;
-                }
-            }
+            set { this.number = value; }
         }
 
         private string city;
         public string City
         {
             get { return this.city; }
-            set
-            {
-                if (this.City != value)
-                {
-                    this.city = value;
-                }
-            }
+            set { this.city = value; }
         }
 
         private string zip;
         public string Zip
         {
             get { return this.zip; }
-            set
-            {
-                if (this.Zip == value) return;
-
-                this.zip = value;
-            }
+            set { this.zip = value; }
         }
 
         private string province;
@@ -282,9 +201,8 @@
             get { return this.province; }
             set
             {
-                if (this.Province == value) return;
-
-                this.province = value.ToUpper();
+                if (value != null)
+                    this.province = value.ToUpper();
             }
         }
 
@@ -292,13 +210,7 @@
         public string Country
         {
             get { return this.country; }
-            set
-            {
-                if (this.Country != value)
-                {
-                    this.country = value;
-                }
-            }
+            set { this.country = value; }
         }
 
         #endregion

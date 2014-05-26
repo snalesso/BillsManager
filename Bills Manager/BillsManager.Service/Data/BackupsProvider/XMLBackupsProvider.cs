@@ -11,6 +11,8 @@ namespace BillsManager.Services.Providers
     {
         #region fields
 
+        // TODO: cleanup unused variables
+
         //private readonly string dbFolderPath = AppDomain.CurrentDomain.BaseDirectory + @"\Database\";
         //private readonly string backupsFolderPath = AppDomain.CurrentDomain.BaseDirectory + @"\Backups\";
 
@@ -32,7 +34,6 @@ namespace BillsManager.Services.Providers
         private const string NS_TAGS = @"Tags";
 
         private readonly string dbFilePath;
-        private readonly string backupsDirectoryPath;
 
         #endregion
 
@@ -41,24 +42,18 @@ namespace BillsManager.Services.Providers
         public XMLBackupsProvider(
             string backupsDirectoryPath)
         {
-            this.backupsDirectoryPath = backupsDirectoryPath;
-            this.dbFilePath = Path.Combine(Path.GetDirectoryName(backupsDirectoryPath.Substring(0, backupsDirectoryPath.Length - 1)), @"DB", DB_NAME + DB_DOT_EXTENSION); // TODO: cleanup unused variables
-            this.dbName = Path.GetFileNameWithoutExtension(backupsDirectoryPath); // TODO: dbname is obsolete (location too)
+            this.location = backupsDirectoryPath;
+            this.dbFilePath = Path.Combine(Path.GetDirectoryName(backupsDirectoryPath.Substring(0, backupsDirectoryPath.Length - 1)), @"DB", DB_NAME + DB_DOT_EXTENSION);
         }
 
         #endregion
 
         #region properties
 
+        private readonly string location;
         public string Location
         {
-            get { return this.backupsDirectoryPath; }
-        }
-
-        private readonly string dbName;
-        public string DBName
-        {
-            get { return this.dbName; }
+            get { return this.location; }
         }
 
         #endregion
@@ -75,10 +70,10 @@ namespace BillsManager.Services.Providers
         {
             var backups = new List<Backup>();
 
-            if (Directory.Exists(this.backupsDirectoryPath))
+            if (Directory.Exists(this.Location))
             {
                 backups.AddRange(
-                    System.IO.Directory.GetFiles(this.backupsDirectoryPath)
+                    System.IO.Directory.GetFiles(this.Location)
                     .Where(b => this.IsBackupFile(b))
                     .Select(b =>
                     {
@@ -126,7 +121,7 @@ namespace BillsManager.Services.Providers
                     creationTime.TimeOfDay.Minutes,
                     creationTime.TimeOfDay.Seconds);
 
-                string newBackupSavePath = Path.Combine(this.backupsDirectoryPath, newBackupName + BACKUP_DOT_EXTENSION);
+                string newBackupSavePath = Path.Combine(this.Location, newBackupName + BACKUP_DOT_EXTENSION);
 
                 xmlBackup.Save(newBackupSavePath);
 
@@ -154,7 +149,7 @@ namespace BillsManager.Services.Providers
                  * so if it is half-overwritten it isn't lost */
 
                 /* create the temp folder */
-                string dbDirectoryPath = Path.GetDirectoryName(backupsDirectoryPath);
+                string dbDirectoryPath = Path.GetDirectoryName(Location);
                 string tempDirectoryPath = Path.Combine(dbDirectoryPath, DB_TEMP_FOLDER_NAME);
                 Directory.CreateDirectory(tempDirectoryPath);
 
@@ -209,8 +204,8 @@ namespace BillsManager.Services.Providers
 
         void EnsureBackupsDirectoryExists()
         {
-            if (!System.IO.Directory.Exists(this.backupsDirectoryPath))
-                System.IO.Directory.CreateDirectory(this.backupsDirectoryPath);
+            if (!System.IO.Directory.Exists(this.Location))
+                System.IO.Directory.CreateDirectory(this.Location);
         }
 
         void AddRollbackDate(XDocument xmlBackup, DateTime rollbackDate)

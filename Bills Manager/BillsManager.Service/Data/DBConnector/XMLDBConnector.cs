@@ -481,23 +481,19 @@ namespace BillsManager.Services.Providers
 
             var newXDoc = new XDocument();
 
-            try // TODO: try catch needed?
-            {
-                newXDoc.Declaration = new XDeclaration("1.0", "utf-8", null);
-                newXDoc.Add(
-                    new XElement(
-                        NS_DATABASE_ROOT,
-                        new XAttribute(ATT_CREATION_DATE, DateTime.Today),
-                        new XElement(NS_BILLS, new XAttribute(ATT_LAST_ID, START_INDEX)),
-                        new XElement(NS_SUPPLIERS, new XAttribute(ATT_LAST_ID, START_INDEX)),
-                        new XElement(NS_TAGS, new XAttribute(ATT_LAST_ID, START_INDEX))/*,
+            newXDoc.Declaration = new XDeclaration("1.0", "utf-8", null);
+            newXDoc.Add(
+                new XElement(
+                    NS_DATABASE_ROOT,
+                    new XAttribute(ATT_CREATION_DATE, DateTime.Today),
+                    new XElement(NS_BILLS, new XAttribute(ATT_LAST_ID, START_INDEX)),
+                    new XElement(NS_SUPPLIERS, new XAttribute(ATT_LAST_ID, START_INDEX)),
+                    new XElement(NS_TAGS, new XAttribute(ATT_LAST_ID, START_INDEX))/*,
                         new XElement(NS_AGENTS, new XAttribute(ATT_LAST_ID, START_INDEX))*/));
 
-                Directory.CreateDirectory(Path.GetDirectoryName(fullDbFilePath));
+            Directory.CreateDirectory(Path.GetDirectoryName(fullDbFilePath));
 
-                newXDoc.Save(fullDbFilePath);
-            }
-            catch { }
+            newXDoc.Save(fullDbFilePath);
         }
 
         #endregion

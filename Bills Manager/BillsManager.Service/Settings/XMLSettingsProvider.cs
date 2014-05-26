@@ -59,11 +59,11 @@ namespace BillsManager.Services.Settings
         {
             try
             {
-                return XDocument.Load(settingsFilePath); // TODO: is parsing error possible?
+                return XDocument.Load(settingsFilePath);
             }
             catch (Exception)
             {
-                return this.CreateDefaultXSettings(); // TODO: needed?
+                return this.CreateDefaultXSettings();
             }
         }
 

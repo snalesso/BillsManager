@@ -18,7 +18,7 @@ namespace BillsManager.ViewModels
 
             this.exposedBackup = backup;
 
-            // TODO: add displayname
+            this.DisplayName = "Backup: " + this.CreationTime.ToShortDateString() + " - " + this.CreationTime.ToShortTimeString();
         }
 
         #endregion
@@ -38,7 +38,7 @@ namespace BillsManager.ViewModels
                 }
             }
         }
-        
+
         #region wrapped from backup
 
         public string Path

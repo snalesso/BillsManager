@@ -70,65 +70,35 @@ namespace BillsManager.Models
         public DateTime RegistrationDate
         {
             get { return this.registrationDate; }
-            set
-            {
-                if (this.RegistrationDate != value)
-                {
-                    this.registrationDate = value;
-                }
-            }
+            set { this.registrationDate = value; }
         }
 
         private DateTime dueDate = DateTime.Today;
         public DateTime DueDate
         {
             get { return this.dueDate; }
-            set
-            {
-                if (this.DueDate != value)
-                {
-                    this.dueDate = value;
-                }
-            }
+            set { this.dueDate = value; }
         }
 
         private DateTime? paymentDate = null;
         public DateTime? PaymentDate
         {
             get { return this.paymentDate; }
-            set
-            {
-                if (this.PaymentDate != value)
-                {
-                    this.paymentDate = value;
-                }
-            }
+            set { this.paymentDate = value; }
         }
 
         private DateTime releaseDate = DateTime.Today;
         public DateTime ReleaseDate
         {
             get { return this.releaseDate; }
-            set
-            {
-                if (this.ReleaseDate != value) // IDEA: remove checks?
-                {
-                    this.releaseDate = value;
-                }
-            }
+            set { this.releaseDate = value; }
         }
 
         private Double amount;
         public Double Amount
         {
             get { return this.amount; }
-            set
-            {
-                //if (this.Amount != value)
-                //{
-                this.amount = value;
-                //}
-            }
+            set { this.amount = value; }
         }
 
         /*private Double gain;
@@ -152,39 +122,21 @@ namespace BillsManager.Models
         public uint SupplierID
         {
             get { return this.supplierID; }
-            set
-            {
-                if (this.SupplierID != value)
-                {
-                    this.supplierID = value;
-                }
-            }
+            set { this.supplierID = value; }
         }
 
         private string notes;
         public string Notes
         {
             get { return this.notes; }
-            set
-            {
-                if (this.Notes != value)
-                {
-                    this.notes = value;
-                }
-            }
+            set { this.notes = value; }
         }
 
         private string code;
         public string Code
         {
             get { return this.code; }
-            set
-            {
-                if (this.Code != value)
-                {
-                    this.code = value;
-                }
-            }
+            set { this.code = value; }
         }
 
         #endregion

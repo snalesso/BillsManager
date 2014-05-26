@@ -100,7 +100,7 @@ namespace BillsManager.ViewModels
             get { return this.ExposedBill.Amount; }
             set
             {
-                // TODO: review set logic
+                // TODO: review set logic, make value check only on base class?
                 //if (this.Amount != value)
                 //{
                 this.ExposedBill.Amount = value;

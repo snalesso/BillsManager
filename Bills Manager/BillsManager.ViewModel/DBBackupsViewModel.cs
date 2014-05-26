@@ -17,7 +17,6 @@ namespace BillsManager.ViewModels
     {
         #region fields
 
-        // TODO: cleanup unused fields
         private readonly IWindowManager windowManager;
         private readonly IEventAggregator globalEventAggregator;
         private readonly IBackupsProvider backupsProvider;
@@ -54,16 +53,6 @@ namespace BillsManager.ViewModels
         #endregion
 
         #region properties
-
-        public string Location
-        {
-            get { return this.backupsProvider.Location; }
-        } // TODO: replace in this vm where it is not used directly
-
-        public string DBName
-        {
-            get { return this.backupsProvider.DBName; }
-        }
 
         private ObservableCollection<BackupViewModel> backupViewModels;
         public ObservableCollection<BackupViewModel> BackupViewModels
@@ -162,7 +151,6 @@ namespace BillsManager.ViewModels
             {
                 this.globalEventAggregator.Publish(
                     new RollbackAuthorizationRequestMessage(
-                        this.DBName,
                         () =>
                         {
                             if (this.backupsProvider.Rollback(backupViewModel.ExposedBackup))
