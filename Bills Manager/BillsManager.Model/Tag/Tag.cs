@@ -16,7 +16,7 @@
             : this(id)
         {
             this.Name = name;
-            this.Color = color; // IDEA: add string format validation?
+            this.Color = color; // IDEA: add string format validation to prevent runtime parse exception?
         }
 
         #endregion
