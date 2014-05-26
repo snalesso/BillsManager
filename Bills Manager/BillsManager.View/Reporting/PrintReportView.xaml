@@ -65,7 +65,7 @@
                     BlurRadius="10" />
                     </Border.Effect>
                 -->
-                <ContentControl Content="{Binding CurrentPage}" />
+                <ContentControl HorizontalAlignment="Center" Content="{Binding CurrentPage}" />
             </Border>
 
         </ScrollViewer>

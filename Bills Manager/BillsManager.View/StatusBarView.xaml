@@ -19,8 +19,6 @@
 
         <TextBlock Text="{Binding ConnectionStateString, Mode=OneWay}" />
 
-        <TextBlock Text="{Binding ActiveDBViewModel.BillsViewModel.FiltersDescription, Mode=OneWay}" />
-
         <TextBlock Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Run Text="{Binding SuppliersCount}" />
             <Run Text="{loc:Translate Suppliers}" />

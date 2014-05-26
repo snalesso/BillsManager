@@ -72,9 +72,8 @@ namespace BillsManager.ViewModels.Reporting
             {
                 if (value < 1)
                     value = 1;
-                else
-                    if (value > this.reportPrinter.PageCount)
-                        value = this.reportPrinter.PageCount;
+                else if (value > this.reportPrinter.PageCount)
+                    value = this.reportPrinter.PageCount;
 
                 if (this.currentPageNumber == value) return;
 
@@ -88,12 +87,16 @@ namespace BillsManager.ViewModels.Reporting
 
         public int PageCount
         {
-            get { return this.reportPrinter.PageCount; }
+            get { 
+                return this.reportPrinter.PageCount; }
         }
 
         public Visual CurrentPage
         {
-            get { return this.reportPrinter.GetPage(this.CurrentPageNumber - 1).Visual; }
+            get
+            {
+                return this.reportPrinter.GetPage(this.CurrentPageNumber - 1).Visual;
+            }
         }
 
         #region page navigation

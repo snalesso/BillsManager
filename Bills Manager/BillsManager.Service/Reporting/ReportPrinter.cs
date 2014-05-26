@@ -363,25 +363,28 @@ namespace BillsManager.Services.Reporting
             rootGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(this.FooterRenderHeight, GridUnitType.Pixel) });
             var footer = this.GetFooter(pageNumber);
             Grid.SetRow(footer, rootGrid.RowDefinitions.Count - 1);
-            Grid.SetColumnSpan(footer, rootGrid.ColumnDefinitions.Count - 1); // URGENT: fix side cutting for footer page number
+            Grid.SetColumn(footer, 0);
+            Grid.SetColumnSpan(footer, rootGrid.ColumnDefinitions.Count /*- 1*/); // URGENT: fix side cutting for footer page number
             rootGrid.Children.Add(footer);
 
             rootGrid.Measure(this.PageSize);
             rootGrid.Arrange(new Rect(new Point(0, 0), rootGrid.DesiredSize));
             //rootGrid.UpdateLayout();
 
-            double total = 0;
+            double actualColumnHeadersWidth = 0;
             foreach (var column in rootGrid.ColumnDefinitions)
             {
-                total += column.ActualWidth;
+                if (rootGrid.ColumnDefinitions.IndexOf(column) % 2 == 0)
+                    actualColumnHeadersWidth += column.ActualWidth;
             }
 
-            var onlyColumnsTotalWidth = (this.PageSize.Width - (rootGrid.ColumnDefinitions.Count() - 1) * COLUMN_SEPARATOR_WIDTH);
+            var columnHeadersAvailableWidth = (rootGrid.ActualWidth - (rootGrid.ColumnDefinitions.Count - 1) * COLUMN_SEPARATOR_WIDTH);
 
             foreach (var column in rootGrid.ColumnDefinitions)
             {
-                column.Width =
-                    new GridLength((onlyColumnsTotalWidth * column.ActualWidth) / total, GridUnitType.Pixel);
+                if (rootGrid.ColumnDefinitions.IndexOf(column) % 2 == 0)
+                    column.Width =
+                        new GridLength((columnHeadersAvailableWidth * column.ActualWidth) / actualColumnHeadersWidth, GridUnitType.Pixel);
             }
 
             return new DocumentPage(rootGrid);
@@ -393,6 +396,7 @@ namespace BillsManager.Services.Reporting
         {
             var root = new Grid()
             {
+                
                 Margin = this.PageMargins,
                 Height = this.PageSize.Height - this.PageMargins.Top - this.PageMargins.Bottom, // TODO: cache available space
                 Width = this.PageSize.Width - this.PageMargins.Left - this.PageMargins.Right,
@@ -441,7 +445,8 @@ namespace BillsManager.Services.Reporting
                 var alignmAtt = Attribute.GetCustomAttribute(pi, typeof(TextAlignmentAttribute)) as TextAlignmentAttribute;
                 var alignment = alignmAtt != null ? alignmAtt.Alignment : TextAlignment.Left;
 
-                columnHeaders.Add(new TextBlock()
+                columnHeaders.Add(
+                    new TextBlock()
                     {
                         Text = text,
                         TextAlignment = alignment,
@@ -490,6 +495,7 @@ namespace BillsManager.Services.Reporting
             footer.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
             var timeInfo = new TextBlock()
             {
+                Foreground = Brushes.Black,
                 Text = this.now.ToShortDateString() + " - " + this.now.ToShortTimeString(),
                 VerticalAlignment = VerticalAlignment.Center
             };
@@ -503,6 +509,7 @@ namespace BillsManager.Services.Reporting
             footer.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
             var pageInfo = new TextBlock()
             {
+                Foreground = Brushes.Black,
                 Text = (pageIndex + 1) + @"/" + this.PageCount,
                 VerticalAlignment = VerticalAlignment.Center
             };
