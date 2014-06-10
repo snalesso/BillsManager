@@ -1,4 +1,4 @@
-﻿using BillsManager.Localization;
+﻿using BillsManager.Localization.Attributes;
 
 namespace BillsManager.ViewModels
 {
@@ -11,6 +11,8 @@ namespace BillsManager.ViewModels
         [LocalizedDisplayName("Medium_toDueLevel")]
         Medium = 2,
         [LocalizedDisplayName("High_toDueLevel")]
-        High = 3
+        High = 3,
+        [LocalizedDisplayName("Critical_toDueLevel")]
+        Critical = 4
     }
 }

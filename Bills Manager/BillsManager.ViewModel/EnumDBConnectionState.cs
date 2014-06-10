@@ -1,4 +1,4 @@
-﻿using BillsManager.Localization;
+﻿using BillsManager.Localization.Attributes;
 
 namespace BillsManager.ViewModels
 {

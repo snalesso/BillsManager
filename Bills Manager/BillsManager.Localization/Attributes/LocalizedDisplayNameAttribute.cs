@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace BillsManager.Localization
+namespace BillsManager.Localization.Attributes
 {
     [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
     public class LocalizedDisplayNameAttribute : DisplayNameAttribute

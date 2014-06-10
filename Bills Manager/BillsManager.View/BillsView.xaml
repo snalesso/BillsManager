@@ -4,6 +4,7 @@
              xmlns:Caliburn="http://www.caliburnproject.org"
              xmlns:Commanding="clr-namespace:BillsManager.ViewModels.Commanding;assembly=BillsManager.ViewModels"
              xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
+             xmlns:Converters="clr-namespace:BillsManager.Views.Converters"
              xmlns:DataTemplates="clr-namespace:BillsManager.Views.DataTemplates"
              xmlns:ViewModels="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -16,7 +17,11 @@
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <ResourceDictionary Source="Dictionaries\Styles.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Dictionaries\Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <UserControl.Background>
@@ -25,6 +30,7 @@
     </UserControl.Background>
 
     <Controls:ListViewEx x:Name="lsvBills"
+                         AlternationCount="2"
                          Commanding:CommandBehavior.Command="{Binding ShowBillDetailsCommand}"
                          Commanding:CommandBehavior.CommandParameter="{Binding SelectedBillViewModel}"
                          Commanding:CommandBehavior.Event="MouseDoubleClick"
@@ -32,8 +38,8 @@
                          ItemsSource="{Binding FilteredBillViewModels, IsAsync=True}"
                          SelectedItem="{Binding SelectedBillViewModel}"
                          SelectionMode="Single"
-                         VirtualizingPanel.IsVirtualizing="True">
-
+                         VirtualizingPanel.IsVirtualizing="True"
+                         VirtualizingPanel.VirtualizationMode="Recycling">
         <!--
             <ListView.ItemTemplate>
             <DataTemplate>
@@ -166,6 +172,12 @@
                                 <DataTrigger Binding="{Binding DueAlert, Mode=OneWay}"
                                              Value="High">
                                     <Setter TargetName="border" Property="Background" Value="{StaticResource HighDueAlertBrush}" />
+                                    <Setter TargetName="dueDate" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
+                                </DataTrigger>
+
+                                <DataTrigger Binding="{Binding DueAlert, Mode=OneWay}"
+                                             Value="Critical">
+                                    <Setter TargetName="border" Property="Background" Value="{StaticResource CriticalDueAlertBrush}" />
                                     <Setter TargetName="dueDate" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
                                 </DataTrigger>
 

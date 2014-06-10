@@ -70,7 +70,7 @@ namespace BillsManager.ViewModels
                     bdvm => bdvm.SupplierID == this.SelectedSupplier.ID,
                     () =>
                         TranslationManager.Instance.Translate("By").ToString().ToLower(TranslationManager.Instance.CurrentLanguage) +
-                        " " + this.SelectedSupplier.Name); // TODO: language
+                        " " + this.SelectedSupplier.Name);
 
             this.isPaidFilter =
                 new Filter<BillDetailsViewModel>(
@@ -84,12 +84,12 @@ namespace BillsManager.ViewModels
             this.dueDateFilter =
                 new Filter<BillDetailsViewModel>(
                     bdvm => bdvm.DueDate == this.DueDateFilterValue,
-                    () => TranslationManager.Instance.Translate("DuedOn_toBills").ToString() + " " + this.DueDateFilterValue.Value.ToShortDateString()); // TODO: language
+                    () => TranslationManager.Instance.Translate("DuedOn_toBills").ToString() + " " + this.DueDateFilterValue.Value.ToShortDateString());
 
             this.releaseDateFilter =
                 new Filter<BillDetailsViewModel>(
                     bdvm => bdvm.ReleaseDate == this.ReleaseDateFilterValue,
-                    () => TranslationManager.Instance.Translate("ReleasedOn_toBills").ToString() + " " + this.ReleaseDateFilterValue.Value.ToShortDateString()); // TODO: language
+                    () => TranslationManager.Instance.Translate("ReleasedOn_toBills").ToString() + " " + this.ReleaseDateFilterValue.Value.ToShortDateString());
         }
 
         #endregion
@@ -168,7 +168,7 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                switch (this.IsPaidFilterValue) // TODO: localize enum
+                switch (this.IsPaidFilterValue)
                 {
                     case true:
                         return TranslationManager.Instance.Translate("Paid_toBills").ToString();

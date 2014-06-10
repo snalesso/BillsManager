@@ -1,4 +1,5 @@
 ﻿using BillsManager.Localization;
+using BillsManager.Localization.Attributes;
 using BillsManager.Models;
 using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
@@ -134,14 +135,15 @@ namespace BillsManager.ViewModels
 
                 if (timeleft.TotalDays >= 0)
                 {
-                    if (timeleft.TotalDays == 0) return "Overdues today"; // TODO: language
-                    if (timeleft.TotalDays == 1) return "Overdues tomorrow";
-                    return timeleft.TotalDays.ToString() + " days left";
+                    if (timeleft.TotalDays == 0) return TranslationManager.Instance.Translate("OverduesToday_toBill").ToString();
+                    if (timeleft.TotalDays == 1) return TranslationManager.Instance.Translate("OverduesTomorrow_toBill").ToString();
+                    return string.Format(TranslationManager.Instance.Translate("OverduesInXDays_toBill_format").ToString(), timeleft.TotalDays);
                 }
                 else
                 {
-                    if (timeleft.TotalDays == -1) return "Overdue yesterday";
-                    return "Overdue " + (timeleft.TotalDays * -1).ToString() + " days ago";
+                    if (timeleft.TotalDays == -1)
+                        return TranslationManager.Instance.Translate("OverdueYesterday_toBill").ToString();
+                    return string.Format(TranslationManager.Instance.Translate("OverdueXDaysAgo_toBill_format").ToString(), timeleft.TotalDays * -1);
                 }
             }
         }
@@ -151,18 +153,20 @@ namespace BillsManager.ViewModels
             get
             {
                 if (this.IsPaid)
-                    return ViewModels.DueAlert.None;
+                    return DueAlert.None;
 
                 var remDays = (this.DueDate - DateTime.Today).TotalDays;
 
                 if (remDays >= 15)
-                    return ViewModels.DueAlert.None;
+                    return DueAlert.None;
                 else if (remDays >= 7)
-                    return ViewModels.DueAlert.Low;
+                    return DueAlert.Low;
                 else if (remDays >= 3)
-                    return ViewModels.DueAlert.Medium;
-                else
+                    return DueAlert.Medium;
+                else if (remDays >= 0)
                     return DueAlert.High;
+                else
+                    return DueAlert.Critical;
             }
         }
 

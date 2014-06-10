@@ -33,7 +33,7 @@ namespace BillsManager.ViewModels.Validation
                     this.validationRules.Add(pi.Name, valAtts);
             }
         }
-        
+
         protected object GetPropertyValue(string propertyName)
         {
             return typeof(T).GetProperty(propertyName).GetValue(this.trackedObject, null);
@@ -44,8 +44,16 @@ namespace BillsManager.ViewModels.Validation
             var validations = this.validationRules[propertyName];
 
             var errors = this.validationRules[propertyName]
-                .Where(vr => !vr.IsValid(this.GetPropertyValue(propertyName)))
-                .Select(vr => vr.ErrorMessage);
+                .Where(vr =>
+                {
+                    var v = !vr.IsValid(this.GetPropertyValue(propertyName));
+                    return v;
+                })
+                .Select(vr =>
+                {
+                    var e = vr.ErrorMessage;
+                    return e;
+                });
 
             return string.Join(Environment.NewLine, errors);
         }

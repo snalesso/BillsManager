@@ -1,4 +1,4 @@
-﻿using BillsManager.Localization;
+﻿using BillsManager.Localization.Attributes;
 using BillsManager.Models;
 using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
@@ -165,7 +165,7 @@ namespace BillsManager.ViewModels
             {
                 if (this.ObligationAmount < 0) return Obligation.Creditor;
                 if (this.ObligationAmount > 0) return Obligation.Debtor;
-                return Obligation.None;
+                return Obligation.Unbound;
             }
         }
 

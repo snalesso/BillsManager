@@ -4,7 +4,7 @@ namespace BillsManager.ViewModels.Messages
 {
     public class BillDeletedMessage : BillCRUDEvent
     {
-        public BillDeletedMessage(Bill deletedBill) // TODO: make properties simple fields?
+        public BillDeletedMessage(Bill deletedBill)
         {
             this.deletedBill = deletedBill;
         }

@@ -11,12 +11,20 @@ namespace BillsManager.ViewModels
 
         public bool IsValid // TODO: make cached?
         {
-            get { return string.IsNullOrEmpty(this.Error); }
+            get
+            {
+                var isValid = this.Error.Length <= 0;
+
+                return isValid;
+            }
         }
 
         public string Error
         {
-            get { return this.rulesTracker.GetAllErrors(); }
+            get
+            {
+                return this.rulesTracker.GetAllErrors();
+            }
         }
 
         public string this[string columnName]

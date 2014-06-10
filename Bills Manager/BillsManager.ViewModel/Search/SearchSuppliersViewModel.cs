@@ -1,4 +1,5 @@
-﻿using BillsManager.ViewModels.Commanding;
+﻿using BillsManager.Localization;
+using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
 using Caliburn.Micro;
 using System;
@@ -52,9 +53,17 @@ namespace BillsManager.ViewModels
                 new Filter<SupplierDetailsViewModel>(
                     sdvm => sdvm.ObligationState == this.ObligationStateFilterValue,
                     () =>
-                        this.ObligationStateFilterValue != Obligation.None ?
-                        this.ObligationStateFilterValue.ToString() + "s" : // TODO: language
-                        "indifferent"); // TODO: find a more appropriate term
+                    {
+                        switch (this.ObligationStateFilterValue)
+                        {
+                            case Obligation.Unbound:
+                                return TranslationManager.Instance.Translate("Unbound_toSuppliers").ToString();
+                            case Obligation.Creditor:
+                                return TranslationManager.Instance.Translate("Creditor_toSuppliers").ToString();
+                            default:
+                                return TranslationManager.Instance.Translate("Debtor_toSuppliers").ToString();
+                        }
+                    });
         }
 
         #endregion

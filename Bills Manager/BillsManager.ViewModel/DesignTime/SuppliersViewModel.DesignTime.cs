@@ -86,7 +86,7 @@ namespace BillsManager.ViewModels
                 "sconti 10/06 - 24/09.",
                 "Barbara",
                 "Robecchi",
-                "347-7892234")) { ObligationAmount = 1 }; // TODO: change obligation set way, look here below
+                "347-7892234")) { ObligationAmount = 1 }; // TODO: change obligation set way, add bills instead
 
             //svm3.ExposedSupplier.Bills.Add(new Bill(
             //    DateTime.Today.AddDays(-2),

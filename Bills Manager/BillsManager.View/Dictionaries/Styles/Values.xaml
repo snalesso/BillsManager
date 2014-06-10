@@ -14,6 +14,7 @@
         <ResourceDictionary Source="Values\ListBoxItemValues.xaml" />
         <ResourceDictionary Source="Values\ListItemValues.xaml" />
         <ResourceDictionary Source="Values\DueAlertValues.xaml" />
+        <ResourceDictionary Source="Values\Converters.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

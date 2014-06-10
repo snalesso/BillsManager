@@ -16,4 +16,7 @@
     <SolidColorBrush x:Key="HighDueAlertBrush"
                      Color="#FFEA0000" />
 
+    <SolidColorBrush x:Key="CriticalDueAlertBrush"
+                     Color="#FFD10065" />
+
 </ResourceDictionary>

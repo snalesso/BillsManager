@@ -249,13 +249,13 @@ namespace BillsManager.ViewModels
             get { return this.ExposedSupplier.Zip; }
             set
             {
-                if (this.Zip != value)
-                {
-                    if (value == string.Empty)
-                        value = null;
-                    this.ExposedSupplier.Zip = value;
-                    this.NotifyOfPropertyChange(() => this.Zip);
-                }
+                if (this.Zip == value) return;
+
+                if (value == string.Empty)
+                    value = null;
+
+                this.ExposedSupplier.Zip = value;
+                this.NotifyOfPropertyChange(() => this.Zip);
             }
         }
 
@@ -264,13 +264,13 @@ namespace BillsManager.ViewModels
             get { return this.ExposedSupplier.Province; }
             set
             {
-                if (this.Province != value)
-                {
-                    if (value == string.Empty)
-                        value = null;
-                    this.ExposedSupplier.Province = value;
-                    this.NotifyOfPropertyChange(() => this.Province);
-                }
+                if (this.Province == value) return;
+
+                if (value == string.Empty)
+                    value = null;
+
+                this.ExposedSupplier.Province = value;
+                this.NotifyOfPropertyChange(() => this.Province);
             }
         }
 

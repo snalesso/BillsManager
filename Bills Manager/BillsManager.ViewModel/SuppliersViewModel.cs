@@ -189,9 +189,12 @@ namespace BillsManager.ViewModels
                     }
                     else // TODO: reshow the dialog with this suppVM
                     {
-                        this.windowManager.ShowDialog(new DialogViewModel(
-                            "Add failed", // TODO: language
-                            "Couldn't save the new supplier. Please try again."));
+                        this.windowManager.ShowDialog(
+                            new DialogViewModel(
+                                TranslationManager.Instance.Translate("AddSupplierFailed").ToString(),
+                                TranslationManager.Instance.Translate("AddSupplierFailedMessage").ToString() +
+                                Environment.NewLine +
+                                TranslationManager.Instance.Translate("TryAgain").ToString()));
                         goto tryAdd;
                     }
                 }

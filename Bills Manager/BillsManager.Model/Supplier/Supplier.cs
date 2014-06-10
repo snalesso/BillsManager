@@ -203,6 +203,8 @@
             {
                 if (value != null)
                     this.province = value.ToUpper();
+                else
+                    this.province = value;
             }
         }
 

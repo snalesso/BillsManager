@@ -70,6 +70,24 @@ namespace BillsManager.Views.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ^[a-zA-Z]*$.
+        /// </summary>
+        public static string _onlyLetters_regex {
+            get {
+                return ResourceManager.GetString("_onlyLetters_regex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ^[0-9]*$.
+        /// </summary>
+        public static string _onlyNumbers_regex {
+            get {
+                return ResourceManager.GetString("_onlyNumbers_regex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} rollbacks.
         /// </summary>
         public static string _rollbacksCount_format {
@@ -106,6 +124,24 @@ namespace BillsManager.Views.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aggiunta fattura fallita.
+        /// </summary>
+        public static string AddBillFailed {
+            get {
+                return ResourceManager.GetString("AddBillFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non è stato possibile aggiungere la fattura.
+        /// </summary>
+        public static string AddBillFailedMessage {
+            get {
+                return ResourceManager.GetString("AddBillFailedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Indirizzo.
         /// </summary>
         public static string Address {
@@ -120,6 +156,24 @@ namespace BillsManager.Views.Languages {
         public static string AddSupplier {
             get {
                 return ResourceManager.GetString("AddSupplier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aggiunta fornitore fallita.
+        /// </summary>
+        public static string AddSupplierFailed {
+            get {
+                return ResourceManager.GetString("AddSupplierFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non è stato possibile aggiungere il fornitore.
+        /// </summary>
+        public static string AddSupplierFailedMessage {
+            get {
+                return ResourceManager.GetString("AddSupplierFailedMessage", resourceCulture);
             }
         }
         
@@ -192,6 +246,15 @@ namespace BillsManager.Views.Languages {
         public static string Amount {
             get {
                 return ResourceManager.GetString("Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Devi specificare un importo.
+        /// </summary>
+        public static string AmountRequired {
+            get {
+                return ResourceManager.GetString("AmountRequired", resourceCulture);
             }
         }
         
@@ -309,6 +372,24 @@ namespace BillsManager.Views.Languages {
         public static string CancelExit {
             get {
                 return ResourceManager.GetString("CancelExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non è possibile superare i {1} caratteri.
+        /// </summary>
+        public static string CannotExceedChars_format {
+            get {
+                return ResourceManager.GetString("CannotExceedChars_format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Devi inserire almeno {0} caratteri.
+        /// </summary>
+        public static string CannotStayBelowChars_format {
+            get {
+                return ResourceManager.GetString("CannotStayBelowChars_format", resourceCulture);
             }
         }
         
@@ -475,6 +556,24 @@ namespace BillsManager.Views.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Creditori.
+        /// </summary>
+        public static string Creditor_toSuppliers {
+            get {
+                return ResourceManager.GetString("Creditor_toSuppliers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Critico.
+        /// </summary>
+        public static string Critical_toDueAlert {
+            get {
+                return ResourceManager.GetString("Critical_toDueAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Database.
         /// </summary>
         public static string Database {
@@ -484,11 +583,56 @@ namespace BillsManager.Views.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Impossibile connettersi database.
+        /// </summary>
+        public static string DatabaseConnectionFailed {
+            get {
+                return ResourceManager.GetString("DatabaseConnectionFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non è stato possibile connettersi al database.
+        /// </summary>
+        public static string DatabaseConnectionFailedMessage {
+            get {
+                return ResourceManager.GetString("DatabaseConnectionFailedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Impossibile salvare database.
+        /// </summary>
+        public static string DatabaseSaveFailed {
+            get {
+                return ResourceManager.GetString("DatabaseSaveFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non è stato possibile salvare il database.
+        /// </summary>
+        public static string DatabaseSaveFailedMessage {
+            get {
+                return ResourceManager.GetString("DatabaseSaveFailedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data.
         /// </summary>
         public static string Date {
             get {
                 return ResourceManager.GetString("Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Devi specificare una data.
+        /// </summary>
+        public static string DateRequired {
+            get {
+                return ResourceManager.GetString("DateRequired", resourceCulture);
             }
         }
         
@@ -507,6 +651,15 @@ namespace BillsManager.Views.Languages {
         public static string Debtor_toSupplier {
             get {
                 return ResourceManager.GetString("Debtor_toSupplier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Debitori.
+        /// </summary>
+        public static string Debtor_toSuppliers {
+            get {
+                return ResourceManager.GetString("Debtor_toSuppliers", resourceCulture);
             }
         }
         
@@ -682,6 +835,15 @@ namespace BillsManager.Views.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Impossibile modificare.
+        /// </summary>
+        public static string EditFailed {
+            get {
+                return ResourceManager.GetString("EditFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Si è verificato un errore durante il salvataggio delle modifiche.
         /// </summary>
         public static string EditFailedMessage {
@@ -826,6 +988,24 @@ namespace BillsManager.Views.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Basso.
+        /// </summary>
+        public static string Low_toDueAlert {
+            get {
+                return ResourceManager.GetString("Low_toDueAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Medio.
+        /// </summary>
+        public static string Medium_toDueAlert {
+            get {
+                return ResourceManager.GetString("Medium_toDueAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Messaggio.
         /// </summary>
         public static string Message {
@@ -844,11 +1024,38 @@ namespace BillsManager.Views.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Devi inserire {0} caratteri.
+        /// </summary>
+        public static string MustBeNChars_format {
+            get {
+                return ResourceManager.GetString("MustBeNChars_format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Devi inserire tra {0} e {1} caratteri.
+        /// </summary>
+        public static string MustStayWithinChars_format {
+            get {
+                return ResourceManager.GetString("MustStayWithinChars_format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nome.
         /// </summary>
         public static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Devi specificare un nome.
+        /// </summary>
+        public static string NameRequired {
+            get {
+                return ResourceManager.GetString("NameRequired", resourceCulture);
             }
         }
         
@@ -916,11 +1123,11 @@ namespace BillsManager.Views.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nessuna.
+        ///   Looks up a localized string similar to Nullo.
         /// </summary>
-        public static string None_toSupplier {
+        public static string None_toDueAlert {
             get {
-                return ResourceManager.GetString("None_toSupplier", resourceCulture);
+                return ResourceManager.GetString("None_toDueAlert", resourceCulture);
             }
         }
         
@@ -1002,6 +1209,51 @@ namespace BillsManager.Views.Languages {
         public static string OperationMayTakeAWhile {
             get {
                 return ResourceManager.GetString("OperationMayTakeAWhile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scade tra {0} giorni.
+        /// </summary>
+        public static string OverduesInXDays_toBill_format {
+            get {
+                return ResourceManager.GetString("OverduesInXDays_toBill_format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scade oggi.
+        /// </summary>
+        public static string OverduesToday_toBill {
+            get {
+                return ResourceManager.GetString("OverduesToday_toBill", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scade domani.
+        /// </summary>
+        public static string OverduesTomorrow_toBill {
+            get {
+                return ResourceManager.GetString("OverduesTomorrow_toBill", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scaduta {0} giorni fa.
+        /// </summary>
+        public static string OverdueXDaysAgo_toBill_format {
+            get {
+                return ResourceManager.GetString("OverdueXDaysAgo_toBill_format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scaduta ieri.
+        /// </summary>
+        public static string OverdueYesterday_toBill {
+            get {
+                return ResourceManager.GetString("OverdueYesterday_toBill", resourceCulture);
             }
         }
         
@@ -1155,6 +1407,15 @@ namespace BillsManager.Views.Languages {
         public static string ReleaseDate {
             get {
                 return ResourceManager.GetString("ReleaseDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Devi specificare una data di rilascio.
+        /// </summary>
+        public static string ReleaseDateRequired {
+            get {
+                return ResourceManager.GetString("ReleaseDateRequired", resourceCulture);
             }
         }
         
@@ -1366,6 +1627,15 @@ namespace BillsManager.Views.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Devi selezionare un fornitore.
+        /// </summary>
+        public static string SupplierRequired {
+            get {
+                return ResourceManager.GetString("SupplierRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fornitori.
         /// </summary>
         public static string Suppliers {
@@ -1389,6 +1659,24 @@ namespace BillsManager.Views.Languages {
         public static string TryAgain {
             get {
                 return ResourceManager.GetString("TryAgain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Svincolata.
+        /// </summary>
+        public static string Unbound_toSupplier {
+            get {
+                return ResourceManager.GetString("Unbound_toSupplier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Svincolati.
+        /// </summary>
+        public static string Undound_toSuppliers {
+            get {
+                return ResourceManager.GetString("Undound_toSuppliers", resourceCulture);
             }
         }
         
@@ -1420,11 +1708,11 @@ namespace BillsManager.Views.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cap.
+        ///   Looks up a localized string similar to CAP.
         /// </summary>
-        public static string Zip {
+        public static string ZIP {
             get {
-                return ResourceManager.GetString("Zip", resourceCulture);
+                return ResourceManager.GetString("ZIP", resourceCulture);
             }
         }
     }

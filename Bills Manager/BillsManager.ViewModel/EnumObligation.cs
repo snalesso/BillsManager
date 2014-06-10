@@ -1,4 +1,4 @@
-﻿using BillsManager.Localization;
+﻿using BillsManager.Localization.Attributes;
 
 namespace BillsManager.ViewModels
 {
@@ -6,8 +6,8 @@ namespace BillsManager.ViewModels
     {
         [LocalizedDisplayName("Creditor_toSupplier")]
         Creditor = -1,
-        [LocalizedDisplayName("None_toSupplier")]
-        None = 0,
+        [LocalizedDisplayName("Unbound_toSupplier")]
+        Unbound = 0,
         [LocalizedDisplayName("Debtor_toSupplier")]
         Debtor = 1
     }

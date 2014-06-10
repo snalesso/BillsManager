@@ -210,8 +210,10 @@ namespace BillsManager.ViewModels
                 else
                 {
                     this.windowManager.ShowDialog(new DialogViewModel(
-                        "Add failed", // TODO: language
-                        "Couldn't save the new bill. Please try again."));
+                        TranslationManager.Instance.Translate("AddBillFailed").ToString(),
+                            TranslationManager.Instance.Translate("AddBillFailedMessage").ToString() +
+                            Environment.NewLine +
+                            TranslationManager.Instance.Translate("TryAgain").ToString()));
                     goto tryAdd;
                 }
             }
@@ -241,9 +243,12 @@ namespace BillsManager.ViewModels
                 }
                 else
                 {
-                    this.windowManager.ShowDialog(new DialogViewModel(
-                        "Edit failed", // TODO: language
-                        "An error has occurred during the edit process. Please try again."));
+                    this.windowManager.ShowDialog(
+                        new DialogViewModel(
+                            TranslationManager.Instance.Translate("EditFailed").ToString(),
+                            TranslationManager.Instance.Translate("EditFailedMessage").ToString() +
+                            Environment.NewLine +
+                            TranslationManager.Instance.Translate("TryAgain").ToString()));
                 }
             }
         }

@@ -312,8 +312,8 @@
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
-  <data name="Zip" xml:space="preserve">
-    <value>Zip</value>
+  <data name="ZIP" xml:space="preserve">
+    <value>ZIP</value>
   </data>
   <data name="AddBill" xml:space="preserve">
     <value>Add bill</value>
@@ -519,8 +519,8 @@
   <data name="Debtor_toSupplier" xml:space="preserve">
     <value>Debtor</value>
   </data>
-  <data name="None_toSupplier" xml:space="preserve">
-    <value>None</value>
+  <data name="Unbound_toSupplier" xml:space="preserve">
+    <value>Unbound</value>
   </data>
   <data name="DoFilter" xml:space="preserve">
     <value>Filter</value>
@@ -572,5 +572,95 @@
   </data>
   <data name="_shortDate_format" xml:space="preserve">
     <value>{0:MM/dd/yyyy}</value>
+  </data>
+  <data name="OverdueXDaysAgo_toBill_format" xml:space="preserve">
+    <value>Overdue {0} days ago</value>
+  </data>
+  <data name="OverdueYesterday_toBill" xml:space="preserve">
+    <value>Overdue yesterday</value>
+  </data>
+  <data name="OverduesToday_toBill" xml:space="preserve">
+    <value>Overdues today</value>
+  </data>
+  <data name="OverduesTomorrow_toBill" xml:space="preserve">
+    <value>Overdues tomorrow</value>
+  </data>
+  <data name="OverduesInXDays_toBill_format" xml:space="preserve">
+    <value>Overdues in {0} days</value>
+  </data>
+  <data name="Critical_toDueAlert" xml:space="preserve">
+    <value>Critical</value>
+  </data>
+  <data name="Low_toDueAlert" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="Medium_toDueAlert" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="None_toDueAlert" xml:space="preserve">
+    <value>Null</value>
+  </data>
+  <data name="DatabaseSaveFailed" xml:space="preserve">
+    <value>Database save failed</value>
+  </data>
+  <data name="EditFailed" xml:space="preserve">
+    <value>Edit failed</value>
+  </data>
+  <data name="AddBillFailed" xml:space="preserve">
+    <value>Add bill failed</value>
+  </data>
+  <data name="AddBillFailedMessage" xml:space="preserve">
+    <value>Couldn't add the bill</value>
+  </data>
+  <data name="AddSupplierFailedMessage" xml:space="preserve">
+    <value>Couldn't add the supplier</value>
+  </data>
+  <data name="AddSupplierFailed" xml:space="preserve">
+    <value>Add supplier failed</value>
+  </data>
+  <data name="DatabaseSaveFailedMessage" xml:space="preserve">
+    <value>Couldn't save the database</value>
+  </data>
+  <data name="DatabaseConnectionFailed" xml:space="preserve">
+    <value>Database connection failed</value>
+  </data>
+  <data name="DatabaseConnectionFailedMessage" xml:space="preserve">
+    <value>Couldn't connect to the database</value>
+  </data>
+  <data name="SupplierRequired" xml:space="preserve">
+    <value>You must select a supplier</value>
+  </data>
+  <data name="DateRequired" xml:space="preserve">
+    <value>You must specify a due date</value>
+  </data>
+  <data name="ReleaseDateRequired" xml:space="preserve">
+    <value>You must specify a release date</value>
+  </data>
+  <data name="AmountRequired" xml:space="preserve">
+    <value>You must specify an amount</value>
+  </data>
+  <data name="CannotExceedChars_format" xml:space="preserve">
+    <value>You cannot exceed {1} characters</value>
+  </data>
+  <data name="CannotStayBelowChars_format" xml:space="preserve">
+    <value>You must enter at least {0} characters</value>
+  </data>
+  <data name="MustStayWithinChars_format" xml:space="preserve">
+    <value>You must stay within {0} and {1} characters</value>
+  </data>
+  <data name="NameRequired" xml:space="preserve">
+    <value>You must specify a name</value>
+  </data>
+  <data name="MustBeNChars_format" xml:space="preserve">
+    <value>Must be {0} characters long</value>
+  </data>
+  <data name="Debtor_toSuppliers" xml:space="preserve">
+    <value>Debtors</value>
+  </data>
+  <data name="Creditor_toSuppliers" xml:space="preserve">
+    <value>Creditors</value>
+  </data>
+  <data name="Undound_toSuppliers" xml:space="preserve">
+    <value>Unbound</value>
   </data>
 </root>

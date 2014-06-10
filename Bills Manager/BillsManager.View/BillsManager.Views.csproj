@@ -68,6 +68,7 @@
     <Compile Include="BackupCenterView.xaml.cs">
       <DependentUpon>BackupCenterView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Behaviors\TextBoxBehavior.cs" />
     <Compile Include="BillDetailsView.xaml.cs">
       <DependentUpon>BillDetailsView.xaml</DependentUpon>
     </Compile>
@@ -80,13 +81,17 @@
     <Compile Include="Controls\AutoGreyableImage.cs" />
     <Compile Include="Controls\ControlBox\CloseWindowButton.cs" />
     <Compile Include="Controls\GridSplitterEx.cs" />
+    <Compile Include="Controls\HyperlinkEx.cs" />
     <Compile Include="Controls\ListBoxEx.cs" />
     <Compile Include="Controls\ListViewEx.cs" />
     <Compile Include="Controls\ControlBox\MinimizeWindowButton.cs" />
     <Compile Include="Controls\ControlBox\NormalizeWindowButton.cs" />
     <Compile Include="Controls\ControlBox\MaximizeWindowButton.cs" />
     <Compile Include="Controls\PathButton.cs" />
+    <Compile Include="Controls\PopupEx.cs" />
     <Compile Include="Controls\WindowEx.cs" />
+    <Compile Include="Converters\MultiBooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\RowAlternatorConverter.cs" />
     <Compile Include="DataTemplates\BackupDataTemplate.xaml.cs">
       <DependentUpon>BackupDataTemplate.xaml</DependentUpon>
     </Compile>
@@ -348,6 +353,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dictionaries\Styles\Values\CheckBoxValues.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dictionaries\Styles\Values\Converters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

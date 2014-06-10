@@ -7,7 +7,6 @@ namespace BillsManager.Views
     /// </summary>
     public partial class SupplierDetailsView : UserControl
     {
-        // TODO: linklabel for website
         public SupplierDetailsView()
         {
             InitializeComponent();

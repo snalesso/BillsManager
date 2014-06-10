@@ -417,8 +417,8 @@
   <data name="Yes" xml:space="preserve">
     <value>Si</value>
   </data>
-  <data name="Zip" xml:space="preserve">
-    <value>Cap</value>
+  <data name="ZIP" xml:space="preserve">
+    <value>CAP</value>
   </data>
   <data name="Connected_toDB" xml:space="preserve">
     <value>Connesso</value>
@@ -519,8 +519,8 @@
   <data name="Debtor_toSupplier" xml:space="preserve">
     <value>Debitore</value>
   </data>
-  <data name="None_toSupplier" xml:space="preserve">
-    <value>Nessuna</value>
+  <data name="Unbound_toSupplier" xml:space="preserve">
+    <value>Svincolata</value>
   </data>
   <data name="DoFilter" xml:space="preserve">
     <value>Filtra</value>
@@ -572,5 +572,103 @@
   </data>
   <data name="_shortDate_format" xml:space="preserve">
     <value>{0:dd/MM/yyyy}</value>
+  </data>
+  <data name="OverdueXDaysAgo_toBill_format" xml:space="preserve">
+    <value>Scaduta {0} giorni fa</value>
+  </data>
+  <data name="OverdueYesterday_toBill" xml:space="preserve">
+    <value>Scaduta ieri</value>
+  </data>
+  <data name="OverduesToday_toBill" xml:space="preserve">
+    <value>Scade oggi</value>
+  </data>
+  <data name="OverduesTomorrow_toBill" xml:space="preserve">
+    <value>Scade domani</value>
+  </data>
+  <data name="OverduesInXDays_toBill_format" xml:space="preserve">
+    <value>Scade tra {0} giorni</value>
+  </data>
+  <data name="None_toDueAlert" xml:space="preserve">
+    <value>Nullo</value>
+  </data>
+  <data name="Medium_toDueAlert" xml:space="preserve">
+    <value>Medio</value>
+  </data>
+  <data name="Low_toDueAlert" xml:space="preserve">
+    <value>Basso</value>
+  </data>
+  <data name="Critical_toDueAlert" xml:space="preserve">
+    <value>Critico</value>
+  </data>
+  <data name="DatabaseSaveFailed" xml:space="preserve">
+    <value>Impossibile salvare database</value>
+  </data>
+  <data name="EditFailed" xml:space="preserve">
+    <value>Impossibile modificare</value>
+  </data>
+  <data name="AddBillFailed" xml:space="preserve">
+    <value>Aggiunta fattura fallita</value>
+  </data>
+  <data name="AddBillFailedMessage" xml:space="preserve">
+    <value>Non è stato possibile aggiungere la fattura</value>
+  </data>
+  <data name="AddSupplierFailedMessage" xml:space="preserve">
+    <value>Non è stato possibile aggiungere il fornitore</value>
+  </data>
+  <data name="AddSupplierFailed" xml:space="preserve">
+    <value>Aggiunta fornitore fallita</value>
+  </data>
+  <data name="DatabaseSaveFailedMessage" xml:space="preserve">
+    <value>Non è stato possibile salvare il database</value>
+  </data>
+  <data name="DatabaseConnectionFailed" xml:space="preserve">
+    <value>Impossibile connettersi database</value>
+  </data>
+  <data name="DatabaseConnectionFailedMessage" xml:space="preserve">
+    <value>Non è stato possibile connettersi al database</value>
+  </data>
+  <data name="SupplierRequired" xml:space="preserve">
+    <value>Devi selezionare un fornitore</value>
+  </data>
+  <data name="DateRequired" xml:space="preserve">
+    <value>Devi specificare una data</value>
+  </data>
+  <data name="ReleaseDateRequired" xml:space="preserve">
+    <value>Devi specificare una data di rilascio</value>
+  </data>
+  <data name="AmountRequired" xml:space="preserve">
+    <value>Devi specificare un importo</value>
+  </data>
+  <data name="CannotExceedChars_format" xml:space="preserve">
+    <value>Non è possibile superare i {1} caratteri</value>
+  </data>
+  <data name="CannotStayBelowChars_format" xml:space="preserve">
+    <value>Devi inserire almeno {0} caratteri</value>
+  </data>
+  <data name="MustStayWithinChars_format" xml:space="preserve">
+    <value>Devi inserire tra {0} e {1} caratteri</value>
+  </data>
+  <data name="NameRequired" xml:space="preserve">
+    <value>Devi specificare un nome</value>
+  </data>
+  <data name="_onlyLetters_regex" xml:space="preserve">
+    <value>^[a-zA-Z]*$</value>
+    <comment>@Invariant</comment>
+  </data>
+  <data name="_onlyNumbers_regex" xml:space="preserve">
+    <value>^[0-9]*$</value>
+    <comment>@Invariant</comment>
+  </data>
+  <data name="MustBeNChars_format" xml:space="preserve">
+    <value>Devi inserire {0} caratteri</value>
+  </data>
+  <data name="Debtor_toSuppliers" xml:space="preserve">
+    <value>Debitori</value>
+  </data>
+  <data name="Creditor_toSuppliers" xml:space="preserve">
+    <value>Creditori</value>
+  </data>
+  <data name="Undound_toSuppliers" xml:space="preserve">
+    <value>Svincolati</value>
   </data>
 </root>

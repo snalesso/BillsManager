@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BillsManager.Localization
+namespace BillsManager.Localization.Attributes
 {
     // TODO: review modality -> string == null ? use type : use provided key -> .Translation
     [Obsolete]

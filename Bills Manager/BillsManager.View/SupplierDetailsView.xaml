@@ -2,8 +2,9 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:ViewModel="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
+             xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              MinWidth="400"
              d:DataContext="{d:DesignInstance Type=ViewModel:SupplierDetailsViewModel, IsDesignTimeCreatable=True}"
@@ -154,8 +155,11 @@
                    Text="{loc:Translate Email}" />
         <TextBlock Grid.Row="15"
                    Grid.Column="3"
-                   VerticalAlignment="Center"
-                   Text="{Binding eMail}" />
+                   VerticalAlignment="Center">
+            <Controls:HyperlinkEx NavigateUri="{Binding eMail, StringFormat=mailto:\{0\}}">
+                <TextBlock Text="{Binding eMail}" />
+            </Controls:HyperlinkEx>
+        </TextBlock>
 
         <TextBlock Grid.Row="17"
                    Grid.Column="1"
@@ -166,8 +170,11 @@
                    Text="{loc:Translate Website}" />
         <TextBlock Grid.Row="17"
                    Grid.Column="3"
-                   VerticalAlignment="Center"
-                   Text="{Binding Website}" />
+                   VerticalAlignment="Center">
+            <Controls:HyperlinkEx NavigateUri="{Binding Website}">
+                <TextBlock Text="{Binding Website}" />
+            </Controls:HyperlinkEx>
+        </TextBlock>
 
         <TextBlock Grid.Row="19"
                    Grid.Column="1"

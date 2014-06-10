@@ -13,7 +13,7 @@ namespace BillsManager.Services.Providers
 
         IEnumerable<Bill> GetAllBills();
 
-        bool Add(Bill bill); // TODO: change name to New/CreateNew
+        bool Add(Bill bill);
 
         bool Edit(Bill bill);
         bool Edit(IEnumerable<Bill> bills); // TODO: obsolete?

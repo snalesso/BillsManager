@@ -2,11 +2,8 @@
 {
     public class AddNewSupplierOrder
     {
-        public AddNewSupplierOrder(/*string dbName*/) // TODO: cleanup
+        public AddNewSupplierOrder()
         {
-            //this.DBName = dbName;
         }
-
-        //public readonly string DBName;
     }
 }

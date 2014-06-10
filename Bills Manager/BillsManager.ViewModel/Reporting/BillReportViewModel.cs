@@ -1,6 +1,5 @@
-﻿using BillsManager.Localization;
+﻿using BillsManager.Localization.Attributes;
 using BillsManager.Services.Reporting;
-using System.ComponentModel;
 using System.Windows;
 
 namespace BillsManager.ViewModels.Reporting

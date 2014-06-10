@@ -6,11 +6,11 @@
         ITagsProvider/*,
         IAgentsProvider*/
     {
-        bool Open();
+        bool Connect();
 
         bool Save();
 
-        void Close();
+        void Disconnect();
 
         //string DBPath { get; } // TODO: obsolete?
 

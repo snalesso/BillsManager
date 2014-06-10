@@ -73,7 +73,7 @@ namespace BillsManager.Services.Providers
 
         #region connector level methods
 
-        public bool Open()
+        public bool Connect()
         {
             try
             {
@@ -99,7 +99,7 @@ namespace BillsManager.Services.Providers
             return true;
         }
 
-        public void Close()
+        public void Disconnect()
         {
             this.xmlDB = null;
         }
@@ -137,14 +137,12 @@ namespace BillsManager.Services.Providers
 
         public bool Add(Bill bill)
         {
-            this.xmlDB.Root.Element(NS_BILLS).Add(new XElement(ITEM_BILL, typeof(Bill).GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Select(pi =>
-                {
-                    if (pi.GetValue(bill, null) != null)
-                        return new XAttribute(pi.Name, pi.GetValue(bill, null));
-                    else
-                        return null;
-                })));
+            this.xmlDB.Root.Element(NS_BILLS)
+                .Add(
+                new XElement(ITEM_BILL,
+                    typeof(Bill).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .Where(pi => pi.GetValue(bill) != null)
+                    .Select(pi => new XAttribute(pi.Name, pi.GetValue(bill)))));
 
             this.IncreaseLastIDValue(NS_BILLS);
 
@@ -153,16 +151,14 @@ namespace BillsManager.Services.Providers
 
         public bool Edit(Bill bill)
         {
-            var XBill = this.xmlDB.Root.Element(NS_BILLS).Elements(ITEM_BILL)
+            var XBill = this.xmlDB.Root.Element(NS_BILLS)
+                .Elements(ITEM_BILL)
                 .Single(elem => elem.Attribute("ID").Value == bill.ID.ToString());
 
             typeof(Bill).GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Where(pi => pi.Name != "ID")
                 .ToList()
-                .ForEach(pi =>
-                {
-                    XBill.SetAttributeValue(pi.Name, pi.GetValue(bill, null));
-                });
+                .ForEach(pi => XBill.SetAttributeValue(pi.Name, pi.GetValue(bill)));
 
             return true;
         }
@@ -171,12 +167,14 @@ namespace BillsManager.Services.Providers
         {
             foreach (Bill b in bills)
             {
-                var XBill = this.xmlDB.Root.Element(NS_BILLS).Elements(ITEM_BILL).Single(elem => elem.Attribute("ID").Value == b.ID.ToString());
+                var XBill = this.xmlDB.Root.Element(NS_BILLS)
+                    .Elements(ITEM_BILL)
+                    .Single(elem => elem.Attribute("ID").Value == b.ID.ToString());
 
-                typeof(Bill).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(pi => pi.Name != "ID").ToList().ForEach(pi =>
-                {
-                    XBill.SetAttributeValue(pi.Name, pi.GetValue(b, null));
-                });
+                typeof(Bill).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .Where(pi => pi.Name != "ID")
+                    .ToList()
+                    .ForEach(pi => XBill.SetAttributeValue(pi.Name, pi.GetValue(b)));
             }
 
             return true;
@@ -196,7 +194,10 @@ namespace BillsManager.Services.Providers
         {
             foreach (Bill b in bills)
             {
-                this.xmlDB.Root.Element(NS_BILLS).Elements().Single(elem => elem.Attribute("ID").Value == b.ID.ToString()).Remove();
+                this.xmlDB.Root.Element(NS_BILLS)
+                    .Elements()
+                    .Single(elem => elem.Attribute("ID").Value == b.ID.ToString())
+                    .Remove();
             }
 
             return true;
@@ -213,10 +214,11 @@ namespace BillsManager.Services.Providers
 
         public IEnumerable<Supplier> GetAllSuppliers()
         {
-            var query = from XSupplier in this.xmlDB.Root.Element(NS_SUPPLIERS).Elements(ITEM_SUPPLIER)
+            var query = from XSupplier in this.xmlDB.Root.Element(NS_SUPPLIERS)
+                            .Elements(ITEM_SUPPLIER)
                         select new
                         Supplier(
-                            uint.Parse(XSupplier.Attribute("ID").Value),
+                            (uint)XSupplier.Attribute("ID"),
                             (string)XSupplier.Attribute("Name"),
                             (string)XSupplier.Attribute("Street"),
                             (string)XSupplier.Attribute("Number"),
@@ -239,14 +241,12 @@ namespace BillsManager.Services.Providers
 
         public bool Add(Supplier supplier)
         {
-            this.xmlDB.Root.Element(NS_SUPPLIERS).Add(new XElement(ITEM_SUPPLIER, typeof(Supplier).GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Select(pi =>
-                {
-                    if (pi.GetValue(supplier, null) != null)
-                        return new XAttribute(pi.Name, pi.GetValue(supplier, null));
-                    else
-                        return null;
-                })));
+            this.xmlDB.Root.Element(NS_SUPPLIERS).Add(
+                new XElement(ITEM_SUPPLIER,
+                    typeof(Supplier)
+                    .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .Where(pi => pi.GetValue(supplier) != null)
+                    .Select(pi => new XAttribute(pi.Name, pi.GetValue(supplier)))));
 
             this.IncreaseLastIDValue(NS_SUPPLIERS);
 
@@ -255,12 +255,15 @@ namespace BillsManager.Services.Providers
 
         public bool Edit(Supplier supplier)
         {
-            var XSupplier = this.xmlDB.Root.Element(NS_SUPPLIERS).Elements(ITEM_SUPPLIER).Single(elem => elem.Attribute("ID").Value == supplier.ID.ToString());
+            var XSupplier = this.xmlDB.Root.Element(NS_SUPPLIERS)
+                .Elements(ITEM_SUPPLIER)
+                .Single(elem => elem.Attribute("ID").Value == supplier.ID.ToString());
 
-            typeof(Supplier).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(pi => pi.Name != "ID").ToList().ForEach(pi =>
-            {
-                XSupplier.SetAttributeValue(pi.Name, pi.GetValue(supplier, null));
-            });
+            typeof(Supplier)
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(pi => pi.Name != "ID")
+                .ToList()
+                .ForEach(pi => XSupplier.SetAttributeValue(pi.Name, pi.GetValue(supplier)));
 
             return true;
         }
@@ -272,7 +275,10 @@ namespace BillsManager.Services.Providers
 
         public bool Delete(Supplier supplier)
         {
-            this.xmlDB.Root.Element(NS_SUPPLIERS).Elements().Single(elem => elem.Attribute("ID").Value == supplier.ID.ToString()).Remove();
+            this.xmlDB.Root.Element(NS_SUPPLIERS)
+                .Elements()
+                .Single(elem => elem.Attribute("ID").Value == supplier.ID.ToString())
+                .Remove();
 
             //this.DecreaseSuppliersCount();
 
@@ -295,27 +301,25 @@ namespace BillsManager.Services.Providers
 
         public IEnumerable<Tag> GetAll()
         {
-            var query = from XTAG in this.xmlDB.Root.Element(NS_TAGS).Elements(ITEM_TAG)
+            var query = from XTAG in this.xmlDB.Root.Element(NS_TAGS)
+                            .Elements(ITEM_TAG)
                         select new
                         Tag(
-                            uint.Parse(XTAG.Attribute("ID").Value),
+                            (uint)XTAG.Attribute("ID"),
                             (string)XTAG.Attribute("Name"),
-                            (string)XTAG.Attribute("Color")
-                        );
+                            (string)XTAG.Attribute("Color"));
 
             return query;
         }
 
         public bool Add(Tag tag)
         {
-            this.xmlDB.Root.Element(NS_TAGS).Add(new XElement(ITEM_TAG, typeof(Tag).GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Select(pi =>
-                {
-                    if (pi.GetValue(tag, null) != null)
-                        return new XAttribute(pi.Name, pi.GetValue(tag, null));
-                    else
-                        return null;
-                })));
+            this.xmlDB.Root.Element(NS_TAGS).Add(
+                new XElement(ITEM_TAG,
+                    typeof(Tag)
+                    .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .Where(pi => pi.GetValue(tag) != null)
+                    .Select(pi => new XAttribute(pi.Name, pi.GetValue(tag)))));
 
             this.IncreaseLastIDValue(NS_TAGS);
 
@@ -324,16 +328,14 @@ namespace BillsManager.Services.Providers
 
         public bool Edit(Tag tag)
         {
-            var XTAG = this.xmlDB.Root.Element(NS_TAGS).Elements(ITEM_TAG)
+            var XTAG = this.xmlDB.Root.Element(NS_TAGS)
+                .Elements(ITEM_TAG)
                 .Single(elem => elem.Attribute("ID").Value == tag.ID.ToString());
 
             typeof(Bill).GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Where(pi => pi.Name != "ID")
                 .ToList()
-                .ForEach(pi =>
-                {
-                    XTAG.SetAttributeValue(pi.Name, pi.GetValue(tag, null));
-                });
+                .ForEach(pi => XTAG.SetAttributeValue(pi.Name, pi.GetValue(tag)));
 
             return true;
         }
@@ -342,12 +344,15 @@ namespace BillsManager.Services.Providers
         {
             foreach (Tag b in tags)
             {
-                var XTag = this.xmlDB.Root.Element(NS_TAGS).Elements(ITEM_TAG).Single(elem => elem.Attribute("ID").Value == b.ID.ToString());
+                var XTag = this.xmlDB.Root.Element(NS_TAGS)
+                    .Elements(ITEM_TAG)
+                    .Single(elem => elem.Attribute("ID").Value == b.ID.ToString());
 
-                typeof(Bill).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(pi => pi.Name != "ID").ToList().ForEach(pi =>
-                {
-                    XTag.SetAttributeValue(pi.Name, pi.GetValue(b, null));
-                });
+                typeof(Bill)
+                    .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .Where(pi => pi.Name != "ID")
+                    .ToList()
+                    .ForEach(pi => XTag.SetAttributeValue(pi.Name, pi.GetValue(b)));
             }
 
             return true;
@@ -367,7 +372,10 @@ namespace BillsManager.Services.Providers
         {
             foreach (Tag b in tags)
             {
-                this.xmlDB.Root.Element(NS_TAGS).Elements().Single(elem => elem.Attribute("ID").Value == b.ID.ToString()).Remove();
+                this.xmlDB.Root.Element(NS_TAGS)
+                    .Elements()
+                    .Single(elem => elem.Attribute("ID").Value == b.ID.ToString())
+                    .Remove();
             }
 
             return true;

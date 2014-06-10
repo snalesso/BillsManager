@@ -36,7 +36,7 @@ namespace BillsManager.ViewModels
         {
             #region IDBConnector Members
 
-            public bool Open()
+            public bool Connect()
             {
                 throw new NotImplementedException();
             }
@@ -46,7 +46,7 @@ namespace BillsManager.ViewModels
                 throw new NotImplementedException();
             }
 
-            public void Close()
+            public void Disconnect()
             {
                 throw new NotImplementedException();
             }

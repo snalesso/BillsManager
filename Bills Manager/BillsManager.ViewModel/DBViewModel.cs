@@ -226,7 +226,7 @@ namespace BillsManager.ViewModels
             // TODO: give control to UI thread
             //this.windowManager.ShowWindow(progressDialog);
 
-            if (this.dbConnector.Open())
+            if (this.dbConnector.Connect())
             {
                 //progressDialog.TryClose();
 
@@ -252,8 +252,8 @@ namespace BillsManager.ViewModels
 
             var dbConnectionErrorDialog =
                 new DialogViewModel(
-                    "Database load failed", // TODO: language
-                    "Database couldn't be opened." +
+                    TranslationManager.Instance.Translate("DatabaseConnectionFailed").ToString(),
+                    TranslationManager.Instance.Translate("DatabaseConnectionFailedMessage").ToString() +
                     Environment.NewLine +
                     TranslationManager.Instance.Translate("TryAgain").ToString());
 
@@ -294,8 +294,8 @@ namespace BillsManager.ViewModels
                         {
                             var errorDialog =
                                 new DialogViewModel(
-                                    "Database save failed", // TODO: language
-                                    "Database couldn't be saved." +
+                                    TranslationManager.Instance.Translate("DatabaseSaveFailed").ToString(),
+                                    TranslationManager.Instance.Translate("DatabaseSaveFailedMessage").ToString() +
                                     Environment.NewLine +
                                     TranslationManager.Instance.Translate("TryAgain").ToString());
 
@@ -314,7 +314,7 @@ namespace BillsManager.ViewModels
                 }
             }
 
-            this.dbConnector.Close();
+            this.dbConnector.Disconnect();
 
             this.ConnectionState = DBConnectionState.Disconnected;
 
@@ -416,12 +416,12 @@ namespace BillsManager.ViewModels
         public void Handle(RollbackAuthorizationRequestMessage message)
         {
             var canRollback = true;
-            var wasConnected = this.ConnectionState == DBConnectionState.Connected;
+            var wasConnected = this.ConnectionState != DBConnectionState.Disconnected;
 
             if (wasConnected)
                 canRollback = this.Disconnect();
 
-            if (canRollback) // TODO: check if authorization can be granted
+            if (canRollback) // if the user confirms the disconnection
             {
                 message.ConfirmAuthorization();
                 if (wasConnected)

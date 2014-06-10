@@ -1,4 +1,5 @@
 ﻿using BillsManager.Localization;
+using BillsManager.Localization.Attributes;
 using BillsManager.Models;
 using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
@@ -75,7 +76,7 @@ namespace BillsManager.ViewModels
         }
 
         private Supplier selectedSupplier; // TODO: remove and make the get to point to the bill?
-        [Required(ErrorMessage = "You must select a supplier.")] // TODO: language
+        [LocalizedRequired(ErrorMessageKey = "SupplierRequired")]
         public Supplier SelectedSupplier
         {
             get { return this.selectedSupplier; }
@@ -126,7 +127,7 @@ namespace BillsManager.ViewModels
             }
         }
 
-        [Required(ErrorMessage = "You must specify a due date.")] // TODO: language
+        [LocalizedRequired(ErrorMessageKey = "DateRequired")]
         public override DateTime DueDate
         {
             get { return base.DueDate; }
@@ -158,7 +159,7 @@ namespace BillsManager.ViewModels
             }
         }
 
-        [Required(ErrorMessage = "You must specify a release date.")] // TODO: language
+        [LocalizedRequired(ErrorMessageKey = "ReleaseDateRequired")]
         public override DateTime ReleaseDate
         {
             get { return base.ReleaseDate; }
@@ -174,7 +175,7 @@ namespace BillsManager.ViewModels
             }
         }
 
-        [Required(ErrorMessage = "You must specify an amount.")] // TODO: language
+        [LocalizedRequired(ErrorMessageKey = "AmountRequired")]
         public override Double Amount
         {
             get { return base.Amount; }
@@ -218,8 +219,8 @@ namespace BillsManager.ViewModels
             }
         }*/
 
-        [Required(ErrorMessage = "You must specify a supplier.")] // TODO: language
-        [Range(0, uint.MaxValue, ErrorMessage = "Chosen supplier ID is out of range.")] // TODO: language
+        //[LocalizedRequired(ErrorMessageKey = "You must specify a supplier.")] // TODO: language
+        //[Range(0, uint.MaxValue, ErrorMessage = "Chosen supplier ID is out of range.")] // TODO: language
         public override uint SupplierID
         {
             get { return base.SupplierID; }
@@ -237,7 +238,7 @@ namespace BillsManager.ViewModels
             }
         }
 
-        [StringLength(200, ErrorMessage = "You cannot exceed 200 characters.")] // TODO: language
+        [LocalizedStringLength(200, ErrorMessageFormatKey = "CannotExceedChars_format")]
         public override string Notes
         {
             get { return base.Notes; }

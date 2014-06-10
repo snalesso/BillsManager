@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:BillsManager.Views.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Values.xaml" />
@@ -20,18 +21,18 @@
                                            HorizontalAlignment="Stretch"
                                            VerticalAlignment="Stretch" />
 
-                <Popup x:Name="errorPopup"
-                       AllowsTransparency="True"
-                       Placement="Right"
-                       VerticalOffset="-1"
-                       HorizontalOffset="2">
+                <Controls:PopupEx x:Name="errorPopup"
+                                  AllowsTransparency="True"
+                                  Placement="Right"
+                                  VerticalOffset="-1"
+                                  HorizontalOffset="2">
                     <Border Background="{StaticResource ErrorTemplateBackgroundBrush}"
                             CornerRadius="{StaticResource ViewCornerRadius}">
                         <TextBlock Foreground="{StaticResource ErrorTemplateForegroundBrush}"
                                    Text="{Binding ElementName=adorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"
                                    Margin="4" />
                     </Border>
-                </Popup>
+                </Controls:PopupEx>
             </Grid>
         </Border>
 

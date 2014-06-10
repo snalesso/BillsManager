@@ -52,10 +52,21 @@
 
         <Style.Triggers>
 
+            <Trigger Property="ItemsControl.AlternationIndex"
+                     Value="0">
+                <Setter Property="Background"
+                        Value="{StaticResource RowColor1}" />
+            </Trigger>
+            <Trigger Property="ItemsControl.AlternationIndex"
+                     Value="1">
+                <Setter Property="Background"
+                        Value="{StaticResource RowColor2}" />
+            </Trigger>
+
             <Trigger Property="IsMouseOver"
                      Value="true">
                 <Setter Property="Background"
-                        Value="#FFF0F0F0" />
+                        Value="{StaticResource ListItemMouseOverBrush}" />
             </Trigger>
 
             <Trigger Property="IsSelected"

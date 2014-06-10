@@ -25,13 +25,15 @@
     </UserControl.Background>
 
     <Controls:ListViewEx x:Name="lsvSuppliers"
+                         AlternationCount="2"
                          Commanding:CommandBehavior.Command="{Binding ShowSupplierDetailsCommand}"
                          Commanding:CommandBehavior.CommandParameter="{Binding SelectedSupplierViewModel}"
                          Commanding:CommandBehavior.Event="MouseDoubleClick"
                          ItemsSource="{Binding FilteredSupplierViewModels, IsAsync=True}"
                          SelectedItem="{Binding SelectedSupplierViewModel}"
                          SelectionMode="Single"
-                         VirtualizingPanel.IsVirtualizing="True">
+                         VirtualizingPanel.IsVirtualizing="True"
+                         VirtualizingPanel.VirtualizationMode="Recycling">
 
         <!--
             <ListView.ItemTemplate>
@@ -61,39 +63,30 @@
 
                                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}"
                                              Value="True">
-                                    <Setter TargetName="obg"
-                                            Property="CornerRadius">
+                                    <Setter TargetName="obg" Property="CornerRadius">
                                         <Setter.Value>
                                             <CornerRadius BottomLeft="0"
+                                                          BottomRight="0"
                                                           TopLeft="0"
-                                                          TopRight="0"
-                                                          BottomRight="0" />
+                                                          TopRight="0" />
                                         </Setter.Value>
                                     </Setter>
                                 </DataTrigger>
 
                                 <DataTrigger Binding="{Binding ObligationState}"
                                              Value="{x:Static ViewModel:Obligation.Creditor}">
-                                    <Setter TargetName="obg"
-                                            Property="Background"
-                                            Value="{StaticResource CreditorObligationBrush}" />
-                                    <Setter TargetName="text"
-                                            Property="Foreground"
-                                            Value="{StaticResource ButtonNormalForegroundBrush}" />
+                                    <Setter TargetName="obg" Property="Background" Value="{StaticResource CreditorObligationBrush}" />
+                                    <Setter TargetName="text" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
                                 </DataTrigger>
 
                                 <DataTrigger Binding="{Binding ObligationState}"
                                              Value="{x:Static ViewModel:Obligation.Debtor}">
-                                    <Setter TargetName="obg"
-                                            Property="Background"
-                                            Value="{StaticResource DebtorObligationBrush}" />
-                                    <Setter TargetName="text"
-                                            Property="Foreground"
-                                            Value="{StaticResource ButtonNormalForegroundBrush}" />
+                                    <Setter TargetName="obg" Property="Background" Value="{StaticResource DebtorObligationBrush}" />
+                                    <Setter TargetName="text" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
                                 </DataTrigger>
 
                                 <DataTrigger Binding="{Binding ObligationState}"
-                                             Value="{x:Static ViewModel:Obligation.None}">
+                                             Value="{x:Static ViewModel:Obligation.Unbound}">
                                     <!--  <Setter TargetName="text" Property="Visibility" Value="Collapsed" />  -->
                                 </DataTrigger>
 

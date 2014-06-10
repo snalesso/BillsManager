@@ -1,9 +1,9 @@
 ﻿using BillsManager.Localization;
+using BillsManager.Localization.Attributes;
 using BillsManager.Models;
 using BillsManager.ViewModels.Commanding;
 using Caliburn.Micro;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace BillsManager.ViewModels
 {
@@ -53,7 +53,7 @@ namespace BillsManager.ViewModels
 
         #region wrapped from supplier
 
-        [Required(ErrorMessage = "You must specify a name.")]
+        [LocalizedRequired(ErrorMessageKey = "NameRequired")]
         public override string Name
         {
             get { return base.Name; }
@@ -114,7 +114,7 @@ namespace BillsManager.ViewModels
             }
         }
 
-        [StringLength(200, ErrorMessage = "You cannot exceed 200 characters.")]
+        [LocalizedStringLength(200, ErrorMessageFormatKey = "CannotExceedChars_format")]
         public override string Notes
         {
             get { return base.Notes; }
@@ -210,35 +210,33 @@ namespace BillsManager.ViewModels
         }
 
         //[Required(ErrorMessage = "You must specify a zip.")]
-        [StringLength(5, MinimumLength = 5, ErrorMessage = "The zip must be 5 digits long.")]
+        [LocalizedStringLength(5, MinimumLength = 5, ErrorMessageFormatKey = "MustBeNChars_format")]
         //[CustomValidation(typeof(UInt32), "Parse", ErrorMessage = "The zip can only contain digits.")] // TODO: complete constraints
         public override string Zip
         {
             get { return base.Zip; }
             set
             {
-                if (this.Zip != value)
-                {
-                    base.Zip = value;
-                    this.NotifyOfPropertyChange(() => this.IsValid);
-                    this.HasChanges = true;
-                }
+                if (this.Zip == value) return;
+
+                base.Zip = value;
+                this.NotifyOfPropertyChange(() => this.IsValid);
+                this.HasChanges = true;
             }
         }
 
         //[Required(ErrorMessage = "You must specify a province.")]
-        [StringLength(2, MinimumLength = 2, ErrorMessage = "The province abbreviation must be 2 characters long.")]
+        [LocalizedStringLength(2, MinimumLength = 2, ErrorMessageFormatKey = "MustBeNChars_format")]
         public override string Province
         {
             get { return base.Province; }
             set
             {
-                if (this.Province != value)
-                {
-                    base.Province = value;
-                    this.NotifyOfPropertyChange(() => this.IsValid);
-                    this.HasChanges = true;
-                }
+                if (this.Province == value) return;
+
+                base.Province = value;
+                this.NotifyOfPropertyChange(() => this.IsValid);
+                this.HasChanges = true;
             }
         }
 
