@@ -1,6 +1,7 @@
 ﻿using BillsManager.Localization.Attributes;
 using BillsManager.ViewModels.Messages;
 using Caliburn.Micro;
+using System.ComponentModel;
 using System.Linq;
 
 namespace BillsManager.ViewModels
@@ -63,7 +64,7 @@ namespace BillsManager.ViewModels
                     /*TranslationManager.Instance.Translate(*/
                     typeof(DBConnectionState)
                     .GetMember(this.ConnectionState.ToString())[0]
-                    .GetAttributes<LocalizedDisplayNameAttribute>(true).FirstOrDefault().DisplayName // TODO: only displayName?
+                    .GetAttributes<DisplayNameAttribute>(true).FirstOrDefault().DisplayName // TODO: only displayName?
                     /*).ToString()*/;
             }
         }
