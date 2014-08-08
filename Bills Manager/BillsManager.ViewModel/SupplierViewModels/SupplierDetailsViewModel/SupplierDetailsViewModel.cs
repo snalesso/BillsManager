@@ -54,90 +54,55 @@ namespace BillsManager.ViewModels
 
         #region wrapped from supplier
 
-        // TODO: perform a clean override on all the other props
-        //public override string City
-        //{
-        //    get
-        //    {
-        //        return base.City;
-        //    }
-        //    set
-        //    {
-        //        base.City = value;
+        public override string AgentName
+        {
+            get { return base.AgentName; }
+        }
 
-        //        this.NotifyOfPropertyChange(() => this.FullAddress);
-        //    }
-        //}
+        public override string AgentPhone
+        {
+            get { return base.AgentPhone; }
+        }
 
-        //public override string Country
-        //{
-        //    get
-        //    {
-        //        return base.Country;
-        //    }
-        //    set
-        //    {
-        //        base.Country = value;
+        public override string AgentSurname
+        {
+            get { return base.AgentSurname; }
+        }
 
-        //        this.NotifyOfPropertyChange(() => this.FullAddress);
-        //    }
-        //}
+        public override string City
+        {
+            get { return base.City; }
+        }
 
-        //public override string Province
-        //{
-        //    get
-        //    {
-        //        return base.Province;
-        //    }
-        //    set
-        //    {
-        //        base.Province = value;
+        public override string Country
+        {
+            get { return base.Country; }
+        }
 
-        //        this.NotifyOfPropertyChange(() => this.FullAddress);
-        //    }
-        //}
+        public override string eMail
+        {
+            get { return base.eMail; }
+        }
 
-        //public override string Zip
-        //{
-        //    get
-        //    {
-        //        return base.Zip;
-        //    }
-        //    set
-        //    {
-        //        base.Zip = value;
+        public override string Fax
+        {
+            get { return base.Fax; }
+        }
 
-        //        this.NotifyOfPropertyChange(() => this.FullAddress);
-        //    }
-        //}
+        public override string Name
+        {
+            get { return base.Name; }
+        }
 
-        //public override string Street
-        //{
-        //    get
-        //    {
-        //        return base.Street;
-        //    }
-        //    set
-        //    {
-        //        base.Street = value;
+        public override string Notes
+        {
+            get { return base.Notes; }
+        }
 
-        //        this.NotifyOfPropertyChange(() => this.FullAddress);
-        //    }
-        //}
-
-        //public override string Number
-        //{
-        //    get
-        //    {
-        //        return base.Number;
-        //    }
-        //    set
-        //    {
-        //        base.Number = value;
-
-        //        this.NotifyOfPropertyChange(() => this.FullAddress);
-        //    }
-        //}
+        public override string Number
+        {
+            get { return base.Number; }
+        }
 
         #endregion
 
@@ -311,7 +276,7 @@ namespace BillsManager.ViewModels
                         () =>
                         {
                             this.TryClose();
-                            this.dbEventAggregator.Publish(new EditSupplierRequestMessage(this.ExposedSupplier));
+                            this.dbEventAggregator.Publish(new EditSupplierOrder(this.ExposedSupplier));
                         });
 
                 return this.switchToEditCommand;

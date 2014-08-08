@@ -58,42 +58,33 @@ namespace BillsManager.ViewModels
 
         public override DateTime DueDate
         {
-            get { return this.ExposedBill.DueDate; }
-            set
-            {
-                if (this.DueDate != value)
-                {
-                    this.ExposedBill.DueDate = value;
-                    this.NotifyOfPropertyChange(() => this.DueDate);
-                    this.NotifyOfPropertyChange(() => this.IsDued);
-                    this.NotifyOfPropertyChange(() => this.DuesIn);
-                }
-            }
+            get { return base.DueDate; }
         }
 
         public override DateTime? PaymentDate
         {
-            get { return this.ExposedBill.PaymentDate; }
-            set
-            {
-                if (this.PaymentDate != value)
-                {
-                    this.ExposedBill.PaymentDate = value;
-                    this.NotifyOfPropertyChange(() => this.PaymentDate);
-                    this.NotifyOfPropertyChange(() => this.IsPaid);
-                    this.NotifyOfPropertyChange(() => this.IsNotPaid);
-                    this.NotifyOfPropertyChange(() => this.IsDued);
-                    this.NotifyOfPropertyChange(() => this.DuesIn);
-                }
-            }
+            get { return base.PaymentDate; }
+        }
+
+        public override double Amount
+        {
+            get { return base.Amount; }
+        }
+
+        public override string Code
+        {
+            get { return base.Code; }
+        }
+
+        public override string Notes
+        {
+            get { return base.Notes; }
         }
 
         #endregion
 
         #region added
 
-        /* IDEA: make property of type SupplierDetailsViewModel?
-         * think about the Tag property, all details should be available from here too */
         public string SupplierName
         {
             get { return this.GetSupplierName(); }
@@ -102,13 +93,6 @@ namespace BillsManager.ViewModels
         public bool IsPaid
         {
             get { return this.PaymentDate.HasValue; }
-            set
-            {
-                if (this.IsPaid == value) return;
-
-                this.PaymentDate = value ? DateTime.Today : (DateTime?)null;
-                // changing only PaymentDate will Refresh IsPaid and similars                
-            }
         }
 
         public bool IsNotPaid
@@ -202,14 +186,14 @@ namespace BillsManager.ViewModels
         {
             // TODO: move supplier logic to BillsViewModel (same for supp's obligation amount)
             string supp = string.Empty;
-            this.globalEventAggregator.Publish(new SupplierNameRequestMessage(this.SupplierID, s => supp = s));
+            this.globalEventAggregator.Publish(new SupplierNameRequest(this.SupplierID, s => supp = s));
             return supp;
         }
 
         private void SwitchToEdit()
         {
             this.TryClose();
-            this.globalEventAggregator.Publish(new EditBillRequestMessage(this.ExposedBill));
+            this.globalEventAggregator.Publish(new EditBillOrder(this.ExposedBill));
         }
 
         #region message handlers

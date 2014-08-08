@@ -311,7 +311,7 @@ namespace BillsManager.ViewModels
         //{
         //    IEnumerable<Supplier> suppliers = null;
 
-        //    this.globalEventAggregator.Publish(new AvailableSuppliersRequestMessage(s => suppliers = s));
+        //    this.globalEventAggregator.Publish(new AvailableSuppliersRequest(s => suppliers = s));
 
         //    return suppliers;
         //}

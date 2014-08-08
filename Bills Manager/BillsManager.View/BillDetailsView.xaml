@@ -60,7 +60,7 @@
                    Grid.Column="3"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Text="{Binding Amount, StringFormat=\{0:N2\} €}"
+                   Text="{Binding Amount, StringFormat=\{0:N2\} €, Mode=OneTime}"
                    TextAlignment="Right" />
 
         <TextBlock Grid.Row="3"
@@ -72,8 +72,9 @@
                    Text="{loc:Translate Supplier}" />
         <TextBlock Grid.Row="3"
                    Grid.Column="3"
+                   HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Text="{Binding SupplierName}" />
+                   Text="{Binding SupplierName, Mode=OneTime}" />
 
         <TextBlock Grid.Row="5"
                    Grid.Column="1"
@@ -84,8 +85,9 @@
                    Text="{loc:Translate Number}" />
         <TextBlock Grid.Row="5"
                    Grid.Column="3"
+                   HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Text="{Binding Code}" />
+                   Text="{Binding Code, Mode=OneTime}" />
 
         <TextBlock Grid.Row="7"
                    Grid.Column="1"
@@ -96,15 +98,18 @@
                    Text="{loc:Translate Payment}" />
         <StackPanel Grid.Row="7"
                     Grid.Column="3"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
                     Orientation="Horizontal">
             <TextBlock VerticalAlignment="Center"
                        Text="{loc:Translate Paid_toBill}"
+                       Visibility="{Binding IsPaid, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneTime}" />
+            <TextBlock VerticalAlignment="Center"
+                       Text="{Binding PaymentDate, StringFormat=' \{0:D\}', ConverterCulture={x:Static gl:CultureInfo.CurrentUICulture}, Mode=OneTime}"
                        Visibility="{Binding IsPaid, Converter={StaticResource BooleanToVisibilityConverter}}" />
             <TextBlock VerticalAlignment="Center"
-                       Text="{Binding PaymentDate, StringFormat=' \{0:D\}'}"
-                       Visibility="{Binding IsPaid, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            <TextBlock Text="{loc:Translate NotPaid_toBill}"
-                       Visibility="{Binding IsNotPaid, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                       Text="{loc:Translate NotPaid_toBill}"
+                       Visibility="{Binding IsNotPaid, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneTime}" />
         </StackPanel>
 
         <TextBlock Grid.Row="9"
@@ -116,9 +121,10 @@
                    Text="{loc:Translate DuesOn}" />
         <TextBlock Grid.Row="9"
                    Grid.Column="3"
+                   HorizontalAlignment="Left"
                    VerticalAlignment="Center">
-            <Run Text="{Binding DueDate, StringFormat=\{0:D\}, ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}" />
-            <Run Text="{Binding DuesIn, Mode=OneWay, StringFormat=({0}), ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}" />
+            <Run Text="{Binding DueDate, StringFormat=\{0:D\}, ConverterCulture={x:Static gl:CultureInfo.CurrentUICulture}, Mode=OneTime}" />
+            <Run Text="{Binding DuesIn, StringFormat=({0}), ConverterCulture={x:Static gl:CultureInfo.CurrentUICulture}, Mode=OneTime}" />
         </TextBlock>
 
         <TextBlock Grid.Row="11"
@@ -130,8 +136,9 @@
                    Text="{loc:Translate ReleasedOn_toBill}" />
         <TextBlock Grid.Row="11"
                    Grid.Column="3"
+                   HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Text="{Binding ReleaseDate, StringFormat=\{0:D\}, ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}" />
+                   Text="{Binding ReleaseDate, StringFormat=\{0:D\}, ConverterCulture={x:Static gl:CultureInfo.CurrentUICulture}, Mode=OneTime}" />
 
         <TextBlock Grid.Row="13"
                    Grid.Column="1"
@@ -142,8 +149,9 @@
                    Text="{loc:Translate RegisteredOn_toBill}" />
         <TextBlock Grid.Row="13"
                    Grid.Column="3"
+                   HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Text="{Binding RegistrationDate, StringFormat=\{0:D\}, ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}" />
+                   Text="{Binding RegistrationDate, StringFormat=\{0:D\}, ConverterCulture={x:Static gl:CultureInfo.CurrentUICulture}, Mode=OneTime}" />
 
         <TextBlock Grid.Row="15"
                    Grid.Column="1"
@@ -155,8 +163,9 @@
         <TextBlock Grid.Row="15"
                    Grid.Column="3"
                    MaxWidth="390"
+                   HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Text="{Binding Notes}"
+                   Text="{Binding Notes, Mode=OneTime}"
                    TextTrimming="CharacterEllipsis"
                    TextWrapping="Wrap" />
 

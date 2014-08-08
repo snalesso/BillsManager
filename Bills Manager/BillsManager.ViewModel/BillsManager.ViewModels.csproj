@@ -92,7 +92,7 @@
     <Compile Include="Reporting\BillReportViewModel.cs" />
     <Compile Include="Search\FilterGeneric.cs" />
     <Compile Include="SendFeedbackViewModel.cs" />
-    <Compile Include="Messages\Backup Events\RollbackAuthorizationRequestMessage.cs" />
+    <Compile Include="Messages\Backup Events\RollbackAuthorizationRequest.cs" />
     <Compile Include="Messages\DatabaseList Events\ActiveDBChangedMessage.cs" />
     <Compile Include="Messages\Single database Events\AddNewSupplierOrder.cs" />
     <Compile Include="DesignTime\DialogViewModel.DesignTime.cs" />
@@ -103,15 +103,15 @@
     <Compile Include="Dialog\DialogViewModel.cs" />
     <Compile Include="Dialog\ResponseType.cs" />
     <Compile Include="ExtensionMethods\ExtensionMethods.cs" />
-    <Compile Include="Messages\Single database Events\SupplierNameRequestMessage.cs" />
+    <Compile Include="Messages\Single database Events\SupplierNameRequest.cs" />
     <Compile Include="Messages\Single database Events\Bills Events\BillAddedMessage.cs" />
     <Compile Include="Messages\Single database Events\Bills Events\BillCRUDEvent.cs" />
     <Compile Include="Messages\Single database Events\Bills Events\BillDeletedMessage.cs" />
     <Compile Include="Messages\Single database Events\Bills Events\BillEditedMessage.cs" />
     <Compile Include="Messages\Single database Events\BillsListChangedMessage.cs" />
     <Compile Include="Messages\Single database Events\ShowSuppliersBillsOrder.cs" />
-    <Compile Include="Messages\Single database Events\EditSupplierRequestMessage.cs" />
-    <Compile Include="Messages\Single database Events\EditBillRequestMessage.cs" />
+    <Compile Include="Messages\Single database Events\EditSupplierOrder.cs" />
+    <Compile Include="Messages\Single database Events\EditBillOrder.cs" />
     <Compile Include="Messages\Single database Events\Suppliers Events\SupplierAddedMessage.cs" />
     <Compile Include="Messages\Single database Events\Suppliers Events\SupplierCRUDEvent.cs" />
     <Compile Include="Messages\Single database Events\Suppliers Events\SupplierDeletedMessage.cs" />
@@ -150,7 +150,7 @@
     <Compile Include="Helpers\WeakFunc.cs" />
     <Compile Include="Helpers\WeakFuncGeneric.cs" />
     <Compile Include="DesignTime\BillsViewModel.DesignTime.cs" />
-    <Compile Include="Messages\Single database Events\AvailableSuppliersRequestMessage.cs" />
+    <Compile Include="Messages\Single database Events\AvailableSuppliersRequest.cs" />
     <Compile Include="Messages\Single database Events\SuppliersListChangedMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search\SearchSuppliersViewModel.cs" />

@@ -18,7 +18,7 @@
                 Value="{StaticResource ButtonNormalBorderBrush}" />
 
         <Setter Property="BorderThickness"
-                Value="{StaticResource BorderThickness}" />
+                Value="{StaticResource ViewBorderThickness}" />
 
         <Setter Property="HorizontalContentAlignment"
                 Value="Center" />

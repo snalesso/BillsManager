@@ -1,6 +1,5 @@
 ﻿namespace BillsManager.Models
 {
-    // TODO: other properties: P. IVA (VATIN)? http://en.wikipedia.org/wiki/VAT_identification_number
     public partial class Supplier
     {
         #region ctor

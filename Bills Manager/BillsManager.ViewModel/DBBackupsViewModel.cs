@@ -150,7 +150,7 @@ namespace BillsManager.ViewModels
             if (rollbackQuestion.FinalResponse == ResponseType.Yes)
             {
                 this.globalEventAggregator.Publish(
-                    new RollbackAuthorizationRequestMessage(
+                    new RollbackAuthorizationRequest(
                         () =>
                         {
                             if (this.backupsProvider.Rollback(backupViewModel.ExposedBackup))

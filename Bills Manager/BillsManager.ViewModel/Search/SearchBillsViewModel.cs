@@ -120,7 +120,7 @@ namespace BillsManager.ViewModels
             {
                 if (this.availableSuppliers == null)
                     this.globalEventAggregator.Publish(
-                        new AvailableSuppliersRequestMessage(suppliers => this.availableSuppliers = suppliers));
+                        new AvailableSuppliersRequest(suppliers => this.availableSuppliers = suppliers));
 
                 return this.availableSuppliers;
             }

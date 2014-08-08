@@ -64,7 +64,6 @@ namespace BillsManager.Localization
             return binding.ProvideValue(serviceProvider);
         }
 
-        // TODO: evaluate speed
         String GetPropertyName<TValue>(Expression<Func<TValue>> propertyId)
         {
             return ((MemberExpression)propertyId.Body).Member.Name;

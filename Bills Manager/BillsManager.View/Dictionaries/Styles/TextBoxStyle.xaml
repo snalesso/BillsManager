@@ -15,7 +15,7 @@
         <Setter Property="Foreground"
                 Value="{StaticResource ViewForegroundBrush}" />
         <Setter Property="BorderThickness"
-                Value="{StaticResource BorderThickness}" />
+                Value="{StaticResource ViewBorderThickness}" />
         <Setter Property="Padding"
                 Value="1" />
         <Setter Property="KeyboardNavigation.TabNavigation"

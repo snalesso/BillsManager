@@ -14,7 +14,7 @@ namespace BillsManager.ViewModels
         IHandle<SupplierCRUDEvent>,
         IHandle<BillCRUDEvent>,
         IHandle<ShowSuppliersBillsOrder>,
-        IHandle<RollbackAuthorizationRequestMessage>
+        IHandle<RollbackAuthorizationRequest>
     {
         #region fields
 
@@ -24,7 +24,7 @@ namespace BillsManager.ViewModels
 
         private readonly Func<SuppliersViewModel> suppliersViewModelFactory;
         private readonly Func<BillsViewModel> billsViewModelFactory;
-        private readonly Func<TagsViewModel> tagsViewModelFactory;
+        //private readonly Func<TagsViewModel> tagsViewModelFactory;
 
         private readonly Func<SearchSuppliersViewModel> searchSuppliersViewModelFactory;
         private readonly Func<SearchBillsViewModel> searchBillsViewModelFactory;
@@ -41,7 +41,7 @@ namespace BillsManager.ViewModels
             IDBConnector dbConnector,
             Func<SuppliersViewModel> suppliersViewModelFactory,
             Func<BillsViewModel> billsViewModelFactory,
-            Func<TagsViewModel> tagsViewModelFactory,
+            //Func<TagsViewModel> tagsViewModelFactory,
             Func<SearchSuppliersViewModel> searchSuppliersViewModelFactory,
             Func<SearchBillsViewModel> searchBillsViewModelFactory,
             // IDEA: move report to tools?
@@ -55,7 +55,7 @@ namespace BillsManager.ViewModels
             // FACTORIES
             this.suppliersViewModelFactory = suppliersViewModelFactory;
             this.billsViewModelFactory = billsViewModelFactory;
-            this.tagsViewModelFactory = tagsViewModelFactory;
+            //this.tagsViewModelFactory = tagsViewModelFactory;
 
             this.searchSuppliersViewModelFactory = searchSuppliersViewModelFactory;
             this.searchBillsViewModelFactory = searchBillsViewModelFactory;
@@ -114,18 +114,18 @@ namespace BillsManager.ViewModels
             }
         }
 
-        private TagsViewModel tagsViewModel;
-        public TagsViewModel TagsViewModel
-        {
-            get { return this.tagsViewModel; }
-            private set
-            {
-                if (this.tagsViewModel == value) return;
+        //private TagsViewModel tagsViewModel;
+        //public TagsViewModel TagsViewModel
+        //{
+        //    get { return this.tagsViewModel; }
+        //    private set
+        //    {
+        //        if (this.tagsViewModel == value) return;
 
-                this.tagsViewModel = value;
-                this.NotifyOfPropertyChange(() => this.TagsViewModel);
-            }
-        }
+        //        this.tagsViewModel = value;
+        //        this.NotifyOfPropertyChange(() => this.TagsViewModel);
+        //    }
+        //}
 
         private SearchSuppliersViewModel searchSuppliersViewModel;
         public SearchSuppliersViewModel SearchSuppliersViewModel
@@ -234,7 +234,7 @@ namespace BillsManager.ViewModels
 
                 this.SuppliersViewModel = this.suppliersViewModelFactory.Invoke();
                 this.BillsViewModel = this.billsViewModelFactory.Invoke();
-                this.TagsViewModel = this.tagsViewModelFactory.Invoke();
+                //this.TagsViewModel = this.tagsViewModelFactory.Invoke();
 
                 this.SearchSuppliersViewModel = this.searchSuppliersViewModelFactory.Invoke();
                 this.SearchBillsViewModel = this.searchBillsViewModelFactory.Invoke();
@@ -324,14 +324,14 @@ namespace BillsManager.ViewModels
             this.SearchSuppliersViewModel = null;
             this.SearchBillsViewModel = null;
 
-            this.TagsViewModel.TryClose();
+            //this.TagsViewModel.TryClose();
             this.SuppliersViewModel.TryClose();
             this.BillsViewModel.TryClose(); /* TODO: review closing order, since this is an AllActive
                                              * a check is needed on whether the canclose automatically closes
                                              * activeitems or these 2 lines are required anyhow */
             this.SuppliersViewModel = null;
             this.BillsViewModel = null;
-            this.TagsViewModel = null;
+            //this.TagsViewModel = null;
 
             return true;
         }
@@ -413,7 +413,7 @@ namespace BillsManager.ViewModels
                 this.ShowFilters = true;
         }
 
-        public void Handle(RollbackAuthorizationRequestMessage message)
+        public void Handle(RollbackAuthorizationRequest message)
         {
             var canRollback = true;
             var wasConnected = this.ConnectionState != DBConnectionState.Disconnected;

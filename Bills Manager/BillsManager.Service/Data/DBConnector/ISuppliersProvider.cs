@@ -14,11 +14,11 @@ namespace BillsManager.Services.Providers
         IEnumerable<Supplier> GetAllSuppliers();
 
         bool Add(Supplier supplier);
-
+        
         bool Edit(Supplier supplier);
-        bool Edit(IEnumerable<Supplier> suppliers);
+        //bool Edit(IEnumerable<Supplier> suppliers); // TODO: obsolete?
 
         bool Delete(Supplier supplier);
-        bool Delete(IEnumerable<Supplier> suppliers);
+        //bool Delete(IEnumerable<Supplier> suppliers); // TODO: obsolete?
     }
 }

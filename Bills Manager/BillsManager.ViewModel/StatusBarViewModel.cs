@@ -64,7 +64,7 @@ namespace BillsManager.ViewModels
                     /*TranslationManager.Instance.Translate(*/
                     typeof(DBConnectionState)
                     .GetMember(this.ConnectionState.ToString())[0]
-                    .GetAttributes<DisplayNameAttribute>(true).FirstOrDefault().DisplayName // TODO: only displayName?
+                    .GetAttributes<DisplayNameAttribute>(true).FirstOrDefault().DisplayName
                     /*).ToString()*/;
             }
         }

@@ -2,8 +2,8 @@
 {
     public interface IDBConnector :
         IBillsProvider,
-        ISuppliersProvider,
-        ITagsProvider/*,
+        ISuppliersProvider/*,
+        ITagsProvider,
         IAgentsProvider*/
     {
         bool Connect();

@@ -62,7 +62,7 @@
                                 <Border x:Name="WindowBorder"
                                         BorderBrush="{StaticResource ViewBorderBrush}"
                                         Background="{StaticResource ViewBackgroundBrush}"
-                                        BorderThickness="{StaticResource BorderThickness}"
+                                        BorderThickness="{StaticResource ViewBorderThickness}"
                                         Padding="{StaticResource ViewBorderPadding}">
                                     
                                     <Grid>

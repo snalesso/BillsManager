@@ -43,7 +43,9 @@
         <ResourceDictionary Source="Styles\GridSplitterStyle.xaml" />
         <ResourceDictionary Source="Styles\GridSplitterExStyle.xaml" />
 
-        <!--<ResourceDictionary Source="Styles\WindowExStyle.xaml" />-->
+        <ResourceDictionary Source="Styles\DatePickerStyle.xaml" />
+
+        <!--  <ResourceDictionary Source="Styles\WindowExStyle.xaml" />  -->
 
     </ResourceDictionary.MergedDictionaries>
 

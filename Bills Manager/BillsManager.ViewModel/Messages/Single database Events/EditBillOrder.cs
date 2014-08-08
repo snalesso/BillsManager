@@ -2,14 +2,14 @@
 
 namespace BillsManager.ViewModels.Messages
 {
-    public class EditBillRequestMessage
+    public class EditBillOrder
     {
-        public EditBillRequestMessage(Bill bill)
+        public EditBillOrder(Bill bill)
         {
             this.bill = bill;
         }
 
-        public EditBillRequestMessage(uint billID)
+        public EditBillOrder(uint billID)
         {
             this.billID = billID;
         }

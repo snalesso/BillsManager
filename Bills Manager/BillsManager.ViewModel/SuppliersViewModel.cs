@@ -14,11 +14,11 @@ namespace BillsManager.ViewModels
 {
     public sealed partial class SuppliersViewModel :
         Screen,
-        IHandle<AvailableSuppliersRequestMessage>,
+        IHandle<AvailableSuppliersRequest>,
         IHandle<SuppliersFilterMessage>,
         IHandle<AddNewSupplierOrder>,
-        IHandle<SupplierNameRequestMessage>,
-        IHandle<EditSupplierRequestMessage>
+        IHandle<SupplierNameRequest>,
+        IHandle<EditSupplierOrder>
     {
         #region fields
 
@@ -292,7 +292,7 @@ namespace BillsManager.ViewModels
 
         #region message handlers
 
-        public void Handle(AvailableSuppliersRequestMessage message)
+        public void Handle(AvailableSuppliersRequest message)
         {
             message.AcquireSuppliersAction(this.SupplierViewModels.Select(svm => svm.ExposedSupplier));
         }
@@ -313,12 +313,12 @@ namespace BillsManager.ViewModels
             //}
         }
 
-        public void Handle(SupplierNameRequestMessage message)
+        public void Handle(SupplierNameRequest message)
         {
             message.GiveSupplier(this.SupplierViewModels.Single(svm => svm.ID == message.SupplierID).ExposedSupplier.Name);
         }
 
-        public void Handle(EditSupplierRequestMessage message)
+        public void Handle(EditSupplierOrder message)
         {
             this.EditSupplier(message.Supplier);
         }

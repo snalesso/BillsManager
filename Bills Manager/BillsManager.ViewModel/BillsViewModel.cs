@@ -15,7 +15,7 @@ namespace BillsManager.ViewModels
         Screen,
         IHandle<BillsFilterMessage>,
         IHandle<SupplierDeletedMessage>,
-        IHandle<EditBillRequestMessage>,
+        IHandle<EditBillOrder>,
         IHandle<AddBillToSupplierOrder>
     {
         #region fields
@@ -48,7 +48,7 @@ namespace BillsManager.ViewModels
             this.billDetailsViewModelFactory = billDetailsViewModelFactory;
 
             // SUBSCRIPTIONS
-            this.globalEventAggregator.Subscribe(this); // TODO: move to activate?
+            this.globalEventAggregator.Subscribe(this);
 
             // HANDLERS
             this.Deactivated +=
@@ -177,7 +177,7 @@ namespace BillsManager.ViewModels
         private string GetSupplierName(uint supplierID)
         {
             string supp = null;
-            this.globalEventAggregator.Publish(new SupplierNameRequestMessage(supplierID, s => supp = s));
+            this.globalEventAggregator.Publish(new SupplierNameRequest(supplierID, s => supp = s));
             return supp;
         }
 
@@ -355,7 +355,7 @@ namespace BillsManager.ViewModels
                 this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
         }
 
-        public void Handle(EditBillRequestMessage message)
+        public void Handle(EditBillOrder message)
         {
             this.EditBill(message.Bill); /* TODO: is it better to pass only the ID and let this VM to get the bill?
                                           * (this would check whether the bill is contained or is a lost one) */
@@ -383,7 +383,7 @@ namespace BillsManager.ViewModels
         private IEnumerable<Supplier> GetAvailableSuppliers()
         {
             IEnumerable<Supplier> supps = Enumerable.Empty<Supplier>();
-            this.globalEventAggregator.Publish(new AvailableSuppliersRequestMessage((s) => supps = s));
+            this.globalEventAggregator.Publish(new AvailableSuppliersRequest((s) => supps = s));
             return supps;
         }
 

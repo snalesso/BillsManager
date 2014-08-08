@@ -3,9 +3,9 @@ using BillsManager.Models;
 
 namespace BillsManager.ViewModels.Messages
 {
-    public class SupplierNameRequestMessage
+    public class SupplierNameRequest
     {
-        public SupplierNameRequestMessage(uint supplierID, Action<string> giveSupplier)
+        public SupplierNameRequest(uint supplierID, Action<string> giveSupplier)
         {
             this.supplierID = supplierID;
             this.giveSupplier = giveSupplier;

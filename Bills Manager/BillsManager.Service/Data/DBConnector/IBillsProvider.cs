@@ -16,9 +16,9 @@ namespace BillsManager.Services.Providers
         bool Add(Bill bill);
 
         bool Edit(Bill bill);
-        bool Edit(IEnumerable<Bill> bills); // TODO: obsolete?
+        //bool Edit(IEnumerable<Bill> bills); // TODO: obsolete?
 
         bool Delete(Bill bill);
-        bool Delete(IEnumerable<Bill> bills); // TODO: obsolete?
+        //bool Delete(IEnumerable<Bill> bills); // TODO: obsolete?
     }
 }

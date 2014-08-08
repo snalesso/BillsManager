@@ -4,9 +4,9 @@ using BillsManager.Models;
 
 namespace BillsManager.ViewModels.Messages
 {
-    public class AvailableSuppliersRequestMessage
+    public class AvailableSuppliersRequest
     {
-        public AvailableSuppliersRequestMessage(Action<IEnumerable<Supplier>> acquireSuppliersAction)
+        public AvailableSuppliersRequest(Action<IEnumerable<Supplier>> acquireSuppliersAction)
         {
             this.acquireSuppliersAction = acquireSuppliersAction;
         }

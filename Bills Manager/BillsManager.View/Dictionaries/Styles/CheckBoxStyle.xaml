@@ -10,7 +10,7 @@
             <Setter.Value>
                 <ControlTemplate>
                     <Border BorderBrush="{StaticResource ViewBorderBrush}"
-                            BorderThickness="{StaticResource BorderThickness}"
+                            BorderThickness="{StaticResource ViewBorderThickness}"
                             Background="{StaticResource ViewBackgroundBrush}" />
                 </ControlTemplate>
             </Setter.Value>
@@ -28,7 +28,7 @@
         <Setter Property="BorderBrush"
                 Value="{StaticResource ViewBorderBrush}" />
         <Setter Property="BorderThickness"
-                Value="{StaticResource BorderThickness}" />
+                Value="{StaticResource ViewBorderThickness}" />
         <Setter Property="Padding">
             <Setter.Value>
                 <Thickness Left="{StaticResource RegionSeparatorSizeValue}"

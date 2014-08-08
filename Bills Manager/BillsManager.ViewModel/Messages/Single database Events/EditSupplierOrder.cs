@@ -2,14 +2,14 @@
 
 namespace BillsManager.ViewModels.Messages
 {
-    public class EditSupplierRequestMessage
+    public class EditSupplierOrder
     {
-        public EditSupplierRequestMessage(Supplier supplier)
+        public EditSupplierOrder(Supplier supplier)
         {
             this.supplier = supplier;
         }
 
-        public EditSupplierRequestMessage(uint supplierID)
+        public EditSupplierOrder(uint supplierID)
         {
             this.supplierID = supplierID;
         }

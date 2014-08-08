@@ -163,22 +163,22 @@ namespace BillsManager.Services.Providers
             return true;
         }
 
-        public bool Edit(IEnumerable<Bill> bills)
-        {
-            foreach (Bill b in bills)
-            {
-                var XBill = this.xmlDB.Root.Element(NS_BILLS)
-                    .Elements(ITEM_BILL)
-                    .Single(elem => elem.Attribute("ID").Value == b.ID.ToString());
+        //public bool Edit(IEnumerable<Bill> bills)
+        //{
+        //    foreach (Bill b in bills)
+        //    {
+        //        var XBill = this.xmlDB.Root.Element(NS_BILLS)
+        //            .Elements(ITEM_BILL)
+        //            .Single(elem => elem.Attribute("ID").Value == b.ID.ToString());
 
-                typeof(Bill).GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                    .Where(pi => pi.Name != "ID")
-                    .ToList()
-                    .ForEach(pi => XBill.SetAttributeValue(pi.Name, pi.GetValue(b)));
-            }
+        //        typeof(Bill).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+        //            .Where(pi => pi.Name != "ID")
+        //            .ToList()
+        //            .ForEach(pi => XBill.SetAttributeValue(pi.Name, pi.GetValue(b)));
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
 
         public bool Delete(Bill bill)
         {
@@ -190,18 +190,18 @@ namespace BillsManager.Services.Providers
             return true;
         }
 
-        public bool Delete(IEnumerable<Bill> bills)
-        {
-            foreach (Bill b in bills)
-            {
-                this.xmlDB.Root.Element(NS_BILLS)
-                    .Elements()
-                    .Single(elem => elem.Attribute("ID").Value == b.ID.ToString())
-                    .Remove();
-            }
+        //public bool Delete(IEnumerable<Bill> bills)
+        //{
+        //    foreach (Bill b in bills)
+        //    {
+        //        this.xmlDB.Root.Element(NS_BILLS)
+        //            .Elements()
+        //            .Single(elem => elem.Attribute("ID").Value == b.ID.ToString())
+        //            .Remove();
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
 
         #endregion
 
@@ -268,10 +268,10 @@ namespace BillsManager.Services.Providers
             return true;
         }
 
-        public bool Edit(IEnumerable<Supplier> suppliers)
-        {
-            throw new NotImplementedException();
-        }
+        //public bool Edit(IEnumerable<Supplier> suppliers)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public bool Delete(Supplier supplier)
         {
@@ -285,103 +285,103 @@ namespace BillsManager.Services.Providers
             return true;
         }
 
-        public bool Delete(IEnumerable<Supplier> suppliers)
-        {
-            throw new NotImplementedException();
-        }
+        //public bool Delete(IEnumerable<Supplier> suppliers)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         #endregion
 
-        #region tags provider
+        //#region tags provider
 
-        public uint GetLastTagID()
-        {
-            return (uint)this.xmlDB.Root.Element(NS_TAGS).Attribute(ATT_LAST_ID);
-        }
+        //public uint GetLastTagID()
+        //{
+        //    return (uint)this.xmlDB.Root.Element(NS_TAGS).Attribute(ATT_LAST_ID);
+        //}
 
-        public IEnumerable<Tag> GetAll()
-        {
-            var query = from XTAG in this.xmlDB.Root.Element(NS_TAGS)
-                            .Elements(ITEM_TAG)
-                        select new
-                        Tag(
-                            (uint)XTAG.Attribute("ID"),
-                            (string)XTAG.Attribute("Name"),
-                            (string)XTAG.Attribute("Color"));
+        //public IEnumerable<Tag> GetAll()
+        //{
+        //    var query = from XTAG in this.xmlDB.Root.Element(NS_TAGS)
+        //                    .Elements(ITEM_TAG)
+        //                select new
+        //                Tag(
+        //                    (uint)XTAG.Attribute("ID"),
+        //                    (string)XTAG.Attribute("Name"),
+        //                    (string)XTAG.Attribute("Color"));
 
-            return query;
-        }
+        //    return query;
+        //}
 
-        public bool Add(Tag tag)
-        {
-            this.xmlDB.Root.Element(NS_TAGS).Add(
-                new XElement(ITEM_TAG,
-                    typeof(Tag)
-                    .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                    .Where(pi => pi.GetValue(tag) != null)
-                    .Select(pi => new XAttribute(pi.Name, pi.GetValue(tag)))));
+        //public bool Add(Tag tag)
+        //{
+        //    this.xmlDB.Root.Element(NS_TAGS).Add(
+        //        new XElement(ITEM_TAG,
+        //            typeof(Tag)
+        //            .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+        //            .Where(pi => pi.GetValue(tag) != null)
+        //            .Select(pi => new XAttribute(pi.Name, pi.GetValue(tag)))));
 
-            this.IncreaseLastIDValue(NS_TAGS);
+        //    this.IncreaseLastIDValue(NS_TAGS);
 
-            return true;
-        }
+        //    return true;
+        //}
 
-        public bool Edit(Tag tag)
-        {
-            var XTAG = this.xmlDB.Root.Element(NS_TAGS)
-                .Elements(ITEM_TAG)
-                .Single(elem => elem.Attribute("ID").Value == tag.ID.ToString());
+        //public bool Edit(Tag tag)
+        //{
+        //    var XTAG = this.xmlDB.Root.Element(NS_TAGS)
+        //        .Elements(ITEM_TAG)
+        //        .Single(elem => elem.Attribute("ID").Value == tag.ID.ToString());
 
-            typeof(Bill).GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Where(pi => pi.Name != "ID")
-                .ToList()
-                .ForEach(pi => XTAG.SetAttributeValue(pi.Name, pi.GetValue(tag)));
+        //    typeof(Bill).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+        //        .Where(pi => pi.Name != "ID")
+        //        .ToList()
+        //        .ForEach(pi => XTAG.SetAttributeValue(pi.Name, pi.GetValue(tag)));
 
-            return true;
-        }
+        //    return true;
+        //}
 
-        public bool Edit(IEnumerable<Tag> tags)
-        {
-            foreach (Tag b in tags)
-            {
-                var XTag = this.xmlDB.Root.Element(NS_TAGS)
-                    .Elements(ITEM_TAG)
-                    .Single(elem => elem.Attribute("ID").Value == b.ID.ToString());
+        ////public bool Edit(IEnumerable<Tag> tags)
+        ////{
+        ////    foreach (Tag b in tags)
+        ////    {
+        ////        var XTag = this.xmlDB.Root.Element(NS_TAGS)
+        ////            .Elements(ITEM_TAG)
+        ////            .Single(elem => elem.Attribute("ID").Value == b.ID.ToString());
 
-                typeof(Bill)
-                    .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                    .Where(pi => pi.Name != "ID")
-                    .ToList()
-                    .ForEach(pi => XTag.SetAttributeValue(pi.Name, pi.GetValue(b)));
-            }
+        ////        typeof(Bill)
+        ////            .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+        ////            .Where(pi => pi.Name != "ID")
+        ////            .ToList()
+        ////            .ForEach(pi => XTag.SetAttributeValue(pi.Name, pi.GetValue(b)));
+        ////    }
 
-            return true;
-        }
+        ////    return true;
+        ////}
 
-        public bool Delete(Tag tag) // URGENT: add fail logic
-        {
-            this.xmlDB.Root.Element(NS_TAGS)
-                .Elements()
-                .Single(elem => elem.Attribute("ID").Value == tag.ID.ToString())
-                .Remove();
+        //public bool Delete(Tag tag) // URGENT: add fail logic
+        //{
+        //    this.xmlDB.Root.Element(NS_TAGS)
+        //        .Elements()
+        //        .Single(elem => elem.Attribute("ID").Value == tag.ID.ToString())
+        //        .Remove();
 
-            return true;
-        }
+        //    return true;
+        //}
 
-        public bool Delete(IEnumerable<Tag> tags)
-        {
-            foreach (Tag b in tags)
-            {
-                this.xmlDB.Root.Element(NS_TAGS)
-                    .Elements()
-                    .Single(elem => elem.Attribute("ID").Value == b.ID.ToString())
-                    .Remove();
-            }
+        ////public bool Delete(IEnumerable<Tag> tags)
+        ////{
+        ////    foreach (Tag b in tags)
+        ////    {
+        ////        this.xmlDB.Root.Element(NS_TAGS)
+        ////            .Elements()
+        ////            .Single(elem => elem.Attribute("ID").Value == b.ID.ToString())
+        ////            .Remove();
+        ////    }
 
-            return true;
-        }
+        ////    return true;
+        ////}
 
-        #endregion
+        //#endregion
 
         /*#region agents provider
 
@@ -453,10 +453,10 @@ namespace BillsManager.Services.Providers
             return true;
         }
 
-        public bool Edit(IEnumerable<Agent> agents)
-        {
-            throw new NotImplementedException();
-        }
+        //public bool Edit(IEnumerable<Agent> agents)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public bool Delete(Agent agent)
         {
@@ -468,10 +468,10 @@ namespace BillsManager.Services.Providers
             return true;
         }
 
-        public bool Delete(IEnumerable<Agent> agents)
-        {
-            throw new NotImplementedException();
-        }
+        //public bool Delete(IEnumerable<Agent> agents)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         #endregion*/
 

@@ -2,9 +2,9 @@
 
 namespace BillsManager.ViewModels.Messages
 {
-    public class RollbackAuthorizationRequestMessage // TODO: request or message?
+    public class RollbackAuthorizationRequest
     {
-        public RollbackAuthorizationRequestMessage(Action confirm, Action negate)
+        public RollbackAuthorizationRequest(Action confirm, Action negate)
         {
             this.confirm = confirm;
             this.negate = negate;
