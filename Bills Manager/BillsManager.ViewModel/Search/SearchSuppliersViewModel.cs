@@ -144,8 +144,8 @@ namespace BillsManager.ViewModels
         {
             if (!this.UseObligationStateFilter) return;
 
-            if ((message.NewBillVersion.Amount != message.OldBillVersion.Amount) |
-                (message.NewBillVersion.PaymentDate.HasValue != message.OldBillVersion.PaymentDate.HasValue))
+            if ((message.Bill.Amount != message.OldBill.Amount) |
+                (message.Bill.PaymentDate.HasValue != message.OldBill.PaymentDate.HasValue))
                 this.SendFilters();
         }
 

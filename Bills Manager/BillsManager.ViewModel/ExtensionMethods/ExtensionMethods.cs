@@ -8,23 +8,31 @@ namespace BillsManager.ViewModels
     {
         public static IEnumerable<T> Where<T>(this IEnumerable<T> data, IEnumerable<Predicate<T>> predicates) // TODO: optimize
         {
-            bool respects;
-
-            foreach (T value in data)
+            if (predicates == null)
             {
-                respects = true;
+                foreach (T item in data)
+                    yield return item;
+            }
+            else
+            {
+                bool respects;
 
-                foreach (Predicate<T> pred in predicates)
+                foreach (T item in data)
                 {
-                    if (!pred.Invoke(value))
-                    {
-                        respects = false;
-                        break;
-                    }
-                }
+                    respects = true;
 
-                if (respects)
-                    yield return value;
+                    foreach (Predicate<T> pred in predicates)
+                    {
+                        if (!pred.Invoke(item))
+                        {
+                            respects = false;
+                            break;
+                        }
+                    }
+
+                    if (respects)
+                        yield return item;
+                }
             }
         }
 

@@ -11,20 +11,12 @@ namespace BillsManager.ViewModels
 
         public bool IsValid // TODO: make cached?
         {
-            get
-            {
-                var isValid = this.Error.Length <= 0;
-
-                return isValid;
-            }
+            get { return this.HasChanges & string.IsNullOrEmpty(this.Error); }
         }
 
         public string Error
         {
-            get
-            {
-                return this.rulesTracker.GetAllErrors();
-            }
+            get { return this.rulesTracker.GetAllErrors(); }
         }
 
         public string this[string columnName]
@@ -34,7 +26,8 @@ namespace BillsManager.ViewModels
                 if (this.rulesTracker == null)
                     this.rulesTracker = new ValidationRulesTracker<BillAddEditViewModel>(this);
 
-                return this.rulesTracker.GetErrorsForProperty(columnName);
+                var errors = this.rulesTracker.GetErrorsForProperty(columnName);
+                return errors;
             }
         }
 

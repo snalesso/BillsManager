@@ -6,6 +6,7 @@ using BillsManager.ViewModels.Reporting;
 using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace BillsManager.ViewModels
@@ -277,10 +278,10 @@ namespace BillsManager.ViewModels
                         {
                             new DialogResponse(
                                 ResponseType.Yes,
-                                TranslationManager.Instance.Translate("Yes").ToString()),
+                                TranslationManager.Instance.Translate("SaveAndExit").ToString()),
                             new DialogResponse(
                                 ResponseType.No,
-                                TranslationManager.Instance.Translate("No").ToString()),
+                                TranslationManager.Instance.Translate("DontSave").ToString()),
                             new DialogResponse(ResponseType.Cancel,
                                 TranslationManager.Instance.Translate("CancelExit").ToString())
                         });
@@ -338,8 +339,8 @@ namespace BillsManager.ViewModels
 
         private void Reload()
         {
-            this.Disconnect();
-            this.Connect();
+            if (this.Disconnect())
+                this.Connect(); // TODO: other checks needed?
         }
 
         private bool Save()
@@ -355,12 +356,7 @@ namespace BillsManager.ViewModels
 
         private void ShowReportCenter()
         {
-            List<BillReportViewModel> billReports = new List<BillReportViewModel>(); ;
-
-            foreach (var bdvm in this.BillsViewModel.FilteredBillViewModels)
-            {
-                billReports.Add(new BillReportViewModel(bdvm));
-            }
+            var billReports = this.BillsViewModel.FilteredBillViewModels.Select(bvm => new BillReportViewModel(bvm));
 
             var header = @"Bills Manager";
             var comment = string.Empty;

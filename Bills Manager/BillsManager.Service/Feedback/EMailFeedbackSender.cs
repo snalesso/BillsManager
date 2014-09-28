@@ -23,30 +23,38 @@ namespace BillsManager.Services.Feedback
 
         public bool SendFeedback(string subject, string message)
         {
-            if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+            try
             {
-                using (var mail = new MailMessage())
+                if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
                 {
-                    mail.From = new MailAddress("feedback@billsmanager.com", "Bills Manager Feedback");
-                    mail.Body = message;
-                    mail.Subject = subject;
-                    mail.To.Add(new MailAddress(toEmailAddress));
-                    mail.Priority = MailPriority.High;
-
-                    using (var mailSender = new SmtpClient())
+                    using (var mail = new MailMessage())
                     {
-                        mailSender.Host = "out.aliceposta.it";
-                        //mailSender.EnableSsl = true;
-                        mailSender.Port = 25;
+                        mail.From = new MailAddress("feedback@billsmanager.com", "Bills Manager Feedback");
+                        mail.Body = message;
+                        mail.Subject = subject;
+                        mail.To.Add(new MailAddress(toEmailAddress));
+                        mail.Priority = MailPriority.High;
 
-                        // URGENT: check on send success required
-                        mailSender.Send(mail);
+                        using (var mailSender = new SmtpClient())
+                        {
+                            mailSender.Host = "out.aliceposta.it";
+                            //mailSender.EnableSsl = true;
+                            mailSender.Port = 25;
 
-                        return true;
+                            // URGENT: check on send success required
+                            mailSender.Send(mail);
+
+                            return true;
+                        }
                     }
                 }
+                else
+                    return false;
             }
-            return false;
+            catch
+            {
+                return false;
+            }
         }
 
         #endregion

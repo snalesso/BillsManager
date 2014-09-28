@@ -60,7 +60,7 @@ namespace BillsManager.ViewModels
             if (timer != null) timer.Start(); // TODO: move in a DialogView.Shown handler or smth like that
         }
 
-        public DialogViewModel(string caption, string message)
+        public DialogViewModel(string caption, string message) // TODO: integrate translation in ctor or implement an auto translating dialogviewmodel
             : this(caption, message, new[] { new DialogResponse(ResponseType.Ok, TranslationManager.Instance.Translate("Ok").ToString()) })
         {
         }

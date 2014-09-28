@@ -319,16 +319,16 @@ namespace BillsManager.ViewModels
             bool refreshNeeded = false;
 
             if (this.UseSupplierFilter)
-                refreshNeeded |= (message.OldBillVersion.SupplierID != message.NewBillVersion.SupplierID);
+                refreshNeeded |= (message.OldBill.SupplierID != message.Bill.SupplierID);
 
             if (this.UseReleaseDateFilter)
-                refreshNeeded |= (message.OldBillVersion.ReleaseDate != message.NewBillVersion.ReleaseDate);
+                refreshNeeded |= (message.OldBill.ReleaseDate != message.Bill.ReleaseDate);
 
             if (this.UseDueDateFilter)
-                refreshNeeded |= (message.OldBillVersion.DueDate != message.NewBillVersion.DueDate);
+                refreshNeeded |= (message.OldBill.DueDate != message.Bill.DueDate);
 
             if (this.IsPaidFilterValue != null)
-                refreshNeeded |= (message.OldBillVersion.PaymentDate.HasValue != message.NewBillVersion.PaymentDate.HasValue);
+                refreshNeeded |= (message.OldBill.PaymentDate.HasValue != message.Bill.PaymentDate.HasValue);
 
             if (refreshNeeded)
                 this.SendFilters();

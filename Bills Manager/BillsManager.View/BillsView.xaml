@@ -50,13 +50,13 @@
 
         <ListView.View>
             <GridView>
-                <GridViewColumn Width="160"
+                <GridViewColumn Width="150"
                                 DisplayMemberBinding="{Binding SupplierName}"
                                 Header="{loc:Translate Supplier}" />
-                <GridViewColumn Width="95"
+                <GridViewColumn Width="90"
                                 DisplayMemberBinding="{Binding Code}"
                                 Header="{loc:Translate Number}" />
-                <GridViewColumn Width="95"
+                <GridViewColumn Width="90"
                                 Header="{loc:Translate Amount}">
                     <GridViewColumn.HeaderTemplate>
                         <DataTemplate>
@@ -71,8 +71,8 @@
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
-                <GridViewColumn Width="90"
-                                Header="{loc:Translate Payment}">
+                <GridViewColumn Width="65"
+                                Header="{loc:Translate Paid_toBill}">
                     <GridViewColumn.HeaderTemplate>
                         <DataTemplate>
                             <ContentPresenter HorizontalAlignment="Center"
@@ -110,8 +110,8 @@
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
-                <GridViewColumn Width="110"
-                                Header="{loc:Translate ReleaseDate}">
+                <GridViewColumn Width="100"
+                                Header="{loc:Translate Release}">
                     <GridViewColumn.HeaderTemplate>
                         <DataTemplate>
                             <ContentPresenter HorizontalAlignment="Center"
@@ -126,8 +126,8 @@
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
-                <GridViewColumn Width="110"
-                                Header="{loc:Translate DueDate}">
+                <GridViewColumn Width="100"
+                                Header="{loc:Translate Due}">
                     <GridViewColumn.HeaderTemplate>
                         <DataTemplate>
                             <ContentPresenter HorizontalAlignment="Center"
@@ -183,6 +183,36 @@
 
                             </DataTemplate.Triggers>
 
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Width="80"
+                                Header="{loc:Translate Agio}">
+                    <GridViewColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <ContentPresenter HorizontalAlignment="Right"
+                                              Content="{TemplateBinding Content}" />
+                        </DataTemplate>
+                    </GridViewColumn.HeaderTemplate>
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Agio, StringFormat=\{0:N2\} €}"
+                                       TextAlignment="Right" />
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Width="80"
+                                Header="{loc:Translate AdditionalCosts}">
+                    <GridViewColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <ContentPresenter HorizontalAlignment="Right"
+                                              Content="{TemplateBinding Content}" />
+                        </DataTemplate>
+                    </GridViewColumn.HeaderTemplate>
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding AdditionalCosts, StringFormat=\{0:N2\} €}"
+                                       TextAlignment="Right" />
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>

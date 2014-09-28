@@ -217,45 +217,45 @@ namespace BillsManager.ViewModels
 
         public void Handle(BillAddedMessage message)
         {
-            if (this.ID == message.AddedBill.SupplierID)
-                if (!message.AddedBill.PaymentDate.HasValue)
+            if (this.ID == message.Bill.SupplierID)
+                if (!message.Bill.PaymentDate.HasValue)
                 {
                     if (double.IsNaN(this.obligationAmount))
                         this.ObligationAmount = 0;
-                    this.ObligationAmount += -message.AddedBill.Amount;
+                    this.ObligationAmount += -message.Bill.Amount;
                 }
         }
 
         public void Handle(BillDeletedMessage message)
         {
-            if (this.ID == message.DeletedBill.SupplierID)
-                if (!message.DeletedBill.PaymentDate.HasValue)
-                    this.ObligationAmount += message.DeletedBill.Amount;
+            if (this.ID == message.Bill.SupplierID)
+                if (!message.Bill.PaymentDate.HasValue)
+                    this.ObligationAmount += message.Bill.Amount;
         }
 
         public void Handle(BillEditedMessage message)
         {
-            bool supplierChanged = message.NewBillVersion.SupplierID != message.OldBillVersion.SupplierID;
+            bool supplierChanged = message.Bill.SupplierID != message.OldBill.SupplierID;
 
             if (supplierChanged)
             {
-                if (this.ID == message.OldBillVersion.SupplierID)
-                    if (!message.OldBillVersion.PaymentDate.HasValue)
-                        this.ObligationAmount += message.OldBillVersion.Amount;
+                if (this.ID == message.OldBill.SupplierID)
+                    if (!message.OldBill.PaymentDate.HasValue)
+                        this.ObligationAmount += message.OldBill.Amount;
 
-                if (this.ID == message.NewBillVersion.SupplierID)
-                    if (!message.NewBillVersion.PaymentDate.HasValue)
-                        this.ObligationAmount += -message.NewBillVersion.Amount;
+                if (this.ID == message.Bill.SupplierID)
+                    if (!message.Bill.PaymentDate.HasValue)
+                        this.ObligationAmount += -message.Bill.Amount;
             }
             else
             {
-                if (this.ID == message.NewBillVersion.SupplierID)
+                if (this.ID == message.Bill.SupplierID)
                 {
-                    if (!message.OldBillVersion.PaymentDate.HasValue)
-                        this.ObligationAmount += message.OldBillVersion.Amount;
+                    if (!message.OldBill.PaymentDate.HasValue)
+                        this.ObligationAmount += message.OldBill.Amount;
 
-                    if (!message.NewBillVersion.PaymentDate.HasValue)
-                        this.ObligationAmount += -message.NewBillVersion.Amount;
+                    if (!message.Bill.PaymentDate.HasValue)
+                        this.ObligationAmount += -message.Bill.Amount;
                 }
             }
         }

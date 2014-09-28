@@ -12,7 +12,7 @@ namespace BillsManager.ViewModels
         // TODO: a simpler way to notify IsValid might be to check if the notifying property has a validation rule
         public bool IsValid
         {
-            get { return string.IsNullOrEmpty(this.Error); }
+            get { return this.HasChanges & string.IsNullOrEmpty(this.Error); }
         }
 
         public string Error

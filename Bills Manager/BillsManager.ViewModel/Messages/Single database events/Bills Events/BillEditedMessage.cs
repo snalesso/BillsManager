@@ -4,22 +4,16 @@ namespace BillsManager.ViewModels.Messages
 {
     public class BillEditedMessage : BillCRUDEvent
     {
-        public BillEditedMessage(Bill newBillVersion, Bill oldBillVersion)
+        public BillEditedMessage(Bill newBill, Bill oldBill)
+            : base(newBill)
         {
-            this.newBillVersion = newBillVersion;
-            this.oldBillVersion = oldBillVersion;
+            this.oldBill = oldBill;
         }
 
-        private readonly Bill newBillVersion;
-        public Bill NewBillVersion
+        private readonly Bill oldBill;
+        public Bill OldBill
         {
-            get { return this.newBillVersion; }
-        }
-
-        private readonly Bill oldBillVersion;
-        public Bill OldBillVersion
-        {
-            get { return this.oldBillVersion; }
+            get { return this.oldBill; }
         }
     }
 }
