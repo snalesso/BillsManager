@@ -30,18 +30,19 @@ namespace BillsManager.ViewModels
         {
             get { return this.ExposedBill.ID; }
         }
-
-        /*public virtual uint TagID
+        
+        public virtual uint SupplierID
         {
-            get { return this.ExposedBill.TagID; }
+            get { return this.ExposedBill.SupplierID; }
             set
             {
-                if (this.TagID == value) return;
-
-                this.ExposedBill.TagID = value;
-                this.NotifyOfPropertyChange(() => this.TagID);
+                if (this.SupplierID != value)
+                {
+                    this.ExposedBill.SupplierID = value;
+                    this.NotifyOfPropertyChange(() => this.SupplierID);
+                }
             }
-        }*/
+        }
 
         public virtual DateTime RegistrationDate
         {
@@ -69,19 +70,6 @@ namespace BillsManager.ViewModels
             }
         }
 
-        public virtual DateTime? PaymentDate
-        {
-            get { return this.ExposedBill.PaymentDate; }
-            set
-            {
-                if (this.PaymentDate != value)
-                {
-                    this.ExposedBill.PaymentDate = value;
-                    this.NotifyOfPropertyChange(() => this.PaymentDate);
-                }
-            }
-        }
-
         public virtual DateTime ReleaseDate
         {
             get { return this.ExposedBill.ReleaseDate; }
@@ -91,6 +79,19 @@ namespace BillsManager.ViewModels
                 {
                     this.ExposedBill.ReleaseDate = value;
                     this.NotifyOfPropertyChange(() => this.ReleaseDate);
+                }
+            }
+        }
+
+        public virtual DateTime? PaymentDate
+        {
+            get { return this.ExposedBill.PaymentDate; }
+            set
+            {
+                if (this.PaymentDate != value)
+                {
+                    this.ExposedBill.PaymentDate = value;
+                    this.NotifyOfPropertyChange(() => this.PaymentDate);
                 }
             }
         }
@@ -109,39 +110,39 @@ namespace BillsManager.ViewModels
             }
         }
 
-        /*public virtual Double Gain
+        public virtual Double Agio
         {
-            get { return this.ExposedBill.Gain; }
+            get { return this.ExposedBill.Agio; }
             set
             {
-                if (this.ExposedBill.Gain == value) return;
+                if (this.ExposedBill.Agio == value) return;
 
-                this.ExposedBill.Gain = value;
-                this.NotifyOfPropertyChange(() => this.Gain);
+                this.ExposedBill.Agio = value;
+                this.NotifyOfPropertyChange(() => this.Agio);
             }
         }
 
-        public virtual Double Expense
+        public virtual Double AdditionalCosts
         {
-            get { return this.ExposedBill.Expense; }
+            get { return this.ExposedBill.AdditionalCosts; }
             set
             {
-                if (this.ExposedBill.Expense == value) return;
+                if (this.ExposedBill.AdditionalCosts == value) return;
 
-                this.ExposedBill.Expense = value;
-                this.NotifyOfPropertyChange(() => this.Expense);
+                this.ExposedBill.AdditionalCosts = value;
+                this.NotifyOfPropertyChange(() => this.AdditionalCosts);
             }
-        }*/
+        }
 
-        public virtual uint SupplierID
+        public virtual string Code
         {
-            get { return this.ExposedBill.SupplierID; }
+            get { return this.ExposedBill.Code; }
             set
             {
-                if (this.SupplierID != value)
+                if (this.Code != value)
                 {
-                    this.ExposedBill.SupplierID = value;
-                    this.NotifyOfPropertyChange(() => this.SupplierID);
+                    this.ExposedBill.Code = value;
+                    this.NotifyOfPropertyChange(() => this.Code);
                 }
             }
         }
@@ -155,19 +156,6 @@ namespace BillsManager.ViewModels
                 {
                     this.ExposedBill.Notes = value;
                     this.NotifyOfPropertyChange(() => this.Notes);
-                }
-            }
-        }
-
-        public virtual string Code
-        {
-            get { return this.ExposedBill.Code; }
-            set
-            {
-                if (this.Code != value)
-                {
-                    this.ExposedBill.Code = value;
-                    this.NotifyOfPropertyChange(() => this.Code);
                 }
             }
         }

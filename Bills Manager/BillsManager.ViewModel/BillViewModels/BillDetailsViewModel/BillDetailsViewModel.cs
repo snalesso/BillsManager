@@ -56,9 +56,19 @@ namespace BillsManager.ViewModels
 
         #region wrapped from bill
 
+        public override DateTime RegistrationDate
+        {
+            get { return base.RegistrationDate; }
+        }
+
         public override DateTime DueDate
         {
             get { return base.DueDate; }
+        }
+
+        public override DateTime ReleaseDate
+        {
+            get { return base.ReleaseDate; }
         }
 
         public override DateTime? PaymentDate
@@ -69,6 +79,16 @@ namespace BillsManager.ViewModels
         public override double Amount
         {
             get { return base.Amount; }
+        }
+
+        public override double Agio
+        {
+            get { return base.Agio; }
+        }
+
+        public override double AdditionalCosts
+        {
+            get { return base.AdditionalCosts; }
         }
 
         public override string Code

@@ -59,13 +59,15 @@
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Name}" />
+                   Text="{loc:Translate Name}"
+                   Margin="25,0,0,0" />
         <TextBlock Grid.Row="1"
                    Grid.Column="3"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
                    Text="{Binding Name, Mode=OneTime}"
-                   TextAlignment="Right" />
+                   TextAlignment="Right"
+                   Margin="0,0,25,0" />
 
         <TextBlock Grid.Row="3"
                    Grid.Column="1"
@@ -73,11 +75,13 @@
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Address}" />
+                   Text="{loc:Translate Address}"
+                   Margin="25,0,0,0" />
         <TextBlock Grid.Row="3"
                    Grid.Column="3"
                    VerticalAlignment="Center"
-                   Text="{Binding FullAddress, Mode=OneTime}" />
+                   Text="{Binding FullAddress, Mode=OneTime}"
+                   Margin="0,0,25,0" />
 
         <TextBlock Grid.Row="5"
                    Grid.Column="1"
@@ -85,11 +89,13 @@
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Obligation}" />
+                   Text="{loc:Translate Obligation}"
+                   Margin="25,0,0,0" />
         <TextBlock Grid.Row="5"
                    Grid.Column="3"
                    HorizontalAlignment="Left"
-                   VerticalAlignment="Center">
+                   VerticalAlignment="Center"
+                   Margin="0,0,25,0">
             <Run Text="{Binding ObligationStateString, Mode=OneWay}" />
             <Run Text="   " />
             <Run Text="{Binding ObligationAmount, StringFormat=\{0:N2\} €, Mode=OneTime}" />
@@ -101,11 +107,13 @@
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Agent}" />
+                   Text="{loc:Translate Agent}"
+                   Margin="25,0,0,0" />
         <TextBlock Grid.Row="7"
                    Grid.Column="3"
                    HorizontalAlignment="Left"
-                   VerticalAlignment="Center">
+                   VerticalAlignment="Center"
+                   Margin="0,0,25,0">
             <Run Text="{Binding AgentName, Mode=OneTime}" />
             <Run Text="{Binding AgentSurname, Mode=OneTime}" />
         </TextBlock>
@@ -116,12 +124,14 @@
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate AgentPhone}" />
+                   Text="{loc:Translate AgentPhone}"
+                   Margin="25,0,0,0" />
         <TextBlock Grid.Row="9"
                    Grid.Column="3"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Text="{Binding AgentPhone, Mode=OneTime}" />
+                   Text="{Binding AgentPhone, Mode=OneTime}"
+                   Margin="0,0,25,0" />
 
         <TextBlock Grid.Row="11"
                    Grid.Column="1"
@@ -129,12 +139,14 @@
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Phone}" />
+                   Text="{loc:Translate Phone}"
+                   Margin="25,0,0,0" />
         <TextBlock Grid.Row="11"
                    Grid.Column="3"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Text="{Binding Phone, Mode=OneTime}" />
+                   Text="{Binding Phone, Mode=OneTime}"
+                   Margin="0,0,25,0" />
 
         <TextBlock Grid.Row="13"
                    Grid.Column="1"
@@ -142,12 +154,14 @@
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Fax}" />
+                   Text="{loc:Translate Fax}"
+                   Margin="25,0,0,0" />
         <TextBlock Grid.Row="13"
                    Grid.Column="3"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Text="{Binding Fax, Mode=OneTime}" />
+                   Text="{Binding Fax, Mode=OneTime}"
+                   Margin="0,0,25,0" />
 
         <TextBlock Grid.Row="15"
                    Grid.Column="1"
@@ -155,11 +169,13 @@
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Email}" />
+                   Text="{loc:Translate Email}"
+                   Margin="25,0,0,0" />
         <TextBlock Grid.Row="15"
                    Grid.Column="3"
                    HorizontalAlignment="Left"
-                   VerticalAlignment="Center">
+                   VerticalAlignment="Center"
+                   Margin="0,0,25,0">
             <Controls:HyperlinkEx NavigateUri="{Binding eMail, StringFormat=mailto:\{0\}, Mode=OneTime}">
                 <TextBlock Text="{Binding eMail, Mode=OneTime}" />
             </Controls:HyperlinkEx>
@@ -171,11 +187,13 @@
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Website}" />
+                   Text="{loc:Translate Website}"
+                   Margin="25,0,0,0" />
         <TextBlock Grid.Row="17"
                    Grid.Column="3"
                    HorizontalAlignment="Left"
-                   VerticalAlignment="Center">
+                   VerticalAlignment="Center"
+                   Margin="0,0,25,0">
             <Controls:HyperlinkEx NavigateUri="{Binding Website, Mode=OneTime}">
                 <TextBlock Text="{Binding Website, Mode=OneTime}" />
             </Controls:HyperlinkEx>
@@ -187,7 +205,8 @@
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Notes}" />
+                   Text="{loc:Translate Notes}"
+                   Margin="25,0,0,0" />
         <TextBlock Grid.Row="19"
                    Grid.Column="3"
                    MaxWidth="390"
@@ -195,7 +214,8 @@
                    VerticalAlignment="Center"
                    Text="{Binding Notes, Mode=OneTime}"
                    TextTrimming="CharacterEllipsis"
-                   TextWrapping="Wrap" />
+                   TextWrapping="Wrap"
+                   Margin="0,0,25,0" />
 
         <StackPanel Grid.Row="21"
                     Grid.Column="1"

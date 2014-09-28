@@ -117,6 +117,9 @@
         <Setter Property="Padding"
                 Value="3 2" />
 
+        <Setter Property="Width"
+                Value="130" />
+
         <Setter Property="IsTodayHighlighted"
                 Value="True" />
 

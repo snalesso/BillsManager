@@ -140,6 +140,49 @@ namespace BillsManager.Views.Behaviors
 
         #endregion
 
+        #region ValueWhenLeftEmpty
+
+        public static readonly DependencyProperty ValueWhenLeftEmptyProperty =
+            DependencyProperty.RegisterAttached(
+            "ValueWhenLeftEmpty",
+            typeof(string),
+            typeof(TextBoxBehavior),
+            new PropertyMetadata(null, OnValueWhenLeftEmptyChanged));
+
+        public static string GetValueWhenLeftEmpty(TextBox sender)
+        {
+            return (string)sender.GetValue(TextBoxBehavior.ValueWhenLeftEmptyProperty);
+        }
+
+        public static void SetValueWhenLeftEmpty(TextBox sender, string value)
+        {
+            sender.SetValue(TextBoxBehavior.ValueWhenLeftEmptyProperty, value);
+        }
+
+        private static void OnValueWhenLeftEmptyChanged(DependencyObject depObj, DependencyPropertyChangedEventArgs e)
+        {
+            var txt = depObj as TextBox;
+            if (txt == null) return;
+
+            if (e.NewValue is string == false) return;
+
+            if (e.NewValue != null)
+                txt.LostFocus += SetValueWhenLeftEmpty;
+            else
+                txt.LostFocus -= SetValueWhenLeftEmpty;
+        }
+
+        private static void SetValueWhenLeftEmpty(object sender, RoutedEventArgs e)
+        {
+            var txt = sender as TextBox;
+            if (txt == null) return;
+
+            if (txt.Text == string.Empty)
+                txt.Text = GetValueWhenLeftEmpty(txt);
+        }
+
+        #endregion
+
         #endregion
     }
 }

@@ -663,4 +663,19 @@
   <data name="Undound_toSuppliers" xml:space="preserve">
     <value>Unbound</value>
   </data>
+  <data name="Agio" xml:space="preserve">
+    <value>Agio</value>
+  </data>
+  <data name="AdditionalCosts" xml:space="preserve">
+    <value>Additional costs</value>
+  </data>
+  <data name="DontSave" xml:space="preserve">
+    <value>Don't save</value>
+  </data>
+  <data name="SaveAndExit" xml:space="preserve">
+    <value>Save and exit</value>
+  </data>
+  <data name="Released_toBill" xml:space="preserve">
+    <value>Released</value>
+  </data>
 </root>

@@ -115,34 +115,52 @@ namespace BillsManager.Services.Providers
 
         public IEnumerable<Bill> GetAllBills()
         {
-            var query = from XBill in this.xmlDB.Root.Element(NS_BILLS).Elements(ITEM_BILL)
-                        select new
-                        Bill(
-                            (uint)XBill.Attribute("ID"),
-                            /*(uint)XBill.Attribute("TagID"),*/
-                            (DateTime)XBill.Attribute("RegistrationDate"),
-                            (DateTime)XBill.Attribute("DueDate"),
-                            (DateTime?)XBill.Attribute("PaymentDate"),
-                            (DateTime)XBill.Attribute("ReleaseDate"),
-                            (double)XBill.Attribute("Amount"),
-                            /*(double)XBill.Attribute("Gain"),
-                            (double)XBill.Attribute("Expense"),*/
-                            (uint)XBill.Attribute("SupplierID"),
-                            (string)XBill.Attribute("Notes"),
-                            (string)XBill.Attribute("Code")
-                        );
+            var q = 
+                this.xmlDB.Root
+                .Element(NS_BILLS)
+                .Elements(ITEM_BILL)
+                .Select(
+                i =>
+                {
+                    return
+                        new Bill(
+                            (uint)i.Attribute("ID"),
+                            (uint)i.Attribute("SupplierID"),
+                            (DateTime)i.Attribute("RegistrationDate"),
+                            (DateTime)i.Attribute("DueDate"),
+                            (DateTime)i.Attribute("ReleaseDate"),
+                            (DateTime?)i.Attribute("PaymentDate"),
+                            (Double)i.Attribute("Amount"),
+                            (Double)i.Attribute("Agio"),
+                            (Double)i.Attribute("AdditionalCosts"),
+                            (string)i.Attribute("Code"),
+                            (string)i.Attribute("Notes"));
+                });
 
-            return query;
+            return q;
+
+            //var query = from XBill in this.xmlDB.Root.Element(NS_BILLS).Elements(ITEM_BILL)
+            //            select new
+            //            Bill(
+            //                (uint)XBill.Attribute("ID"),
+            //                (uint)XBill.Attribute("SupplierID"),
+            //                (DateTime)XBill.Attribute("RegistrationDate"),
+            //                (DateTime)XBill.Attribute("DueDate"),
+            //                (DateTime)XBill.Attribute("ReleaseDate"),
+            //                (DateTime?)XBill.Attribute("PaymentDate"),
+            //                (Double)XBill.Attribute("Amount"),
+            //                (Double)XBill.Attribute("Agio"),
+            //                (Double)XBill.Attribute("AdditionalCosts"),
+            //                (string)XBill.Attribute("Code"),
+            //                (string)XBill.Attribute("Notes")
+            //            );
+
+            //return query;
         }
 
         public bool Add(Bill bill)
         {
-            this.xmlDB.Root.Element(NS_BILLS)
-                .Add(
-                new XElement(ITEM_BILL,
-                    typeof(Bill).GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                    .Where(pi => pi.GetValue(bill) != null)
-                    .Select(pi => new XAttribute(pi.Name, pi.GetValue(bill)))));
+            this.xmlDB.Root.Element(NS_BILLS).Add(this.GetXBill(bill));
 
             this.IncreaseLastIDValue(NS_BILLS);
 
@@ -155,10 +173,10 @@ namespace BillsManager.Services.Providers
                 .Elements(ITEM_BILL)
                 .Single(elem => elem.Attribute("ID").Value == bill.ID.ToString());
 
-            typeof(Bill).GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Where(pi => pi.Name != "ID")
-                .ToList()
-                .ForEach(pi => XBill.SetAttributeValue(pi.Name, pi.GetValue(bill)));
+            if (XBill == null)
+                return false;
+
+            XBill.ReplaceWith(this.GetXBill(bill));
 
             return true;
         }
@@ -203,6 +221,15 @@ namespace BillsManager.Services.Providers
         //    return true;
         //}
 
+        private XElement GetXBill(Bill bill)
+        {
+            return
+                new XElement(ITEM_BILL,
+                    typeof(Bill).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .Where(pi => pi.GetValue(bill) != null)
+                    .Select(pi => new XAttribute(pi.Name, pi.GetValue(bill))));
+        }
+
         #endregion
 
         #region suppliers provider
@@ -214,39 +241,63 @@ namespace BillsManager.Services.Providers
 
         public IEnumerable<Supplier> GetAllSuppliers()
         {
-            var query = from XSupplier in this.xmlDB.Root.Element(NS_SUPPLIERS)
-                            .Elements(ITEM_SUPPLIER)
-                        select new
-                        Supplier(
-                            (uint)XSupplier.Attribute("ID"),
-                            (string)XSupplier.Attribute("Name"),
-                            (string)XSupplier.Attribute("Street"),
-                            (string)XSupplier.Attribute("Number"),
-                            (string)XSupplier.Attribute("City"),
-                            (string)XSupplier.Attribute("Zip"),
-                            (string)XSupplier.Attribute("Province"),
-                            (string)XSupplier.Attribute("Country"),
-                            (string)XSupplier.Attribute("eMail"),
-                            (string)XSupplier.Attribute("Website"),
-                            (string)XSupplier.Attribute("Phone"),
-                            (string)XSupplier.Attribute("Fax"),
-                            (string)XSupplier.Attribute("Notes"),
-                            (string)XSupplier.Attribute("AgentName"),
-                            (string)XSupplier.Attribute("AgentSurname"),
-                            (string)XSupplier.Attribute("AgentPhone")
-                        );
+            var q = 
+                this.xmlDB.Root
+                .Element(NS_SUPPLIERS)
+                .Elements(ITEM_SUPPLIER)
+                .Select(
+                i =>
+                {
+                    return
+                        new Supplier(
+                            (uint)i.Attribute("ID"),
+                            (string)i.Attribute("Name"),
+                            (string)i.Attribute("Street"),
+                            (string)i.Attribute("Number"),
+                            (string)i.Attribute("City"),
+                            (string)i.Attribute("Zip"),
+                            (string)i.Attribute("Province"),
+                            (string)i.Attribute("Country"),
+                            (string)i.Attribute("eMail"),
+                            (string)i.Attribute("Website"),
+                            (string)i.Attribute("Phone"),
+                            (string)i.Attribute("Fax"),
+                            (string)i.Attribute("Notes"),
+                            (string)i.Attribute("AgentName"),
+                            (string)i.Attribute("AgentSurname"),
+                            (string)i.Attribute("AgentPhone"));
+                });
 
-            return query;
+            return q;
+
+            //var query = from XSupplier in this.xmlDB.Root.Element(NS_SUPPLIERS)
+            //                .Elements(ITEM_SUPPLIER)
+            //            select new
+            //            Supplier(
+            //                (uint)XSupplier.Attribute("ID"),
+            //                (string)XSupplier.Attribute("Name"),
+            //                (string)XSupplier.Attribute("Street"),
+            //                (string)XSupplier.Attribute("Number"),
+            //                (string)XSupplier.Attribute("City"),
+            //                (string)XSupplier.Attribute("Zip"),
+            //                (string)XSupplier.Attribute("Province"),
+            //                (string)XSupplier.Attribute("Country"),
+            //                (string)XSupplier.Attribute("eMail"),
+            //                (string)XSupplier.Attribute("Website"),
+            //                (string)XSupplier.Attribute("Phone"),
+            //                (string)XSupplier.Attribute("Fax"),
+            //                (string)XSupplier.Attribute("Notes"),
+            //                (string)XSupplier.Attribute("AgentName"),
+            //                (string)XSupplier.Attribute("AgentSurname"),
+            //                (string)XSupplier.Attribute("AgentPhone")
+            //            );
+
+            //return query;
         }
 
         public bool Add(Supplier supplier)
         {
-            this.xmlDB.Root.Element(NS_SUPPLIERS).Add(
-                new XElement(ITEM_SUPPLIER,
-                    typeof(Supplier)
-                    .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                    .Where(pi => pi.GetValue(supplier) != null)
-                    .Select(pi => new XAttribute(pi.Name, pi.GetValue(supplier)))));
+            this.xmlDB.Root.Element(NS_SUPPLIERS).Add(this.GetXSupplier(supplier));
 
             this.IncreaseLastIDValue(NS_SUPPLIERS);
 
@@ -255,15 +306,16 @@ namespace BillsManager.Services.Providers
 
         public bool Edit(Supplier supplier)
         {
+            // TODO: use replaceWith
+
             var XSupplier = this.xmlDB.Root.Element(NS_SUPPLIERS)
                 .Elements(ITEM_SUPPLIER)
                 .Single(elem => elem.Attribute("ID").Value == supplier.ID.ToString());
 
-            typeof(Supplier)
-                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Where(pi => pi.Name != "ID")
-                .ToList()
-                .ForEach(pi => XSupplier.SetAttributeValue(pi.Name, pi.GetValue(supplier)));
+            if (XSupplier == null)
+                return false;
+
+            XSupplier.ReplaceWith(this.GetXSupplier(supplier));
 
             return true;
         }
@@ -289,6 +341,16 @@ namespace BillsManager.Services.Providers
         //{
         //    throw new NotImplementedException();
         //}
+
+        private XElement GetXSupplier(Supplier supplier)
+        {
+            return
+                new XElement(ITEM_SUPPLIER,
+                    typeof(Supplier)
+                    .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .Where(pi => pi.GetValue(supplier) != null)
+                    .Select(pi => new XAttribute(pi.Name, pi.GetValue(supplier))));
+        }
 
         #endregion
 

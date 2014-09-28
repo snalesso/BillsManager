@@ -11,7 +11,8 @@
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Rectangle Fill="Orange" />
+                    <Rectangle Stroke="Black"
+                               StrokeThickness="0" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -21,9 +22,20 @@
            BasedOn="{StaticResource {x:Type TextBox}}"
            TargetType="{x:Type TextBox}">
 
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+
+        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
+
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+
+        <Setter Property="AllowDrop" Value="true" />
+
         <Setter Property="BorderThickness" Value="0" />
+
         <Setter Property="BorderBrush" Value="{x:Null}" />
+
         <Setter Property="Padding" Value="0" />
+
     </Style>
 
     <Style x:Key="ComboBoxToggleButtonStyle"
@@ -161,19 +173,6 @@
                 <Setter Property="IsDropDownOpen" Value="true" />
             </Trigger>
 
-            <!--
-                <Trigger Property="IsDropDownOpen" Value="true">
-                <Setter TargetName="DropDownBorder" Property="CornerRadius">
-                <Setter.Value>
-                <CornerRadius BottomLeft="0"
-                BottomRight="0"
-                TopLeft="{StaticResource ViewCornerRadiusValue}"
-                TopRight="{StaticResource ViewCornerRadiusValue}" />
-                </Setter.Value>
-                </Setter>
-                </Trigger>
-            -->
-
         </ControlTemplate.Triggers>
 
     </ControlTemplate>
@@ -189,8 +188,7 @@
         <Setter Property="Foreground" Value="{StaticResource MenuItemForegroundBrush}" />
         <Setter Property="BorderBrush" Value="{StaticResource MenuBorderBrush}" />
 
-        <Setter Property="BorderThickness"
-                Value="{StaticResource ViewBorderThickness}" />
+        <Setter Property="BorderThickness" Value="{StaticResource ViewBorderThickness}" />
 
         <Setter Property="Padding" Value="4 2" />
         <!--

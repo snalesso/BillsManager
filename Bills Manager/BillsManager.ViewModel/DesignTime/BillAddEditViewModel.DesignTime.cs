@@ -52,23 +52,22 @@ namespace BillsManager.ViewModels
 
             this.ExposedBill = new Bill(
                 0,
-                //7,
+                supp.ID,
                 DateTime.Today.AddDays(-2),
                 DateTime.Today.AddDays(14),
-                DateTime.Today,
                 DateTime.Today.AddDays(-8),
+                DateTime.Today,
                 723.61,
-                /*32,
-                0,*/
-                supp.ID,
-                "call agent for reduction @additional comments to trigger validation rule",
-                string.Empty);
+                32,
+                0,
+                null,
+                "call agent for reduction @additional comments to trigger validation rule");
 
             this.AvailableSuppliers = new[] { supp };
             this.SelectedSupplier = this.AvailableSuppliers.FirstOrDefault();
         }
 
         #endregion
-    } 
+    }
 #endif
 }

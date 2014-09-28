@@ -42,20 +42,23 @@ namespace BillsManager.ViewModels.Validation
         public string GetErrorsForProperty(string propertyName)
         {
             var validations = this.validationRules[propertyName];
+            
+            var errors = validations
+               .Where(vr =>
+               {
+                   var v = !vr.IsValid(this.GetPropertyValue(propertyName));
+                   return v;
+               })
+               .Select(vr =>
+               {
+                   var e = vr.ErrorMessage;
+                   return e;
+               })
+               .ToArray();
 
-            var errors = this.validationRules[propertyName]
-                .Where(vr =>
-                {
-                    var v = !vr.IsValid(this.GetPropertyValue(propertyName));
-                    return v;
-                })
-                .Select(vr =>
-                {
-                    var e = vr.ErrorMessage;
-                    return e;
-                });
+            var allErrors = string.Join(Environment.NewLine, errors);
 
-            return string.Join(Environment.NewLine, errors);
+            return allErrors;
         }
 
         public string GetAllErrors() // TODO: optimize for speed

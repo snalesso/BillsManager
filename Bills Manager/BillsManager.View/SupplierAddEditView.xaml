@@ -95,14 +95,12 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="{StaticResource MarginSize}" />
-            <ColumnDefinition Width="Auto"
-                              MinWidth="75" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="{StaticResource MarginSize}" />
             <ColumnDefinition Width="Auto"
                               MinWidth="150" />
             <ColumnDefinition Width="{StaticResource MarginSize}" />
-            <ColumnDefinition Width="Auto"
-                              MinWidth="75" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="{StaticResource MarginSize}" />
             <ColumnDefinition Width="Auto"
                               MinWidth="150" />
@@ -120,6 +118,7 @@
 
         <TextBlock Grid.Row="3"
                    Grid.Column="1"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate Name}" />
@@ -134,6 +133,7 @@
 
         <TextBlock Grid.Row="5"
                    Grid.Column="1"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate Notes}" />
@@ -162,6 +162,7 @@
 
         <TextBlock Grid.Row="19"
                    Grid.Column="1"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate AgentName}" />
@@ -172,6 +173,7 @@
 
         <TextBlock Grid.Row="19"
                    Grid.Column="5"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate AgentSurname}" />
@@ -182,6 +184,7 @@
 
         <TextBlock Grid.Row="21"
                    Grid.Column="1"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate AgentPhone}" />
@@ -192,6 +195,7 @@
 
         <TextBlock Grid.Row="25"
                    Grid.Column="1"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate Phone}" />
@@ -204,6 +208,7 @@
 
         <TextBlock Grid.Row="25"
                    Grid.Column="5"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate Fax}" />
@@ -216,6 +221,7 @@
 
         <TextBlock Grid.Row="27"
                    Grid.Column="5"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate Website}" />
@@ -228,6 +234,7 @@
 
         <TextBlock Grid.Row="27"
                    Grid.Column="1"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate Email}" />
@@ -251,6 +258,7 @@
 
         <TextBlock Grid.Row="10"
                    Grid.Column="1"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Center"
                    Text="{loc:Translate City}" />
@@ -259,10 +267,11 @@
                  VerticalAlignment="Center"
                  MaxLines="1"
                  TabIndex="2"
-                 Text="{Binding Path=City, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                 Text="{Binding Path=City, UpdateSourceTrigger=PropertyChanged}" />
 
         <TextBlock Grid.Row="12"
                    Grid.Column="5"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate Country}" />
@@ -271,10 +280,11 @@
                  VerticalAlignment="Center"
                  MaxLines="1"
                  TabIndex="5"
-                 Text="{Binding Path=Country, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                 Text="{Binding Path=Country, UpdateSourceTrigger=PropertyChanged}" />
 
         <TextBlock Grid.Row="14"
                    Grid.Column="5"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate Number}" />
@@ -283,10 +293,11 @@
                  VerticalAlignment="Center"
                  MaxLines="1"
                  TabIndex="7"
-                 Text="{Binding Path=Number, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                 Text="{Binding Path=Number, UpdateSourceTrigger=PropertyChanged}" />
 
         <TextBlock Grid.Row="12"
                    Grid.Column="1"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate Province}" />
@@ -302,6 +313,7 @@
 
         <TextBlock Grid.Row="14"
                    Grid.Column="1"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate Street}" />
@@ -310,10 +322,11 @@
                  VerticalAlignment="Center"
                  MaxLines="1"
                  TabIndex="6"
-                 Text="{Binding Path=Street, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                 Text="{Binding Path=Street, UpdateSourceTrigger=PropertyChanged}" />
 
         <TextBlock Grid.Row="10"
                    Grid.Column="5"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Text="{loc:Translate ZIP}" />

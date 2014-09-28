@@ -37,6 +37,10 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="24" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="{StaticResource MarginSize}" />
@@ -55,13 +59,15 @@
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Amount}" />
+                   Text="{loc:Translate Amount}"
+                   Margin="25,0,0,0" />
         <TextBlock Grid.Row="1"
                    Grid.Column="3"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
                    Text="{Binding Amount, StringFormat=\{0:N2\} €, Mode=OneTime}"
-                   TextAlignment="Right" />
+                   TextAlignment="Right"
+                   Margin="0,0,25,0" />
 
         <TextBlock Grid.Row="3"
                    Grid.Column="1"
@@ -69,12 +75,15 @@
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Supplier}" />
+                   Text="{loc:Translate Agio}"
+                   Margin="25,0,0,0" />
         <TextBlock Grid.Row="3"
                    Grid.Column="3"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Text="{Binding SupplierName, Mode=OneTime}" />
+                   Text="{Binding Agio, StringFormat=\{0:N2\} €, Mode=OneTime}"
+                   TextAlignment="Right"
+                   Margin="0,0,25,0" />
 
         <TextBlock Grid.Row="5"
                    Grid.Column="1"
@@ -82,12 +91,15 @@
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Number}" />
+                   Text="{loc:Translate AdditionalCosts}"
+                   Margin="25,0,0,0" />
         <TextBlock Grid.Row="5"
                    Grid.Column="3"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Text="{Binding Code, Mode=OneTime}" />
+                   Text="{Binding AdditionalCosts, StringFormat=\{0:N2\} €, Mode=OneTime}"
+                   TextAlignment="Right"
+                   Margin="0,0,25,0" />
 
         <TextBlock Grid.Row="7"
                    Grid.Column="1"
@@ -95,12 +107,43 @@
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Payment}" />
-        <StackPanel Grid.Row="7"
+                   Text="{loc:Translate Supplier}"
+                   Margin="25,0,0,0" />
+        <TextBlock Grid.Row="7"
+                   Grid.Column="3"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Text="{Binding SupplierName, Mode=OneTime}" />
+
+        <TextBlock Grid.Row="9"
+                   Grid.Column="1"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Text="{loc:Translate Number}"
+                   Margin="25,0,0,0" />
+        <TextBlock Grid.Row="9"
+                   Grid.Column="3"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Text="{Binding Code, Mode=OneTime}"
+                   Margin="0,0,25,0" />
+
+        <TextBlock Grid.Row="11"
+                   Grid.Column="1"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Text="{loc:Translate Payment}"
+                   Margin="25,0,0,0" />
+        <StackPanel Grid.Row="11"
                     Grid.Column="3"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
-                    Orientation="Horizontal">
+                    Orientation="Horizontal"
+                    Margin="0,0,25,0">
             <TextBlock VerticalAlignment="Center"
                        Text="{loc:Translate Paid_toBill}"
                        Visibility="{Binding IsPaid, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneTime}" />
@@ -112,64 +155,72 @@
                        Visibility="{Binding IsNotPaid, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneTime}" />
         </StackPanel>
 
-        <TextBlock Grid.Row="9"
+        <TextBlock Grid.Row="13"
                    Grid.Column="1"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate DuesOn}" />
-        <TextBlock Grid.Row="9"
+                   Text="{loc:Translate DuesOn}"
+                   Margin="25,0,0,0" />
+        <TextBlock Grid.Row="13"
                    Grid.Column="3"
                    HorizontalAlignment="Left"
-                   VerticalAlignment="Center">
+                   VerticalAlignment="Center"
+                   Margin="0,0,25,0">
             <Run Text="{Binding DueDate, StringFormat=\{0:D\}, ConverterCulture={x:Static gl:CultureInfo.CurrentUICulture}, Mode=OneTime}" />
             <Run Text="{Binding DuesIn, StringFormat=({0}), ConverterCulture={x:Static gl:CultureInfo.CurrentUICulture}, Mode=OneTime}" />
         </TextBlock>
 
-        <TextBlock Grid.Row="11"
-                   Grid.Column="1"
-                   HorizontalAlignment="Right"
-                   VerticalAlignment="Top"
-                   FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate ReleasedOn_toBill}" />
-        <TextBlock Grid.Row="11"
-                   Grid.Column="3"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Center"
-                   Text="{Binding ReleaseDate, StringFormat=\{0:D\}, ConverterCulture={x:Static gl:CultureInfo.CurrentUICulture}, Mode=OneTime}" />
-
-        <TextBlock Grid.Row="13"
-                   Grid.Column="1"
-                   HorizontalAlignment="Right"
-                   VerticalAlignment="Top"
-                   FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate RegisteredOn_toBill}" />
-        <TextBlock Grid.Row="13"
-                   Grid.Column="3"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Center"
-                   Text="{Binding RegistrationDate, StringFormat=\{0:D\}, ConverterCulture={x:Static gl:CultureInfo.CurrentUICulture}, Mode=OneTime}" />
-
         <TextBlock Grid.Row="15"
                    Grid.Column="1"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
                    Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Notes}" />
+                   Text="{loc:Translate ReleasedOn_toBill}"
+                   Margin="25,0,0,0" />
         <TextBlock Grid.Row="15"
+                   Grid.Column="3"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Text="{Binding ReleaseDate, StringFormat=\{0:D\}, ConverterCulture={x:Static gl:CultureInfo.CurrentUICulture}, Mode=OneTime}"
+                   Margin="0,0,25,0" />
+
+        <TextBlock Grid.Row="17"
+                   Grid.Column="1"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Text="{loc:Translate RegisteredOn_toBill}"
+                   Margin="25,0,0,0" />
+        <TextBlock Grid.Row="17"
+                   Grid.Column="3"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Text="{Binding RegistrationDate, StringFormat=\{0:D\}, ConverterCulture={x:Static gl:CultureInfo.CurrentUICulture}, Mode=OneTime}"
+                   Margin="0,0,25,0" />
+
+        <TextBlock Grid.Row="19"
+                   Grid.Column="1"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   FontWeight="Medium"
+                   Foreground="{StaticResource ViewTitleBrush}"
+                   Text="{loc:Translate Notes}"
+                   Margin="25,0,0,0" />
+        <TextBlock Grid.Row="19"
                    Grid.Column="3"
                    MaxWidth="390"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
                    Text="{Binding Notes, Mode=OneTime}"
                    TextTrimming="CharacterEllipsis"
-                   TextWrapping="Wrap" />
+                   TextWrapping="Wrap"
+                   Margin="0,0,25,0" />
 
-        <StackPanel Grid.Row="17"
+        <StackPanel Grid.Row="21"
                     Grid.Column="1"
                     Grid.ColumnSpan="3"
                     HorizontalAlignment="Right"

@@ -67,8 +67,7 @@ namespace BillsManager.ViewModels
             get { return this.availableSuppliers; }
             protected set
             {
-                if (this.availableSuppliers == value)
-                    return;
+                if (this.availableSuppliers == value) return;
 
                 this.availableSuppliers = value;
                 this.NotifyOfPropertyChange(() => this.AvailableSuppliers);
@@ -92,24 +91,33 @@ namespace BillsManager.ViewModels
             }
         }
 
+        public DateTime DisplayDateEndForReleaseDate
+        {
+            get { return DateTime.Today; }
+        }
+
         #endregion
 
         #region wrapped from bill
 
-        /*[Required(ErrorMessage = "You must specify a tag.")] // TODO: language
-        public override uint TagID
+        //[LocalizedRequired(ErrorMessageKey = "You must specify a supplier.")] // TODO: language
+        //[Range(0, uint.MaxValue, ErrorMessage = "Chosen supplier ID is out of range.")] // TODO: language
+        public override uint SupplierID
         {
-            get { return base.TagID; }
+            get { return base.SupplierID; }
             set
             {
-                if (this.TagID == value) return;
+                if (this.SupplierID != value)
+                {
+                    base.SupplierID = value;
+                    this.NotifyOfPropertyChange(() => this.SupplierID);
+                    this.NotifyOfPropertyChange(() => this.IsValid);
+                    this.HasChanges = true;
 
-                this.TagID = value;
-                this.NotifyOfPropertyChange(() => this.TagID);
-                this.NotifyOfPropertyChange(() => this.IsValid);
-                this.HasChanges = true;
+                    //this.SelectedSupplier = this.GetSupplier(this.SupplierID);
+                }
             }
-        }*/
+        }
 
         /* TODO: registration date should be read only
          *       this means no validatio and no override here */
@@ -143,22 +151,6 @@ namespace BillsManager.ViewModels
             }
         }
 
-        public override DateTime? PaymentDate
-        {
-            get { return base.PaymentDate; }
-            set
-            {
-                if (this.PaymentDate != value)
-                {
-                    base.PaymentDate = value;
-                    this.NotifyOfPropertyChange(() => this.PaymentDate);
-                    this.NotifyOfPropertyChange(() => this.IsPaid);
-                    this.NotifyOfPropertyChange(() => this.IsValid);
-                    this.HasChanges = true;
-                }
-            }
-        }
-
         [LocalizedRequired(ErrorMessageKey = "ReleaseDateRequired")]
         public override DateTime ReleaseDate
         {
@@ -169,6 +161,22 @@ namespace BillsManager.ViewModels
                 {
                     base.ReleaseDate = value;
                     this.NotifyOfPropertyChange(() => this.ReleaseDate);
+                    this.NotifyOfPropertyChange(() => this.IsValid);
+                    this.HasChanges = true;
+                }
+            }
+        }
+
+        public override DateTime? PaymentDate
+        {
+            get { return base.PaymentDate; }
+            set
+            {
+                if (this.PaymentDate != value)
+                {
+                    base.PaymentDate = value;
+                    this.NotifyOfPropertyChange(() => this.PaymentDate);
+                    this.NotifyOfPropertyChange(() => this.IsPaid);
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
                 }
@@ -191,49 +199,40 @@ namespace BillsManager.ViewModels
             }
         }
 
-        /*public override double Gain
+        public override double Agio
         {
-            get { return base.Gain; }
+            get { return base.Agio; }
             set
             {
-                base.Gain = value;
-                this.NotifyOfPropertyChange(() => this.Gain);
+                base.Agio = value;
+                this.NotifyOfPropertyChange(() => this.Agio);
                 this.HasChanges = true;
-
-                if (value != 0)
-                    this.Expense = 0;
             }
         }
 
-        public override double Expense
+        public override double AdditionalCosts
         {
-            get { return base.Expense; }
+            get { return base.AdditionalCosts; }
             set
             {
-                base.Expense = value;
-                this.NotifyOfPropertyChange(() => this.Expense);
+                base.AdditionalCosts = value;
+                this.NotifyOfPropertyChange(() => this.AdditionalCosts);
                 this.HasChanges = true;
-
-                if (value != 0)
-                    this.Gain = 0;
             }
-        }*/
+        }
 
-        //[LocalizedRequired(ErrorMessageKey = "You must specify a supplier.")] // TODO: language
-        //[Range(0, uint.MaxValue, ErrorMessage = "Chosen supplier ID is out of range.")] // TODO: language
-        public override uint SupplierID
+        //[Required(ErrorMessage = "You must specify a code.")] // TODO: language
+        public override string Code
         {
-            get { return base.SupplierID; }
+            get { return base.Code; }
             set
             {
-                if (this.SupplierID != value)
+                if (this.Code != value)
                 {
-                    base.SupplierID = value;
-                    this.NotifyOfPropertyChange(() => this.SupplierID);
+                    base.Code = value;
+                    this.NotifyOfPropertyChange(() => this.Code);
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
-
-                    //this.SelectedSupplier = this.GetSupplier(this.SupplierID);
                 }
             }
         }
@@ -248,22 +247,6 @@ namespace BillsManager.ViewModels
                 {
                     base.Notes = value;
                     this.NotifyOfPropertyChange(() => this.Notes);
-                    this.NotifyOfPropertyChange(() => this.IsValid);
-                    this.HasChanges = true;
-                }
-            }
-        }
-
-        //[Required(ErrorMessage = "You must specify a code.")] // TODO: language
-        public override string Code
-        {
-            get { return base.Code; }
-            set
-            {
-                if (this.Code != value)
-                {
-                    base.Code = value;
-                    this.NotifyOfPropertyChange(() => this.Code);
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
                 }

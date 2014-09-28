@@ -29,7 +29,7 @@
                     <Border Background="{StaticResource ErrorTemplateBackgroundBrush}"
                             CornerRadius="{StaticResource ViewCornerRadius}">
                         <TextBlock Foreground="{StaticResource ErrorTemplateForegroundBrush}"
-                                   Text="{Binding ElementName=adorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}"
+                                   Text="{Binding ElementName=adorner, Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent}"
                                    Margin="4" />
                     </Border>
                 </Controls:PopupEx>

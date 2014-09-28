@@ -44,59 +44,55 @@ namespace BillsManager.ViewModels
 
             Bill newBill = new Bill(
                 0,
-                //21,
+                supp.ID,
                 DateTime.Today,
                 DateTime.Today.AddDays(14),
-                DateTime.Today,
                 DateTime.Today.AddDays(-2),
+                DateTime.Today,
                 723.61,
-                /*0,
-                21.3,*/
-                supp.ID,
-                "call agent for reduction",
-                "X3V-KDM");
+                0,
+                21.3,
+                "X3V-KDM",
+                "call agent for reduction");
 
             Bill newBill2 = new Bill(
                 1,
-                //64,
+                supp.ID,
                 DateTime.Today.AddDays(-30),
                 DateTime.Today.AddDays(-20),
-                null,
                 DateTime.Today.AddDays(-32),
+                null,
                 54.06,
-                /*0,
-                0.5,*/
-                supp.ID,
-                "ask for catalog",
-                "DK23595");
+                0,
+                0.5,
+                "DK23595",
+                "ask for catalog");
 
             Bill newBill3 = new Bill(
                 2,
-                //3,
+                supp.ID,
                 DateTime.Today,
                 DateTime.Today.AddDays(7),
-                null,
                 DateTime.Today.AddDays(-3),
+                null,
                 54.06,
-                /*9,
-                0,*/
-                supp.ID,
-                "call agent for reductions and new winter orders",
-                "AZ381EY");
+                9,
+                0,
+                "AZ381EY",
+                "call agent for reductions and new winter orders");
 
             Bill newBill4 = new Bill(
                 3,
-                //22,
+                supp.ID,
                 DateTime.Today.AddDays(-30),
                 DateTime.Today.AddDays(-1),
-                null,
                 DateTime.Today.AddDays(-32),
+                null,
                 54.06,
-                /*15.7,
-                 0,*/
-                supp.ID,
-                "ask for catalog",
-                "DK23595");
+                15.7,
+                0,
+                "DK23595",
+                "ask for catalog");
 
             var bills = new List<BillDetailsViewModel>();
 

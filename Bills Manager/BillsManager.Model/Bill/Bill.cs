@@ -8,31 +8,40 @@ namespace BillsManager.Models
         #region ctor
 
         public Bill(uint id)
+            : this(
+            id, 
+            0, 
+            DateTime.Today, 
+            DateTime.Today,
+            DateTime.Today, 
+            null, 
+            0, 
+            0, 
+            0, 
+            null, 
+            null)
         {
-            this.id = id;
         }
 
         public Bill(
             uint id,
-            /*uint tagID,*/
-            DateTime registrationDate,
-            DateTime dueDate,
-            DateTime? paymentDate,
-            DateTime releaseDate,
-            Double amount,
-            /*Double gain,
-            Double expense,*/
             uint supplierID,
-            string notes,
-            string code)
-            : this(id)
+            DateTime registrationDate, 
+            DateTime dueDate,
+            DateTime releaseDate, 
+            DateTime? paymentDate, 
+            Double amount, 
+            Double agio, 
+            Double additionalCosts, 
+            string code, 
+            string notes)
         {
-            /*this.TagID = tagID;*/
+            this.AdditionalCosts = additionalCosts;
+            this.Agio = agio;
             this.Amount = amount;
             this.Code = code;
             this.DueDate = dueDate;
-            /*this.Expense = expense;
-            this.Gain = gain;*/
+            this.id = id;
             this.Notes = notes;
             this.PaymentDate = paymentDate;
             this.RegistrationDate = registrationDate;
@@ -48,96 +57,28 @@ namespace BillsManager.Models
         public uint ID
         {
             get { return this.id; }
-            //private set
-            //{
-            //    this.id = value;
-            //}
         }
 
-        /*private uint tagID;
-        public uint TagID // IDEA: nullable?
-        {
-            get { return this.tagID; }
-            set
-            {
-                if (this.tagID == value) return;
+        public DateTime RegistrationDate { get; set; }
 
-                this.tagID = value;
-            }
-        }*/
+        public DateTime DueDate { get; set; }
 
-        private DateTime registrationDate = DateTime.Today;
-        public DateTime RegistrationDate
-        {
-            get { return this.registrationDate; }
-            set { this.registrationDate = value; }
-        }
+        public DateTime? PaymentDate { get; set; }
 
-        private DateTime dueDate = DateTime.Today;
-        public DateTime DueDate
-        {
-            get { return this.dueDate; }
-            set { this.dueDate = value; }
-        }
+        public DateTime ReleaseDate { get; set; }
 
-        private DateTime? paymentDate = null;
-        public DateTime? PaymentDate
-        {
-            get { return this.paymentDate; }
-            set { this.paymentDate = value; }
-        }
+        public Double Amount { get; set; }
 
-        private DateTime releaseDate = DateTime.Today;
-        public DateTime ReleaseDate
-        {
-            get { return this.releaseDate; }
-            set { this.releaseDate = value; }
-        }
+        public Double Agio { get; set; }
 
-        private Double amount;
-        public Double Amount
-        {
-            get { return this.amount; }
-            set { this.amount = value; }
-        }
+        public Double AdditionalCosts { get; set; }
 
-        /*private Double gain;
-        public Double Gain
-        {
-            get { return this.gain; }
-            set
-            {
-                this.gain = value;
-            }
-        }
+        // TODO: find a default value that means no supplier (0 means the first created supplier)
+        public uint SupplierID { get; set; }
 
-        private Double expense;
-        public Double Expense // URGENT: review the term
-        {
-            get { return this.expense; }
-            set { this.expense = value; }
-        }*/
+        public string Notes { get; set; }
 
-        private uint supplierID; // TODO: find a default value that means no supplier (0 means the first created supplier)
-        public uint SupplierID
-        {
-            get { return this.supplierID; }
-            set { this.supplierID = value; }
-        }
-
-        private string notes;
-        public string Notes
-        {
-            get { return this.notes; }
-            set { this.notes = value; }
-        }
-
-        private string code;
-        public string Code
-        {
-            get { return this.code; }
-            set { this.code = value; }
-        }
+        public string Code { get; set; }
 
         #endregion
     }

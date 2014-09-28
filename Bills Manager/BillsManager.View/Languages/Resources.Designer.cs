@@ -142,6 +142,15 @@ namespace BillsManager.Views.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Spese.
+        /// </summary>
+        public static string AdditionalCosts {
+            get {
+                return ResourceManager.GetString("AdditionalCosts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Indirizzo.
         /// </summary>
         public static string Address {
@@ -219,6 +228,15 @@ namespace BillsManager.Views.Languages {
         public static string AgentSurname {
             get {
                 return ResourceManager.GetString("AgentSurname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aggio.
+        /// </summary>
+        public static string Agio {
+            get {
+                return ResourceManager.GetString("Agio", resourceCulture);
             }
         }
         
@@ -768,6 +786,15 @@ namespace BillsManager.Views.Languages {
         public static string DoFilter {
             get {
                 return ResourceManager.GetString("DoFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non salvare.
+        /// </summary>
+        public static string DontSave {
+            get {
+                return ResourceManager.GetString("DontSave", resourceCulture);
             }
         }
         
@@ -1402,6 +1429,15 @@ namespace BillsManager.Views.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rilasciata.
+        /// </summary>
+        public static string Released_toBill {
+            get {
+                return ResourceManager.GetString("Released_toBill", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data di rilascio.
         /// </summary>
         public static string ReleaseDate {
@@ -1515,6 +1551,15 @@ namespace BillsManager.Views.Languages {
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Salva ed esci.
+        /// </summary>
+        public static string SaveAndExit {
+            get {
+                return ResourceManager.GetString("SaveAndExit", resourceCulture);
             }
         }
         
