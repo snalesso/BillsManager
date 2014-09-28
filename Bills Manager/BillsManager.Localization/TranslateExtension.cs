@@ -10,12 +10,12 @@ namespace BillsManager.Localization
     {
         #region ctor
 
-//#if DEBUG
+        //#if DEBUG
 
-//        private static ITranslationProvider traslationProvider = new ResxTranslationProvider(
-//            Assembly.GetAssembly(typeof(;
+        //        private static ITranslationProvider traslationProvider = new ResxTranslationProvider(
+        //            Assembly.GetAssembly(typeof(;
 
-//#endif
+        //#endif
 
         public TranslateExtension(string key)
         {

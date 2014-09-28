@@ -1,7 +1,7 @@
 ﻿using BillsManager.Models;
 using BillsManager.Services.Providers;
-using Old.Models;
-using Old.Services;
+using OldModels.Models;
+using OldModels.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -60,6 +60,10 @@
       <Project>{fc8a7a61-d9cf-4ac7-a62d-590c35a28a44}</Project>
       <Name>BillsManager.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OldModels\OldModels.vbproj">
+      <Project>{1bb1ea29-aeef-4205-bf84-64962c605c2b}</Project>
+      <Name>OldModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
