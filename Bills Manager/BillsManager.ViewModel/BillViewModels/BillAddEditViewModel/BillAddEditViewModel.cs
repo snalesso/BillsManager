@@ -2,13 +2,9 @@
 using BillsManager.Localization.Attributes;
 using BillsManager.Models;
 using BillsManager.ViewModels.Commanding;
-using BillsManager.ViewModels.Messages;
 using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 using System.Linq;
 
 namespace BillsManager.ViewModels
@@ -120,7 +116,7 @@ namespace BillsManager.ViewModels
         }
 
         /* TODO: registration date should be read only
-         *       this means no validatio and no override here */
+         *       this means no validation and no override here */
         public override DateTime RegistrationDate
         {
             get { return base.RegistrationDate; }

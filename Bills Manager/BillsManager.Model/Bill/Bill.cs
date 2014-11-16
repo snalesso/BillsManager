@@ -2,7 +2,6 @@
 
 namespace BillsManager.Models
 {
-    // URGENT: add aggio/spese
     public partial class Bill
     {
         #region ctor
@@ -73,7 +72,6 @@ namespace BillsManager.Models
 
         public Double AdditionalCosts { get; set; }
 
-        // TODO: find a default value that means no supplier (0 means the first created supplier)
         public uint SupplierID { get; set; }
 
         public string Notes { get; set; }

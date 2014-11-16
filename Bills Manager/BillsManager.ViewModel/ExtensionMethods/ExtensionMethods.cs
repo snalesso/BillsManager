@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace BillsManager.ViewModels
 {
@@ -8,32 +9,34 @@ namespace BillsManager.ViewModels
     {
         public static IEnumerable<T> Where<T>(this IEnumerable<T> data, IEnumerable<Predicate<T>> predicates) // TODO: optimize
         {
-            if (predicates == null)
-            {
-                foreach (T item in data)
-                    yield return item;
-            }
-            else
-            {
-                bool respects;
+            return data.Where(i => predicates.All(p => p(i)));
 
-                foreach (T item in data)
-                {
-                    respects = true;
+            //if (predicates == null)
+            //{
+            //    foreach (T item in data)
+            //        yield return item;
+            //}
+            //else
+            //{
+            //    bool respects;
 
-                    foreach (Predicate<T> pred in predicates)
-                    {
-                        if (!pred.Invoke(item))
-                        {
-                            respects = false;
-                            break;
-                        }
-                    }
+            //    foreach (T item in data)
+            //    {
+            //        respects = true;
 
-                    if (respects)
-                        yield return item;
-                }
-            }
+            //        foreach (Predicate<T> pred in predicates)
+            //        {
+            //            if (!pred.Invoke(item))
+            //            {
+            //                respects = false;
+            //                break;
+            //            }
+            //        }
+
+            //        if (respects)
+            //            yield return item;
+            //    }
+            //}
         }
 
         public static ulong ULongCount<T>(this IEnumerable<T> data)
@@ -67,7 +70,11 @@ namespace BillsManager.ViewModels
             while (i < list.Count && comparer.Compare(list[i], item) < 0)
                 i++;
 
-            list.AddSorted(item, comparer);
+            var obs = list as ObservableCollection<T>;
+            if (obs != null)
+                obs.Move(obs.IndexOf(item), i);
+            else
+                list.Insert(i, item);
         }
     }
 }

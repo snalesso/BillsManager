@@ -70,37 +70,40 @@ namespace BillsManager.ViewModels
         #region properties
 
         private ObservableCollection<BillDetailsViewModel> billViewModels;
-        public ObservableCollection<BillDetailsViewModel> BillViewModels
+        private ObservableCollection<BillDetailsViewModel> BillViewModels
         {
             get { return this.billViewModels; }
-            private set
+            set
             {
                 if (this.billViewModels != value)
                 {
                     this.billViewModels = value;
                     this.NotifyOfPropertyChange(() => this.BillViewModels);
-                    this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
+                    this.FilteredBillViewModels =
+                        new ReadOnlyObservableCollectionEx<BillDetailsViewModel>(
+                            this.BillViewModels,
+                            this.Filters != null ? this.Filters.Select(f => f.Execute) : null);
 
+                    // IDEA: #IF !DEBUG ?
                     if (!Execute.InDesignMode)
-                        this.globalEventAggregator.Publish(new BillsListChangedMessage(this.BillViewModels.Select(bvm => bvm.ExposedBill)));
+                        this.globalEventAggregator.Publish(new BillsListChangedMessage(this.BillViewModels.Select(bvm => bvm.ExposedBill))); // TODO: move to filtered?
                 }
             }
 
         }
 
-        public ReadOnlyObservableCollection<BillDetailsViewModel> FilteredBillViewModels
+        private ReadOnlyObservableCollectionEx<BillDetailsViewModel> filteredBillViewModels;
+        public ReadOnlyObservableCollectionEx<BillDetailsViewModel> FilteredBillViewModels
         {
-            get
+            get { return this.filteredBillViewModels; }
+            private set
             {
-                if (this.Filters != null)
+                // TODO: remove set / make lazy get?
 
-                    return new ReadOnlyObservableCollection<BillDetailsViewModel>( // TODO: check whether this is a good practice
-                        new ObservableCollection<BillDetailsViewModel>(
-                            this.BillViewModels
-                            .Where(this.Filters.Select(filter => filter.Execute))));
+                if (this.filteredBillViewModels == value) return;
 
-                else
-                    return new ReadOnlyObservableCollection<BillDetailsViewModel>(this.BillViewModels);
+                this.filteredBillViewModels = value;
+                this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
             }
         }
 
@@ -118,6 +121,7 @@ namespace BillsManager.ViewModels
             }
         }
 
+        // IDEA: remove filter class and make it possibile to add or not a comment at print time?
         private IEnumerable<Filter<BillDetailsViewModel>> filters;
         public IEnumerable<Filter<BillDetailsViewModel>> Filters
         {
@@ -128,7 +132,7 @@ namespace BillsManager.ViewModels
 
                 this.filters = value;
                 this.NotifyOfPropertyChange(() => this.Filters);
-                this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
+                this.UpdateFilters();
                 this.NotifyOfPropertyChange(() => this.FiltersDescription);
             }
         }
@@ -192,7 +196,7 @@ namespace BillsManager.ViewModels
                 newBvm.SelectedSupplier = supplier;
 
             //newBvm.SetupForAddEdit();
-        tryAdd:
+tryAdd:
             if (this.windowManager.ShowDialog(newBvm) == true)
             {
                 // TODO: make it possible to show the view through a dialogviewmodel (evaluate the idea)
@@ -200,8 +204,9 @@ namespace BillsManager.ViewModels
                 {
                     var newBillDetVM = this.billDetailsViewModelFactory.Invoke(newBvm.ExposedBill);
 
-                    this.BillViewModels.AddSorted(newBillDetVM);
-                    this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
+                    this.BillViewModels.Add(newBillDetVM);
+                    //this.BillViewModels.AddSorted(newBillDetVM);
+                    //this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
 
                     this.SelectedBillViewModel = newBillDetVM;
 
@@ -230,11 +235,12 @@ namespace BillsManager.ViewModels
 
             if (this.windowManager.ShowDialog(baeVM) == true)
             {
-                if (this.billsProvider.Edit(baeVM.ExposedBill))
+                if (this.billsProvider.Edit(baeVM.ExposedBill)) // URGENT: if the DB action fails, changes have to be rolled back!!
                 {
                     var editedBillVM = this.BillViewModels.Single(bvm => bvm.ExposedBill == bill);
                     var wasSelected = this.SelectedBillViewModel == editedBillVM;
-                    this.BillViewModels.SortEdited(editedBillVM);
+                    //this.BillViewModels.SortEdited(editedBillVM);
+                    editedBillVM.Refresh();
 
                     if (wasSelected) // TODO: not working
                         this.SelectedBillViewModel = editedBillVM;
@@ -274,14 +280,15 @@ namespace BillsManager.ViewModels
 
             if (question.FinalResponse == ResponseType.Yes)
             {
-                this.billsProvider.Delete(bill);
+                if (this.billsProvider.Delete(bill))
+                {
+                    this.BillViewModels.Remove(this.BillViewModels.Single(bvm => bvm.ExposedBill == bill));
+                    //this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
 
-                this.BillViewModels.Remove(this.BillViewModels.Single(bvm => bvm.ExposedBill == bill));
-                this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
+                    this.SelectedBillViewModel = null;
 
-                this.SelectedBillViewModel = null;
-
-                this.globalEventAggregator.Publish(new BillDeletedMessage(bill));
+                    this.globalEventAggregator.Publish(new BillDeletedMessage(bill));
+                }
             }
         }
 
@@ -309,16 +316,18 @@ namespace BillsManager.ViewModels
 
                 bill.PaymentDate = DateTime.Today;
 
-                this.billsProvider.Edit(bill);
+                if (this.billsProvider.Edit(bill))
+                {
 
-                var editedVM = this.BillViewModels.Single(bvm => bvm.ExposedBill == bill);
-                var wasSelected = this.SelectedBillViewModel == editedVM;
-                this.BillViewModels.SortEdited(editedVM);
+                    var editedVM = this.BillViewModels.Single(bvm => bvm.ExposedBill == bill);
+                    var wasSelected = this.SelectedBillViewModel == editedVM;
+                    //this.BillViewModels.SortEdited(editedVM);
 
-                if (wasSelected)
-                    this.SelectedBillViewModel = editedVM;
+                    if (wasSelected)
+                        this.SelectedBillViewModel = editedVM;
 
-                this.globalEventAggregator.Publish(new BillEditedMessage(bill, oldVersion));
+                    this.globalEventAggregator.Publish(new BillEditedMessage(bill, oldVersion));
+                }
             }
         }
 
@@ -351,8 +360,10 @@ namespace BillsManager.ViewModels
                     throw new ApplicationException("Couldn't delete this bill: " + Environment.NewLine + Environment.NewLine + this.GetBillSummary(bvm.ExposedBill));
             }
 
-            if (this.Filters == null)
-                this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
+            // if there was an error during the romve operation on the db
+            // this point wouldn't be reached
+            //if (this.Filters == null)
+            //    this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
         }
 
         public void Handle(EditBillOrder message)
@@ -379,6 +390,11 @@ namespace BillsManager.ViewModels
         #endregion
 
         #region support
+
+        private void UpdateFilters()
+        {
+            this.FilteredBillViewModels.Filters = (this.Filters != null ? this.Filters.Select(f => f.Execute) : null);
+        }
 
         private IEnumerable<Supplier> GetAvailableSuppliers()
         {

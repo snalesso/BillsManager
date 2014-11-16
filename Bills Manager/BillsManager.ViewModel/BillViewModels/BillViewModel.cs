@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using BillsManager.Models;
+﻿using BillsManager.Models;
 using Caliburn.Micro;
+using System;
 
 namespace BillsManager.ViewModels
 {
@@ -10,6 +8,7 @@ namespace BillsManager.ViewModels
     {
         #region properties
 
+        // TODO: make readonly -> add ctor
         protected Bill exposedBill;
         public Bill ExposedBill
         {
@@ -20,6 +19,9 @@ namespace BillsManager.ViewModels
                 {
                     this.exposedBill = value;
                     this.NotifyOfPropertyChange(() => this.ExposedBill);
+                    this.Refresh(); /* TODO: this double refreshes this property, and properties that don't need refresh too
+                                     * also, it refreshes in the ctor, when the object is created
+                                     * and every time the value changes: eg. on edit (?) */
                 }
             }
         }

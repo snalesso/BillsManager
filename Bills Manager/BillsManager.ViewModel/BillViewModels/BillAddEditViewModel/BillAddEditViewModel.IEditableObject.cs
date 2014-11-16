@@ -13,7 +13,7 @@ namespace BillsManager.ViewModels
         public bool IsInEditMode
         {
             get { return this.isInEditMode; }
-            set
+            protected set
             {
                 if (this.isInEditMode != value)
                 {

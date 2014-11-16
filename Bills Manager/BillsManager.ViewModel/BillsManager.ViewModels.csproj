@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="BackupCenterViewModel.cs" />
     <Compile Include="BillViewModels\BillDetailsViewModel\BillDetailsViewModel.IComparable.cs" />
+    <Compile Include="Collections\ObjectModel\ReadOnlyObservableCollectionEx.cs" />
     <Compile Include="Commanding\EventToCommand\BehaviorBinding.cs" />
     <Compile Include="Commanding\EventToCommand\CommandBehavior.cs" />
     <Compile Include="Commanding\EventToCommand\CommandBehaviorBinding.cs" />

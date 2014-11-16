@@ -98,7 +98,7 @@ namespace BillsManager.ViewModels
 
             var allSorted = all.OrderByDescending(b => b.CreationTime);
 
-            var vms = allSorted.Select(b => new BackupViewModel(b)); // TODO: factory?
+            var vms = allSorted.Select(b => new BackupViewModel(b)); // IDEA: factory?
 
             this.BackupViewModels = new ObservableCollection<BackupViewModel>(vms);
         }
