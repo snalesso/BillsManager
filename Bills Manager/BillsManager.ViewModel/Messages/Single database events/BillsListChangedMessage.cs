@@ -5,13 +5,13 @@ namespace BillsManager.ViewModels.Messages
 {
     public class BillsListChangedMessage
     {
-        public BillsListChangedMessage(IEnumerable<Bill> bills)
+        public BillsListChangedMessage(ICollection<Bill> bills)
         {
             this.bills = bills;
         }
 
-        private IEnumerable<Bill> bills;
-        public IEnumerable<Bill> Bills
+        private ICollection<Bill> bills;
+        public ICollection<Bill> Bills
         {
             get { return this.bills; }
         }

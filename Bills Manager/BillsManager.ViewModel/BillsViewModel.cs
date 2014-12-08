@@ -27,6 +27,8 @@ namespace BillsManager.ViewModels
         private readonly Func<IEnumerable<Supplier>, Bill, BillAddEditViewModel> billAddEditViewModelFactory;
         private readonly Func<Bill, BillDetailsViewModel> billDetailsViewModelFactory;
 
+        private readonly IComparer<BillDetailsViewModel> billDetailsVMComparer = new BillDetailsViewModelComparer();
+
         #endregion
 
         #region ctor
@@ -82,11 +84,12 @@ namespace BillsManager.ViewModels
                     this.FilteredBillViewModels =
                         new ReadOnlyObservableCollectionEx<BillDetailsViewModel>(
                             this.BillViewModels,
-                            this.Filters != null ? this.Filters.Select(f => f.Execute) : null);
+                            this.Filters != null ? this.Filters.Select(f => f.Execute) : null,
+                            this.billDetailsVMComparer);
 
                     // IDEA: #IF !DEBUG ?
                     if (!Execute.InDesignMode)
-                        this.globalEventAggregator.Publish(new BillsListChangedMessage(this.BillViewModels.Select(bvm => bvm.ExposedBill))); // TODO: move to filtered?
+                        this.globalEventAggregator.Publish(new BillsListChangedMessage(this.BillViewModels.Select(bvm => bvm.ExposedBill).ToList())); // TODO: move to filtered?
                 }
             }
 

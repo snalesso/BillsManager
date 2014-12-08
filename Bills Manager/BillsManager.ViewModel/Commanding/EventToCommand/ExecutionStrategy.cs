@@ -69,5 +69,4 @@ namespace BillsManager.ViewModels.Commanding
 
         #endregion
     }
-
 }

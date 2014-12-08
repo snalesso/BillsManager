@@ -204,7 +204,7 @@ namespace BillsManager.ViewModels.Reporting
                 if (this.goToLastPageCommand == null)
                     this.goToLastPageCommand = new RelayCommand(
                         () => this.GoToLastPage(),
-                        () => this.CanGoToNextPage); // TODO: fix: at last/firt-unique page gotolast is enabled
+                        () => this.CanGoToNextPage);
 
                 return this.goToLastPageCommand;
             }

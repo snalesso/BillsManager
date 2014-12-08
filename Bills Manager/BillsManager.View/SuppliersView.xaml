@@ -10,7 +10,8 @@
              xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Caliburn:Bind.AtDesignTime="True"
-             d:DataContext="{d:DesignInstance Type=ViewModel:SuppliersViewModel, IsDesignTimeCreatable=True}"
+             d:DataContext="{d:DesignInstance Type=ViewModel:SuppliersViewModel,
+                                              IsDesignTimeCreatable=True}"
              d:DesignHeight="250"
              d:DesignWidth="900"
              mc:Ignorable="d">
@@ -20,16 +21,16 @@
     </UserControl.Resources>
 
     <UserControl.Background>
-        <Binding Mode="OneTime"
-                 Source="{StaticResource ViewBackgroundBrush}" />
+        <Binding Mode="OneTime" Source="{StaticResource ViewBackgroundBrush}" />
     </UserControl.Background>
 
     <Controls:ListViewEx x:Name="lsvSuppliers"
                          AlternationCount="2"
                          Commanding:CommandBehavior.Command="{Binding ShowSupplierDetailsCommand}"
                          Commanding:CommandBehavior.CommandParameter="{Binding SelectedSupplierViewModel}"
-                         Commanding:CommandBehavior.Event="MouseDoubleClick"
-                         ItemsSource="{Binding FilteredSupplierViewModels, IsAsync=True}"
+                         Commanding:CommandBehavior.Event="ItemMouseDoubleLeftClick"
+                         ItemsSource="{Binding FilteredSupplierViewModels,
+                                               IsAsync=True}"
                          SelectedItem="{Binding SelectedSupplierViewModel}"
                          SelectionMode="Single"
                          VirtualizingPanel.IsVirtualizing="True"
@@ -45,8 +46,7 @@
 
         <ListView.View>
             <GridView>
-                <GridViewColumn Width="Auto"
-                                Header="{loc:Translate Name}">
+                <GridViewColumn Width="Auto" Header="{loc:Translate Name}">
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
                             <Border x:Name="obg"
@@ -55,14 +55,12 @@
                                     VerticalAlignment="Stretch"
                                     CornerRadius="{StaticResource ViewCornerRadius}"
                                     Padding="5">
-                                <TextBlock x:Name="text"
-                                           Text="{Binding Name}" />
+                                <TextBlock x:Name="text" Text="{Binding Name}" />
                             </Border>
 
                             <DataTemplate.Triggers>
 
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}"
-                                             Value="True">
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}" Value="True">
                                     <Setter TargetName="obg" Property="CornerRadius">
                                         <Setter.Value>
                                             <CornerRadius BottomLeft="0"
@@ -73,20 +71,17 @@
                                     </Setter>
                                 </DataTrigger>
 
-                                <DataTrigger Binding="{Binding ObligationState}"
-                                             Value="{x:Static ViewModel:Obligation.Creditor}">
+                                <DataTrigger Binding="{Binding ObligationState}" Value="{x:Static ViewModel:Obligation.Creditor}">
                                     <Setter TargetName="obg" Property="Background" Value="{StaticResource CreditorObligationBrush}" />
                                     <Setter TargetName="text" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
                                 </DataTrigger>
 
-                                <DataTrigger Binding="{Binding ObligationState}"
-                                             Value="{x:Static ViewModel:Obligation.Debtor}">
+                                <DataTrigger Binding="{Binding ObligationState}" Value="{x:Static ViewModel:Obligation.Debtor}">
                                     <Setter TargetName="obg" Property="Background" Value="{StaticResource DebtorObligationBrush}" />
                                     <Setter TargetName="text" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
                                 </DataTrigger>
 
-                                <DataTrigger Binding="{Binding ObligationState}"
-                                             Value="{x:Static ViewModel:Obligation.Unbound}">
+                                <DataTrigger Binding="{Binding ObligationState}" Value="{x:Static ViewModel:Obligation.Unbound}">
                                     <!--  <Setter TargetName="text" Property="Visibility" Value="Collapsed" />  -->
                                 </DataTrigger>
 
@@ -160,14 +155,14 @@
         <ListView.ContextMenu>
             <ContextMenu>
 
-                <MenuItem Command="{Binding SelectedSupplierViewModel.AddBillCommand, Mode=OneWay}"
-                          Header="{loc:Translate AddBill}">
+                <MenuItem Command="{Binding SelectedSupplierViewModel.AddBillCommand, Mode=OneWay}" Header="{loc:Translate AddBill}">
                     <MenuItem.Icon>
                         <Controls:AutoGreyableImage Source="Images/bills/bill-add-24.png" />
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Command="{Binding ShowSuppliersBillsCommand, Mode=OneWay}"
+                <MenuItem Command="{Binding ShowSuppliersBillsCommand,
+                                            Mode=OneWay}"
                           CommandParameter="{Binding SelectedSupplierViewModel}"
                           Header="{loc:Translate ShowBills}">
                     <MenuItem.Icon>
@@ -177,14 +172,14 @@
 
                 <Separator />
 
-                <MenuItem Command="{Binding AddNewSupplierCommand, Mode=OneWay}"
-                          Header="{loc:Translate Add}">
+                <MenuItem Command="{Binding AddNewSupplierCommand, Mode=OneWay}" Header="{loc:Translate Add}">
                     <MenuItem.Icon>
                         <Controls:AutoGreyableImage Source="Images/generic/add-16.png" />
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Command="{Binding EditSupplierCommand, Mode=OneWay}"
+                <MenuItem Command="{Binding EditSupplierCommand,
+                                            Mode=OneWay}"
                           CommandParameter="{Binding SelectedSupplierViewModel}"
                           Header="{loc:Translate Edit}">
                     <MenuItem.Icon>
@@ -192,7 +187,8 @@
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Command="{Binding DeleteSupplierCommand, Mode=OneWay}"
+                <MenuItem Command="{Binding DeleteSupplierCommand,
+                                            Mode=OneWay}"
                           CommandParameter="{Binding SelectedSupplierViewModel}"
                           Header="{loc:Translate Delete}">
                     <MenuItem.Icon>
@@ -202,7 +198,8 @@
 
                 <Separator />
 
-                <MenuItem Command="{Binding ShowSupplierDetailsCommand, Mode=OneWay}"
+                <MenuItem Command="{Binding ShowSupplierDetailsCommand,
+                                            Mode=OneWay}"
                           CommandParameter="{Binding SelectedSupplierViewModel}"
                           Header="{loc:Translate Details}">
                     <MenuItem.Icon>
@@ -210,7 +207,8 @@
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Command="{Binding CopyEMailCommand, Mode=OneWay}"
+                <MenuItem Command="{Binding CopyEMailCommand,
+                                            Mode=OneWay}"
                           CommandParameter="{Binding SelectedSupplierViewModel}"
                           Header="{loc:Translate CopyEmail}">
                     <MenuItem.Icon>

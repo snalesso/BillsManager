@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="BackupCenterViewModel.cs" />
     <Compile Include="BillViewModels\BillDetailsViewModel\BillDetailsViewModel.IComparable.cs" />
+    <Compile Include="BillViewModels\BillDetailsViewModel\BillDetailsViewModelComparer.cs" />
     <Compile Include="Collections\ObjectModel\ReadOnlyObservableCollectionEx.cs" />
     <Compile Include="Commanding\EventToCommand\BehaviorBinding.cs" />
     <Compile Include="Commanding\EventToCommand\CommandBehavior.cs" />
@@ -129,8 +130,6 @@
     <Compile Include="SupplierViewModels\SupplierDetailsViewModel\SupplierDetailsViewModel.IComparable.cs" />
     <Compile Include="SupplierViewModels\SupplierDetailsViewModel\SupplierDetailsViewModel.cs" />
     <Compile Include="SupplierViewModels\SupplierViewModel.cs" />
-    <Compile Include="TagsViewModel.cs" />
-    <Compile Include="TagViewModels\TagViewModel.cs" />
     <Compile Include="Validation\ValidationRulesTrackerGeneric.cs" />
     <Compile Include="Messages\Single database Events\Searches Events\BillsFilterMessage.cs" />
     <Compile Include="Messages\Single database Events\Searches Events\SuppliersFilterMessage.cs" />

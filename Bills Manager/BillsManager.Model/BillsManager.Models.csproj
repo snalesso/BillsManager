@@ -57,7 +57,6 @@
     <Compile Include="Settings\Settings.cs" />
     <Compile Include="Supplier\Supplier.cs" />
     <Compile Include="Supplier\Supplier.ICloneable.cs" />
-    <Compile Include="Tag\Tag.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Settings\Settings.ICloneable.cs" />

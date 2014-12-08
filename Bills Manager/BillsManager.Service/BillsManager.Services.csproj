@@ -62,7 +62,6 @@
     <Compile Include="Data\DBConnector\XMLDBConnector.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Data\DBConnector\ITagsProvider.cs" />
     <Compile Include="Reporting\Attributes\TextAlignmentAttribute.cs" />
     <Compile Include="Reporting\IReportPrinter.cs" />
     <Compile Include="Reporting\ReportOptions.cs" />

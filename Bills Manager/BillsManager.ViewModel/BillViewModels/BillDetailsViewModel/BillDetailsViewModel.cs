@@ -9,7 +9,6 @@ using System.Linq;
 
 namespace BillsManager.ViewModels
 {
-    // IDEA: make properties read only?
     public partial class BillDetailsViewModel :
         BillViewModel,
         IHandle<SupplierEditedMessage>

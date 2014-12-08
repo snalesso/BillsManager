@@ -79,8 +79,8 @@ namespace BillsManager.ViewModels
             get { return this.ConnectionState != DBConnectionState.Unsaved; }
         }
 
-        private ulong suppliersCount;
-        public ulong SuppliersCount
+        private int suppliersCount;
+        public int SuppliersCount
         {
             get { return this.suppliersCount; }
             set
@@ -92,8 +92,8 @@ namespace BillsManager.ViewModels
             }
         }
 
-        private ulong billsCount;
-        public ulong BillsCount
+        private int billsCount;
+        public int BillsCount
         {
             get { return this.billsCount; }
             set
@@ -118,12 +118,12 @@ namespace BillsManager.ViewModels
 
         public void Handle(SuppliersListChangedMessage message)
         {
-            this.SuppliersCount = message.Suppliers.ULongCount();
+            this.SuppliersCount = message.Suppliers.Count;
         }
 
         public void Handle(BillsListChangedMessage message)
         {
-            this.BillsCount = message.Bills.ULongCount();
+            this.BillsCount = message.Bills.Count;
         }
 
         public void Handle(BillAddedMessage message)

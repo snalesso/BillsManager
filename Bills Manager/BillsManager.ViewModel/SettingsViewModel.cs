@@ -3,6 +3,7 @@ using BillsManager.Models;
 using BillsManager.Services.Settings;
 using BillsManager.ViewModels.Commanding;
 using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -82,9 +83,13 @@ namespace BillsManager.ViewModels
 
         protected void RevertChanges()
         {
-            this.settingsProvider.Settings.Language = this.oldSettings.Language;
-            this.settingsProvider.Settings.StartupDBLoad = this.oldSettings.StartupDBLoad;
-            this.settingsProvider.Settings.FeedbackToEmailAddress = this.oldSettings.FeedbackToEmailAddress;
+            try
+            {
+                this.CurrentLanguage = this.oldSettings.Language;
+                this.StartupDBLoad = this.oldSettings.StartupDBLoad;
+                this.FeedbackToEmailAddress = this.oldSettings.FeedbackToEmailAddress;
+            }
+            catch (Exception ex) { } // URGENT: exception always thrown when rolling back before exiting
         }
 
         protected void SaveAndClose()

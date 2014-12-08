@@ -183,46 +183,7 @@ namespace BillsManager.ViewModels
             //    throw new NotImplementedException();
             //}
 
-            //#endregion
-
-            #region ITagsProvider Members
-
-            public uint GetLastTagID()
-            {
-                throw new NotImplementedException();
-            }
-
-            public IEnumerable<Models.Tag> GetAll()
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool Add(Models.Tag tag)
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool Edit(Models.Tag tag)
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool Edit(IEnumerable<Models.Tag> tags)
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool Delete(Models.Tag tag)
-            {
-                throw new NotImplementedException();
-            }
-
-            public bool Delete(IEnumerable<Models.Tag> tags)
-            {
-                throw new NotImplementedException();
-            }
-
-            #endregion
+            //#endregion            
         }
     }
 #endif

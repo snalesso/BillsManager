@@ -84,7 +84,7 @@ namespace BillsManager.ViewModels
                     this.NotifyOfPropertyChange(() => this.FilteredSupplierViewModels);
 
                     if (!Execute.InDesignMode)
-                        this.dbEventAggregator.Publish(new SuppliersListChangedMessage(this.SupplierViewModels.Select(svm => svm.ExposedSupplier)));
+                        this.dbEventAggregator.Publish(new SuppliersListChangedMessage(this.SupplierViewModels.Select(svm => svm.ExposedSupplier).ToList()));
                 }
             }
         }
@@ -173,7 +173,7 @@ namespace BillsManager.ViewModels
                 //var newVM = new SupplierAddEditViewModel(this.windowManager, this.dbEventAggregator, new Supplier(this.suppliersProvider.GetLastSupplierID() + 1));
                 var newSvm = this.supplierAddEditViewModelFactory.Invoke(new Supplier(this.suppliersProvider.GetLastSupplierID() + 1));
 
-            tryAdd: // TODO: optimize
+tryAdd: // TODO: optimize
                 if (this.windowManager.ShowDialog(newSvm) == true)
                 {
                     if (this.suppliersProvider.Add(newSvm.ExposedSupplier))
@@ -262,7 +262,7 @@ namespace BillsManager.ViewModels
                 this.NotifyOfPropertyChange(() => this.FilteredSupplierViewModels);
 
                 this.SelectedSupplierViewModel = null;
-                this.dbEventAggregator.Publish(new SuppliersListChangedMessage(this.SupplierViewModels.Select(svm => svm.ExposedSupplier)));
+                this.dbEventAggregator.Publish(new SuppliersListChangedMessage(this.SupplierViewModels.Select(svm => svm.ExposedSupplier).ToList()));
                 this.dbEventAggregator.Publish(new SupplierDeletedMessage(supplier));
             }
         }

@@ -6,13 +6,13 @@ namespace BillsManager.ViewModels.Messages
     public class SuppliersListChangedMessage
     {
         public SuppliersListChangedMessage(
-            IEnumerable<Supplier> suppliers)
+            ICollection<Supplier> suppliers)
         {
             this.suppliers = suppliers;
         }
 
-        private readonly IEnumerable<Supplier> suppliers;
-        public IEnumerable<Supplier> Suppliers
+        private readonly ICollection<Supplier> suppliers;
+        public ICollection<Supplier> Suppliers
         {
             get { return this.suppliers; }
         }

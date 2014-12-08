@@ -15,7 +15,7 @@
         darkest gray    FFD7D7D7
     -->
     <SolidColorBrush x:Key="RowColor2"
-                     Color="#FFE2E2E2" />
+                     Color="#FFECECEC" />
 
     <Thickness x:Key="ListItemNormalBorderThickness"
                Bottom="0"
@@ -37,6 +37,6 @@
         darkest blue    FFBDD3EC
     -->
     <SolidColorBrush x:Key="ListItemMouseOverBrush"
-                     Color="#FFCBDCEF" />
+                     Color="#FFC6DBF0" />
 
 </ResourceDictionary>

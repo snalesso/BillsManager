@@ -129,7 +129,6 @@
                                  Height="16"
                                  Command="{Binding GoToLastPageCommand, Mode=OneWay}"
                                  Data="{StaticResource LastRightGeometry}"
-                                 Foreground="{StaticResource ViewForegroundBrush}"
                                  Style="{StaticResource PathButtonStyle}" />
 
             <Button Grid.Column="15"

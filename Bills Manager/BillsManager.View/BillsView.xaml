@@ -11,7 +11,8 @@
              xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Caliburn:Bind.AtDesignTime="True"
-             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type ViewModels:BillsViewModel}}"
+             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,
+                                              Type={x:Type ViewModels:BillsViewModel}}"
              d:DesignHeight="250"
              d:DesignWidth="900"
              mc:Ignorable="d">
@@ -25,17 +26,17 @@
     </UserControl.Resources>
 
     <UserControl.Background>
-        <Binding Mode="OneTime"
-                 Source="{StaticResource ViewBackgroundBrush}" />
+        <Binding Mode="OneTime" Source="{StaticResource ViewBackgroundBrush}" />
     </UserControl.Background>
 
     <Controls:ListViewEx x:Name="lsvBills"
                          AlternationCount="2"
                          Commanding:CommandBehavior.Command="{Binding ShowBillDetailsCommand}"
                          Commanding:CommandBehavior.CommandParameter="{Binding SelectedBillViewModel}"
-                         Commanding:CommandBehavior.Event="MouseDoubleClick"
+                         Commanding:CommandBehavior.Event="ItemMouseDoubleLeftClick"
                          Grid.IsSharedSizeScope="True"
-                         ItemsSource="{Binding FilteredBillViewModels, IsAsync=True}"
+                         ItemsSource="{Binding FilteredBillViewModels,
+                                               IsAsync=True}"
                          SelectedItem="{Binding SelectedBillViewModel}"
                          SelectionMode="Single"
                          VirtualizingPanel.IsVirtualizing="True"
@@ -56,52 +57,49 @@
                 <GridViewColumn Width="90"
                                 DisplayMemberBinding="{Binding Code}"
                                 Header="{loc:Translate Number}" />
-                <GridViewColumn Width="90"
-                                Header="{loc:Translate Amount}">
+                <GridViewColumn Width="90" Header="{loc:Translate Amount}">
                     <GridViewColumn.HeaderTemplate>
                         <DataTemplate>
-                            <ContentPresenter HorizontalAlignment="Right"
-                                              Content="{TemplateBinding Content}" />
+                            <ContentPresenter HorizontalAlignment="Right" Content="{TemplateBinding Content}" />
                         </DataTemplate>
                     </GridViewColumn.HeaderTemplate>
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Amount, StringFormat=\{0:N2\} €}"
-                                       TextAlignment="Right" />
+                            <TextBlock Text="{Binding Amount, StringFormat=\{0:N2\} €}" TextAlignment="Right" />
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
-                <GridViewColumn Width="65"
-                                Header="{loc:Translate Paid_toBill}">
+                <GridViewColumn Width="65" Header="{loc:Translate Paid_toBill}">
                     <GridViewColumn.HeaderTemplate>
                         <DataTemplate>
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              Content="{TemplateBinding Content}" />
+                            <ContentPresenter HorizontalAlignment="Center" Content="{TemplateBinding Content}" />
                         </DataTemplate>
                     </GridViewColumn.HeaderTemplate>
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel HorizontalAlignment="Center"
-                                        VerticalAlignment="Center">
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <Path Name="tick"
                                       Width="{StaticResource ViewFontSize}"
                                       Height="{StaticResource ViewFontSize}"
                                       Data="{StaticResource Checkmark3}"
                                       Fill="{StaticResource PaidBrush}"
                                       Stretch="Uniform"
-                                      Visibility="{Binding IsPaid, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+                                      Visibility="{Binding IsPaid,
+                                                           Converter={StaticResource BooleanToVisibilityConverter},
+                                                           Mode=OneWay}" />
                                 <Path Name="cross"
                                       Width="{StaticResource ViewFontSize}"
                                       Height="{StaticResource ViewFontSize}"
                                       Data="{StaticResource CloseGeometry}"
                                       Fill="{StaticResource NotPaidBrush}"
                                       Stretch="Uniform"
-                                      Visibility="{Binding IsNotPaid, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" />
+                                      Visibility="{Binding IsNotPaid,
+                                                           Converter={StaticResource BooleanToVisibilityConverter},
+                                                           Mode=OneWay}" />
                             </StackPanel>
 
                             <DataTemplate.Triggers>
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}"
-                                             Value="True">
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}" Value="True">
                                     <Setter TargetName="tick" Property="Fill" Value="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}" />
                                     <Setter TargetName="cross" Property="Fill" Value="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}" />
                                 </DataTrigger>
@@ -110,28 +108,25 @@
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
-                <GridViewColumn Width="100"
-                                Header="{loc:Translate Release}">
+                <GridViewColumn Width="100" Header="{loc:Translate Release}">
                     <GridViewColumn.HeaderTemplate>
                         <DataTemplate>
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              Content="{TemplateBinding Content}" />
+                            <ContentPresenter HorizontalAlignment="Center" Content="{TemplateBinding Content}" />
                         </DataTemplate>
                     </GridViewColumn.HeaderTemplate>
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock HorizontalAlignment="Center"
-                                       Text="{Binding ReleaseDate, StringFormat=\{0:d\}}"
+                                       Text="{Binding ReleaseDate,
+                                                      StringFormat=\{0:d\}}"
                                        TextAlignment="Right" />
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
-                <GridViewColumn Width="100"
-                                Header="{loc:Translate Due}">
+                <GridViewColumn Width="100" Header="{loc:Translate Due}">
                     <GridViewColumn.HeaderTemplate>
                         <DataTemplate>
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              Content="{TemplateBinding Content}" />
+                            <ContentPresenter HorizontalAlignment="Center" Content="{TemplateBinding Content}" />
                         </DataTemplate>
                     </GridViewColumn.HeaderTemplate>
                     <GridViewColumn.CellTemplate>
@@ -145,38 +140,34 @@
                                     Padding="5">
                                 <TextBlock x:Name="dueDate"
                                            HorizontalAlignment="Center"
-                                           Text="{Binding DueDate, StringFormat=\{0:d\}}"
+                                           Text="{Binding DueDate,
+                                                          StringFormat=\{0:d\}}"
                                            TextAlignment="Right" />
                             </Border>
                             <DataTemplate.Triggers>
 
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}"
-                                             Value="True">
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}" Value="True">
                                     <Setter TargetName="border" Property="CornerRadius" Value="0" />
                                 </DataTrigger>
 
                                 <!--  {x:Static ViewModels:DueAlert.Low}  -->
-                                <DataTrigger Binding="{Binding DueAlert, Mode=OneWay}"
-                                             Value="Low">
+                                <DataTrigger Binding="{Binding DueAlert, Mode=OneWay}" Value="Low">
                                     <Setter TargetName="border" Property="Background" Value="{StaticResource LowDueAlertBrush}" />
                                     <Setter TargetName="dueDate" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
                                 </DataTrigger>
 
 
-                                <DataTrigger Binding="{Binding DueAlert, Mode=OneWay}"
-                                             Value="Medium">
+                                <DataTrigger Binding="{Binding DueAlert, Mode=OneWay}" Value="Medium">
                                     <Setter TargetName="border" Property="Background" Value="{StaticResource MediumDueAlertBrush}" />
                                     <Setter TargetName="dueDate" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
                                 </DataTrigger>
 
-                                <DataTrigger Binding="{Binding DueAlert, Mode=OneWay}"
-                                             Value="High">
+                                <DataTrigger Binding="{Binding DueAlert, Mode=OneWay}" Value="High">
                                     <Setter TargetName="border" Property="Background" Value="{StaticResource HighDueAlertBrush}" />
                                     <Setter TargetName="dueDate" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
                                 </DataTrigger>
 
-                                <DataTrigger Binding="{Binding DueAlert, Mode=OneWay}"
-                                             Value="Critical">
+                                <DataTrigger Binding="{Binding DueAlert, Mode=OneWay}" Value="Critical">
                                     <Setter TargetName="border" Property="Background" Value="{StaticResource CriticalDueAlertBrush}" />
                                     <Setter TargetName="dueDate" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
                                 </DataTrigger>
@@ -186,38 +177,31 @@
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
-                <GridViewColumn Width="80"
-                                Header="{loc:Translate Agio}">
+                <GridViewColumn Width="80" Header="{loc:Translate Agio}">
                     <GridViewColumn.HeaderTemplate>
                         <DataTemplate>
-                            <ContentPresenter HorizontalAlignment="Right"
-                                              Content="{TemplateBinding Content}" />
+                            <ContentPresenter HorizontalAlignment="Right" Content="{TemplateBinding Content}" />
                         </DataTemplate>
                     </GridViewColumn.HeaderTemplate>
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Agio, StringFormat=\{0:N2\} €}"
-                                       TextAlignment="Right" />
+                            <TextBlock Text="{Binding Agio, StringFormat=\{0:N2\} €}" TextAlignment="Right" />
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
-                <GridViewColumn Width="80"
-                                Header="{loc:Translate AdditionalCosts}">
+                <GridViewColumn Width="80" Header="{loc:Translate AdditionalCosts}">
                     <GridViewColumn.HeaderTemplate>
                         <DataTemplate>
-                            <ContentPresenter HorizontalAlignment="Right"
-                                              Content="{TemplateBinding Content}" />
+                            <ContentPresenter HorizontalAlignment="Right" Content="{TemplateBinding Content}" />
                         </DataTemplate>
                     </GridViewColumn.HeaderTemplate>
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding AdditionalCosts, StringFormat=\{0:N2\} €}"
-                                       TextAlignment="Right" />
+                            <TextBlock Text="{Binding AdditionalCosts, StringFormat=\{0:N2\} €}" TextAlignment="Right" />
                         </DataTemplate>
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
-                <GridViewColumn Width="Auto"
-                                Header="{loc:Translate Notes}">
+                <GridViewColumn Width="Auto" Header="{loc:Translate Notes}">
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Notes}" />
@@ -243,7 +227,8 @@
         <ListView.ContextMenu>
             <ContextMenu>
 
-                <MenuItem Command="{Binding PayBillCommand, Mode=OneWay}"
+                <MenuItem Command="{Binding PayBillCommand,
+                                            Mode=OneWay}"
                           CommandParameter="{Binding SelectedBillViewModel}"
                           Header="{loc:Translate Pay}">
                     <MenuItem.Icon>
@@ -253,14 +238,14 @@
 
                 <Separator />
 
-                <MenuItem Command="{Binding AddNewBillCommand, Mode=OneWay}"
-                          Header="{loc:Translate Add}">
+                <MenuItem Command="{Binding AddNewBillCommand, Mode=OneWay}" Header="{loc:Translate Add}">
                     <MenuItem.Icon>
                         <Controls:AutoGreyableImage Source="Images/generic/add-16.png" />
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Command="{Binding EditBillCommand, Mode=OneWay}"
+                <MenuItem Command="{Binding EditBillCommand,
+                                            Mode=OneWay}"
                           CommandParameter="{Binding SelectedBillViewModel}"
                           Header="{loc:Translate Edit}">
                     <MenuItem.Icon>
@@ -268,7 +253,8 @@
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <MenuItem Command="{Binding DeleteBillCommand, Mode=OneWay}"
+                <MenuItem Command="{Binding DeleteBillCommand,
+                                            Mode=OneWay}"
                           CommandParameter="{Binding SelectedBillViewModel}"
                           Header="{loc:Translate Delete}">
                     <MenuItem.Icon>
@@ -278,7 +264,8 @@
 
                 <Separator />
 
-                <MenuItem Command="{Binding ShowBillDetailsCommand, Mode=OneWay}"
+                <MenuItem Command="{Binding ShowBillDetailsCommand,
+                                            Mode=OneWay}"
                           CommandParameter="{Binding SelectedBillViewModel}"
                           Header="{loc:Translate Details}">
                     <MenuItem.Icon>

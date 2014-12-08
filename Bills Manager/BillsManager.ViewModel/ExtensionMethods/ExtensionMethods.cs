@@ -39,14 +39,6 @@ namespace BillsManager.ViewModels
             //}
         }
 
-        public static ulong ULongCount<T>(this IEnumerable<T> data)
-        {
-            ulong count = 0;
-            foreach (var item in data)
-                count++;
-            return count;
-        }
-
         public static void AddSorted<T>(this IList<T> list, T item, IComparer<T> comparer = null)
         {
             if (comparer == null)
