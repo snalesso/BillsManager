@@ -8,6 +8,32 @@ namespace BillsManager.Views.Controls
 {
     public class ListViewEx : ListView
     {
+        #region ICommands
+
+        #region ItemDoubleLeftClickCommand
+
+        public static DependencyProperty ItemDoubleLeftClickCommandProperty =
+            DependencyProperty.Register("ItemDoubleLeftClickCommand", typeof(ICommand), typeof(ListViewEx));
+
+        public ICommand ItemDoubleLeftClickCommand
+        {
+            get { return (ICommand)GetValue(ListViewEx.ItemDoubleLeftClickCommandProperty); }
+            set { SetValue(ListViewEx.ItemDoubleLeftClickCommandProperty, value); }
+        }
+
+        public static DependencyProperty ItemDoubleLeftClickCommandParameterProperty =
+            DependencyProperty.Register("ItemDoubleLeftClickCommandParameter", typeof(object), typeof(ListViewEx));
+
+        public object ItemDoubleLeftClickCommandParameter
+        {
+            get { return (object)GetValue(ListViewEx.ItemDoubleLeftClickCommandParameterProperty); }
+            set { SetValue(ListViewEx.ItemDoubleLeftClickCommandParameterProperty, value); }
+        }
+
+        #endregion
+
+        #endregion
+
         #region events
 
         protected override void OnContextMenuOpening(ContextMenuEventArgs e)
@@ -63,6 +89,9 @@ namespace BillsManager.Views.Controls
 
         public void OnItemMouseDoubleLeftClick(MouseButtonEventArgs e)
         {
+            if (this.ItemDoubleLeftClickCommand != null && this.ItemDoubleLeftClickCommand.CanExecute(this.ItemDoubleLeftClickCommandParameter))
+                this.ItemDoubleLeftClickCommand.Execute(this.ItemDoubleLeftClickCommandParameter);
+
             if (this.ItemMouseDoubleLeftClick != null)
             {
                 this.ItemMouseDoubleLeftClick(this, e);

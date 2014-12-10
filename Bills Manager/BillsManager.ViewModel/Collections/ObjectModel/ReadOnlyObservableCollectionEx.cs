@@ -33,7 +33,7 @@ namespace System.Collections.ObjectModel
             this.filters = filters;
             this.comparer = comparer;
 
-            this.UpdateFilterAndSort();
+            this.UpdateItemsAndSort();
 
             this.SubscribeToSourceINCC(this.source);
             this.SubscribeToItemsINPC(this.source);
@@ -60,7 +60,8 @@ namespace System.Collections.ObjectModel
                 this.filters = value;
                 this.NotifyOfPropertyChange();
 
-                this.UpdateFilterAndSort();
+                this.UpdateItemsAndSort();
+
                 this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
         }
@@ -76,7 +77,17 @@ namespace System.Collections.ObjectModel
                 this.comparer = value;
                 this.NotifyOfPropertyChange("Comparer");
 
-                this.UpdateSorting();
+                if (this.Comparer != null)
+                {
+                    this.UpdateItemsOrder();
+                }
+                else
+                {
+                    this.UpdateItems();
+                    this.NotifyOfPropertyChange("Count[]");
+                }
+                this.NotifyOfPropertyChange("Item[]");
+                this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
         }
 
@@ -84,9 +95,29 @@ namespace System.Collections.ObjectModel
 
         #region methods
 
-        private void UpdateFilterAndSort()
+        private void UpdateItems()
         {
-            IEnumerable<T> fs = this.source;
+            var fs = this.source.AsEnumerable<T>();
+
+            if (this.Filters != null)
+                fs = fs.Where(i => this.Filters.All(f => f(i)));
+
+            this.filteredSource = fs.ToList();
+        }
+
+        private void UpdateItemsOrder()
+        {
+            if (this.Comparer != null)
+            {
+                var x = this.filteredSource.AsEnumerable<T>();
+                var ox = x.OrderBy(t => t, this.Comparer);
+                this.filteredSource = ox.ToList();
+            }
+        }
+
+        private void UpdateItemsAndSort()
+        {
+            var fs = this.source.AsEnumerable<T>();
 
             if (this.Filters != null)
                 fs = fs.Where(i => this.Filters.All(f => f(i)));
@@ -95,26 +126,11 @@ namespace System.Collections.ObjectModel
                 fs = fs.OrderBy(t => t, this.Comparer);
 
             this.filteredSource = fs.ToList();
-
-            this.NotifyOfPropertyChange("Item[]");
-            this.NotifyOfPropertyChange("Count");
         }
 
-        private void UpdateSorting()
+        private bool IsItemAllowed(T item)
         {
-            // TODO: improve performance
-            if (this.Comparer != null)
-            {
-                this.filteredSource = this.filteredSource.OrderBy(t => t, this.Comparer).ToList();
-
-                this.NotifyOfPropertyChange("Item[]");
-            }
-            else
-            {
-                this.UpdateFilterAndSort();
-            }
-
-            this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            return (this.Filters == null || (this.Filters != null && this.Filters.All(f => f(item))));
         }
 
         private void SubscribeToSourceINCC(INotifyCollectionChanged source)
@@ -127,7 +143,7 @@ namespace System.Collections.ObjectModel
         {
             foreach (var i in this.source)
             {
-                i.PropertyChanged += itemPropertyChanged;
+                i.PropertyChanged += ItemPropertyChanged;
             }
         }
 
@@ -135,7 +151,7 @@ namespace System.Collections.ObjectModel
         {
             foreach (var i in this.source)
             {
-                i.PropertyChanged -= itemPropertyChanged;
+                i.PropertyChanged -= ItemPropertyChanged;
             }
         }
 
@@ -414,83 +430,75 @@ namespace System.Collections.ObjectModel
             }
         }
 
-        void HandleCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void HandleCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
                     {
-                        (e.NewItems[0] as T).PropertyChanged += this.itemPropertyChanged;
+                        var newItem = e.NewItems[0] as T;
 
-                        if (this.Filters != null)
+                        newItem.PropertyChanged += this.ItemPropertyChanged;
+
+                        // TODO: try invert if conditions order -> might remove the repeated check in this.IsItemAllowed
+                        if (this.IsItemAllowed(newItem)) // if it has to be added
                         {
-                            if (this.Filters.All(f => f(e.NewItems[0] as T))) // if the added item passes all filters
-                            {
-                                // add it
-                                this.UpdateFilterAndSort(); // TODO: check if there's a way to find the insert position and just add the single item
-                                var addIndex = this.IndexOf(e.NewItems[0] as T);
+                            int addIndex = e.NewStartingIndex;
 
-                                this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, e.NewItems, addIndex));
+                            if (this.Comparer != null) // if it has to be sorted
+                            {
+                                this.filteredSource.Insert(0, newItem); // add it anywhere and sort
+                                this.UpdateItemsOrder();
+
+                                addIndex = this.IndexOf(newItem);
                             }
-                        }
-                        else // if there is no filter
-                        {
-                            this.filteredSource.Insert(e.NewStartingIndex, e.NewItems[0] as T);
-
-                            // if the item has to be inserted in an ordered index
-                            if (this.Comparer != null)
+                            else // if it doesn't have to be sorted
                             {
-                                // order the list
-                                this.UpdateSorting();
-                                var insertIndex = this.IndexOf(e.NewItems[0] as T);
-                                // update the eventargs with the ordered index
-                                e = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, e.NewItems, insertIndex);
+                                if (this.Filters != null) // if there are filters
+                                {
+                                    this.UpdateItems(); // update the whole list to put it in the right index
+
+                                    addIndex = this.IndexOf(newItem);
+                                }
+                                else // if no filtering and no sorting
+                                    this.filteredSource.Insert(addIndex, newItem);
                             }
 
-                            this.OnCollectionChanged(e);
+                            this.NotifyOfPropertyChange("Item[]");
+                            this.NotifyOfPropertyChange("Count");
+                            this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, e.NewItems, addIndex));
                         }
                         break;
                     }
 
                 case NotifyCollectionChangedAction.Move:
                     {
-                        if (this.Comparer == null)
+                        var movedItem = e.OldItems[0] as T;
+
+                        if (this.Comparer == null) // if the item IS contained AND sorting is NOT ACTIVE
                         {
-                            if (this.Filters != null)
+                            if (this.Filters != null) // if there are filters
                             {
-                                // if the moved item passes the filter
-                                if (this.Filters.All(f => f(e.OldItems[0] as T)))
+                                if (this.Filters.All(f => f(movedItem))) // if the it is contained
                                 {
-                                    // if it was already in the filtered list
-                                    var wasAlreadyContained = this.Contains(e.OldItems[0] as T);
-                                    int oldIndex = -1;
+                                    var oldIndex = this.IndexOf(movedItem);
+                                    this.UpdateItems(); // TODO: check if there's a way to calculate the new index
+                                    var newIndex = this.IndexOf(movedItem);
 
-                                    if (wasAlreadyContained)
-                                        oldIndex = this.IndexOf(e.OldItems[0] as T);
-
-                                    this.UpdateFilterAndSort(); // TODO: check if there's a way to just add the item
-                                    var newIndex = this.IndexOf(e.OldItems[0] as T);
-
-                                    if (wasAlreadyContained)
-                                        this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Move, e.OldItems, newIndex, oldIndex));
-                                    else
-                                        this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, e.OldItems, newIndex));
+                                    this.NotifyOfPropertyChange("Item[]");
+                                    this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Move, e.OldItems, newIndex, oldIndex));
                                 }
-                                // if the moved item doesn't pass the filter but it's contained
-                                else if (this.Contains(e.OldItems[0] as T))
+                                else
                                 {
-                                    // remove it
-                                    var removeIndex = this.IndexOf(e.OldItems[0] as T);
-                                    this.filteredSource.RemoveAt(removeIndex);
-
-                                    this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Move, e.OldItems, removeIndex));
+                                    // this condition is never reached
                                 }
                             }
-                            else // if there are no filters
+                            else // if no filtering and no sorting
                             {
                                 this.filteredSource.RemoveAt(e.OldStartingIndex);
-                                this.filteredSource.Insert(e.NewStartingIndex, e.NewItems[0] as T);
+                                this.filteredSource.Insert(e.NewStartingIndex, movedItem);
 
+                                this.NotifyOfPropertyChange("Item[]");
                                 this.OnCollectionChanged(e);
                             }
                         }
@@ -499,15 +507,21 @@ namespace System.Collections.ObjectModel
 
                 case NotifyCollectionChangedAction.Remove:
                     {
-                        (e.OldItems[0] as T).PropertyChanged -= this.itemPropertyChanged;
+                        var removedItem = e.OldItems[0] as T;
 
-                        // if there are no filters, or there are some and the item passes them -> shortly: if the item is shown in the filtered list
-                        if (this.Filters == null || (this.Filters != null && this.Filters.All(f => f(e.OldItems[0] as T))))
+                        removedItem.PropertyChanged -= this.ItemPropertyChanged;
+
+                        if (this.IsItemAllowed(removedItem)) // if it is contained, remove it
                         {
-                            // remove it
-                            var removeIndex = this.IndexOf(e.OldItems[0] as T);
+                            var removeIndex = e.OldStartingIndex;
+
+                            if (this.Filters != null || this.Comparer != null) // if the index might be different
+                                removeIndex = this.IndexOf(removedItem);
+
                             this.filteredSource.RemoveAt(removeIndex);
 
+                            this.NotifyOfPropertyChange("Item[]");
+                            this.NotifyOfPropertyChange("Count");
                             this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, e.OldItems, removeIndex));
                         }
                         break;
@@ -515,58 +529,100 @@ namespace System.Collections.ObjectModel
 
                 case NotifyCollectionChangedAction.Replace:
                     {
-                        (e.OldItems[0] as T).PropertyChanged -= this.itemPropertyChanged;
-                        (e.NewItems[0] as T).PropertyChanged += this.itemPropertyChanged;
+                        var oldItem = e.OldItems[0] as T;
+                        var newItem = e.NewItems[0] as T;
+
+                        oldItem.PropertyChanged -= this.ItemPropertyChanged;
+                        newItem.PropertyChanged += this.ItemPropertyChanged;
 
                         if (this.Filters != null)
                         {
-                            // if the item that has been replaced is contained (passes the filter)
-                            if (this.Filters.All(f => f(e.OldItems[0] as T)))
+                            int addIndex = e.NewStartingIndex;
+                            var removeIndex = this.IndexOf(oldItem); // remove it
+
+                            bool oldRemoved = false;
+                            bool newAdded = false;
+
+                            if (this.Filters.All(f => f(oldItem))) // if the old item was contained
                             {
-                                // remove it
-                                var replaceIndex = this.IndexOf(e.OldItems[0] as T);
-                                this.filteredSource.RemoveAt(replaceIndex);
-
-                                // if the new one is allowed
-                                if (this.Filters.All(f => f(e.NewItems[0] as T)))
-                                {
-                                    // replace it
-                                    this.filteredSource.Insert(replaceIndex, e.NewItems[0] as T);
-
-                                    this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, e.NewItems, e.OldItems, replaceIndex));
-                                }
-                                else // if the new one it's not allowed
-                                    this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, e.OldItems, replaceIndex));
+                                this.filteredSource.RemoveAt(removeIndex);
+                                oldRemoved = true;
                             }
-                            else // if the replaced item is not contained
-                            {
-                                // but the new one is allowed
-                                if (this.Filters.All(f => f(e.NewItems[0] as T)))
-                                {
-                                    // add it
-                                    this.UpdateFilterAndSort(); // TODO: check if there's a way to just add the item
-                                    var addIndex = this.IndexOf(e.NewItems[0] as T);
 
-                                    this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, e.NewItems, addIndex));
+                            if (this.Filters.All(f => f(newItem))) // if the new item has to be inserted
+                            {
+                                if (this.Comparer != null) // if it has to be sorted
+                                {
+                                    this.filteredSource.Insert(0, newItem); // add it anywhere and sort
+                                    this.UpdateItemsOrder();
+                                }
+                                else // if it doesn't have to be sorted
+                                {
+                                    this.UpdateItems(); // update the whole list to put it in the right index
+                                }
+
+                                addIndex = this.IndexOf(newItem);
+                                newAdded = true;
+                            }
+
+                            if (oldRemoved)
+                            {
+                                if (newAdded)
+                                    if (removeIndex == addIndex)
+                                    {
+                                        this.NotifyOfPropertyChange("Item[]");
+                                        this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, e.NewItems, e.OldItems, removeIndex));
+                                    }
+                                    else
+                                    {
+                                        this.NotifyOfPropertyChange("Item[]");
+                                        this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, e.OldItems, removeIndex));
+                                        this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, e.NewItems, addIndex));
+                                    }
+                                else
+                                {
+                                    this.NotifyOfPropertyChange("Item[]");
+                                    this.NotifyOfPropertyChange("Count[]");
+                                    this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, e.OldItems, removeIndex));
+                                }
+                            }
+                            else
+                            {
+                                if (newAdded)
+                                {
+                                    this.NotifyOfPropertyChange("Item[]");
+                                    this.NotifyOfPropertyChange("Count[]");
+                                    this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, e.NewItems, addIndex));
                                 }
                             }
                         }
                         else // if there are no filters
                         {
-                            this.filteredSource.RemoveAt(e.OldStartingIndex);
-                            this.filteredSource.Insert(e.NewStartingIndex, e.NewItems[0] as T);
+                            var removeIndex = e.OldStartingIndex;
+                            var insertIndex = e.NewStartingIndex;
 
-                            // if the new item has to be ordered
-                            if (this.Comparer != null)
+                            if (this.Comparer != null) // if sorting is active
                             {
-                                // order the list
-                                this.UpdateSorting();
-                                var replaceIndex = this.IndexOf(e.NewItems[0] as T);
-                                // update the eventargs with the ordered index
-                                e = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, e.NewItems, e.OldItems, replaceIndex);
-                            }
+                                removeIndex = this.IndexOf(oldItem);
+                                this.filteredSource.RemoveAt(removeIndex);
+                                this.filteredSource.Insert(0, newItem);
+                                this.UpdateItemsOrder();
+                                insertIndex = this.IndexOf(newItem);
 
-                            this.OnCollectionChanged(e);
+                                this.NotifyOfPropertyChange("Item[]");
+                                this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, e.OldItems, removeIndex));
+                                this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, e.NewItems, insertIndex));
+                            }
+                            else
+                            {
+                                removeIndex = this.IndexOf(oldItem);
+                                this.filteredSource.RemoveAt(removeIndex);
+                                this.filteredSource.Insert(insertIndex, newItem);
+                                insertIndex = this.IndexOf(newItem);
+
+                                this.NotifyOfPropertyChange("Item[]");
+                                this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, e.NewItems, e.OldItems, removeIndex));
+                            }
                         }
                         break;
                     }
@@ -574,8 +630,10 @@ namespace System.Collections.ObjectModel
                 case NotifyCollectionChangedAction.Reset:
                     {
                         // URGENT: this doesn't remove subscriptions from removed items, just adds to new ones
+
+                        // when the source collection is reset, we must refresh subscriptions, in order to unsubscribe from removed elements
                         this.UnsubscribeFromItemsINPC(this.source);
-                        this.UpdateFilterAndSort();
+                        this.UpdateItemsAndSort();
                         this.SubscribeToItemsINPC(this.source);
 
                         this.OnCollectionChanged(e);
@@ -618,24 +676,45 @@ namespace System.Collections.ObjectModel
             this.OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
         }
 
-        void itemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void ItemPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            var item = sender as T;
+            var changedItem = sender as T;
             if (sender == null)
                 throw new InvalidOperationException("sender is not of type " + typeof(T).Name);
 
-            if (this.Filters == null || this.Filters.All(f => f(item))) // if there are no filters or the item passes them
+            if (this.IsItemAllowed(changedItem)) // if the item is allowed
             {
-                this.UpdateFilterAndSort();
-                this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                if (this.Contains(changedItem))
+                {
+                    this.UpdateItemsOrder();
+                    this.NotifyOfPropertyChange("Item[]");
+                    this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                }
+                else // if it has to be added
+                {
+                    if (this.Comparer != null)
+                    {
+                        // TODO: check whether add is more performant than insert(0)
+                        this.filteredSource.Insert(0, changedItem); // add it anywhere an sort
+                        this.UpdateItemsOrder();
+                    }
+                    else
+                    {
+                        this.UpdateItems();
+                    }
+                    var addIndex = this.IndexOf(changedItem);
+                    this.NotifyOfPropertyChange("Item[]");
+                    this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, changedItem, addIndex));
+                }
             }
             else
             {
-                if (this.Contains(item))
+                if (this.Contains(changedItem))
                 {
-                    var tiIndex = this.IndexOf(item);
-                    this.filteredSource.Remove(item);
-                    this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, tiIndex));
+                    var removeIndex = this.IndexOf(changedItem);
+                    this.filteredSource.Remove(changedItem);
+                    this.NotifyOfPropertyChange("Item[]");
+                    this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, changedItem, removeIndex));
                 }
             }
         }
@@ -645,3 +724,643 @@ namespace System.Collections.ObjectModel
         #endregion implementations
     }
 }
+
+// OLD VERSION
+
+//[Serializable]
+//[DebuggerDisplay("Count = {Count}, HasFilters = {Filters != null}, HasComparer = {Comparer != null}")]
+//public class ReadOnlyObservableCollectionEx<T> : IList<T>, IList, IReadOnlyList<T>, INotifyCollectionChanged, INotifyPropertyChanged
+//    where T : class, INotifyPropertyChanged
+//{
+//    #region fields
+
+//    private readonly ObservableCollection<T> source;
+//    private IList<T> filteredSource;
+
+//    [NonSerialized]
+//    private Object _syncRoot;
+
+//    #endregion
+
+//    #region ctor
+
+//    public ReadOnlyObservableCollectionEx(ObservableCollection<T> source, IEnumerable<Predicate<T>> filters, IComparer<T> comparer)
+//    {
+//        if (source == null)
+//            throw new ArgumentNullException();
+
+//        this.source = source;
+//        this.filters = filters;
+//        this.comparer = comparer;
+
+//        this.UpdateFilterAndSort();
+
+//        this.SubscribeToSourceINCC(this.source);
+//        this.SubscribeToItemsINPC(this.source);
+
+//    }
+
+//    public ReadOnlyObservableCollectionEx(ObservableCollection<T> source)
+//        : this(source, null, null)
+//    {
+//    }
+
+//    #endregion ctor
+
+//    #region properties
+
+//    private IEnumerable<Predicate<T>> filters;
+//    public IEnumerable<Predicate<T>> Filters
+//    {
+//        get { return this.filters; }
+//        set
+//        {
+//            if (this.filters == value & value == null) return;
+
+//            this.filters = value;
+//            this.NotifyOfPropertyChange();
+
+//            this.UpdateFilterAndSort();
+//            this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+//        }
+//    }
+
+//    private IComparer<T> comparer;
+//    public IComparer<T> Comparer
+//    {
+//        get { return this.comparer; }
+//        set
+//        {
+//            if (this.comparer == value) return;
+
+//            this.comparer = value;
+//            this.NotifyOfPropertyChange("Comparer");
+
+//            this.UpdateSorting();
+//        }
+//    }
+
+//    #endregion properties
+
+//    #region methods
+
+//    private void UpdateFilterAndSort()
+//    {
+//        var fs = this.source.AsEnumerable<T>();
+
+//        if (this.Filters != null)
+//            fs = fs.Where(i => this.Filters.All(f => f(i)));
+
+//        if (this.Comparer != null)
+//            fs = fs.OrderBy(t => t, this.Comparer);
+
+//        this.filteredSource = fs.ToList();
+
+//        this.NotifyOfPropertyChange("Item[]");
+//        this.NotifyOfPropertyChange("Count");
+//    }
+
+//    private void UpdateSorting()
+//    {
+//        // TODO: improve performance
+//        if (this.Comparer != null)
+//        {
+//            this.filteredSource = this.filteredSource.OrderBy(t => t, this.Comparer).ToList();
+
+//            this.NotifyOfPropertyChange("Item[]");
+//        }
+//        else
+//        {
+//            this.UpdateFilterAndSort();
+//        }
+
+//        this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+//    }
+
+//    private void SubscribeToSourceINCC(INotifyCollectionChanged source)
+//    {
+//        ((INotifyCollectionChanged)source).CollectionChanged += new NotifyCollectionChangedEventHandler(HandleCollectionChanged);
+//        ((INotifyPropertyChanged)source).PropertyChanged += new PropertyChangedEventHandler(HandlePropertyChanged);
+//    }
+
+//    private void SubscribeToItemsINPC(IEnumerable<T> items)
+//    {
+//        foreach (var i in this.source)
+//        {
+//            i.PropertyChanged += itemPropertyChanged;
+//        }
+//    }
+
+//    private void UnsubscribeFromItemsINPC(IEnumerable<T> items)
+//    {
+//        foreach (var i in this.source)
+//        {
+//            i.PropertyChanged -= itemPropertyChanged;
+//        }
+//    }
+
+//    #endregion methods
+
+//    #region implementations
+
+//    #region IList<T>, IList, IReadOnlyList<T>
+
+//    public int Count
+//    {
+//        get { return this.filteredSource.Count; }
+//    }
+
+//    public T this[int index]
+//    {
+//        get { return this.filteredSource[index]; }
+//    }
+
+//    public bool Contains(T value)
+//    {
+//        return this.filteredSource.Contains(value);
+//    }
+
+//    public void CopyTo(T[] array, int index)
+//    {
+//        this.filteredSource.CopyTo(array, index);
+//    }
+
+//    public IEnumerator<T> GetEnumerator()
+//    {
+//        return this.filteredSource.GetEnumerator();
+//    }
+
+//    public int IndexOf(T value)
+//    {
+//        return this.filteredSource.IndexOf(value);
+//    }
+
+//    protected IList<T> Items
+//    {
+//        get
+//        {
+//            return this.filteredSource;
+//        }
+//    }
+
+//    bool ICollection<T>.IsReadOnly
+//    {
+//        get { return true; }
+//    }
+
+//    T IList<T>.this[int index]
+//    {
+//        get { return this.filteredSource[index]; }
+//        set
+//        {
+//            throw new NotSupportedException();
+//        }
+//    }
+
+//    void ICollection<T>.Add(T value)
+//    {
+//        throw new NotSupportedException();
+//    }
+
+//    void ICollection<T>.Clear()
+//    {
+//        throw new NotSupportedException();
+//    }
+
+//    void IList<T>.Insert(int index, T value)
+//    {
+//        throw new NotSupportedException();
+//    }
+
+//    bool ICollection<T>.Remove(T value)
+//    {
+//        throw new NotSupportedException();
+//    }
+
+//    void IList<T>.RemoveAt(int index)
+//    {
+//        throw new NotSupportedException();
+//    }
+
+//    IEnumerator IEnumerable.GetEnumerator()
+//    {
+//        return ((IEnumerable)this.filteredSource).GetEnumerator();
+//    }
+
+//    bool ICollection.IsSynchronized
+//    {
+//        get { return false; }
+//    }
+
+//    object ICollection.SyncRoot
+//    {
+//        get
+//        {
+//            if (_syncRoot == null)
+//            {
+//                ICollection c = this.filteredSource as ICollection;
+//                if (c != null)
+//                {
+//                    _syncRoot = c.SyncRoot;
+//                }
+//                else
+//                {
+//                    System.Threading.Interlocked.CompareExchange<Object>(ref _syncRoot, new Object(), null);
+//                }
+//            }
+//            return _syncRoot;
+//        }
+//    }
+
+//    void ICollection.CopyTo(Array array, int index)
+//    {
+//        if (array == null)
+//        {
+//            throw new ArgumentNullException();
+//        }
+
+//        if (array.Rank != 1)
+//        {
+//            throw new ArgumentException();
+//        }
+
+//        if (array.GetLowerBound(0) != 0)
+//        {
+//            throw new ArgumentException();
+//        }
+
+//        if (index < 0)
+//        {
+//            throw new ArgumentException();
+//        }
+
+//        if (array.Length - index < Count)
+//        {
+//            throw new ArgumentException();
+//        }
+
+//        T[] items = array as T[];
+//        if (items != null)
+//        {
+//            this.filteredSource.CopyTo(items, index);
+//        }
+//        else
+//        {
+//            //
+//            // Catch the obvious case assignment will fail.
+//            // We can found all possible problems by doing the check though.
+//            // For example, if the element type of the Array is derived from T,
+//            // we can't figure out if we can successfully copy the element beforehand.
+//            //
+//            Type targetType = array.GetType().GetElementType();
+//            Type sourceType = typeof(T);
+//            if (!(targetType.IsAssignableFrom(sourceType) || sourceType.IsAssignableFrom(targetType)))
+//            {
+//                throw new ArgumentException();
+//            }
+
+//            //
+//            // We can't cast array of value type to object[], so we don't support 
+//            // widening of primitive types here.
+//            //
+//            object[] objects = array as object[];
+//            if (objects == null)
+//            {
+//                throw new ArgumentException();
+//            }
+
+//            int count = this.filteredSource.Count;
+//            try
+//            {
+//                for (int i = 0; i < count; i++)
+//                {
+//                    objects[index++] = this.filteredSource[i];
+//                }
+//            }
+//            catch (ArrayTypeMismatchException)
+//            {
+//                throw new ArgumentException();
+//            }
+//        }
+//    }
+
+//    bool IList.IsFixedSize
+//    {
+//        get { return true; }
+//    }
+
+//    bool IList.IsReadOnly
+//    {
+//        get { return true; }
+//    }
+
+//    object IList.this[int index]
+//    {
+//        get { return this.filteredSource[index]; }
+//        set
+//        {
+//            throw new NotSupportedException();
+//        }
+//    }
+
+//    int IList.Add(object value)
+//    {
+//        throw new NotSupportedException();
+//    }
+
+//    void IList.Clear()
+//    {
+//        throw new NotSupportedException();
+//    }
+
+//    private static bool IsCompatibleObject(object value)
+//    {
+//        // Non-null values are fine.  Only accept nulls if T is a class or Nullable<U>.
+//        // Note that default(T) is not equal to null for value types except when T is Nullable<U>. 
+//        return ((value is T) || (value == null && default(T) == null));
+//    }
+
+//    bool IList.Contains(object value)
+//    {
+//        if (IsCompatibleObject(value))
+//        {
+//            return this.Contains((T)value);
+//        }
+//        return false;
+//    }
+
+//    int IList.IndexOf(object value)
+//    {
+//        if (IsCompatibleObject(value))
+//        {
+//            return this.IndexOf((T)value);
+//        }
+//        return -1;
+//    }
+
+//    void IList.Insert(int index, object value)
+//    {
+//        throw new NotSupportedException();
+//    }
+
+//    void IList.Remove(object value)
+//    {
+//        throw new NotSupportedException();
+//    }
+
+//    void IList.RemoveAt(int index)
+//    {
+//        throw new NotSupportedException();
+//    }
+
+//    #endregion IList<T>, IList, IReadOnlyList<T>
+
+//    #region INotifyCollectionChanged
+
+//    event NotifyCollectionChangedEventHandler INotifyCollectionChanged.CollectionChanged
+//    {
+//        add { this.CollectionChanged += value; }
+//        remove { this.CollectionChanged -= value; }
+//    }
+
+//    [field: NonSerialized]
+//    protected virtual event NotifyCollectionChangedEventHandler CollectionChanged;
+
+//    protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs args)
+//    {
+//        if (this.CollectionChanged != null)
+//        {
+//            this.CollectionChanged(this, args);
+//        }
+//    }
+
+//    void HandleCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+//    {
+//        switch (e.Action)
+//        {
+//            case NotifyCollectionChangedAction.Add:
+//                {
+//                    (e.NewItems[0] as T).PropertyChanged += this.itemPropertyChanged;
+
+//                    if (this.Filters != null)
+//                    {
+//                        if (this.Filters.All(f => f(e.NewItems[0] as T))) // if the added item passes all filters
+//                        {
+//                            // add it
+//                            this.UpdateFilterAndSort(); // TODO: check if there's a way to find the insert position and just add the single item
+//                            var addIndex = this.IndexOf(e.NewItems[0] as T);
+
+//                            this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, e.NewItems, addIndex));
+//                        }
+//                    }
+//                    else // if there is no filter
+//                    {
+//                        this.filteredSource.Insert(e.NewStartingIndex, e.NewItems[0] as T);
+
+//                        // if the item has to be inserted in an ordered index
+//                        if (this.Comparer != null)
+//                        {
+//                            // order the list
+//                            this.UpdateSorting();
+//                            var insertIndex = this.IndexOf(e.NewItems[0] as T);
+//                            // update the eventargs with the ordered index
+//                            e = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, e.NewItems, insertIndex);
+//                        }
+
+//                        this.OnCollectionChanged(e);
+//                    }
+//                    break;
+//                }
+
+//            case NotifyCollectionChangedAction.Move:
+//                {
+//                    if (this.Comparer == null)
+//                    {
+//                        if (this.Filters != null)
+//                        {
+//                            // if the moved item passes the filter
+//                            if (this.Filters.All(f => f(e.OldItems[0] as T)))
+//                            {
+//                                // if it was already in the filtered list
+//                                var wasAlreadyContained = this.Contains(e.OldItems[0] as T);
+//                                int oldIndex = -1;
+
+//                                if (wasAlreadyContained)
+//                                    oldIndex = this.IndexOf(e.OldItems[0] as T);
+
+//                                this.UpdateFilterAndSort(); // TODO: check if there's a way to just add the item
+//                                var newIndex = this.IndexOf(e.OldItems[0] as T);
+
+//                                if (wasAlreadyContained)
+//                                    this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Move, e.OldItems, newIndex, oldIndex));
+//                                else
+//                                    this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, e.OldItems, newIndex));
+//                            }
+//                            // if the moved item doesn't pass the filter but it's contained
+//                            else if (this.Contains(e.OldItems[0] as T))
+//                            {
+//                                // remove it
+//                                var removeIndex = this.IndexOf(e.OldItems[0] as T);
+//                                this.filteredSource.RemoveAt(removeIndex);
+
+//                                this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Move, e.OldItems, removeIndex));
+//                            }
+//                        }
+//                        else // if there are no filters
+//                        {
+//                            this.filteredSource.RemoveAt(e.OldStartingIndex);
+//                            this.filteredSource.Insert(e.NewStartingIndex, e.NewItems[0] as T);
+
+//                            this.OnCollectionChanged(e);
+//                        }
+//                    }
+//                    break;
+//                }
+
+//            case NotifyCollectionChangedAction.Remove:
+//                {
+//                    (e.OldItems[0] as T).PropertyChanged -= this.itemPropertyChanged;
+
+//                    // if there are no filters, or there are some and the item passes them -> shortly: if the item is shown in the filtered list
+//                    if (this.Filters == null || (this.Filters != null && this.Filters.All(f => f(e.OldItems[0] as T))))
+//                    {
+//                        // remove it
+//                        var removeIndex = this.IndexOf(e.OldItems[0] as T);
+//                        this.filteredSource.RemoveAt(removeIndex);
+
+//                        this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, e.OldItems, removeIndex));
+//                    }
+//                    break;
+//                }
+
+//            case NotifyCollectionChangedAction.Replace:
+//                {
+//                    (e.OldItems[0] as T).PropertyChanged -= this.itemPropertyChanged;
+//                    (e.NewItems[0] as T).PropertyChanged += this.itemPropertyChanged;
+
+//                    if (this.Filters != null)
+//                    {
+//                        // if the item that has been replaced is contained (passes the filter)
+//                        if (this.Filters.All(f => f(e.OldItems[0] as T)))
+//                        {
+//                            // remove it
+//                            var replaceIndex = this.IndexOf(e.OldItems[0] as T);
+//                            this.filteredSource.RemoveAt(replaceIndex);
+
+//                            // if the new one is allowed
+//                            if (this.Filters.All(f => f(e.NewItems[0] as T)))
+//                            {
+//                                // replace it
+//                                this.filteredSource.Insert(replaceIndex, e.NewItems[0] as T);
+
+//                                this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, e.NewItems, e.OldItems, replaceIndex));
+//                            }
+//                            else // if the new one it's not allowed
+//                                this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, e.OldItems, replaceIndex));
+//                        }
+//                        else // if the replaced item is not contained
+//                        {
+//                            // but the new one is allowed
+//                            if (this.Filters.All(f => f(e.NewItems[0] as T)))
+//                            {
+//                                // add it
+//                                this.UpdateFilterAndSort(); // TODO: check if there's a way to just add the item
+//                                var addIndex = this.IndexOf(e.NewItems[0] as T);
+
+//                                this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, e.NewItems, addIndex));
+//                            }
+//                        }
+//                    }
+//                    else // if there are no filters
+//                    {
+//                        this.filteredSource.RemoveAt(e.OldStartingIndex);
+//                        this.filteredSource.Insert(e.NewStartingIndex, e.NewItems[0] as T);
+
+//                        // if the new item has to be ordered
+//                        if (this.Comparer != null)
+//                        {
+//                            // order the list
+//                            this.UpdateSorting();
+//                            var replaceIndex = this.IndexOf(e.NewItems[0] as T);
+//                            // update the eventargs with the ordered index
+//                            e = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, e.NewItems, e.OldItems, replaceIndex);
+//                        }
+
+//                        this.OnCollectionChanged(e);
+//                    }
+//                    break;
+//                }
+
+//            case NotifyCollectionChangedAction.Reset:
+//                {
+//                    // URGENT: this doesn't remove subscriptions from removed items, just adds to new ones
+//                    this.UnsubscribeFromItemsINPC(this.source);
+//                    this.UpdateFilterAndSort();
+//                    this.SubscribeToItemsINPC(this.source);
+
+//                    this.OnCollectionChanged(e);
+//                    break;
+//                }
+
+//            default:
+//                throw new InvalidEnumArgumentException(@"Unknown collection action: " + e.Action);
+//        }
+//    }
+
+//    #endregion INotifyCollectionChanged
+
+//    #region INotifyPropertyChanged
+
+//    event PropertyChangedEventHandler INotifyPropertyChanged.PropertyChanged
+//    {
+//        add { this.PropertyChanged += value; }
+//        remove { this.PropertyChanged -= value; }
+//    }
+
+//    [field: NonSerialized]
+//    protected virtual event PropertyChangedEventHandler PropertyChanged;
+
+//    protected virtual void OnPropertyChanged(PropertyChangedEventArgs args)
+//    {
+//        if (this.PropertyChanged != null)
+//        {
+//            this.PropertyChanged(this, args);
+//        }
+//    }
+
+//    void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
+//    {
+//        this.OnPropertyChanged(e);
+//    }
+
+//    public virtual void NotifyOfPropertyChange([CallerMemberName] string propertyName = null)
+//    {
+//        this.OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
+//    }
+
+//    void itemPropertyChanged(object sender, PropertyChangedEventArgs e)
+//    {
+//        var item = sender as T;
+//        if (sender == null)
+//            throw new InvalidOperationException("sender is not of type " + typeof(T).Name);
+
+//        if (this.Filters == null || this.Filters.All(f => f(item))) // if there are no filters or the item passes them
+//        {
+//            this.UpdateFilterAndSort();
+//            this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+//        }
+//        else
+//        {
+//            if (this.Contains(item))
+//            {
+//                var tiIndex = this.IndexOf(item);
+//                this.filteredSource.Remove(item);
+//                this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, tiIndex));
+//            }
+//        }
+//    }
+
+//    #endregion INotifyPropertyChanged
+
+//    #endregion implementations
+//}

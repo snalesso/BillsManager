@@ -5,10 +5,12 @@ using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
 using Caliburn.Micro;
 using System;
+using System.Diagnostics;
 using System.Linq;
 
 namespace BillsManager.ViewModels
 {
+    [DebuggerDisplay("Code = {Code}")]
     public partial class BillDetailsViewModel :
         BillViewModel,
         IHandle<SupplierEditedMessage>

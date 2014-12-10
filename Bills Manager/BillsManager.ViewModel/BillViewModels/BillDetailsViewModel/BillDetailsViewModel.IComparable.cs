@@ -23,7 +23,7 @@ namespace BillsManager.ViewModels
             var code = string.Compare(this.Code, other.Code);
             if (code != 0) return code; // URGENT: control if this string.Compare method returns the right value for bills ordering
 
-            return 1;
+            return 0;
         }
 
         #endregion

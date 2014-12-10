@@ -8,7 +8,9 @@ namespace BillsManager.ViewModels
 
         public int Compare(BillDetailsViewModel x, BillDetailsViewModel y)
         {
-            return x.CompareTo(y);
+            var change = x.CompareTo(y);
+
+            return change;
         }
 
         #endregion

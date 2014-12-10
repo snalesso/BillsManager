@@ -31,13 +31,12 @@
 
     <Controls:ListViewEx x:Name="lsvBills"
                          AlternationCount="2"
-                         Commanding:CommandBehavior.Command="{Binding ShowBillDetailsCommand}"
-                         Commanding:CommandBehavior.CommandParameter="{Binding SelectedBillViewModel}"
-                         Commanding:CommandBehavior.Event="ItemMouseDoubleLeftClick"
                          Grid.IsSharedSizeScope="True"
+                         ItemDoubleLeftClickCommand="{Binding ShowBillDetailsCommand}"
+                         ItemDoubleLeftClickCommandParameter="{Binding SelectedBillViewModel}"
                          ItemsSource="{Binding FilteredBillViewModels,
                                                IsAsync=True}"
-                         SelectedItem="{Binding SelectedBillViewModel}"
+                         SelectedItem="{Binding SelectedBillViewModel, Mode=TwoWay}"
                          SelectionMode="Single"
                          VirtualizingPanel.IsVirtualizing="True"
                          VirtualizingPanel.VirtualizationMode="Recycling">

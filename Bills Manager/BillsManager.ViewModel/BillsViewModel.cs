@@ -193,27 +193,23 @@ namespace BillsManager.ViewModels
         private void AddBill(Supplier supplier = null)
         {
             var supps = this.GetAvailableSuppliers();
-            var newBvm = this.billAddEditViewModelFactory.Invoke(supps, new Bill(this.billsProvider.GetLastBillID() + 1));
+            var addBillVm = this.billAddEditViewModelFactory.Invoke(supps, new Bill(this.billsProvider.GetLastBillID() + 1));
 
             if (supplier != null) // TODO: safe operation? if supplier is not known by addbvm?
-                newBvm.SelectedSupplier = supplier;
-
-            //newBvm.SetupForAddEdit();
+                addBillVm.SelectedSupplier = supplier;
 tryAdd:
-            if (this.windowManager.ShowDialog(newBvm) == true)
+            if (this.windowManager.ShowDialog(addBillVm) == true)
             {
                 // TODO: make it possible to show the view through a dialogviewmodel (evaluate the idea)
-                if (this.billsProvider.Add(newBvm.ExposedBill))
+                if (this.billsProvider.Add(addBillVm.ExposedBill))
                 {
-                    var newBillDetVM = this.billDetailsViewModelFactory.Invoke(newBvm.ExposedBill);
+                    var newBillDetailsVm = this.billDetailsViewModelFactory.Invoke(addBillVm.ExposedBill);
 
-                    this.BillViewModels.Add(newBillDetVM);
-                    //this.BillViewModels.AddSorted(newBillDetVM);
-                    //this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
+                    this.BillViewModels.Add(newBillDetailsVm);
 
-                    this.SelectedBillViewModel = newBillDetVM;
+                    this.SelectedBillViewModel = newBillDetailsVm;
 
-                    this.globalEventAggregator.Publish(new BillAddedMessage(newBvm.ExposedBill));
+                    this.globalEventAggregator.Publish(new BillAddedMessage(newBillDetailsVm.ExposedBill));
                 }
                 else
                 {
@@ -240,13 +236,10 @@ tryAdd:
             {
                 if (this.billsProvider.Edit(baeVM.ExposedBill)) // URGENT: if the DB action fails, changes have to be rolled back!!
                 {
-                    var editedBillVM = this.BillViewModels.Single(bvm => bvm.ExposedBill == bill);
-                    var wasSelected = this.SelectedBillViewModel == editedBillVM;
-                    //this.BillViewModels.SortEdited(editedBillVM);
+                    var editedBillVM = this.BillViewModels.FirstOrDefault(bvm => bvm.ExposedBill == bill); // TODO: use singleorfefault?
                     editedBillVM.Refresh();
 
-                    if (wasSelected) // TODO: not working
-                        this.SelectedBillViewModel = editedBillVM;
+                    this.SelectedBillViewModel = null;
 
                     this.globalEventAggregator.Publish(new BillEditedMessage(baeVM.ExposedBill, oldVersion)); // TODO: move to confirm add edit command in addeditbvm
                 }
@@ -321,13 +314,10 @@ tryAdd:
 
                 if (this.billsProvider.Edit(bill))
                 {
+                    var editedVM = this.BillViewModels.FirstOrDefault(bvm => bvm.ExposedBill == bill);
+                    editedVM.Refresh();
 
-                    var editedVM = this.BillViewModels.Single(bvm => bvm.ExposedBill == bill);
-                    var wasSelected = this.SelectedBillViewModel == editedVM;
-                    //this.BillViewModels.SortEdited(editedVM);
-
-                    if (wasSelected)
-                        this.SelectedBillViewModel = editedVM;
+                    this.SelectedBillViewModel = null;
 
                     this.globalEventAggregator.Publish(new BillEditedMessage(bill, oldVersion));
                 }
