@@ -36,7 +36,7 @@
                          ItemDoubleLeftClickCommandParameter="{Binding SelectedBillViewModel}"
                          ItemsSource="{Binding FilteredBillViewModels,
                                                IsAsync=True}"
-                         SelectedItem="{Binding SelectedBillViewModel, Mode=TwoWay}"
+                         SelectedItem="{Binding SelectedBillViewModel}"
                          SelectionMode="Single"
                          VirtualizingPanel.IsVirtualizing="True"
                          VirtualizingPanel.VirtualizationMode="Recycling">

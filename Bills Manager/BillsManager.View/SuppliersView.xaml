@@ -26,9 +26,8 @@
 
     <Controls:ListViewEx x:Name="lsvSuppliers"
                          AlternationCount="2"
-                         Commanding:CommandBehavior.Command="{Binding ShowSupplierDetailsCommand}"
-                         Commanding:CommandBehavior.CommandParameter="{Binding SelectedSupplierViewModel}"
-                         Commanding:CommandBehavior.Event="ItemMouseDoubleLeftClick"
+                         ItemDoubleLeftClickCommand="{Binding ShowSupplierDetailsCommand}"
+                         ItemDoubleLeftClickCommandParameter="{Binding SelectedSupplierViewModel}"
                          ItemsSource="{Binding FilteredSupplierViewModels,
                                                IsAsync=True}"
                          SelectedItem="{Binding SelectedSupplierViewModel}"
