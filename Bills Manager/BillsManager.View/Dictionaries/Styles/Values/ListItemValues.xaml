@@ -6,16 +6,14 @@
         <ResourceDictionary Source="ViewValues.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <SolidColorBrush x:Key="RowColor1"
-                     Color="Transparent" />
+    <SolidColorBrush x:Key="RowColor1" Color="Transparent" />
     <!--
         beige           FFF8F8BE
         normal gray     FFEEEEEE
         uncle gray      FFE2E2E2
         darkest gray    FFD7D7D7
     -->
-    <SolidColorBrush x:Key="RowColor2"
-                     Color="#FFECECEC" />
+    <SolidColorBrush x:Key="RowColor2" Color="#FFEEEEEE" />
 
     <Thickness x:Key="ListItemNormalBorderThickness"
                Bottom="0"
@@ -29,14 +27,12 @@
                Right="1"
                Top="1" />
 
-    <SolidColorBrush x:Key="ListItemSelectedBorderBrush"
-                     Color="#FF6A6A6A" />
+    <SolidColorBrush x:Key="ListItemSelectedBorderBrush" Color="#FF6A6A6A" />
     <!--
         normal blue     FFDBE7F4
         uncle blue      FFCBDCEF
         darkest blue    FFBDD3EC
     -->
-    <SolidColorBrush x:Key="ListItemMouseOverBrush"
-                     Color="#FFC6DBF0" />
+    <SolidColorBrush x:Key="ListItemMouseOverBrush" Color="#FFC6DBF0" />
 
 </ResourceDictionary>

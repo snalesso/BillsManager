@@ -1,0 +1,62 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--  SCROLLBAR  -->
+
+    <!--  ScrollBar.Background  -->
+    <SolidColorBrush x:Key="ScrollBar.Background.Normal" Color="White" />
+    <SolidColorBrush x:Key="ScrollBar.Background.Hover" Color="White" />
+    <SolidColorBrush x:Key="ScrollBar.Background.Disabled" Color="#FFECECEC" />
+
+    <!--  ScrollBar.BorderBrush  -->
+    <SolidColorBrush x:Key="ScrollBar.BorderBrush.Normal" Color="White" />
+    <SolidColorBrush x:Key="ScrollBar.BorderBrush.Hover" Color="White" />
+    <SolidColorBrush x:Key="ScrollBar.BorderBrush.Disabled" Color="#FFECECEC" />
+
+    <!--  ScrollBar.Foreground  -->
+    <SolidColorBrush x:Key="ScrollBar.Foreground.Normal" Color="#FF2E2E2E" />
+    <SolidColorBrush x:Key="ScrollBar.Foreground.Hover" Color="#FF2E2E2E" />
+    <SolidColorBrush x:Key="ScrollBar.Foreground.Disabled" Color="#FF9E9E9E" />
+
+
+    <!--  THUMB  -->
+
+    <!--  ScrollBar.Thumb.Background  -->
+    <SolidColorBrush x:Key="ScrollBar.Thumb.Background.Normal" Color="#FFD2D2D2" />
+    <SolidColorBrush x:Key="ScrollBar.Thumb.Background.Hover" Color="#FFB8B8B8" />
+    <SolidColorBrush x:Key="ScrollBar.Thumb.Background.Dragging" Color="#FF9E9E9E" />
+    <SolidColorBrush x:Key="ScrollBar.Thumb.Background.Disabled" Color="#FFECECEC" />
+
+    <!--  ScrollBar.Thumb.BorderBrush  -->
+    <SolidColorBrush x:Key="ScrollBar.Thumb.BorderBrush.Normal" Color="#FFD2D2D2" />
+    <SolidColorBrush x:Key="ScrollBar.Thumb.BorderBrush.Hover" Color="#FFB8B8B8" />
+    <SolidColorBrush x:Key="ScrollBar.Thumb.BorderBrush.Dragging" Color="#FF9E9E9E" />
+    <SolidColorBrush x:Key="ScrollBar.Thumb.BorderBrush.Disabled" Color="#FFECECEC" />
+
+    <!--  ScrollBar.Thumb.Foreground  -->
+    <SolidColorBrush x:Key="ScrollBar.Thumb.Foreground.Normal" Color="#FF2E2E2E" />
+    <SolidColorBrush x:Key="ScrollBar.Thumb.Foreground.Hover" Color="#FF2E2E2E" />
+    <SolidColorBrush x:Key="ScrollBar.Thumb.Foreground.Dragging" Color="White" />
+    <SolidColorBrush x:Key="ScrollBar.Thumb.Foreground.Disabled" Color="#FF9E9E9E" />
+
+
+    <!--  REPEATBUTTON  -->
+
+    <!--  ScrollBar.RepeatButton.Background  -->
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.Background.Normal" Color="White" />
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.Background.Hover" Color="#FFD2D2D2" />
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.Background.Pressed" Color="#FFB8B8B8" />
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.Background.Disabled" Color="#FFECECEC" />
+
+    <!--  ScrollBar.RepeatButton.BorderBrush  -->
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.BorderBrush.Normal" Color="White" />
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.BorderBrush.Hover" Color="#FFD2D2D2" />
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.BorderBrush.Pressed" Color="#FFB8B8B8" />
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.BorderBrush.Disabled" Color="#FFECECEC" />
+
+    <!--  ScrollBar.RepeatButton.Foreground  -->
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.Foreground.Normal" Color="#FF2E2E2E" />
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.Foreground.Hover" Color="#FF2E2E2E" />
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.Foreground.Pressed" Color="White" />
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.Foreground.Disabled" Color="#FF9E9E9E" />
+
+</ResourceDictionary>

@@ -1,4 +1,5 @@
-﻿using BillsManager.Localization;
+﻿using System.Linq;
+using BillsManager.Localization;
 using BillsManager.Models;
 using BillsManager.Services.Settings;
 using BillsManager.ViewModels.Commanding;
@@ -89,7 +90,7 @@ namespace BillsManager.ViewModels
                 this.StartupDBLoad = this.oldSettings.StartupDBLoad;
                 this.FeedbackToEmailAddress = this.oldSettings.FeedbackToEmailAddress;
             }
-            catch (Exception ex) { } // URGENT: exception always thrown when rolling back before exiting
+            catch (Exception ex) { }
         }
 
         protected void SaveAndClose()

@@ -4,50 +4,38 @@
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-    <SolidColorBrush x:Key="ViewBackgroundBrush"
-                     Color="White" />
+    <SolidColorBrush x:Key="ViewBackgroundBrush" Color="White" />
 
-    <SolidColorBrush x:Key="ViewBorderBrush"
-                     Color="#FF1C97EA" />
+    <SolidColorBrush x:Key="ViewBorderBrush" Color="#FF1C97EA" />
 
     <System:Double x:Key="ViewTitleFontSize">16</System:Double>
 
-    <!--
-        #FF3C3C3C
-    -->
-    <SolidColorBrush x:Key="ViewForegroundBrush"
-                     Color="#FF2E2E2E" />
+    <!--  #FF3C3C3C  -->
+    <SolidColorBrush x:Key="ViewForegroundBrush" Color="#FF2E2E2E" />
 
-    <!--    FFC9C9C9    -->
-    <SolidColorBrush x:Key="ViewDisabledForegroundBrush"
-                     Color="#FFA0A0A0" />
+    <!--  FFC9C9C9  -->
+    <SolidColorBrush x:Key="ViewDisabledForegroundBrush" Color="#FFA0A0A0" />
     <!--
         blue    #FF0091F7
         green   FF00B100 FF00B600
     -->
-    <SolidColorBrush x:Key="ViewTitleBrush"
-                     Color="#FF0091F7" />
+    <SolidColorBrush x:Key="ViewTitleBrush" Color="#FF0091F7" />
 
 
 
     <!--  #FF00B700  -->
-    <SolidColorBrush x:Key="PaidBrush"
-                     Color="#FF00B400" />
+    <SolidColorBrush x:Key="PaidBrush" Color="#FF00B400" />
 
-    <SolidColorBrush x:Key="NotPaidBrush"
-                     Color="#FFEA0000" />
+    <SolidColorBrush x:Key="NotPaidBrush" Color="#FFEA0000" />
 
 
 
 
-    <SolidColorBrush x:Key="ErrorTemplateBorderBrush"
-                     Color="#FFE40000" />
+    <SolidColorBrush x:Key="ErrorTemplateBorderBrush" Color="#FFE40000" />
 
-    <SolidColorBrush x:Key="ErrorTemplateBackgroundBrush"
-                     Color="#FFE40000" />
+    <SolidColorBrush x:Key="ErrorTemplateBackgroundBrush" Color="#FFE40000" />
 
-    <SolidColorBrush x:Key="ErrorTemplateForegroundBrush"
-                     Color="White" />
+    <SolidColorBrush x:Key="ErrorTemplateForegroundBrush" Color="White" />
 
     <!--
         dark gold       FFFFC300
@@ -56,11 +44,9 @@
         violet          FFC58EFF
         dark violet     FFBD8AFF
     -->
-    <SolidColorBrush x:Key="WarningBackgroundBrush"
-                     Color="#FFFF8900" />
+    <SolidColorBrush x:Key="WarningBackgroundBrush" Color="#FFFF8900" />
 
-    <SolidColorBrush x:Key="WarningForegroundBrush"
-                     Color="White" />
+    <SolidColorBrush x:Key="WarningForegroundBrush" Color="White" />
 
 
 
