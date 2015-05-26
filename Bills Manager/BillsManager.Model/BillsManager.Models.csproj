@@ -27,6 +27,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -47,19 +48,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Address\Address.cs" />
-    <Compile Include="Address\Address.ICloneable.cs" />
-    <Compile Include="Backup\Backup.cs" />
-    <Compile Include="Bill\Bill.cs" />
-    <Compile Include="Bill\Bill.ICloneable.cs" />
-    <Compile Include="Database\Database.cs" />
+    <Compile Include="Collections\ObjectModel\ReadOnlyObservableCollectionEx.cs" />
+    <Compile Include="Entities\Backup\Backup.cs" />
+    <Compile Include="Entities\Bill\Bill.cs" />
+    <Compile Include="Entities\Bill\Bill.ICloneable.cs" />
+    <Compile Include="Enums\DBConnectionState.cs" />
+    <Compile Include="Enums\DueAlert.cs" />
+    <Compile Include="Enums\Obligation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings\Settings.cs" />
-    <Compile Include="Supplier\Supplier.cs" />
-    <Compile Include="Supplier\Supplier.ICloneable.cs" />
+    <Compile Include="Entities\Settings\Settings.cs" />
+    <Compile Include="Entities\Supplier\Supplier.cs" />
+    <Compile Include="Entities\Supplier\Supplier.ICloneable.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Settings\Settings.ICloneable.cs" />
+    <Compile Include="Entities\Settings\Settings.ICloneable.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BillsManager.Localization\BillsManager.Localization.csproj">
+      <Project>{5387db3b-6ec1-42cf-a72b-cef5adfb541a}</Project>
+      <Name>BillsManager.Localization</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

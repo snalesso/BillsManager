@@ -75,22 +75,20 @@ namespace BillsManager.ViewModels
 
         private void SendFeedback()
         {
-            if (this.feedbackSender.SendFeedback(this.Subject, this.Message))
-            {
-                this.windowManager.ShowDialog(
-                    new DialogViewModel(
-                        TranslationManager.Instance.Translate("FeedbackSent").ToString(),
-                        TranslationManager.Instance.Translate("FeedbackSentMessage").ToString()));
+            // TODO: feedback serialization for delayed send in case of error. send retries in a second moment (restart/countdown)
+            var sent = this.feedbackSender.SendFeedback(this.Subject, this.Message);
 
-                if (this.CloseAfterSend)
-                    this.TryClose();
-            }
-            else
-                // TODO: feedback serialization for delayed send in case of error. send retry at new start
-                this.windowManager.ShowDialog(
-                    new DialogViewModel(
-                        TranslationManager.Instance.Translate("FeedbackNotSent").ToString(),
-                        TranslationManager.Instance.Translate("FeedbackNotSentMessage").ToString()));
+            DialogViewModel resultDialog =
+                DialogViewModel.Show(
+                    sent ? DialogType.Information : DialogType.Error,
+                    sent ? TranslationManager.Instance.Translate("FeedbackSent") : TranslationManager.Instance.Translate("FeedbackNotSent"),
+                    sent ? TranslationManager.Instance.Translate("FeedbackSentMessage") : TranslationManager.Instance.Translate("FeedbackNotSentMessage"))
+                 .Ok();
+
+            this.windowManager.ShowDialog(resultDialog);
+
+            if (sent & this.CloseAfterSend)
+                this.TryClose();
         }
 
         #endregion
@@ -102,12 +100,10 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.sendFeedbackCommand == null)
-                    this.sendFeedbackCommand = new RelayCommand(
+                return this.sendFeedbackCommand ?? (this.sendFeedbackCommand = 
+                    new RelayCommand(
                         () => this.SendFeedback(),
-                        () => !string.IsNullOrWhiteSpace(this.Message));
-
-                return this.sendFeedbackCommand;
+                        () => !string.IsNullOrWhiteSpace(this.Message)));
             }
         }
 
@@ -116,11 +112,9 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.cancelCommand == null)
-                    this.cancelCommand = new RelayCommand(
-                        () => this.TryClose());
-
-                return this.cancelCommand;
+                return this.cancelCommand ?? (this.cancelCommand = 
+                    new RelayCommand(
+                        () => this.TryClose()));
             }
         }
 

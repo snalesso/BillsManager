@@ -17,7 +17,7 @@ namespace BillsManager.App
             this.boot = new AutofacBootstrapper();
         }
 
-        private const string Unique = "My_Unique_Application_String";
+        private const string Unique = "2u-39Fàè+ùEW)8||3kdj+ò*éç*°23r4eè23?kc2dK?M5faJW$/243F;8722%f0^aw[93jrfwelr";
         [STAThread]
         public static void Main()
         {

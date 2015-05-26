@@ -1,144 +1,71 @@
-﻿using Caliburn.Micro;
+﻿using BillsManager.Localization.Attributes;
+using Caliburn.Micro;
 
 namespace BillsManager.ViewModels
 {
     public class DialogResponse : PropertyChangedBase
     {
-        // TODO: fix buttons spacing in dialog view (first or last has useless margin)
         #region ctor
-
-        // TODO: review ctors gerarchy
-
+        
         public DialogResponse(ResponseType response, string text, string confirmCheckText)
-            : this(response, text)
         {
-            this.ConfirmCheckText = confirmCheckText;
-        }
-
-        public DialogResponse(ResponseType response, string text, ushort timer)
-            : this(response, text)
-        {
-            this.Timer = timer;
+            this.response = response;
+            this.text = text;
+            this.confirmCheckText = confirmCheckText;
         }
 
         public DialogResponse(ResponseType response, string text)
-            : this(response)
+            : this(response, text, null)
         {
-            this.Text = text;
-        }
-
-        public DialogResponse(ResponseType response, ushort timer)
-            : this(response)
-        {
-            this.Timer = timer;
         }
 
         public DialogResponse(ResponseType response)
+            : this(ResponseType.Ok, null, null)
         {
-            this.Response = response;
-            this.Text = response.ToString();
         }
 
         #endregion
 
         #region properties
 
-        private ResponseType response;
+        private readonly ResponseType response;
         public ResponseType Response
         {
             get { return response; }
-            protected set
-            {
-                if (this.response != value)
-                {
-                    response = value;
-                    this.NotifyOfPropertyChange(() => this.Response);
-                }
-            }
         }
 
-        private string text;
+        private readonly string text;
         public string Text
         {
             get
             {
-                if (this.Timer == 0) return this.text;
-
-                return this.text + " (" + this.Timer + ")";
-            }
-            protected set
-            {
-                if (this.text != value)
+                if (!string.IsNullOrEmpty(this.text))
                 {
-                    this.text = value;
-                    this.NotifyOfPropertyChange(() => this.Text);
+                    return this.text;
+                }
+                else
+                {
+                    var rtInfo = typeof(ResponseType).GetMember(response.ToString());
+                    var attributes = rtInfo[0].GetCustomAttributes(typeof(LocalizedDisplayNameAttribute), true);
+                    return (attributes[0] as LocalizedDisplayNameAttribute).DisplayName;
                 }
             }
         }
 
-        private ushort timer;
-        public ushort Timer
-        {
-            get { return this.timer; }
-            set
-            {
-                if (this.timer != value)
-                {
-                    this.timer = value;
-                    this.NotifyOfPropertyChange(() => this.Text);
-                    this.IsEnabled = (this.Timer <= 0);
-                }
-            }
-        }
-                
-        private string confirmCheckText;
+        private readonly string confirmCheckText;
         public string ConfirmCheckText
         {
             get { return this.confirmCheckText; }
-            set
-            {
-                if (this.confirmCheckText != value)
-                {
-                    this.confirmCheckText = value;
-                    this.NotifyOfPropertyChange(() => this.ConfirmCheckText);
-                    this.NotifyOfPropertyChange(() => this.UseConfirmCheck);
-                    this.IsEnabled = !this.UseConfirmCheck;
-                }
-            }
         }
-        
+
         public bool UseConfirmCheck
         {
             get { return !string.IsNullOrEmpty(this.ConfirmCheckText); }
         }
 
-        private bool isDefault;
-        public bool IsDefault
-        {
-            get { return this.isDefault; }
-            set
-            {
-                if (this.isDefault != value)
-                {
-                    this.isDefault = value;
-                    this.NotifyOfPropertyChange(() => this.IsDefault);
-                }
-            }
-        }
+        public bool IsDefault { get; set; }
 
-        private bool isCancel;
-        public bool IsCancel
-        {
-            get { return this.isCancel; }
-            set
-            {
-                if (this.isCancel != value)
-                {
-                    this.isCancel = value;
-                    this.NotifyOfPropertyChange(() => this.IsCancel);
-                }
-            }
-        }
+        public bool IsCancel { get; set; }
 
         private bool isEnabled = true;
         public bool IsEnabled
@@ -146,7 +73,7 @@ namespace BillsManager.ViewModels
             get { return this.isEnabled; }
             set
             {
-                if ( this.IsEnabled != value)
+                if (this.IsEnabled != value)
                 {
                     this.isEnabled = value;
                     this.NotifyOfPropertyChange(() => this.IsEnabled);

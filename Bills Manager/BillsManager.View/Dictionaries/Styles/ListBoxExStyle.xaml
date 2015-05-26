@@ -8,29 +8,19 @@
 
     <Style TargetType="{x:Type Controls:ListBoxEx}">
 
-        <Setter Property="Background"
-                Value="{StaticResource ViewBackgroundBrush}" />
-        <Setter Property="BorderBrush"
-                Value="{StaticResource ViewBorderBrush}" />
-        <Setter Property="Foreground"
-                Value="{StaticResource ViewForegroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource View.Background}" />
+        <Setter Property="BorderBrush" Value="{StaticResource View.BorderBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource View.Foreground.Normal}" />
 
-        <Setter Property="BorderThickness"
-                Value="0" />
+        <Setter Property="BorderThickness" Value="0" />
 
-        <Setter Property="Padding"
-                Value="0" />
+        <Setter Property="Padding" Value="0" />
 
-        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility"
-                Value="Auto" />
-        <Setter Property="ScrollViewer.VerticalScrollBarVisibility"
-                Value="Auto" />
-        <Setter Property="ScrollViewer.CanContentScroll"
-                Value="true" />
-        <Setter Property="ScrollViewer.PanningMode"
-                Value="Both" />
-        <Setter Property="Stylus.IsFlicksEnabled"
-                Value="False" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
+        <Setter Property="ScrollViewer.PanningMode" Value="Both" />
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -38,7 +28,7 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{StaticResource ViewCornerRadius}"
+                            CornerRadius="{StaticResource Control.Border.CornerRadius}"
                             Padding="{TemplateBinding Padding}">
                         <ScrollViewer Focusable="false">
                             <ItemsPresenter />
@@ -53,10 +43,8 @@
             <MultiDataTrigger>
 
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}"
-                               Value="0" />
-                    <Condition Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=ShowEmptyMessage}"
-                               Value="true" />
+                    <Condition Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0" />
+                    <Condition Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=ShowEmptyMessage}" Value="true" />
                 </MultiDataTrigger.Conditions>
 
                 <MultiDataTrigger.Setters>
@@ -64,9 +52,10 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate>
-                                <TextBlock Text="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=EmptyMessage}"
+                                <TextBlock Margin="8"
                                            HorizontalAlignment="Center"
-                                           Margin="8" />
+                                           Text="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent},
+                                                          Path=EmptyMessage}" />
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
@@ -75,10 +64,8 @@
 
             </MultiDataTrigger>
 
-            <Trigger Property="IsGrouping"
-                     Value="true">
-                <Setter Property="ScrollViewer.CanContentScroll"
-                        Value="false" />
+            <Trigger Property="IsGrouping" Value="true">
+                <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
             </Trigger>
 
         </Style.Triggers>

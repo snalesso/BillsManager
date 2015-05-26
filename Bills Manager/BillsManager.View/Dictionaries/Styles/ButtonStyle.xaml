@@ -8,26 +8,16 @@
 
     <Style TargetType="{x:Type Button}">
 
-        <Setter Property="Background"
-                Value="{StaticResource ButtonNormalBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource Button.Background.Normal}" />
+        <Setter Property="Foreground" Value="{StaticResource Button.Foreground.Normal}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Button.BorderBrush.Normal}" />
 
-        <Setter Property="Foreground"
-                Value="{StaticResource ButtonNormalForegroundBrush}" />
+        <Setter Property="BorderThickness" Value="{StaticResource View.Border.Thickness}" />
 
-        <Setter Property="BorderBrush"
-                Value="{StaticResource ButtonNormalBorderBrush}" />
+        <Setter Property="Padding" Value="4" />
 
-        <Setter Property="BorderThickness"
-                Value="{StaticResource ViewBorderThickness}" />
-
-        <Setter Property="HorizontalContentAlignment"
-                Value="Center" />
-
-        <Setter Property="VerticalContentAlignment"
-                Value="Center" />
-
-        <Setter Property="Padding"
-                Value="3 2" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -36,62 +26,195 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{StaticResource ViewCornerRadius}">
+                            CornerRadius="{StaticResource Control.Border.CornerRadius}">
 
                         <ContentPresenter Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          RecognizesAccessKey="True"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="True" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
 
         <Style.Triggers>
-            
-            <!--<Trigger Property="Command"
-                     Value="{x:Null}">
-                <Setter Property="IsEnabled"
-                        Value="False" />
-            </Trigger>-->
 
-            <Trigger Property="IsCancel"
-                     Value="true">
-                <Setter Property="BorderBrush"
-                        Value="{StaticResource ResourceKey=ButtonIsCancelBorderBrush}" />
+            <!--  COMMON BUTTON  -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="true" />
+                    <Condition Property="IsDefault" Value="false" />
+                    <Condition Property="IsCancel" Value="false" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Background" Value="{StaticResource Button.Background.Hover}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource Button.BorderBrush.Hover}" />
+                    <Setter Property="Foreground" Value="{StaticResource Button.Foreground.Hover}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+
+            <Trigger Property="IsFocused" Value="true">
+                <!--<Setter Property="Background" Value="{StaticResource Button.Background.Focused}" />-->
+                <Setter Property="BorderBrush" Value="{StaticResource Button.BorderBrush.Focused}" />
+                <!--<Setter Property="Foreground" Value="{StaticResource Button.Foreground.Focused}" />-->
             </Trigger>
 
-            <Trigger Property="IsDefault"
-                     Value="true">
-                <Setter Property="BorderBrush"
-                        Value="{StaticResource ResourceKey=ButtonIsDefaultBorderBrush}" />
-            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsPressed" Value="true" />
+                    <Condition Property="IsDefault" Value="false" />
+                    <Condition Property="IsCancel" Value="false" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Background" Value="{StaticResource Button.Background.Pressed}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource Button.BorderBrush.Pressed}" />
+                    <Setter Property="Foreground" Value="{StaticResource Button.Foreground.Pressed}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
 
-            <Trigger Property="IsFocused"
-                     Value="true">
-                <Setter Property="BorderBrush"
-                        Value="{StaticResource ResourceKey=ButtonFocusedBorderBrush}" />
-            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsEnabled" Value="false" />
+                    <Condition Property="IsDefault" Value="false" />
+                    <Condition Property="IsCancel" Value="false" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Background" Value="{StaticResource Button.Background.Disabled}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource Button.BorderBrush.Disabled}" />
+                    <Setter Property="Foreground" Value="{StaticResource Button.Foreground.Disabled}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
 
-            <Trigger Property="IsEnabled"
-                     Value="false">
-                <Setter Property="Background"
-                        Value="{StaticResource ResourceKey=ButtonDisabledBackgroundBrush}" />
-                <Setter Property="BorderBrush"
-                        Value="{StaticResource ResourceKey=ButtonDisabledBorderBrush}" />
-                <Setter Property="Foreground"
-                        Value="{StaticResource ResourceKey=ButtonDisabledForegroundBrush}" />
-            </Trigger>
+            <!--  CANCEL BUTTON  -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsDefault" Value="false" />
+                    <Condition Property="IsCancel" Value="true" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Background" Value="{StaticResource CancelButton.Background.Normal}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource CancelButton.BorderBrush.Normal}" />
+                    <Setter Property="Foreground" Value="{StaticResource CancelButton.Foreground.Normal}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
 
-            <Trigger Property="IsPressed"
-                     Value="true">
-                <Setter Property="Background"
-                        Value="{StaticResource ResourceKey=ButtonPressedBackgroundBrush}" />
-                <Setter Property="BorderBrush"
-                        Value="{StaticResource ResourceKey=ButtonPressedBorderBrush}" />
-                <Setter Property="Foreground"
-                        Value="{StaticResource ResourceKey=ButtonPressedForegroundBrush}" />
-            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="true" />
+                    <Condition Property="IsDefault" Value="false" />
+                    <Condition Property="IsCancel" Value="true" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Background" Value="{StaticResource CancelButton.Background.Hover}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource CancelButton.BorderBrush.Hover}" />
+                    <Setter Property="Foreground" Value="{StaticResource CancelButton.Foreground.Hover}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsFocused" Value="true" />
+                    <Condition Property="IsDefault" Value="false" />
+                    <Condition Property="IsCancel" Value="true" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <!--<Setter Property="Background" Value="{StaticResource CancelButton.Background.Focused}" />-->
+                    <Setter Property="BorderBrush" Value="{StaticResource CancelButton.BorderBrush.Focused}" />
+                    <!--<Setter Property="Foreground" Value="{StaticResource CancelButton.Foreground.Focused}" />-->
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsPressed" Value="true" />
+                    <Condition Property="IsDefault" Value="false" />
+                    <Condition Property="IsCancel" Value="true" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Background" Value="{StaticResource CancelButton.Background.Pressed}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource CancelButton.BorderBrush.Pressed}" />
+                    <Setter Property="Foreground" Value="{StaticResource CancelButton.Foreground.Pressed}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsEnabled" Value="false" />
+                    <Condition Property="IsDefault" Value="false" />
+                    <Condition Property="IsCancel" Value="true" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Background" Value="{StaticResource CancelButton.Background.Disabled}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource CancelButton.BorderBrush.Disabled}" />
+                    <Setter Property="Foreground" Value="{StaticResource CancelButton.Foreground.Disabled}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+
+            <!--  DEFAULT BUTTON  -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsDefault" Value="true" />
+                    <Condition Property="IsCancel" Value="false" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Background" Value="{StaticResource DefaultButton.Background.Normal}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource DefaultButton.BorderBrush.Normal}" />
+                    <Setter Property="Foreground" Value="{StaticResource DefaultButton.Foreground.Normal}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="true" />
+                    <Condition Property="IsDefault" Value="true" />
+                    <Condition Property="IsCancel" Value="false" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Background" Value="{StaticResource DefaultButton.Background.Hover}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource DefaultButton.BorderBrush.Hover}" />
+                    <Setter Property="Foreground" Value="{StaticResource DefaultButton.Foreground.Hover}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsFocused" Value="true" />
+                    <Condition Property="IsDefault" Value="true" />
+                    <Condition Property="IsCancel" Value="false" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <!--<Setter Property="Background" Value="{StaticResource DefaultButton.Background.Focused}" />-->
+                    <Setter Property="BorderBrush" Value="{StaticResource DefaultButton.BorderBrush.Focused}" />
+                    <!--<Setter Property="Foreground" Value="{StaticResource DefaultButton.Foreground.Focused}" />-->
+
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsPressed" Value="true" />
+                    <Condition Property="IsDefault" Value="true" />
+                    <Condition Property="IsCancel" Value="false" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Background" Value="{StaticResource DefaultButton.Background.Pressed}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource DefaultButton.BorderBrush.Pressed}" />
+                    <Setter Property="Foreground" Value="{StaticResource DefaultButton.Foreground.Pressed}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsEnabled" Value="false" />
+                    <Condition Property="IsDefault" Value="true" />
+                    <Condition Property="IsCancel" Value="false" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Background" Value="{StaticResource DefaultButton.Background.Disabled}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource DefaultButton.BorderBrush.Disabled}" />
+                    <Setter Property="Foreground" Value="{StaticResource DefaultButton.Foreground.Disabled}" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
 
         </Style.Triggers>
 

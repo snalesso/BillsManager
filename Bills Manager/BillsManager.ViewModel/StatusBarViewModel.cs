@@ -1,4 +1,4 @@
-﻿using BillsManager.Localization.Attributes;
+﻿using BillsManager.Models;
 using BillsManager.ViewModels.Messages;
 using Caliburn.Micro;
 using System.ComponentModel;
@@ -8,12 +8,12 @@ namespace BillsManager.ViewModels
 {
     public partial class StatusBarViewModel : Screen,
         IHandle<DBConnectionStateChangedMessage>,
-        IHandle<SuppliersListChangedMessage>,
         IHandle<BillsListChangedMessage>,
-        IHandle<BillAddedMessage>,
-        IHandle<BillDeletedMessage>,
-        IHandle<SupplierAddedMessage>,
-        IHandle<SupplierDeletedMessage>
+        IHandle<SuppliersListChangedMessage>,
+        IHandle<AddedMessage<Bill>>,
+        IHandle<DeletedMessage<Bill>>,
+        IHandle<AddedMessage<Supplier>>,
+        IHandle<DeletedMessage<Supplier>>
     {
         #region fields
 
@@ -126,22 +126,22 @@ namespace BillsManager.ViewModels
             this.BillsCount = message.Bills.Count;
         }
 
-        public void Handle(BillAddedMessage message)
+        public void Handle(AddedMessage<Bill> message)
         {
             this.BillsCount++;
         }
 
-        public void Handle(BillDeletedMessage message)
+        public void Handle(DeletedMessage<Bill> message)
         {
             this.BillsCount--;
         }
 
-        public void Handle(SupplierAddedMessage message)
+        public void Handle(AddedMessage<Supplier> message)
         {
             this.SuppliersCount++;
         }
 
-        public void Handle(SupplierDeletedMessage message)
+        public void Handle(DeletedMessage<Supplier> message)
         {
             this.SuppliersCount--;
         }

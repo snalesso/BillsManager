@@ -67,11 +67,11 @@ namespace BillsManager.Localization
 
         #region methods
 
-        public object Translate(string key)
+        public string Translate(string key)
         {
             if (this.TranslationProvider != null)
             {
-                object translatedValue = this.TranslationProvider.Translate(key);
+                var translatedValue = this.TranslationProvider.Translate(key);
 
                 if (translatedValue != null)
                 {

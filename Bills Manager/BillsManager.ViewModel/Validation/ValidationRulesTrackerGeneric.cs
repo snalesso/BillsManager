@@ -15,7 +15,7 @@ namespace BillsManager.ViewModels.Validation
         public ValidationRulesTracker(T trackedObject)
         {
             if (trackedObject == null)
-                throw new ArgumentNullException("trackedObject cannot be null");
+                throw new ArgumentNullException("trackedObject");
 
             this.trackedObject = trackedObject;
             this.validationRules = new Dictionary<string, ValidationAttribute[]>();
@@ -25,64 +25,47 @@ namespace BillsManager.ViewModels.Validation
 
         protected void MapValidationRules()
         {
-            foreach (PropertyInfo pi in this.trackedObject.GetType().GetProperties())
+            foreach (PropertyInfo pi in this.trackedObject.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
                 ValidationAttribute[] valAtts = (ValidationAttribute[])pi.GetCustomAttributes(typeof(ValidationAttribute), true);
 
-                if (valAtts.Count() > 0) // TODO: what if no validation rules?
+                if (valAtts.Any()) // TODO: what if no validation rules?
                     this.validationRules.Add(pi.Name, valAtts);
             }
         }
 
         protected object GetPropertyValue(string propertyName)
         {
-            return typeof(T).GetProperty(propertyName).GetValue(this.trackedObject, null);
+            return typeof(T).GetProperty(propertyName).GetValue(this.trackedObject);
         }
 
-        public string GetErrorsForProperty(string propertyName)
+        public IEnumerable<string> GetErrorsForProperty(string propertyName)
         {
-            var validations = this.validationRules[propertyName];
-            
-            var errors = validations
-               .Where(vr =>
-               {
-                   var v = !vr.IsValid(this.GetPropertyValue(propertyName));
-                   return v;
-               })
-               .Select(vr =>
-               {
-                   var e = vr.ErrorMessage;
-                   return e;
-               })
-               .ToArray();
-
-            var allErrors = string.Join(Environment.NewLine, errors);
-
-            return allErrors;
-        }
-
-        public string GetAllErrors() // TODO: optimize for speed
-        {
-            string errors = string.Empty;
-
-            foreach (KeyValuePair<string, ValidationAttribute[]> kvp in this.validationRules)
+            if (this.validationRules.ContainsKey(propertyName))
             {
-                var propVal = this.GetPropertyValue(kvp.Key);
+                var validations = this.validationRules[propertyName];
 
-                foreach (var va in kvp.Value)
-                {
-                    bool valid = va.IsValid(propVal);
+                var errors = validations
+                   .Where(vr =>
+                   {
+                       var v = !vr.IsValid(this.GetPropertyValue(propertyName));
+                       return v;
+                   })
+                   .Select(vr =>
+                   {
+                       var e = vr.ErrorMessage;
+                       return e;
+                   })
+                   .ToArray();
 
-                    if (!valid)
-                    {
-                        if (!string.IsNullOrEmpty(errors))
-                            errors += Environment.NewLine;
-                        errors += va.ErrorMessage;
-                    }
-                }
+                return errors;
             }
+            return Enumerable.Empty<string>();
+        }
 
-            return errors;
+        public IEnumerable<string> GetAllErrors() // TODO: optimize for speed
+        {
+            return this.validationRules.Keys.SelectMany(k => this.GetErrorsForProperty(k));
         }
     }
 }

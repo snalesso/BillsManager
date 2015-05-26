@@ -59,10 +59,7 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.backupViewModels == null)
-                    this.backupViewModels = new ObservableCollection<BackupViewModel>();
-
-                return this.backupViewModels;
+                return this.backupViewModels ?? (this.backupViewModels = new ObservableCollection<BackupViewModel>());
             }
             protected set
             {
@@ -105,20 +102,20 @@ namespace BillsManager.ViewModels
 
         private void CreateBackup()
         {
-            var question = new DialogViewModel(
-                TranslationManager.Instance.Translate("CreateBackup").ToString(),
-                TranslationManager.Instance.Translate("CreateBackupQuestion").ToString() +
-                Environment.NewLine +
-                TranslationManager.Instance.Translate("OperationMayTakeAWhile").ToString(),
-                new[]
-                {
-                    new DialogResponse(ResponseType.Yes, TranslationManager.Instance.Translate("CreateBackup").ToString()),
-                    new DialogResponse(ResponseType.No, TranslationManager.Instance.Translate("No").ToString())
-                });
+            DialogViewModel createBackupConfirmDialog =
+                DialogViewModel.Show(
+                    DialogType.Question,
+                    TranslationManager.Instance.Translate("CreateBackup"),
+                    TranslationManager.Instance.Translate("CreateBackupQuestion") +
+                    Environment.NewLine +
+                    TranslationManager.Instance.Translate("OperationMayTakeAWhile"))
+                .YesNo(
+                    TranslationManager.Instance.Translate("CreateBackup"),
+                    TranslationManager.Instance.Translate("No"));
 
-            this.windowManager.ShowDialog(question);
+            this.windowManager.ShowDialog(createBackupConfirmDialog);
 
-            if (question.FinalResponse == ResponseType.Yes)
+            if (createBackupConfirmDialog.FinalResponse == ResponseType.Yes)
             {
                 this.backupsProvider.CreateNew();
                 this.RefreshBackups();
@@ -127,29 +124,24 @@ namespace BillsManager.ViewModels
 
         private void Rollback(BackupViewModel backupViewModel)
         {
-            var rollbackQuestion = new DialogViewModel(
-                            TranslationManager.Instance.Translate("Rollback").ToString(),
-                            TranslationManager.Instance.Translate("ConfirmRollbackQuestion").ToString() +
-                            Environment.NewLine +
-                            Environment.NewLine + this.GetBackupInfo(backupViewModel.ExposedBackup),
-                            new[]
-                            {
-                                new DialogResponse(
-                                    ResponseType.Yes, 
-                                    TranslationManager.Instance.Translate("Rollback").ToString(), 
-                                    TranslationManager.Instance.Translate("Yes").ToString()),
-                                new DialogResponse(
-                                    ResponseType.No,
-                                    TranslationManager.Instance.Translate("No").ToString())
-                            });
+            DialogViewModel rollbackConfirmDialog =
+                DialogViewModel.Show(
+                    DialogType.Question,
+                    TranslationManager.Instance.Translate("Rollback"),
+                    TranslationManager.Instance.Translate("ConfirmRollbackQuestion") +
+                    Environment.NewLine +
+                    Environment.NewLine + this.GetBackupInfo(backupViewModel.ExposedBackup))
+                .YesNo(
+                    TranslationManager.Instance.Translate("Rollback"),
+                    TranslationManager.Instance.Translate("No"));
 
-            this.windowManager.ShowDialog(rollbackQuestion);
+            this.windowManager.ShowDialog(rollbackConfirmDialog);
 
             // URGENT: rollback failed protection
 
-            if (rollbackQuestion.FinalResponse == ResponseType.Yes)
+            if (rollbackConfirmDialog.FinalResponse == ResponseType.Yes)
             {
-                this.globalEventAggregator.Publish(
+                this.globalEventAggregator.PublishOnUIThread(
                     new RollbackAuthorizationRequest(
                         () =>
                         {
@@ -157,48 +149,47 @@ namespace BillsManager.ViewModels
                             {
                                 this.RefreshBackups();
                                 this.windowManager.ShowDialog(
-                                    new DialogViewModel(
-                                        TranslationManager.Instance.Translate("RollbackCompleted").ToString(),
-                                        TranslationManager.Instance.Translate("RollbackCompletedMessage").ToString()));
+                                    DialogViewModel.Show(
+                                        DialogType.Information,
+                                        TranslationManager.Instance.Translate("RollbackCompleted"),
+                                        TranslationManager.Instance.Translate("RollbackCompletedMessage"))
+                                    .Ok());
                             }
                             else
                                 this.windowManager.ShowDialog(
-                                    new DialogViewModel(
-                                        TranslationManager.Instance.Translate("RollbackFailed").ToString(),
-                                        TranslationManager.Instance.Translate("RollbackFailedMessage").ToString()));
+                                    DialogViewModel.Show(
+                                        DialogType.Error,
+                                        TranslationManager.Instance.Translate("RollbackFailed"),
+                                        TranslationManager.Instance.Translate("RollbackFailedMessage"))
+                                    .Ok());
                         },
                         () =>
                         {
                             this.windowManager.ShowDialog(
-                                new DialogViewModel(
-                                    TranslationManager.Instance.Translate("RollbackCanceled").ToString(),
-                                    TranslationManager.Instance.Translate("RollbackCanceledMessage").ToString()));
+                                DialogViewModel.Show(
+                                    DialogType.Information,
+                                    TranslationManager.Instance.Translate("RollbackCanceled"),
+                                    TranslationManager.Instance.Translate("RollbackCanceledMessage"))
+                                .Ok());
                         }));
             }
         }
 
         private void DeleteBackup(BackupViewModel backupViewModel)
         {
-            var question = new DialogViewModel(
-                TranslationManager.Instance.Translate("DeleteBackup").ToString(),
-                TranslationManager.Instance.Translate("DeleteBackupQuestion").ToString() +
-                Environment.NewLine +
-                Environment.NewLine +
-                this.GetBackupInfo(backupViewModel.ExposedBackup),
-                new[]
-                {
-                    new DialogResponse(
-                        ResponseType.Yes,
-                        TranslationManager.Instance.Translate("Delete").ToString(),
-                        TranslationManager.Instance.Translate("Yes").ToString()),
-                    new DialogResponse(
-                        ResponseType.No,
-                        TranslationManager.Instance.Translate("No").ToString())
-                });
+            DialogViewModel deleteBackupConfirmDialog =
+                DialogViewModel.Show(
+                    DialogType.Question,
+                    TranslationManager.Instance.Translate("DeleteBackup"),
+                    TranslationManager.Instance.Translate("DeleteBackupQuestion") +
+                    Environment.NewLine +
+                    Environment.NewLine +
+                    this.GetBackupInfo(backupViewModel.ExposedBackup))
+                .YesNo();
 
-            this.windowManager.ShowDialog(question);
+            this.windowManager.ShowDialog(deleteBackupConfirmDialog);
 
-            if (question.FinalResponse == ResponseType.Yes)
+            if (deleteBackupConfirmDialog.FinalResponse == ResponseType.Yes)
             {
                 this.backupsProvider.Delete(backupViewModel.ExposedBackup);
                 this.RefreshBackups();
@@ -207,15 +198,14 @@ namespace BillsManager.ViewModels
 
         private string GetBackupInfo(Backup backup)
         {
-            // TODO: review informations layout
             return backup.CreationTime.ToLongDateString() + "   " + backup.CreationTime.ToLongTimeString() +
                    Environment.NewLine +
                    Environment.NewLine +
                    backup.BillsCount + " " +
-                   TranslationManager.Instance.Translate("Bills").ToString().ToLower(TranslationManager.Instance.CurrentLanguage) +
+                   TranslationManager.Instance.Translate("Bills").ToLower(TranslationManager.Instance.CurrentLanguage) +
                    Environment.NewLine +
                    backup.SuppliersCount + " " +
-                   TranslationManager.Instance.Translate("Suppliers").ToString().ToLower(TranslationManager.Instance.CurrentLanguage);
+                   TranslationManager.Instance.Translate("Suppliers").ToLower(TranslationManager.Instance.CurrentLanguage);
         }
 
         private void OpenBackupsFolder()
@@ -233,11 +223,9 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.createNewBackupCommand == null)
-                    this.createNewBackupCommand = new RelayCommand(
-                    () => this.CreateBackup());
-
-                return this.createNewBackupCommand;
+                return this.createNewBackupCommand ?? (this.createNewBackupCommand =
+                    new RelayCommand(
+                        () => this.CreateBackup()));
             }
         }
 
@@ -246,12 +234,10 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.rollbackCommand == null)
-                    this.rollbackCommand = new RelayCommand<BackupViewModel>(
+                return this.rollbackCommand ?? (this.rollbackCommand =
+                    new RelayCommand<BackupViewModel>(
                         p => this.Rollback(p),
-                        p => p != null);
-
-                return this.rollbackCommand;
+                        p => p != null));
 
             }
         }
@@ -261,12 +247,10 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.deleteBackupCommand == null)
-                    this.deleteBackupCommand = new RelayCommand<BackupViewModel>(
+                return this.deleteBackupCommand ?? (this.deleteBackupCommand =
+                    new RelayCommand<BackupViewModel>(
                         p => this.DeleteBackup(p),
-                        p => p != null);
-
-                return this.deleteBackupCommand;
+                        p => p != null));
             }
         }
 
@@ -275,11 +259,9 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.openBackupsFolderCommand == null)
-                    this.openBackupsFolderCommand = new RelayCommand(
-                        () => this.OpenBackupsFolder());
-
-                return this.openBackupsFolderCommand;
+                return this.openBackupsFolderCommand ?? (this.openBackupsFolderCommand =
+                    new RelayCommand(
+                        () => this.OpenBackupsFolder()));
             }
         }
 

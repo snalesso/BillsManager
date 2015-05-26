@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             d:DataContext="{Binding Source={d:DesignInstance Type=ViewModel:SettingsViewModel, IsDesignTimeCreatable=True}}"
+             d:DataContext="{Binding Source={d:DesignInstance Type=ViewModel:SettingsViewModel,
+                                                              IsDesignTimeCreatable=True}}"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -13,28 +14,27 @@
     </UserControl.Resources>
 
     <UserControl.Background>
-        <Binding Mode="OneTime"
-                 Source="{StaticResource ViewBackgroundBrush}" />
+        <Binding Mode="OneTime" Source="{StaticResource View.Background}" />
     </UserControl.Background>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.Region.Spacing.Medium}" />
             <RowDefinition />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="{StaticResource View.MarginSize}" />
             <ColumnDefinition MinWidth="75" />
-            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="{StaticResource View.MarginSize}" />
             <ColumnDefinition MinWidth="150" />
-            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="{StaticResource View.MarginSize}" />
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Row="1"
@@ -89,16 +89,18 @@
                     Grid.ColumnSpan="3"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
-            <Button Command="{Binding SaveAndCloseCommand, Mode=OneWay}"
-                    Content="{loc:Translate Save}"
-                    MinWidth="80">
+            <Button MinWidth="80"
+                    Command="{Binding SaveAndCloseCommand,
+                                      Mode=OneWay}"
+                    Content="{loc:Translate Save}">
                 <Button.Margin>
-                    <Thickness Right="{StaticResource MarginSizeValue}" />
+                    <Thickness Right="{StaticResource View.MarginSize.Value}" />
                 </Button.Margin>
             </Button>
-            <Button Command="{Binding CancelAndCloseCommand, Mode=OneWay}"
-                    Content="{loc:Translate Cancel}"
-                    MinWidth="80" />
+            <Button MinWidth="80"
+                    Command="{Binding CancelAndCloseCommand,
+                                      Mode=OneWay}"
+                    Content="{loc:Translate Cancel}" />
         </StackPanel>
 
     </Grid>

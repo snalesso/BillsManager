@@ -18,7 +18,7 @@ namespace BillsManager.ViewModels
                 if (this.exposedBill != value)
                 {
                     this.exposedBill = value;
-                    this.NotifyOfPropertyChange(() => this.ExposedBill);
+                    this.NotifyOfPropertyChange();
                     this.Refresh(); /* TODO: this double refreshes this property, and properties that don't need refresh too
                                      * also, it refreshes in the ctor, when the object is created
                                      * and every time the value changes: eg. on edit (?) */
@@ -32,7 +32,7 @@ namespace BillsManager.ViewModels
         {
             get { return this.ExposedBill.ID; }
         }
-        
+
         public virtual uint SupplierID
         {
             get { return this.ExposedBill.SupplierID; }
@@ -41,7 +41,7 @@ namespace BillsManager.ViewModels
                 if (this.SupplierID != value)
                 {
                     this.ExposedBill.SupplierID = value;
-                    this.NotifyOfPropertyChange(() => this.SupplierID);
+                    this.NotifyOfPropertyChange();
                 }
             }
         }
@@ -54,7 +54,7 @@ namespace BillsManager.ViewModels
                 if (this.RegistrationDate != value)
                 {
                     this.ExposedBill.RegistrationDate = value;
-                    this.NotifyOfPropertyChange(() => this.RegistrationDate);
+                    this.NotifyOfPropertyChange();
                 }
             }
         }
@@ -67,7 +67,7 @@ namespace BillsManager.ViewModels
                 if (this.DueDate != value)
                 {
                     this.ExposedBill.DueDate = value;
-                    this.NotifyOfPropertyChange(() => this.DueDate);
+                    this.NotifyOfPropertyChange();
                 }
             }
         }
@@ -80,7 +80,7 @@ namespace BillsManager.ViewModels
                 if (this.ReleaseDate != value)
                 {
                     this.ExposedBill.ReleaseDate = value;
-                    this.NotifyOfPropertyChange(() => this.ReleaseDate);
+                    this.NotifyOfPropertyChange();
                 }
             }
         }
@@ -93,7 +93,7 @@ namespace BillsManager.ViewModels
                 if (this.PaymentDate != value)
                 {
                     this.ExposedBill.PaymentDate = value;
-                    this.NotifyOfPropertyChange(() => this.PaymentDate);
+                    this.NotifyOfPropertyChange();
                 }
             }
         }
@@ -103,12 +103,11 @@ namespace BillsManager.ViewModels
             get { return this.ExposedBill.Amount; }
             set
             {
-                // TODO: review set logic, make value check only on base class?
-                //if (this.Amount != value)
-                //{
-                this.ExposedBill.Amount = value;
-                this.NotifyOfPropertyChange(() => this.Amount);
-                //}
+                if (this.Amount != value)
+                {
+                    this.ExposedBill.Amount = value;
+                    this.NotifyOfPropertyChange();
+                }
             }
         }
 
@@ -120,7 +119,7 @@ namespace BillsManager.ViewModels
                 if (this.ExposedBill.Agio == value) return;
 
                 this.ExposedBill.Agio = value;
-                this.NotifyOfPropertyChange(() => this.Agio);
+                this.NotifyOfPropertyChange();
             }
         }
 
@@ -132,7 +131,7 @@ namespace BillsManager.ViewModels
                 if (this.ExposedBill.AdditionalCosts == value) return;
 
                 this.ExposedBill.AdditionalCosts = value;
-                this.NotifyOfPropertyChange(() => this.AdditionalCosts);
+                this.NotifyOfPropertyChange();
             }
         }
 
@@ -144,7 +143,7 @@ namespace BillsManager.ViewModels
                 if (this.Code != value)
                 {
                     this.ExposedBill.Code = value;
-                    this.NotifyOfPropertyChange(() => this.Code);
+                    this.NotifyOfPropertyChange();
                 }
             }
         }
@@ -157,7 +156,7 @@ namespace BillsManager.ViewModels
                 if (this.Notes != value)
                 {
                     this.ExposedBill.Notes = value;
-                    this.NotifyOfPropertyChange(() => this.Notes);
+                    this.NotifyOfPropertyChange();
                 }
             }
         }

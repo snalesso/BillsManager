@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using BillsManager.Localization;
+﻿using BillsManager.Localization;
 using BillsManager.Models;
 using BillsManager.Services.Settings;
 using BillsManager.ViewModels.Commanding;
@@ -90,7 +89,7 @@ namespace BillsManager.ViewModels
                 this.StartupDBLoad = this.oldSettings.StartupDBLoad;
                 this.FeedbackToEmailAddress = this.oldSettings.FeedbackToEmailAddress;
             }
-            catch (Exception ex) { }
+            catch (Exception) { }
         }
 
         protected void SaveAndClose()
@@ -114,11 +113,9 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.saveAndCloseCommand == null)
-                    this.saveAndCloseCommand = new RelayCommand(
-                        () => this.SaveAndClose());
-
-                return this.saveAndCloseCommand;
+                return this.saveAndCloseCommand ?? (this.saveAndCloseCommand = 
+                    new RelayCommand(
+                        () => this.SaveAndClose()));
             }
         }
 
@@ -127,11 +124,9 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.cancelAndCloseCommand == null)
-                    this.cancelAndCloseCommand = new RelayCommand(
-                        () => this.CancelAndClose());
-
-                return this.cancelAndCloseCommand;
+                return this.cancelAndCloseCommand ?? (this.cancelAndCloseCommand = 
+                    new RelayCommand(
+                        () => this.CancelAndClose()));
             }
         }
 

@@ -1,79 +1,41 @@
-﻿using BillsManager.Localization;
-using Caliburn.Micro;
+﻿using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Threading;
 
 namespace BillsManager.ViewModels
 {
-    public partial class DialogViewModel : Screen
+    public partial class DialogViewModel : Screen, IDialogViewModelFactory
     {
-        #region fields
-
-        DispatcherTimer timer;
-
-        #endregion
-
         #region ctor
 
-        /* TODO: create static methods such as
-         * .YesCheckedNo .YesTimedNo
-         * or
-         * YesNo(ResponseType.Timed, ResponseType.Checked) */
-        public DialogViewModel(
-            string caption,
-            string message,
-            IEnumerable<DialogResponse> responses)
+        private DialogViewModel(
+            DialogType dialogType,
+            string title,
+            string message)
         {
-            this.responses = responses;
+            this.responses = new[] { new DialogResponse(ResponseType.Ok) };
 
-            bool hasDefault = false, hasCancel = false;
-
-            foreach (DialogResponse resp in this.Responses)
-            {
-                hasDefault |= resp.IsDefault;
-                hasCancel |= resp.IsCancel;
-            }
-
-            if (!hasCancel)
-                this.Responses.LastOrDefault().IsCancel = true;
-
-            if (!hasDefault)
-                this.Responses.FirstOrDefault().IsDefault = true;
-
-            foreach (DialogResponse resp in this.Responses)
-            {
-                if (resp.Timer > 0)
-                {
-                    if (this.timer == null)
-                        this.timer = new DispatcherTimer() { Interval = new System.TimeSpan(0, 0, 0, 1) };
-
-                    this.timer.Tick += this.UpdateResponsesTimers;
-                    break;
-                }
-            }
-
-            this.DisplayName = caption;
+            this.dialogType = dialogType;
+            this.DisplayName = title;
             this.message = message;
-
-            if (timer != null) timer.Start(); // TODO: move in a DialogView.Shown handler or smth like that
-        }
-
-        public DialogViewModel(string caption, string message) // TODO: integrate translation in ctor or implement an auto translating dialogviewmodel
-            : this(caption, message, new[] { new DialogResponse(ResponseType.Ok, TranslationManager.Instance.Translate("Ok").ToString()) })
-        {
         }
 
         #endregion
 
         #region properties
 
-        private readonly string caption;
-        public string Caption
+        private readonly DialogType dialogType;
+        public DialogType DialogType
         {
-            get { return this.caption; }
+            get { return this.dialogType; }
         }
+
+        //private readonly string caption;
+        //public string Caption
+        //{
+        //    get { return this.caption; }
+        //}
 
         private readonly string message;
         public string Message
@@ -81,19 +43,35 @@ namespace BillsManager.ViewModels
             get { return this.message; }
         }
 
-        private readonly IEnumerable<DialogResponse> responses;
+        private IEnumerable<DialogResponse> responses;
         public IEnumerable<DialogResponse> Responses
         {
             get { return this.responses; }
-        }
-
-        private ResponseType response = ResponseType.InvalidResponse;
-        public ResponseType FinalResponse
-        {
-            get { return this.response; }
             private set
             {
-                this.response = value;
+                if ((value != null & value.Count() > 0) &
+                    (this.responses != value))
+                {
+                    this.responses = value;
+
+                    foreach (var resp in this.responses)
+                    {
+                        resp.IsDefault = false;
+                        resp.IsCancel = false;
+                    }
+                    this.Responses.First().IsDefault = true;
+                    this.Responses.Last().IsCancel = true;
+                }
+            }
+        }
+
+        private ResponseType finalResponse = ResponseType.Unset;
+        public ResponseType FinalResponse
+        {
+            get { return this.finalResponse; }
+            protected set
+            {
+                this.finalResponse = value;
             }
         }
 
@@ -101,21 +79,73 @@ namespace BillsManager.ViewModels
 
         #region methods
 
-        void UpdateResponsesTimers(object sender, EventArgs e)
+        #region creation
+
+        public static IDialogViewModelFactory Show(DialogType dialogType, string title, string text)
         {
-            bool leftovers = false;
-
-            foreach (DialogResponse resp in this.Responses)
-            {
-                if (resp.Timer > 0)
-                {
-                    resp.Timer--;
-                    leftovers |= (resp.Timer > 0);
-                }
-            }
-
-            if (!leftovers) this.timer.Stop();
+            return new DialogViewModel(dialogType, title, text);
         }
+
+        #region IDialogViewModelFactory Members
+
+        DialogViewModel IDialogViewModelFactory.Ok(string okText)
+        {
+            this.Responses = new DialogResponse[] 
+            { 
+                new DialogResponse(ResponseType.Ok, okText)
+            };
+
+            return this;
+        }
+
+        DialogViewModel IDialogViewModelFactory.OkCancel(string okText, string cancelText)
+        {
+            this.Responses = new DialogResponse[] 
+            { 
+                new DialogResponse(ResponseType.Ok, okText),
+                new DialogResponse(ResponseType.Cancel, cancelText)
+            };
+
+            return this;
+        }
+
+        DialogViewModel IDialogViewModelFactory.YesNo(string yesText, string noText)
+        {
+            this.Responses = new DialogResponse[] 
+            { 
+                new DialogResponse(ResponseType.Yes, yesText),
+                new DialogResponse(ResponseType.No, noText)
+            };
+
+            return this;
+        }
+
+        DialogViewModel IDialogViewModelFactory.YesNoCancel(string yesText, string noText, string cancelText)
+        {
+            this.Responses = new DialogResponse[] 
+            { 
+                new DialogResponse(ResponseType.Yes, yesText),
+                new DialogResponse(ResponseType.No, noText),
+                new DialogResponse(ResponseType.Cancel, cancelText)
+            };
+
+            return this;
+        }
+
+        DialogViewModel IDialogViewModelFactory.RetryCancel(string retryText, string cancelText)
+        {
+            this.Responses = new DialogResponse[] 
+            { 
+                new DialogResponse(ResponseType.Retry, retryText),
+                new DialogResponse(ResponseType.Cancel, cancelText)
+            };
+
+            return this;
+        }
+
+        #endregion
+
+        #endregion
 
         public void Respond(DialogResponse dialogResponse)
         {
@@ -132,7 +162,7 @@ namespace BillsManager.ViewModels
 
         public override void CanClose(Action<bool> callback)
         {
-            callback(this.FinalResponse != ResponseType.InvalidResponse);
+            callback(this.FinalResponse != ResponseType.Unset);
         }
 
         #endregion

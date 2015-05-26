@@ -11,16 +11,16 @@ namespace BillsManager.ViewModels
         {
             if (Execute.InDesignMode)
             {
-                this.caption = "Test";
-                this.message = "This is a fucking test";
-                this.DisplayName = this.caption;
+                //this.caption = "Test";
+                this.message = "This is a test";
+                this.DisplayName = "Test";
 
                 // TODO: move to a designdata project
                 this.responses = new[]
                 {
                     new DialogResponse(ResponseType.Yes, "go on", "Confirm"),
                     new DialogResponse(ResponseType.No, "Nein", "I say") {IsEnabled = true},
-                    new DialogResponse(ResponseType.Retry, 10),
+                    new DialogResponse(ResponseType.Retry),
                     new DialogResponse(ResponseType.Cancel),
                 };
 

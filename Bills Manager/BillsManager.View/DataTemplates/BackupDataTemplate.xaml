@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             d:DataContext="{d:DesignInstance Type=ViewModels:BackupViewModel, IsDesignTimeCreatable=True}"
+             d:DataContext="{d:DesignInstance Type=ViewModels:BackupViewModel,
+                                              IsDesignTimeCreatable=True}"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -13,41 +14,52 @@
     </UserControl.Resources>
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{StaticResource View.MarginSize}" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="{StaticResource View.MarginSize}" />
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="{Binding Path=CreationTime, StringFormat=\{0:F\}, Mode=OneTime}" />
+        <TextBlock Grid.Column="1" Text="{Binding CreationTime, StringFormat=\{0:F\}, Mode=OneTime}" />
 
-        <TextBlock Grid.Row="2">
+        <TextBlock Grid.Row="2" Grid.Column="1">
             <Run Text="{loc:Translate Suppliers}" />
-            <Run Text="{Binding Path=SuppliersCount, Mode=OneTime}" />
+            <Run Text="{Binding SuppliersCount, Mode=OneTime}" />
         </TextBlock>
 
-        <TextBlock Grid.Row="4">
+        <TextBlock Grid.Row="4" Grid.Column="1">
             <Run Text="{loc:Translate Bills}" />
-            <Run Text="{Binding Path=BillsCount, Mode=OneTime}" />
+            <Run Text="{Binding BillsCount, Mode=OneTime}" />
         </TextBlock>
 
         <TextBlock Grid.Row="6"
-                   Visibility="{Binding HasNoRollbacks, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <Run Text="{Binding Path=TimesUsedForRollback, Mode=OneTime}" />
+                   Grid.Column="1"
+                   Visibility="{Binding HasNoRollbacks,
+                                        Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Run Text="{Binding TimesUsedForRollback, Mode=OneTime}" />
             <Run Text=" rollbacks" />
         </TextBlock>
 
         <Expander Grid.Row="6"
+                  Grid.Column="1"
                   Background="{x:Null}"
                   BorderBrush="{x:Null}"
                   BorderThickness="0"
                   Focusable="False"
-                  Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
-                  Visibility="{Binding HasRollbacks, Converter={StaticResource BooleanToVisibilityConverter}}">
+                  Foreground="{Binding Foreground,
+                                       RelativeSource={RelativeSource FindAncestor,
+                                                                      AncestorType={x:Type UserControl}}}"
+                  Visibility="{Binding HasRollbacks,
+                                       Converter={StaticResource BooleanToVisibilityConverter}}">
             <Expander.Header>
                 <TextBlock Grid.Column="1">
                     <Run Text="{Binding Path=TimesUsedForRollback, Mode=OneTime}" />
@@ -58,8 +70,7 @@
             <ItemsControl ItemsSource="{Binding RollbackDates}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Margin="28 8 0 0"
-                                   Text="{Binding Mode=OneWay, StringFormat=\{0:F\}}" />
+                        <TextBlock Margin="28 8 0 0" Text="{Binding Mode=OneWay, StringFormat=\{0:F\}}" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

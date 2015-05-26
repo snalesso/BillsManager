@@ -7,7 +7,8 @@
              xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              MinWidth="400"
-             d:DataContext="{d:DesignInstance Type=ViewModel:BillDetailsViewModel, IsDesignTimeCreatable=True}"
+             d:DataContext="{d:DesignInstance Type=ViewModel:BillDetailsViewModel,
+                                              IsDesignTimeCreatable=True}"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -15,210 +16,232 @@
     </UserControl.Resources>
 
     <UserControl.Background>
-        <Binding Mode="OneTime"
-                 Source="{StaticResource ViewBackgroundBrush}" />
+        <Binding Mode="OneTime" Source="{StaticResource View.Background}" />
     </UserControl.Background>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="24" />
+            <RowDefinition Height="{StaticResource View.Region.Spacing.Medium}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="{StaticResource View.MarginSize}" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="{StaticResource View.MarginSize}" />
             <ColumnDefinition />
-            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="{StaticResource View.MarginSize}" />
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Row="1"
                    Grid.Column="1"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Amount}"
-                   Margin="25,0,0,0" />
+                   Foreground="{StaticResource View.Title.Foreground}"
+                   Text="{loc:Translate Amount}" />
         <TextBlock Grid.Row="1"
                    Grid.Column="3"
+                   Margin="0,0,25,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Text="{Binding Amount, StringFormat=\{0:N2\} €, Mode=OneTime}"
-                   TextAlignment="Right"
-                   Margin="0,0,25,0" />
+                   Text="{Binding Amount,
+                                  StringFormat=\{0:N2\} €,
+                                  Mode=OneTime}"
+                   TextAlignment="Right" />
 
         <TextBlock Grid.Row="3"
                    Grid.Column="1"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Agio}"
-                   Margin="25,0,0,0" />
+                   Foreground="{StaticResource View.Title.Foreground}"
+                   Text="{loc:Translate Agio}" />
         <TextBlock Grid.Row="3"
                    Grid.Column="3"
+                   Margin="0,0,25,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Text="{Binding Agio, StringFormat=\{0:N2\} €, Mode=OneTime}"
-                   TextAlignment="Right"
-                   Margin="0,0,25,0" />
+                   Text="{Binding Agio,
+                                  StringFormat=\{0:N2\} €,
+                                  Mode=OneTime}"
+                   TextAlignment="Right" />
 
         <TextBlock Grid.Row="5"
                    Grid.Column="1"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate AdditionalCosts}"
-                   Margin="25,0,0,0" />
+                   Foreground="{StaticResource View.Title.Foreground}"
+                   Text="{loc:Translate AdditionalCosts}" />
         <TextBlock Grid.Row="5"
                    Grid.Column="3"
+                   Margin="0,0,25,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Text="{Binding AdditionalCosts, StringFormat=\{0:N2\} €, Mode=OneTime}"
-                   TextAlignment="Right"
-                   Margin="0,0,25,0" />
+                   Text="{Binding AdditionalCosts,
+                                  StringFormat=\{0:N2\} €,
+                                  Mode=OneTime}"
+                   TextAlignment="Right" />
 
         <TextBlock Grid.Row="7"
                    Grid.Column="1"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Supplier}"
-                   Margin="25,0,0,0" />
+                   Foreground="{StaticResource View.Title.Foreground}"
+                   Text="{loc:Translate Supplier}" />
         <TextBlock Grid.Row="7"
                    Grid.Column="3"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Text="{Binding SupplierName, Mode=OneTime}" />
+                   Text="{Binding SupplierName,
+                                  Mode=OneTime}" />
 
         <TextBlock Grid.Row="9"
                    Grid.Column="1"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Number}"
-                   Margin="25,0,0,0" />
+                   Foreground="{StaticResource View.Title.Foreground}"
+                   Text="{loc:Translate Number}" />
         <TextBlock Grid.Row="9"
                    Grid.Column="3"
+                   Margin="0,0,25,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Text="{Binding Code, Mode=OneTime}"
-                   Margin="0,0,25,0" />
+                   Text="{Binding Code,
+                                  Mode=OneTime}" />
 
         <TextBlock Grid.Row="11"
                    Grid.Column="1"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Payment}"
-                   Margin="25,0,0,0" />
+                   Foreground="{StaticResource View.Title.Foreground}"
+                   Text="{loc:Translate Payment}" />
         <StackPanel Grid.Row="11"
                     Grid.Column="3"
+                    Margin="0,0,25,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
-                    Orientation="Horizontal"
-                    Margin="0,0,25,0">
+                    Orientation="Horizontal">
             <TextBlock VerticalAlignment="Center"
                        Text="{loc:Translate Paid_toBill}"
-                       Visibility="{Binding IsPaid, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneTime}" />
+                       Visibility="{Binding IsPaid,
+                                            Converter={StaticResource BooleanToVisibilityConverter},
+                                            Mode=OneTime}" />
             <TextBlock VerticalAlignment="Center"
-                       Text="{Binding PaymentDate, StringFormat=' \{0:D\}', ConverterCulture={x:Static gl:CultureInfo.CurrentUICulture}, Mode=OneTime}"
-                       Visibility="{Binding IsPaid, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                       Text="{Binding PaymentDate,
+                                      StringFormat=' \{0:D\}',
+                                      ConverterCulture={x:Static gl:CultureInfo.CurrentUICulture},
+                                      Mode=OneTime}"
+                       Visibility="{Binding IsPaid,
+                                            Converter={StaticResource BooleanToVisibilityConverter}}" />
             <TextBlock VerticalAlignment="Center"
                        Text="{loc:Translate NotPaid_toBill}"
-                       Visibility="{Binding IsNotPaid, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneTime}" />
+                       Visibility="{Binding IsNotPaid,
+                                            Converter={StaticResource BooleanToVisibilityConverter},
+                                            Mode=OneTime}" />
         </StackPanel>
 
         <TextBlock Grid.Row="13"
                    Grid.Column="1"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate DuesOn}"
-                   Margin="25,0,0,0" />
+                   Foreground="{StaticResource View.Title.Foreground}"
+                   Text="{loc:Translate DuesOn}" />
         <TextBlock Grid.Row="13"
                    Grid.Column="3"
+                   Margin="0,0,25,0"
                    HorizontalAlignment="Left"
-                   VerticalAlignment="Center"
-                   Margin="0,0,25,0">
+                   VerticalAlignment="Center">
             <Run Text="{Binding DueDate, StringFormat=\{0:D\}, ConverterCulture={x:Static gl:CultureInfo.CurrentUICulture}, Mode=OneTime}" />
             <Run Text="{Binding DuesIn, StringFormat=({0}), ConverterCulture={x:Static gl:CultureInfo.CurrentUICulture}, Mode=OneTime}" />
         </TextBlock>
 
         <TextBlock Grid.Row="15"
                    Grid.Column="1"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate ReleasedOn_toBill}"
-                   Margin="25,0,0,0" />
+                   Foreground="{StaticResource View.Title.Foreground}"
+                   Text="{loc:Translate ReleasedOn_toBill}" />
         <TextBlock Grid.Row="15"
                    Grid.Column="3"
+                   Margin="0,0,25,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Text="{Binding ReleaseDate, StringFormat=\{0:D\}, ConverterCulture={x:Static gl:CultureInfo.CurrentUICulture}, Mode=OneTime}"
-                   Margin="0,0,25,0" />
+                   Text="{Binding ReleaseDate,
+                                  StringFormat=\{0:D\},
+                                  ConverterCulture={x:Static gl:CultureInfo.CurrentUICulture},
+                                  Mode=OneTime}" />
 
         <TextBlock Grid.Row="17"
                    Grid.Column="1"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate RegisteredOn_toBill}"
-                   Margin="25,0,0,0" />
+                   Foreground="{StaticResource View.Title.Foreground}"
+                   Text="{loc:Translate RegisteredOn_toBill}" />
         <TextBlock Grid.Row="17"
                    Grid.Column="3"
+                   Margin="0,0,25,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Text="{Binding RegistrationDate, StringFormat=\{0:D\}, ConverterCulture={x:Static gl:CultureInfo.CurrentUICulture}, Mode=OneTime}"
-                   Margin="0,0,25,0" />
+                   Text="{Binding RegistrationDate,
+                                  StringFormat=\{0:D\},
+                                  ConverterCulture={x:Static gl:CultureInfo.CurrentUICulture},
+                                  Mode=OneTime}" />
 
         <TextBlock Grid.Row="19"
                    Grid.Column="1"
+                   Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    FontWeight="Medium"
-                   Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Notes}"
-                   Margin="25,0,0,0" />
+                   Foreground="{StaticResource View.Title.Foreground}"
+                   Text="{loc:Translate Notes}" />
         <TextBlock Grid.Row="19"
                    Grid.Column="3"
                    MaxWidth="390"
+                   Margin="0,0,25,0"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Center"
-                   Text="{Binding Notes, Mode=OneTime}"
+                   Text="{Binding Notes,
+                                  Mode=OneTime}"
                    TextTrimming="CharacterEllipsis"
-                   TextWrapping="Wrap"
-                   Margin="0,0,25,0" />
+                   TextWrapping="Wrap" />
 
         <StackPanel Grid.Row="21"
                     Grid.Column="1"
@@ -226,15 +249,17 @@
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
             <Button MinWidth="80"
-                    Command="{Binding SwitchToEditCommand, Mode=OneTime}"
+                    Command="{Binding SwitchToEditCommand,
+                                      Mode=OneTime}"
                     Content="{loc:Translate Edit}"
                     IsDefault="True">
                 <Button.Margin>
-                    <Thickness Right="{StaticResource MarginSizeValue}" />
+                    <Thickness Right="{StaticResource View.MarginSize.Value}" />
                 </Button.Margin>
             </Button>
             <Button MinWidth="80"
-                    Command="{Binding CloseDetailsViewCommand, Mode=OneTime}"
+                    Command="{Binding CloseDetailsViewCommand,
+                                      Mode=OneTime}"
                     Content="{loc:Translate Close}"
                     IsCancel="True" />
         </StackPanel>

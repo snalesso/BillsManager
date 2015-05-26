@@ -1,7 +1,7 @@
 using BillsManager.Localization;
 using BillsManager.Services.Settings;
 using BillsManager.ViewModels.Commanding;
-using BillsManager.ViewModels.Messages;
+//using BillsManager.ViewModels.Search;
 using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
@@ -24,6 +24,7 @@ namespace BillsManager.ViewModels
         private readonly Func<SendFeedbackViewModel> sendFeedbackViewModelFactory;
         private readonly Func<SettingsViewModel> settingsViewModelFactory;
         // other UI regions
+        //private readonly Func<SearchViewModel<BillDetailsViewModel>> searchBillsViewModelFactory;
         private readonly Func<StatusBarViewModel> statusBarViewModelFactory;
 
         #endregion
@@ -35,6 +36,7 @@ namespace BillsManager.ViewModels
             IEventAggregator globalEventAggregator,
             ISettingsProvider settingsProvider,
             Func<DBViewModel> dbViewModelFactory,
+            //Func<SearchViewModel<BillDetailsViewModel>> searchBillsViewModelFactory,
             Func<StatusBarViewModel> statusBarViewModelFactory,
             Func<BackupCenterViewModel> backupCenterViewModelFactory,
             Func<SendFeedbackViewModel> sendFeedbackViewModelFactory,
@@ -48,6 +50,7 @@ namespace BillsManager.ViewModels
 
             // FACTORIES
             this.dbViewModelFactory = dbViewModelFactory;
+            //this.searchBillsViewModelFactory = searchBillsViewModelFactory;
             this.statusBarViewModelFactory = statusBarViewModelFactory;
             this.backupCenterViewModelFactory = backupCenterViewModelFactory;
             this.sendFeedbackViewModelFactory = sendFeedbackViewModelFactory;
@@ -66,7 +69,7 @@ namespace BillsManager.ViewModels
 
             // UI
             var sb = this.StatusBarViewModel; // initialize the status bar in order to receive db first load notifications
-            this.DisplayName = TranslationManager.Instance.Translate("BillsManager").ToString();
+            this.DisplayName = TranslationManager.Instance.Translate("BillsManager");
 
             // START
             this.ActivateItem(this.DBViewModel);
@@ -84,22 +87,29 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.dbViewModel == null)
-                    this.dbViewModel = this.dbViewModelFactory.Invoke();
-
-                return this.dbViewModel;
+                return this.dbViewModel ?? (this.dbViewModel = this.dbViewModelFactory.Invoke());
             }
         }
+
+
+        //private SearchViewModel<BillDetailsViewModel> searchViewModel;
+        //public SearchViewModel<BillDetailsViewModel> SearchViewModel
+        //{
+        //    get
+        //    {
+        //        if (this.searchViewModel == null)
+        //            this.searchViewModel = this.searchBillsViewModelFactory.Invoke();
+
+        //        return this.searchViewModel;
+        //    }
+        //}
 
         private StatusBarViewModel statusBarViewModel;
         public StatusBarViewModel StatusBarViewModel
         {
             get
             {
-                if (this.statusBarViewModel == null)
-                    this.statusBarViewModel = this.statusBarViewModelFactory.Invoke();
-
-                return this.statusBarViewModel;
+                return this.statusBarViewModel ?? (this.statusBarViewModel = this.statusBarViewModelFactory.Invoke());
             }
         }
 
@@ -109,14 +119,16 @@ namespace BillsManager.ViewModels
 
         private void ShowBackupCenter()
         {
-            this.windowManager.ShowDialog(this.backupCenterViewModelFactory.Invoke(), settings: new Dictionary<string, object>
-            {
-                //{"ResizeMode", ResizeMode.CanResize},
-                {"SizeToContent", SizeToContent.Width},
-                //{"ResizeDirections", new Thickness(0, 1, 0, 1)},
-                {"CanClose", true}/*,
-                {"ShowInTaskbar", true}*/
-            });
+            this.windowManager.ShowDialog(
+                this.backupCenterViewModelFactory.Invoke(),
+                settings: new Dictionary<string, object>
+                {
+                    //{"ResizeMode", ResizeMode.CanResize},
+                    {"SizeToContent", SizeToContent.Width},
+                    //{"ResizeDirections", new Thickness(0, 1, 0, 1)},
+                    {"CanClose", true}/*,
+                    {"ShowInTaskbar", true}*/
+                });
         }
 
         private void ShowSendFeedback()
@@ -139,16 +151,6 @@ namespace BillsManager.ViewModels
                 });
         }
 
-        #region message handlers
-
-        //public void Handle(ActiveDBChangedMessage message)
-        //{
-        //    var dn = "Bills Manager" + (message.ActiveDB != null ? " - " + message.ActiveDB.DisplayName : string.Empty);
-        //    this.DisplayName = dn;
-        //}
-
-        #endregion
-
         #endregion
 
         #region commands
@@ -158,11 +160,9 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.showBackupCenterCommand == null)
-                    this.showBackupCenterCommand = new RelayCommand(
-                    () => this.ShowBackupCenter());
-
-                return this.showBackupCenterCommand;
+                return this.showBackupCenterCommand ?? (this.showBackupCenterCommand =
+                    new RelayCommand(
+                        () => this.ShowBackupCenter()));
             }
         }
 
@@ -171,11 +171,9 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.showSendFeedbackCommand == null)
-                    this.showSendFeedbackCommand = new RelayCommand(
-                        () => this.ShowSendFeedback());
-
-                return this.showSendFeedbackCommand;
+                return this.showSendFeedbackCommand ?? (this.showSendFeedbackCommand =
+                    new RelayCommand(
+                        () => this.ShowSendFeedback()));
             }
         }
 
@@ -184,11 +182,9 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.showSettingsCommand == null)
-                    this.showSettingsCommand = new RelayCommand(
-                        () => this.ShowSettings());
-
-                return this.showSettingsCommand;
+                return this.showSettingsCommand ?? (this.showSettingsCommand =
+                    new RelayCommand(
+                        () => this.ShowSettings()));
             }
         }
 

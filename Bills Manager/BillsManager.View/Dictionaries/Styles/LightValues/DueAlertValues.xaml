@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <SolidColorBrush x:Key="NoneDueAlertBrush" Color="Transparent" />
+
+    <!--  FF00B400    green  -->
+    <!--  FF74B400    rotten green  -->
+    <SolidColorBrush x:Key="LowDueAlertBrush" Color="#FF00B400" />
+
+    <SolidColorBrush x:Key="MediumDueAlertBrush" Color="#FFFF8900" />
+
+    <SolidColorBrush x:Key="HighDueAlertBrush" Color="#FFE44141" />
+    <!--  FFD10065  -->
+    <SolidColorBrush x:Key="CriticalDueAlertBrush" Color="#FFBF0058" />
+
+
+</ResourceDictionary>

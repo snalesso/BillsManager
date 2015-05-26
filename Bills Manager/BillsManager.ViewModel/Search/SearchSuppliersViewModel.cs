@@ -1,4 +1,5 @@
 ﻿using BillsManager.Localization;
+using BillsManager.Models;
 using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
 using Caliburn.Micro;
@@ -9,9 +10,9 @@ using System.Linq;
 namespace BillsManager.ViewModels
 {
     public partial class SearchSuppliersViewModel : Screen,
-        IHandle<BillAddedMessage>,
-        IHandle<BillEditedMessage>,
-        IHandle<BillDeletedMessage>
+        IHandle<AddedMessage<Bill>>,
+        IHandle<EditedMessage<Bill>>,
+        IHandle<DeletedMessage<Bill>>
     {
         #region fields
 
@@ -121,9 +122,9 @@ namespace BillsManager.ViewModels
             if (this.UseObligationStateFilter) filters.Add(this.obligationStateFilter);
 
             if (filters.Count > 0)
-                this.globalEventAggregator.Publish(new SuppliersFilterMessage(filters));
+                this.globalEventAggregator.PublishOnUIThread(new FilterMessage<SupplierDetailsViewModel>(filters));
             else
-                this.globalEventAggregator.Publish(new SuppliersFilterMessage(null));
+                this.globalEventAggregator.PublishOnUIThread(new FilterMessage<SupplierDetailsViewModel>(null));
         }
 
         void DeactivateAllFilters()
@@ -133,23 +134,23 @@ namespace BillsManager.ViewModels
 
         #region message handlers
 
-        public void Handle(BillAddedMessage message)
+        public void Handle(AddedMessage<Bill> message)
         {
             if (!this.UseObligationStateFilter) return;
 
             this.SendFilters();
         }
 
-        public void Handle(BillEditedMessage message)
+        public void Handle(EditedMessage<Bill> message)
         {
             if (!this.UseObligationStateFilter) return;
 
-            if ((message.Bill.Amount != message.OldBill.Amount) |
-                (message.Bill.PaymentDate.HasValue != message.OldBill.PaymentDate.HasValue))
+            if ((message.NewItem.Amount != message.OldItem.Amount) |
+                (message.NewItem.PaymentDate.HasValue != message.OldItem.PaymentDate.HasValue))
                 this.SendFilters();
         }
 
-        public void Handle(BillDeletedMessage message)
+        public void Handle(DeletedMessage<Bill> message)
         {
             if (!this.UseObligationStateFilter) return;
 
@@ -167,10 +168,9 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.sendFilerCommand == null) this.sendFilerCommand = new RelayCommand(
-                    () => this.SendFilters());
-
-                return this.sendFilerCommand;
+                return this.sendFilerCommand ?? (this.sendFilerCommand =
+                    new RelayCommand(
+                        () => this.SendFilters()));
             }
         }
 
@@ -179,14 +179,13 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.exitSearchCommand == null) this.exitSearchCommand = new RelayCommand(
-                    () =>
-                    {
-                        this.DeactivateAllFilters();
-                        this.SendFilters();
-                    });
-
-                return this.exitSearchCommand;
+                return this.exitSearchCommand ?? (this.exitSearchCommand =
+                    new RelayCommand(
+                        () =>
+                        {
+                            this.DeactivateAllFilters();
+                            this.SendFilters();
+                        }));
             }
         }
 

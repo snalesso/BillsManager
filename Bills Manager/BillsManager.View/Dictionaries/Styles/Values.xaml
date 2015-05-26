@@ -1,20 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Values\ButtonValues.xaml" />
-        <ResourceDictionary Source="Values\Geometries.xaml" />
-        <ResourceDictionary Source="Values\ViewValues.xaml" />
-        <ResourceDictionary Source="Values\MenuValues.xaml" />
-        <ResourceDictionary Source="Values\MenuItemValues.xaml" />
-        <ResourceDictionary Source="Values\TextBoxValues.xaml" />
-        <ResourceDictionary Source="Values\ObligationValues.xaml" />
-        <ResourceDictionary Source="Values\DBConnectionStateValues.xaml" />
-        <ResourceDictionary Source="Values\CheckBoxValues.xaml" />
-        <ResourceDictionary Source="Values\ListBoxItemValues.xaml" />
-        <ResourceDictionary Source="Values\ListItemValues.xaml" />
-        <ResourceDictionary Source="Values\DueAlertValues.xaml" />
-        <ResourceDictionary Source="Values\Converters.xaml" />
-        <ResourceDictionary Source="Values\ScrollBarValues.xaml" />
+        <ResourceDictionary Source="LightValues.xaml" />
+        <!--  <ResourceDictionary Source="DarkValues.xaml" />  -->
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

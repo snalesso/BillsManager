@@ -7,8 +7,6 @@ using System;
 
 namespace BillsManager.ViewModels
 {
-    // TODO: cap database support
-    // TODO: country database (3chars?)
     public partial class SupplierAddEditViewModel : SupplierViewModel
     {
         #region fields
@@ -45,6 +43,8 @@ namespace BillsManager.ViewModels
                         this.dbEventAggregator.Unsubscribe(this);
                     }
                 };
+
+            this.rulesTracker = new Validation.ValidationRulesTracker<SupplierAddEditViewModel>(this);
         }
 
         #endregion
@@ -139,10 +139,7 @@ namespace BillsManager.ViewModels
 
         public override string AgentSurname
         {
-            get
-            {
-                return base.AgentSurname;
-            }
+            get { return base.AgentSurname; }
             set
             {
                 base.AgentSurname = value;
@@ -153,10 +150,7 @@ namespace BillsManager.ViewModels
 
         public override string AgentPhone
         {
-            get
-            {
-                return base.AgentPhone;
-            }
+            get { return base.AgentPhone; }
             set
             {
                 base.AgentPhone = value;
@@ -266,7 +260,7 @@ namespace BillsManager.ViewModels
             get
             {
                 return this.IsInEditMode
-                    ? (TranslationManager.Instance.Translate("EditSupplier").ToString() + (this.IsInEditMode & this.HasChanges ? " [*]" : string.Empty))
+                    ? (TranslationManager.Instance.Translate("EditSupplier").ToString() + (this.IsInEditMode & this.HasChanges ? " *" : string.Empty))
                     : TranslationManager.Instance.Translate("NewSupplier").ToString();
             }
         }
@@ -281,16 +275,14 @@ namespace BillsManager.ViewModels
         {
             if (this.HasChanges)
             {
-                var discardChangesDialog = new DialogViewModel(
-                    this.IsInEditMode ?
-                    TranslationManager.Instance.Translate("CancelEdit").ToString() :
-                    TranslationManager.Instance.Translate("CancelAdd").ToString(),
-                    TranslationManager.Instance.Translate("DiscardChangesQuestion").ToString(),
-                    new[]
-                    {
-                        new DialogResponse(ResponseType.Yes, TranslationManager.Instance.Translate("Yes").ToString()),
-                        new DialogResponse(ResponseType.No, TranslationManager.Instance.Translate("No").ToString())
-                    });
+                DialogViewModel discardChangesDialog =
+                    DialogViewModel.Show(
+                        DialogType.Question,
+                        this.IsInEditMode ?
+                        TranslationManager.Instance.Translate("CancelEdit") :
+                        TranslationManager.Instance.Translate("CancelAdd"),
+                        TranslationManager.Instance.Translate("DiscardChangesQuestion"))
+                    .YesNo();
 
                 this.windowManager.ShowDialog(discardChangesDialog);
 
@@ -299,7 +291,7 @@ namespace BillsManager.ViewModels
                     if (this.IsInEditMode)
                         this.CancelEdit();
 
-                    this.TryClose(false); // TODO: change these 2 to 1 single at the end?
+                    this.TryClose(false);
                 }
             }
             else
@@ -328,12 +320,10 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.confirmAddEditAndCloseCommand == null)
-                    this.confirmAddEditAndCloseCommand = new RelayCommand(
-                    () => this.ConfirmAddEditAndClose(),
-                    () => this.IsValid);
-
-                return this.confirmAddEditAndCloseCommand;
+                return this.confirmAddEditAndCloseCommand ?? (this.confirmAddEditAndCloseCommand =
+                    new RelayCommand(
+                        () => this.ConfirmAddEditAndClose(),
+                        () => this.IsValid));
             }
         }
 
@@ -342,11 +332,9 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.cancelAddEditAndCloseCommand == null)
-                    this.cancelAddEditAndCloseCommand = new RelayCommand(
-                    () => this.CancelddEditAndClose());
-
-                return this.cancelAddEditAndCloseCommand;
+                return this.cancelAddEditAndCloseCommand ?? (this.cancelAddEditAndCloseCommand =
+                    new RelayCommand(
+                        () => this.CancelddEditAndClose()));
             }
         }
 

@@ -9,13 +9,13 @@
     <ControlTemplate x:Key="ErrorTemplate">
 
         <Border BorderBrush="{StaticResource ErrorTemplateBorderBrush}"
-                CornerRadius="{StaticResource ViewCornerRadius}"
-                BorderThickness="1">
+                BorderThickness="1"
+                CornerRadius="{StaticResource Control.Border.CornerRadius}">
             <Grid>
-                <Path Data="{StaticResource TopRightLittleCorner}"
-                      Fill="{StaticResource ErrorTemplateBorderBrush}"
-                      HorizontalAlignment="Right"
-                      VerticalAlignment="Top" />
+                <Path HorizontalAlignment="Right"
+                      VerticalAlignment="Top"
+                      Data="{StaticResource TopRightLittleCorner}"
+                      Fill="{StaticResource ErrorTemplateBorderBrush}" />
                 <AdornedElementPlaceholder x:Name="adorner"
                                            Margin="-1"
                                            HorizontalAlignment="Stretch"
@@ -23,14 +23,14 @@
 
                 <Controls:PopupEx x:Name="errorPopup"
                                   AllowsTransparency="True"
+                                  HorizontalOffset="2"
                                   Placement="Right"
-                                  VerticalOffset="-1"
-                                  HorizontalOffset="2">
-                    <Border Background="{StaticResource ErrorTemplateBackgroundBrush}"
-                            CornerRadius="{StaticResource ViewCornerRadius}">
-                        <TextBlock Foreground="{StaticResource ErrorTemplateForegroundBrush}"
-                                   Text="{Binding ElementName=adorner, Path=AdornedElement.(Validation.Errors).CurrentItem.ErrorContent}"
-                                   Margin="4" />
+                                  VerticalOffset="-1">
+                    <Border Background="{StaticResource ErrorTemplateBackgroundBrush}" CornerRadius="{StaticResource Control.Border.CornerRadius}">
+                        <TextBlock Margin="4"
+                                   Foreground="{StaticResource ErrorTemplateForegroundBrush}"
+                                   Text="{Binding AdornedElement.(Validation.Errors).CurrentItem.ErrorContent,
+                                                  ElementName=adorner}" />
                     </Border>
                 </Controls:PopupEx>
             </Grid>
@@ -38,32 +38,20 @@
 
         <ControlTemplate.Triggers>
 
-            <Trigger Property="IsMouseOver"
-                     Value="true">
-                <Setter TargetName="errorPopup"
-                        Property="IsOpen"
-                        Value="True" />
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter TargetName="errorPopup" Property="IsOpen" Value="True" />
             </Trigger>
 
-            <Trigger Property="IsFocused"
-                     Value="true">
-                <Setter TargetName="errorPopup"
-                        Property="IsOpen"
-                        Value="True" />
+            <Trigger Property="IsFocused" Value="true">
+                <Setter TargetName="errorPopup" Property="IsOpen" Value="True" />
             </Trigger>
 
-            <DataTrigger Binding="{Binding ElementName=adorner, Path=AdornedElement.IsMouseOver}"
-                         Value="true">
-                <Setter TargetName="errorPopup"
-                        Property="IsOpen"
-                        Value="True" />
+            <DataTrigger Binding="{Binding AdornedElement.IsMouseOver, ElementName=adorner}" Value="true">
+                <Setter TargetName="errorPopup" Property="IsOpen" Value="True" />
             </DataTrigger>
 
-            <DataTrigger Binding="{Binding ElementName=adorner, Path=AdornedElement.IsFocused}"
-                         Value="true">
-                <Setter TargetName="errorPopup"
-                        Property="IsOpen"
-                        Value="True" />
+            <DataTrigger Binding="{Binding AdornedElement.IsFocused, ElementName=adorner}" Value="true">
+                <Setter TargetName="errorPopup" Property="IsOpen" Value="True" />
             </DataTrigger>
 
         </ControlTemplate.Triggers>

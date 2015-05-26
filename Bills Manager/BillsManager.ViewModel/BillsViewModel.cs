@@ -13,8 +13,8 @@ namespace BillsManager.ViewModels
 {
     public sealed partial class BillsViewModel :
         Screen,
-        IHandle<BillsFilterMessage>,
-        IHandle<SupplierDeletedMessage>,
+        IHandle<FilterMessage<BillDetailsViewModel>>,
+        IHandle<DeletedMessage<Supplier>>,
         IHandle<EditBillOrder>,
         IHandle<AddBillToSupplierOrder>
     {
@@ -89,7 +89,7 @@ namespace BillsManager.ViewModels
 
                     // IDEA: #IF !DEBUG ?
                     if (!Execute.InDesignMode)
-                        this.globalEventAggregator.Publish(new BillsListChangedMessage(this.BillViewModels.Select(bvm => bvm.ExposedBill).ToList())); // TODO: move to filtered?
+                        this.globalEventAggregator.PublishOnUIThread(new BillsListChangedMessage(this.BillViewModels.Select(bvm => bvm.ExposedBill).ToList())); // TODO: move to filtered?
                 }
             }
 
@@ -184,7 +184,7 @@ namespace BillsManager.ViewModels
         private string GetSupplierName(uint supplierID)
         {
             string supp = null;
-            this.globalEventAggregator.Publish(new SupplierNameRequest(supplierID, s => supp = s));
+            this.globalEventAggregator.PublishOnUIThread(new SupplierNameRequest(supplierID, s => supp = s));
             return supp;
         }
 
@@ -209,15 +209,19 @@ tryAdd:
 
                     this.SelectedBillViewModel = newBillDetailsVm;
 
-                    this.globalEventAggregator.Publish(new BillAddedMessage(newBillDetailsVm.ExposedBill));
+                    this.globalEventAggregator.PublishOnUIThread(new AddedMessage<Bill>(newBillDetailsVm.ExposedBill));
                 }
                 else
                 {
-                    this.windowManager.ShowDialog(new DialogViewModel(
-                        TranslationManager.Instance.Translate("AddBillFailed").ToString(),
-                            TranslationManager.Instance.Translate("AddBillFailedMessage").ToString() +
+                    this.windowManager.ShowDialog(
+                        DialogViewModel.Show(
+                            DialogType.Error,
+                            TranslationManager.Instance.Translate("AddBillFailed"),
+                            TranslationManager.Instance.Translate("AddBillFailedMessage") +
                             Environment.NewLine +
-                            TranslationManager.Instance.Translate("TryAgain").ToString()));
+                            TranslationManager.Instance.Translate("TryAgain"))
+                        .Ok());
+
                     goto tryAdd;
                 }
             }
@@ -236,77 +240,69 @@ tryAdd:
             {
                 if (this.billsProvider.Edit(baeVM.ExposedBill)) // URGENT: if the DB action fails, changes have to be rolled back!!
                 {
-                    var editedBillVM = this.BillViewModels.FirstOrDefault(bvm => bvm.ExposedBill == bill); // TODO: use singleorfefault?
+                    var editedBillVM = this.BillViewModels.FirstOrDefault(bvm => bvm.ExposedBill == bill);
                     editedBillVM.Refresh();
 
                     this.SelectedBillViewModel = null;
 
-                    this.globalEventAggregator.Publish(new BillEditedMessage(baeVM.ExposedBill, oldVersion)); // TODO: move to confirm add edit command in addeditbvm
+                    this.globalEventAggregator.PublishOnUIThread(new EditedMessage<Bill>(baeVM.ExposedBill, oldVersion)); // TODO: move to confirm add edit command in addeditbvm
                 }
                 else
                 {
                     this.windowManager.ShowDialog(
-                        new DialogViewModel(
-                            TranslationManager.Instance.Translate("EditFailed").ToString(),
-                            TranslationManager.Instance.Translate("EditFailedMessage").ToString() +
+                        DialogViewModel.Show(
+                            DialogType.Error,
+                            TranslationManager.Instance.Translate("EditFailed"),
+                            TranslationManager.Instance.Translate("EditFailedMessage") +
                             Environment.NewLine +
-                            TranslationManager.Instance.Translate("TryAgain").ToString()));
+                            TranslationManager.Instance.Translate("TryAgain"))
+                        .Ok());
                 }
             }
         }
 
         private void DeleteBill(Bill bill)
         {
-            var question = new DialogViewModel(
-                TranslationManager.Instance.Translate("DeleteBill").ToString(),
-                TranslationManager.Instance.Translate("DeleteBillQuestion").ToString() +
-                Environment.NewLine +
-                Environment.NewLine +
-                this.GetBillSummary(bill),
-                new[]
-                {
-                    new DialogResponse(
-                        ResponseType.Yes,
-                        TranslationManager.Instance.Translate("Delete").ToString(),
-                        TranslationManager.Instance.Translate("Yes").ToString()),
-                    new DialogResponse(ResponseType.No,TranslationManager.Instance.Translate("No").ToString())
-                });
+            DialogViewModel deleteBillConfirmationDialog =
+                DialogViewModel.Show(
+                    DialogType.Question,
+                    TranslationManager.Instance.Translate("DeleteBill"),
+                    TranslationManager.Instance.Translate("DeleteBillQuestion") +
+                    Environment.NewLine +
+                    Environment.NewLine +
+                    this.GetBillSummary(bill))
+                .YesNo(TranslationManager.Instance.Translate("Delete"));
 
-            this.windowManager.ShowDialog(question);
+            this.windowManager.ShowDialog(deleteBillConfirmationDialog);
 
-            if (question.FinalResponse == ResponseType.Yes)
+            if (deleteBillConfirmationDialog.FinalResponse == ResponseType.Yes)
             {
                 if (this.billsProvider.Delete(bill))
                 {
-                    this.BillViewModels.Remove(this.BillViewModels.Single(bvm => bvm.ExposedBill == bill));
+                    this.BillViewModels.Remove(this.BillViewModels.FirstOrDefault(bvm => bvm.ExposedBill == bill));
                     //this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
 
                     this.SelectedBillViewModel = null;
 
-                    this.globalEventAggregator.Publish(new BillDeletedMessage(bill));
+                    this.globalEventAggregator.PublishOnUIThread(new DeletedMessage<Bill>(bill));
                 }
             }
         }
 
         private void PayBill(Bill bill)
         {
-            var dialog = new DialogViewModel(
-                TranslationManager.Instance.Translate("PayBill").ToString(),
-                TranslationManager.Instance.Translate("PayBillQuestion").ToString() +
-                Environment.NewLine +
-                Environment.NewLine +
-                this.GetBillSummary(bill),
-                new[] 
-                { 
-                    new DialogResponse(
-                        ResponseType.Yes,
-                        TranslationManager.Instance.Translate("PayBill").ToString()),
-                    new DialogResponse(
-                        ResponseType.No,
-                        TranslationManager.Instance.Translate("No").ToString()) 
-                });
+            DialogViewModel payBillConfirmationDialog =
+                DialogViewModel.Show(
+                    DialogType.Question,
+                    TranslationManager.Instance.Translate("PayBill"),
+                    TranslationManager.Instance.Translate("PayBillQuestion") +
+                    Environment.NewLine +
+                    Environment.NewLine +
+                    this.GetBillSummary(bill))
+                .YesNo(
+                    TranslationManager.Instance.Translate("PayBill"));
 
-            if (this.windowManager.ShowDialog(dialog) == true)
+            if (this.windowManager.ShowDialog(payBillConfirmationDialog) == true)
             {
                 Bill oldVersion = (Bill)bill.Clone();
 
@@ -319,7 +315,7 @@ tryAdd:
 
                     this.SelectedBillViewModel = null;
 
-                    this.globalEventAggregator.Publish(new BillEditedMessage(bill, oldVersion));
+                    this.globalEventAggregator.PublishOnUIThread(new EditedMessage<Bill>(bill, oldVersion));
                 }
             }
         }
@@ -333,7 +329,7 @@ tryAdd:
 
         #region message handlers
 
-        public void Handle(BillsFilterMessage message)
+        public void Handle(FilterMessage<BillDetailsViewModel> message)
         {
             this.Filters = message.Filters;
 
@@ -341,9 +337,9 @@ tryAdd:
                 this.SelectedBillViewModel = null;
         }
 
-        public void Handle(SupplierDeletedMessage message)
+        public void Handle(DeletedMessage<Supplier> message)
         {
-            var bvmsToDelete = this.BillViewModels.Where(bvm => bvm.SupplierID == message.DeletedSupplier.ID).ToList();
+            var bvmsToDelete = this.BillViewModels.Where(bvm => bvm.SupplierID == message.DeletedItem.ID).ToArray();
 
             foreach (var bvm in bvmsToDelete)
             {
@@ -392,7 +388,7 @@ tryAdd:
         private IEnumerable<Supplier> GetAvailableSuppliers()
         {
             IEnumerable<Supplier> supps = Enumerable.Empty<Supplier>();
-            this.globalEventAggregator.Publish(new AvailableSuppliersRequest((s) => supps = s));
+            this.globalEventAggregator.PublishOnUIThread(new AvailableSuppliersRequest((s) => supps = s));
             return supps;
         }
 
@@ -407,10 +403,9 @@ tryAdd:
         {
             get
             {
-                if (this.addNewBillCommand == null)
-                    this.addNewBillCommand = new RelayCommand(() => this.AddBill());
-
-                return this.addNewBillCommand;
+                return this.addNewBillCommand ?? (this.addNewBillCommand = 
+                    new RelayCommand(
+                        () => this.AddBill()));
             }
         }
 
@@ -419,12 +414,10 @@ tryAdd:
         {
             get
             {
-                if (this.editBillCommand == null)
-                    this.editBillCommand = new RelayCommand<BillDetailsViewModel>(
+                return this.editBillCommand ?? (this.editBillCommand = 
+                    new RelayCommand<BillDetailsViewModel>(
                         p => this.EditBill(p.ExposedBill),
-                        p => p != null);
-
-                return this.editBillCommand;
+                        p => p != null));
             }
         }
 
@@ -433,12 +426,10 @@ tryAdd:
         {
             get
             {
-                if (this.deleteBillCommand == null)
-                    this.deleteBillCommand = new RelayCommand<BillDetailsViewModel>(
+                return this.deleteBillCommand ?? (this.deleteBillCommand = 
+                    new RelayCommand<BillDetailsViewModel>(
                         p => this.DeleteBill(p.ExposedBill),
-                        p => p != null);
-
-                return this.deleteBillCommand;
+                        p => p != null));
             }
         }
 
@@ -447,12 +438,10 @@ tryAdd:
         {
             get
             {
-                if (this.payBillCommand == null)
-                    this.payBillCommand = new RelayCommand<BillDetailsViewModel>(
+                return this.payBillCommand ?? (this.payBillCommand = 
+                    new RelayCommand<BillDetailsViewModel>(
                         p => this.PayBill(p.ExposedBill),
-                        p => p != null && !p.IsPaid);
-
-                return this.payBillCommand;
+                        p => p != null && !p.IsPaid));
             }
         }
 
@@ -461,12 +450,10 @@ tryAdd:
         {
             get
             {
-                if (this.showBillDetailsCommand == null)
-                    this.showBillDetailsCommand = new RelayCommand<BillDetailsViewModel>(
+                return this.showBillDetailsCommand ?? (this.showBillDetailsCommand = 
+                    new RelayCommand<BillDetailsViewModel>(
                         p => this.ShowBillDetails(p),
-                        p => p != null);
-
-                return this.showBillDetailsCommand;
+                        p => p != null));
             }
         }
 

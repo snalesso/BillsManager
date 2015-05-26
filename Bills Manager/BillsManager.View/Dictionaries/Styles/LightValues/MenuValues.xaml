@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ViewValues.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!--
+        xmlns:presentation="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
+        <presentation:Visibility x:Key="Menu.Header.Visibility">Collapsed</presentation:Visibility>
+    -->
+
+    <SolidColorBrush x:Key="Menu.Background.Normal" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+
+    <SolidColorBrush x:Key="Menu.BorderBrush.Normal" Color="{Binding Source={StaticResource View.BorderBrush}, Path=Color}" />
+
+    <SolidColorBrush x:Key="Menu.Foreground.Normal" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+
+    <!--  #FF28A43D  -->
+    <!--  #FF0087C8  -->
+    <SolidColorBrush x:Key="MenuHoverBackgroundBrush" Color="{Binding Source={StaticResource View.BorderBrush}, Path=Color}" />
+
+    <SolidColorBrush x:Key="MenuHoverBorderBrush" Color="{Binding Source={StaticResource View.BorderBrush}, Path=Color}" />
+
+    <SolidColorBrush x:Key="MenuHoverForegroundBrush" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+
+    <SolidColorBrush x:Key="MenuPressedBackgroundBrush" Color="#FF106024" />
+
+    <!--  #FF106024  -->
+    <SolidColorBrush x:Key="MenuPressedForegroundBrush" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+
+    <SolidColorBrush x:Key="MenuPressedBorderBrush" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+
+    <SolidColorBrush x:Key="MenuDisabledForegroundBrush" Color="#FFC9C9C9" />
+
+    <SolidColorBrush x:Key="MenuDisabledBackgroundBrush" Color="#FFC9C9C9" />
+
+    <SolidColorBrush x:Key="MenuDisabledBorderBrush" Color="#FFC9C9C9" />
+
+</ResourceDictionary>

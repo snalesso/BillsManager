@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             d:DataContext="{d:DesignInstance Type=ViewModel:SearchBillsViewModel, IsDesignTimeCreatable=True}"
+             d:DataContext="{d:DesignInstance Type=ViewModel:SearchBillsViewModel,
+                                              IsDesignTimeCreatable=True}"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -13,55 +14,75 @@
     </UserControl.Resources>
 
     <UserControl.Background>
-        <Binding Mode="OneTime"
-                 Source="{StaticResource ViewBackgroundBrush}" />
+        <Binding Mode="OneTime" Source="{StaticResource View.Background}" />
     </UserControl.Background>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
+            <RowDefinition Height="Auto" />
+            <!--<RowDefinition Height="Auto" />-->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="{StaticResource View.MarginSize}" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="{StaticResource View.MarginSize}" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="{StaticResource View.MarginSize}" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="{StaticResource View.MarginSize}" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="{StaticResource View.MarginSize}" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Margin="0 2"
-                   Foreground="{StaticResource ViewTitleBrush}"
+        <!--<Rectangle Grid.ColumnSpan="12"
+                   Height="{StaticResource Separator.Size}"
+                   Margin="0 1"
+                   Fill="{StaticResource View.Foreground.Disabled}" />-->
+
+        <TextBlock Grid.Row="1"
+                   Margin="0 2"
+                   Foreground="{StaticResource View.Title.Foreground}"
                    Text="{loc:Translate Payment}" />
 
-        <CheckBox Grid.Row="2"
+        <TextBlock Grid.Row="1"
+                   Grid.Column="2"
+                   Margin="0 2"
+                   Foreground="{StaticResource View.Title.Foreground}"
+                   Text="{loc:Translate ReleaseDate}" />
+
+        <TextBlock Grid.Row="1"
+                   Grid.Column="4"
+                   Margin="0 2"
+                   Foreground="{StaticResource View.Title.Foreground}"
+                   Text="{loc:Translate DueDate}" />
+
+        <TextBlock Grid.Row="1"
+                   Grid.Column="6"
+                   Margin="0 2"
+                   Foreground="{StaticResource View.Title.Foreground}"
+                   Text="{loc:Translate Supplier}" />
+
+        <CheckBox Grid.Row="3"
                   HorizontalAlignment="Left"
                   VerticalAlignment="Center"
                   Content="{Binding IsPaidFilterState}"
                   IsChecked="{Binding IsPaidFilterValue}"
                   IsThreeState="True" />
 
-        <CheckBox Grid.Row="2"
+        <CheckBox Grid.Row="3"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
                   Content="{loc:Translate NotPaid_toBills}"
                   Visibility="Hidden" />
 
 
-        <TextBlock Grid.Column="2"
-                   Margin="0 2"
-                   Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate ReleaseDate}" />
-
-        <StackPanel Grid.Row="2"
+        <StackPanel Grid.Row="3"
                     Grid.Column="2"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
@@ -74,12 +95,7 @@
                         SelectedDate="{Binding ReleaseDateFilterValue}" />
         </StackPanel>
 
-        <TextBlock Grid.Column="4"
-                   Margin="0 2"
-                   Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate DueDate}" />
-
-        <StackPanel Grid.Row="2"
+        <StackPanel Grid.Row="3"
                     Grid.Column="4"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
@@ -92,12 +108,7 @@
                         SelectedDate="{Binding DueDateFilterValue}" />
         </StackPanel>
 
-        <TextBlock Grid.Column="6"
-                   Margin="0 2"
-                   Foreground="{StaticResource ViewTitleBrush}"
-                   Text="{loc:Translate Supplier}" />
-
-        <StackPanel Grid.Row="2"
+        <StackPanel Grid.Row="3"
                     Grid.Column="6"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
@@ -111,7 +122,8 @@
                       MinWidth="230"
                       HorizontalAlignment="Left"
                       VerticalAlignment="Center"
-                      ItemsSource="{Binding AvailableSuppliers, IsAsync=True}"
+                      ItemsSource="{Binding AvailableSuppliers,
+                                            IsAsync=True}"
                       SelectedValue="{Binding SelectedSupplier}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -121,7 +133,7 @@
             </ComboBox>
         </StackPanel>
 
-        <Button Grid.Row="2"
+        <Button Grid.Row="3"
                 Grid.Column="8"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
@@ -129,13 +141,19 @@
                 Content="{loc:Translate DoFilter}"
                 Focusable="False" />
 
-        <Button Grid.Row="2"
+        <Button Grid.Row="3"
                 Grid.Column="10"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Command="{Binding ExitSearchCommand}"
                 Content="{loc:Translate ShowAll}"
                 Focusable="False" />
+
+        <!--<Rectangle Grid.Row="4"
+                   Grid.ColumnSpan="12"
+                   Height="{StaticResource Separator.Size}"
+                   Margin="0 1"
+                   Fill="{StaticResource View.Foreground.Disabled}" />-->
 
     </Grid>
 </UserControl>

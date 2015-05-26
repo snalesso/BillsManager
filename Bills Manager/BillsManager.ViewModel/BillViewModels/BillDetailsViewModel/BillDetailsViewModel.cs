@@ -13,7 +13,7 @@ namespace BillsManager.ViewModels
     [DebuggerDisplay("Code = {Code}")]
     public partial class BillDetailsViewModel :
         BillViewModel,
-        IHandle<SupplierEditedMessage>
+        IHandle<EditedMessage<Supplier>>
     {
         #region fields
 
@@ -181,7 +181,7 @@ namespace BillsManager.ViewModels
             {
                 return
                     /*TranslationManager.Instance.Translate(*/
-                    typeof(ViewModels.DueAlert)
+                    typeof(DueAlert)
                     .GetMember(this.DueAlert.ToString())[0]
                     .GetAttributes<LocalizedDisplayNameAttribute>(true).FirstOrDefault().DisplayName
                     /*).ToString()*/;
@@ -207,21 +207,21 @@ namespace BillsManager.ViewModels
         {
             // TODO: move supplier logic to BillsViewModel (same for supp's obligation amount)
             string supp = string.Empty;
-            this.globalEventAggregator.Publish(new SupplierNameRequest(this.SupplierID, s => supp = s));
+            this.globalEventAggregator.PublishOnUIThread(new SupplierNameRequest(this.SupplierID, s => supp = s));
             return supp;
         }
 
         private void SwitchToEdit()
         {
             this.TryClose();
-            this.globalEventAggregator.Publish(new EditBillOrder(this.ExposedBill));
+            this.globalEventAggregator.PublishOnUIThread(new EditBillOrder(this.ExposedBill));
         }
 
         #region message handlers
 
-        public void Handle(SupplierEditedMessage message)
+        public void Handle(EditedMessage<Supplier> message)
         {
-            if (this.SupplierID == message.OldSupplierVersion.ID)
+            if (this.SupplierID == message.OldItem.ID)
             {
                 this.NotifyOfPropertyChange(() => this.SupplierName);
             }
@@ -238,11 +238,9 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.switchToEditCommand == null)
-                    this.switchToEditCommand = new RelayCommand(
-                        () => this.SwitchToEdit());
-
-                return this.switchToEditCommand;
+                return this.switchToEditCommand ?? (this.switchToEditCommand =
+                    new RelayCommand(
+                        () => this.SwitchToEdit()));
             }
         }
 
@@ -251,11 +249,9 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.closeDetailsViewCommand == null)
-                    this.closeDetailsViewCommand = new RelayCommand(
-                    () => this.TryClose());
-
-                return this.closeDetailsViewCommand;
+                return this.closeDetailsViewCommand ?? (this.closeDetailsViewCommand =
+                    new RelayCommand(
+                        () => this.TryClose()));
             }
         }
 

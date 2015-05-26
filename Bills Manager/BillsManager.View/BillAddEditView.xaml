@@ -7,52 +7,47 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             d:DataContext="{d:DesignInstance Type=ViewModels:BillAddEditViewModel, IsDesignTimeCreatable=True}"
+             d:DataContext="{d:DesignInstance Type=ViewModels:BillAddEditViewModel}"
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <!--  \Values  -->
         <ResourceDictionary Source="Dictionaries\Styles.xaml" />
     </UserControl.Resources>
 
     <UserControl.Background>
-        <Binding Mode="OneTime"
-                 Source="{StaticResource ViewBackgroundBrush}" />
+        <Binding Mode="OneTime" Source="{StaticResource View.Background}" />
     </UserControl.Background>
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="{StaticResource View.MarginSize}" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="{StaticResource MarginSize}" />
-            <ColumnDefinition Width="Auto"
-                              MinWidth="150" />
-            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="{StaticResource View.MarginSize}" />
+            <ColumnDefinition Width="Auto" MinWidth="150" />
+            <ColumnDefinition Width="{StaticResource View.MarginSize}" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="{StaticResource MarginSize}" />
-            <ColumnDefinition Width="Auto"
-                              MinWidth="150" />
-            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="{StaticResource View.MarginSize}" />
+            <ColumnDefinition Width="Auto" MinWidth="150" />
+            <ColumnDefinition Width="{StaticResource View.MarginSize}" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
-            <RowDefinition Height="18" />
+            <RowDefinition Height="{StaticResource View.Region.Spacing.Medium}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
         </Grid.RowDefinitions>
 
         <!--  Details  -->
@@ -77,7 +72,8 @@
                     Width="Auto"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Center"
-                    DisplayDateEnd="{Binding DisplayDateEndForReleaseDate, Mode=OneTime}"
+                    DisplayDateEnd="{Binding DisplayDateEndForReleaseDate,
+                                             Mode=OneTime}"
                     FirstDayOfWeek="Monday"
                     SelectedDate="{Binding ReleaseDate}"
                     TabIndex="0" />
@@ -148,7 +144,9 @@
                  Language="en-US"
                  MaxLines="1"
                  TabIndex="4"
-                 Text="{Binding Amount, StringFormat=\{0:0.00##\}, ValidatesOnDataErrors=True}"
+                 Text="{Binding Amount,
+                                StringFormat=\{0:0.00##\},
+                                ValidatesOnDataErrors=True}"
                  TextAlignment="Right" />
 
 
@@ -166,7 +164,8 @@
                  GotMouseCapture="SelectAllText"
                  MaxLines="1"
                  TabIndex="5"
-                 Text="{Binding Code, UpdateSourceTrigger=PropertyChanged}" />
+                 Text="{Binding Code,
+                                UpdateSourceTrigger=PropertyChanged}" />
 
 
         <TextBlock Grid.Row="9"
@@ -185,7 +184,8 @@
                  Language="en-US"
                  MaxLines="1"
                  TabIndex="6"
-                 Text="{Binding Agio, StringFormat=\{0:0.00##\}}"
+                 Text="{Binding Agio,
+                                StringFormat=\{0:0.00##\}}"
                  TextAlignment="Right" />
 
 
@@ -205,7 +205,8 @@
                  Language="en-US"
                  MaxLines="1"
                  TabIndex="7"
-                 Text="{Binding AdditionalCosts, StringFormat=\{0:0.00##\}}"
+                 Text="{Binding AdditionalCosts,
+                                StringFormat=\{0:0.00##\}}"
                  TextAlignment="Right" />
 
 
@@ -224,8 +225,11 @@
                   IsEditable="True"
                   IsTextSearchCaseSensitive="False"
                   IsTextSearchEnabled="True"
-                  ItemsSource="{Binding AvailableSuppliers, UpdateSourceTrigger=PropertyChanged}"
-                  SelectedItem="{Binding SelectedSupplier, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                  ItemsSource="{Binding AvailableSuppliers,
+                                        UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding SelectedSupplier,
+                                         UpdateSourceTrigger=PropertyChanged,
+                                         ValidatesOnDataErrors=True}"
                   TabIndex="8"
                   TextSearch.TextPath="Name">
             <ComboBox.ItemTemplate>
@@ -250,12 +254,14 @@
                  VerticalAlignment="Center"
                  HorizontalScrollBarVisibility="Disabled"
                  TabIndex="9"
-                 Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                 Text="{Binding Notes,
+                                UpdateSourceTrigger=PropertyChanged,
+                                ValidatesOnDataErrors=True}"
                  TextWrapping="Wrap"
                  VerticalScrollBarVisibility="Auto" />
 
 
-        <StackPanel Grid.Row="16"
+        <StackPanel Grid.Row="15"
                     Grid.Column="1"
                     Grid.ColumnSpan="7"
                     HorizontalAlignment="Right"
@@ -265,7 +271,7 @@
                     Content="{loc:Translate Ok}"
                     TabIndex="10">
                 <Button.Margin>
-                    <Thickness Right="{StaticResource MarginSizeValue}" />
+                    <Thickness Right="{StaticResource View.MarginSize.Value}" />
                 </Button.Margin>
             </Button>
             <Button Width="80"

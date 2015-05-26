@@ -1,14 +1,10 @@
-﻿using System.Collections.Generic;
-using BillsManager.Models;
+﻿using BillsManager.Models;
+using System.Collections.Generic;
 
 namespace BillsManager.Services.Providers
 {
     public interface ISuppliersProvider
     {
-        //string DBPath { get; } // TODO: obsolete?
-
-        //string DBName { get; } // TODO: obsolete?
-
         uint GetLastSupplierID();
 
         IEnumerable<Supplier> GetAllSuppliers();

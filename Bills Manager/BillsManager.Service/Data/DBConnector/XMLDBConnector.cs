@@ -33,39 +33,19 @@ namespace BillsManager.Services.Providers
         private const string ATT_CREATION_DATE = @"CreationDate";
         private const string ATT_LAST_ID = @"LastID";
 
+        private readonly string dbPath;
+
         private XDocument xmlDB;
 
         #endregion
 
         #region ctor
 
-        public XMLDBConnector(string fullDbPath)
+        public XMLDBConnector(string dbPath)
         {
-            this.EnsureDbFileExists(fullDbPath);
-
-            this.DBPath = fullDbPath;
+            this.dbPath = dbPath;
+            this.EnsureDbFileExists();
         }
-
-        #endregion
-
-        #region properties
-
-        private string dbPath;
-        public string DBPath
-        {
-            get { return this.dbPath; }
-            private set
-            {
-                if (this.dbPath == value) return;
-
-                this.dbPath = value;
-            }
-        }
-
-        /*public string DBName
-        {
-            get { return System.IO.Path.GetFileNameWithoutExtension(this.DBPath); }
-        }*/
 
         #endregion
 
@@ -77,7 +57,7 @@ namespace BillsManager.Services.Providers
         {
             try
             {
-                this.xmlDB = XDocument.Load(this.DBPath);
+                this.xmlDB = XDocument.Load(this.dbPath);
             }
             catch
             {
@@ -90,7 +70,7 @@ namespace BillsManager.Services.Providers
         {
             try
             {
-                this.xmlDB.Save(this.DBPath);
+                this.xmlDB.Save(this.dbPath);
             }
             catch
             {
@@ -115,7 +95,7 @@ namespace BillsManager.Services.Providers
 
         public IEnumerable<Bill> GetAllBills()
         {
-            var q = 
+            var q =
                 this.xmlDB.Root
                 .Element(NS_BILLS)
                 .Elements(ITEM_BILL)
@@ -171,7 +151,7 @@ namespace BillsManager.Services.Providers
         {
             var XBill = this.xmlDB.Root.Element(NS_BILLS)
                 .Elements(ITEM_BILL)
-                .Single(elem => elem.Attribute("ID").Value == bill.ID.ToString());
+                .FirstOrDefault(elem => elem.Attribute("ID").Value == bill.ID.ToString());
 
             if (XBill == null)
                 return false;
@@ -200,10 +180,12 @@ namespace BillsManager.Services.Providers
 
         public bool Delete(Bill bill)
         {
-            this.xmlDB.Root.Element(NS_BILLS)
+            var xBill = this.xmlDB.Root.Element(NS_BILLS)
                 .Elements()
-                .Single(elem => elem.Attribute("ID").Value == bill.ID.ToString())
-                .Remove();
+                .FirstOrDefault(elem => elem.Attribute("ID").Value == bill.ID.ToString());
+
+            if (xBill != null)
+                xBill.Remove();
 
             return true;
         }
@@ -241,7 +223,7 @@ namespace BillsManager.Services.Providers
 
         public IEnumerable<Supplier> GetAllSuppliers()
         {
-            var q = 
+            var q =
                 this.xmlDB.Root
                 .Element(NS_SUPPLIERS)
                 .Elements(ITEM_SUPPLIER)
@@ -306,11 +288,9 @@ namespace BillsManager.Services.Providers
 
         public bool Edit(Supplier supplier)
         {
-            // TODO: use replaceWith
-
             var XSupplier = this.xmlDB.Root.Element(NS_SUPPLIERS)
                 .Elements(ITEM_SUPPLIER)
-                .Single(elem => elem.Attribute("ID").Value == supplier.ID.ToString());
+                .FirstOrDefault(elem => elem.Attribute("ID").Value == supplier.ID.ToString());
 
             if (XSupplier == null)
                 return false;
@@ -327,10 +307,12 @@ namespace BillsManager.Services.Providers
 
         public bool Delete(Supplier supplier)
         {
-            this.xmlDB.Root.Element(NS_SUPPLIERS)
+            var xSupplier = this.xmlDB.Root.Element(NS_SUPPLIERS)
                 .Elements()
-                .Single(elem => elem.Attribute("ID").Value == supplier.ID.ToString())
-                .Remove();
+                .FirstOrDefault(elem => elem.Attribute("ID").Value == supplier.ID.ToString());
+
+            if (xSupplier != null)
+                xSupplier.Remove();
 
             //this.DecreaseSuppliersCount();
 
@@ -545,9 +527,9 @@ namespace BillsManager.Services.Providers
                 .SetValue(uint.Parse(this.xmlDB.Root.Element(ns).Attribute(ATT_LAST_ID).Value) + 1);
         }
 
-        private void EnsureDbFileExists(string fullDbFilePath)
+        private void EnsureDbFileExists()
         {
-            if (File.Exists(fullDbFilePath)) return;
+            if (File.Exists(this.dbPath)) return;
 
             var newXDoc = new XDocument();
 
@@ -561,9 +543,9 @@ namespace BillsManager.Services.Providers
                     new XElement(NS_TAGS, new XAttribute(ATT_LAST_ID, START_INDEX))/*,
                         new XElement(NS_AGENTS, new XAttribute(ATT_LAST_ID, START_INDEX))*/));
 
-            Directory.CreateDirectory(Path.GetDirectoryName(fullDbFilePath));
+            Directory.CreateDirectory(Path.GetDirectoryName(this.dbPath));
 
-            newXDoc.Save(fullDbFilePath);
+            newXDoc.Save(this.dbPath);
         }
 
         #endregion

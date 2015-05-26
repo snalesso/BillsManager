@@ -6,18 +6,18 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Values.xaml" />
-          <ResourceDictionary Source="ErrorTemplate.xaml" />  
+        <ResourceDictionary Source="ErrorTemplate.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type DatePickerTextBox}">
 
-        <Setter Property="Foreground" Value="{StaticResource ViewForegroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource View.Foreground.Normal}" />
 
-        <Setter Property="Background" Value="{StaticResource ViewBackgroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource View.Background}" />
 
-        <Setter Property="BorderBrush" Value="{StaticResource ViewBorderBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource View.BorderBrush}" />
 
-        <Setter Property="BorderThickness" Value="{StaticResource ViewBorderThickness}" />
+        <Setter Property="BorderThickness" Value="{StaticResource View.Border.Thickness}" />
 
         <Setter Property="Padding" Value="0" />
 
@@ -39,9 +39,9 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}">
                         <Border.CornerRadius>
-                            <CornerRadius BottomLeft="{StaticResource ViewCornerRadiusValue}"
+                            <CornerRadius BottomLeft="{StaticResource Control.Border.CornerRadius.Value}"
                                           BottomRight="0"
-                                          TopLeft="{StaticResource ViewCornerRadiusValue}"
+                                          TopLeft="{StaticResource Control.Border.CornerRadius.Value}"
                                           TopRight="0" />
                         </Border.CornerRadius>
 
@@ -58,7 +58,7 @@
                             <!--
                                 <Border x:Name="FocusVisual"
                                 BorderBrush="#FF00FF94"
-                                CornerRadius="{StaticResource ViewCornerRadius}"
+                                CornerRadius="{StaticResource Control.Border.CornerRadius}"
                                 IsHitTestVisible="False"
                                 Opacity="1" />
                             -->
@@ -91,46 +91,34 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        
+
     </Style>
 
     <Style TargetType="{x:Type DatePicker}">
-        
-        <Setter Property="Validation.ErrorTemplate"
-                Value="{StaticResource ErrorTemplate}" />
 
-        <Setter Property="OverridesDefaultStyle"
-                Value="True" />
+        <Setter Property="Validation.ErrorTemplate" Value="{StaticResource ErrorTemplate}" />
 
-        <Setter Property="Foreground"
-                Value="{StaticResource ViewForegroundBrush}" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
 
-        <Setter Property="Background"
-                Value="{StaticResource ViewBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource View.Foreground.Normal}" />
 
-        <Setter Property="BorderBrush"
-                Value="{StaticResource ViewBorderBrush}" />
+        <Setter Property="Background" Value="{StaticResource View.Background}" />
 
-        <Setter Property="BorderThickness"
-                Value="{StaticResource ViewBorderThickness}" />
+        <Setter Property="BorderBrush" Value="{StaticResource View.BorderBrush}" />
 
-        <Setter Property="Padding"
-                Value="3 2" />
+        <Setter Property="BorderThickness" Value="{StaticResource View.Border.Thickness}" />
 
-        <Setter Property="Width"
-                Value="130" />
+        <Setter Property="Padding" Value="3 2" />
 
-        <Setter Property="IsTodayHighlighted"
-                Value="True" />
+        <Setter Property="Width" Value="130" />
 
-        <Setter Property="SelectedDateFormat"
-                Value="Short" />
+        <Setter Property="IsTodayHighlighted" Value="True" />
 
-        <Setter Property="HorizontalContentAlignment"
-                Value="Center" />
+        <Setter Property="SelectedDateFormat" Value="Short" />
 
-        <Setter Property="HorizontalContentAlignment"
-                Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -140,14 +128,13 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{StaticResource ViewCornerRadius}">
+                            CornerRadius="{StaticResource Control.Border.CornerRadius}">
 
                         <Border.Child>
                             <Grid x:Name="PART_Root">
 
                                 <Grid.Resources>
-                                    <ControlTemplate x:Key="DropDownButtonTemplate"
-                                                     TargetType="{x:Type Button}">
+                                    <ControlTemplate x:Key="DropDownButtonTemplate" TargetType="{x:Type Button}">
                                         <Grid>
 
                                             <Grid.ColumnDefinitions>
@@ -178,7 +165,8 @@
                                                        VerticalAlignment="Center"
                                                        FontSize="12"
                                                        FontWeight="Medium"
-                                                       Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"
+                                                       Text="{Binding Content,
+                                                                      RelativeSource={RelativeSource TemplatedParent}}"
                                                        TextAlignment="Center" />
                                         </Grid>
                                     </ControlTemplate>
@@ -189,19 +177,14 @@
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
 
-                                <Button x:Name="PART_Button"
-                                        Grid.Column="1"
-                                        Width="{TemplateBinding ActualHeight}"
-                                        Height="{TemplateBinding ActualHeight}"
-                                        Margin="0,-1,-1,-1"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Stretch"
-                                        Background="{TemplateBinding Background}"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        Content="15"
-                                        Focusable="False"
-                                        Foreground="{TemplateBinding Foreground}"
-                                        Template="{StaticResource DropDownButtonTemplate}" />
+                                <Popup x:Name="PART_Popup"
+                                       AllowsTransparency="True"
+                                       Placement="Bottom"
+                                       PlacementTarget="{Binding ElementName=border}"
+                                       StaysOpen="False"
+                                       VerticalOffset="-3" />
+
+                                <!--  </Grid>  -->
 
                                 <DatePickerTextBox x:Name="PART_TextBox"
                                                    Grid.Column="0"
@@ -241,14 +224,19 @@
                                     RadiusY="1" />
                                 -->
 
-                                <Popup x:Name="PART_Popup"
-                                       AllowsTransparency="True"
-                                       Placement="Bottom"
-                                       PlacementTarget="{Binding ElementName=border}"
-                                       StaysOpen="False"
-                                       VerticalOffset="-3" />
-
-                                <!--  </Grid>  -->
+                                <Button x:Name="PART_Button"
+                                        Grid.Column="1"
+                                        Width="{TemplateBinding ActualHeight}"
+                                        Height="{TemplateBinding ActualHeight}"
+                                        Margin="0,-1,-1,-1"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        Content="15"
+                                        Focusable="False"
+                                        Foreground="{TemplateBinding Foreground}"
+                                        Template="{StaticResource DropDownButtonTemplate}" />
 
                             </Grid>
                         </Border.Child>
@@ -261,14 +249,13 @@
 
         <Style.Triggers>
 
-            <Trigger Property="IsEnabled"
-                     Value="false">
-                <!--<Setter Property="Background"
-                        Value="{StaticResource ButtonDisabledBackgroundBrush}" />-->
-                <Setter Property="BorderBrush"
-                        Value="{StaticResource ButtonDisabledBorderBrush}" />
-                <Setter Property="Foreground"
-                        Value="{StaticResource ViewDisabledForegroundBrush}" />
+            <Trigger Property="IsEnabled" Value="false">
+                <!--
+                    <Setter Property="Background"
+                    Value="{StaticResource Button.Background.Disabled}" />
+                -->
+                <Setter Property="BorderBrush" Value="{StaticResource Button.BorderBrush.Disabled}" />
+                <Setter Property="Foreground" Value="{StaticResource View.Foreground.Disabled}" />
             </Trigger>
 
         </Style.Triggers>

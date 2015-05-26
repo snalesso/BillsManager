@@ -13,10 +13,10 @@ namespace BillsManager.ViewModels
     public partial class SearchBillsViewModel :
         Screen,
         IHandle<SuppliersListChangedMessage>,
-        IHandle<SupplierAddedMessage>,
-        IHandle<SupplierEditedMessage>,
-        IHandle<SupplierDeletedMessage>,
-        IHandle<BillEditedMessage>,
+        IHandle<AddedMessage<Supplier>>,
+        IHandle<EditedMessage<Supplier>>,
+        IHandle<DeletedMessage<Supplier>>,
+        IHandle<EditedMessage<Bill>>,
         IHandle<ShowSuppliersBillsOrder>,
         IHandle<SelectedSupplierChagedMessage>
     {
@@ -37,7 +37,7 @@ namespace BillsManager.ViewModels
 
         #region ctor
 
-        // TODO: should available suppliers be injected?
+        // TODO: should available suppliers be injected? As observable, maybe?
         public SearchBillsViewModel(
             IEventAggregator globalEventAggregator)
         {
@@ -119,7 +119,7 @@ namespace BillsManager.ViewModels
             get
             {
                 if (this.availableSuppliers == null)
-                    this.globalEventAggregator.Publish(
+                    this.globalEventAggregator.PublishOnUIThread(
                         new AvailableSuppliersRequest(suppliers => this.availableSuppliers = suppliers));
 
                 return this.availableSuppliers;
@@ -256,9 +256,9 @@ namespace BillsManager.ViewModels
             if (this.UseDueDateFilter) filters.Add(this.dueDateFilter);
 
             if (filters.Count > 0)
-                this.globalEventAggregator.Publish(new BillsFilterMessage(filters));
+                this.globalEventAggregator.PublishOnUIThread(new FilterMessage<BillDetailsViewModel>(filters));
             else
-                this.globalEventAggregator.Publish(new BillsFilterMessage(null));
+                this.globalEventAggregator.PublishOnUIThread(new FilterMessage<BillDetailsViewModel>(null));
         }
 
         private void DeactivateAllFilters()
@@ -284,14 +284,14 @@ namespace BillsManager.ViewModels
             }
         }
 
-        public void Handle(SupplierAddedMessage message)
+        public void Handle(AddedMessage<Supplier> message)
         {
-            this.AvailableSuppliers = this.AvailableSuppliers.Concat(new[] { message.AddedSupplier });
+            this.AvailableSuppliers = this.AvailableSuppliers.Concat(new[] { message.AddedItem });
         }
 
-        public void Handle(SupplierEditedMessage message)
+        public void Handle(EditedMessage<Supplier> message)
         {
-            if (message.OldSupplierVersion.Name != message.NewSupplierVersion.Name)
+            if (message.OldItem.Name != message.NewItem.Name)
             {
                 var supps = this.AvailableSuppliers;
                 var selSupp = this.SelectedSupplier;
@@ -304,31 +304,31 @@ namespace BillsManager.ViewModels
             }
         }
 
-        public void Handle(SupplierDeletedMessage message)
+        public void Handle(DeletedMessage<Supplier> message)
         {
-            this.AvailableSuppliers = this.AvailableSuppliers.Where(supplier => supplier != message.DeletedSupplier);
+            this.AvailableSuppliers = this.AvailableSuppliers.Where(supplier => supplier != message.DeletedItem);
             this.SelectedSupplier =
-                (this.SelectedSupplier == message.DeletedSupplier ?
+                (this.SelectedSupplier == message.DeletedItem ?
                 this.AvailableSuppliers.FirstOrDefault() :
                 this.SelectedSupplier);
         }
 
 
-        public void Handle(BillEditedMessage message)
+        public void Handle(EditedMessage<Bill> message)
         {
             bool refreshNeeded = false;
 
             if (this.UseSupplierFilter)
-                refreshNeeded |= (message.OldBill.SupplierID != message.Bill.SupplierID);
+                refreshNeeded |= (message.OldItem.SupplierID != message.NewItem.SupplierID);
 
             if (this.UseReleaseDateFilter)
-                refreshNeeded |= (message.OldBill.ReleaseDate != message.Bill.ReleaseDate);
+                refreshNeeded |= (message.OldItem.ReleaseDate != message.NewItem.ReleaseDate);
 
             if (this.UseDueDateFilter)
-                refreshNeeded |= (message.OldBill.DueDate != message.Bill.DueDate);
+                refreshNeeded |= (message.OldItem.DueDate != message.NewItem.DueDate);
 
             if (this.IsPaidFilterValue != null)
-                refreshNeeded |= (message.OldBill.PaymentDate.HasValue != message.Bill.PaymentDate.HasValue);
+                refreshNeeded |= (message.OldItem.PaymentDate.HasValue != message.NewItem.PaymentDate.HasValue);
 
             if (refreshNeeded)
                 this.SendFilters();
@@ -366,10 +366,9 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.sendFilerCommand == null) this.sendFilerCommand = new RelayCommand(
-                    () => this.SendFilters());
-
-                return this.sendFilerCommand;
+                return this.sendFilerCommand ?? (this.sendFilerCommand =
+                    new RelayCommand(
+                        () => this.SendFilters()));
             }
         }
 
@@ -378,14 +377,13 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.exitSearchCommand == null) this.exitSearchCommand = new RelayCommand(
-                    () =>
-                    {
-                        this.DeactivateAllFilters();
-                        this.SendFilters();
-                    });
-
-                return this.exitSearchCommand;
+                return this.exitSearchCommand ?? (this.exitSearchCommand =
+                    new RelayCommand(
+                        () =>
+                        {
+                            this.DeactivateAllFilters();
+                            this.SendFilters();
+                        }));
             }
         }
 

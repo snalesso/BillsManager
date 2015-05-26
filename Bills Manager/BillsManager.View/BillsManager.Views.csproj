@@ -31,6 +31,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -42,16 +43,18 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Caliburn.Micro, Version=1.5.2.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\net45\Caliburn.Micro.dll</HintPath>
+    <Reference Include="Caliburn.Micro, Version=2.0.2.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.Core.2.0.2\lib\net45\Caliburn.Micro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Caliburn.Micro.Platform, Version=2.0.2.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.2.0.2\lib\net45\Caliburn.Micro.Platform.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\net45\System.Windows.Interactivity.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -127,8 +130,8 @@
     <Compile Include="SendFeedbackView.xaml.cs">
       <DependentUpon>SendFeedbackView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Geometries.xaml.cs">
-      <DependentUpon>Geometries.xaml</DependentUpon>
+    <Compile Include="Dictionaries\StyleTests.xaml.cs">
+      <DependentUpon>StyleTests.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Helpers\WindowHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -177,6 +180,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -277,7 +281,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dictionaries\Styles\GridViewColumnHeaderGripperStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dictionaries\Styles\GridViewColumnHeaderStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dictionaries\Styles\LightValues\ControlBoxValues.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dictionaries\Styles\LightValues\GridViewValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -345,47 +361,51 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Dictionaries\Styles\LightValues.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Dictionaries\Styles\Values.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Styles\Values\ButtonValues.xaml">
+    <Page Include="Dictionaries\Styles\LightValues\ButtonValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Styles\Values\CheckBoxValues.xaml">
+    <Page Include="Dictionaries\Styles\LightValues\CheckBoxValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Styles\Values\Converters.xaml">
+    <Page Include="Dictionaries\Styles\LightValues\Converters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Styles\Values\DBConnectionStateValues.xaml">
+    <Page Include="Dictionaries\Styles\LightValues\DBConnectionStateValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Styles\Values\DueAlertValues.xaml">
+    <Page Include="Dictionaries\Styles\LightValues\DueAlertValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Styles\Values\Geometries.xaml">
+    <Page Include="Dictionaries\Styles\LightValues\Geometries.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Styles\Values\ListBoxItemValues.xaml">
+    <Page Include="Dictionaries\Styles\LightValues\ListBoxItemValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Styles\Values\ListItemValues.xaml">
+    <Page Include="Dictionaries\Styles\LightValues\ListItemValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Styles\Values\MenuItemValues.xaml">
+    <Page Include="Dictionaries\Styles\LightValues\MenuItemValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Styles\Values\MenuValues.xaml">
+    <Page Include="Dictionaries\Styles\LightValues\MenuValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -393,23 +413,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Styles\Values\ObligationValues.xaml">
+    <Page Include="Dictionaries\Styles\LightValues\ObligationValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Styles\Values\ScrollBarValues.xaml">
+    <Page Include="Dictionaries\Styles\LightValues\ScrollBarValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Styles\Values\TextBoxValues.xaml">
+    <Page Include="Dictionaries\Styles\LightValues\TextBoxValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Styles\Values\ViewValues.xaml">
+    <Page Include="Dictionaries\Styles\LightValues\ViewValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <None Include="Geometries.xaml">
+    <None Include="Dictionaries\StyleTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </None>
@@ -466,6 +486,10 @@
     <ProjectReference Include="..\BillsManager.Localization\BillsManager.Localization.csproj">
       <Project>{5387db3b-6ec1-42cf-a72b-cef5adfb541a}</Project>
       <Name>BillsManager.Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BillsManager.Model\BillsManager.Models.csproj">
+      <Project>{888f670b-4396-4660-8c5a-0d43fb2c0a1d}</Project>
+      <Name>BillsManager.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\BillsManager.ViewModel\BillsManager.ViewModels.csproj">
       <Project>{127368A5-65A5-46C6-A203-33ABC22B1EDD}</Project>

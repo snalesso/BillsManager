@@ -16,7 +16,7 @@ namespace BillsManager.ViewModels
                 if (this.exposedSupplier != value)
                 {
                     this.exposedSupplier = value;
-                    this.NotifyOfPropertyChange(() => this.ExposedSupplier);
+                    this.NotifyOfPropertyChange();
                 }
             }
         }
@@ -38,7 +38,7 @@ namespace BillsManager.ViewModels
                     if (value == string.Empty)
                         value = null;
                     this.ExposedSupplier.Name = value;
-                    this.NotifyOfPropertyChange(() => this.Name);
+                    this.NotifyOfPropertyChange();
                 }
             }
         }
@@ -53,7 +53,7 @@ namespace BillsManager.ViewModels
                     if (value == string.Empty)
                         value = null;
                     this.ExposedSupplier.eMail = value;
-                    this.NotifyOfPropertyChange(() => this.eMail);
+                    this.NotifyOfPropertyChange();
                 }
             }
         }
@@ -68,27 +68,10 @@ namespace BillsManager.ViewModels
                     if (value == string.Empty)
                         value = null;
                     this.ExposedSupplier.Website = value;
-                    this.NotifyOfPropertyChange(() => this.Website);
+                    this.NotifyOfPropertyChange();
                 }
             }
         }
-
-        /*public ObservableCollection<Agent> Agents
-        {
-            get
-            {
-                if (this.ExposedSupplier.Agents == null) this.ExposedSupplier.Agents = new ObservableCollection<Agent>();
-                return this.ExposedSupplier.Agents;
-            }
-            set
-            {
-                if (this.ExposedSupplier.Agents != value)
-                {
-                    this.ExposedSupplier.Agents = value;
-                    this.NotifyOfPropertyChange(() => this.Agents);
-                }
-            }
-        }*/
 
         public virtual string Phone
         {
@@ -100,7 +83,7 @@ namespace BillsManager.ViewModels
                     if (value == string.Empty)
                         value = null;
                     this.ExposedSupplier.Phone = value;
-                    this.NotifyOfPropertyChange(() => this.Phone);
+                    this.NotifyOfPropertyChange();
                 }
             }
         }
@@ -115,7 +98,7 @@ namespace BillsManager.ViewModels
                 if (value == string.Empty)
                     value = null;
                 this.ExposedSupplier.Fax = value;
-                this.NotifyOfPropertyChange(() => this.Fax);
+                this.NotifyOfPropertyChange();
             }
         }
 
@@ -129,7 +112,7 @@ namespace BillsManager.ViewModels
                     if (value == string.Empty)
                         value = null;
                     this.ExposedSupplier.Notes = value;
-                    this.NotifyOfPropertyChange(() => this.Notes);
+                    this.NotifyOfPropertyChange();
                 }
             }
         }
@@ -144,7 +127,7 @@ namespace BillsManager.ViewModels
                     if (value == string.Empty)
                         value = null;
                     this.ExposedSupplier.AgentName = value;
-                    this.NotifyOfPropertyChange(() => this.AgentName);
+                    this.NotifyOfPropertyChange();
                 }
             }
         }
@@ -159,7 +142,7 @@ namespace BillsManager.ViewModels
                     if (value == string.Empty)
                         value = null;
                     this.ExposedSupplier.AgentSurname = value;
-                    this.NotifyOfPropertyChange(() => this.AgentSurname);
+                    this.NotifyOfPropertyChange();
                 }
             }
         }
@@ -174,30 +157,12 @@ namespace BillsManager.ViewModels
                     if (value == string.Empty)
                         value = null;
                     this.ExposedSupplier.AgentPhone = value;
-                    this.NotifyOfPropertyChange(() => this.AgentPhone);
+                    this.NotifyOfPropertyChange();
                 }
             }
         }
 
         #region address
-
-        /*public Address Address
-        {
-            get
-            {
-                //if (this.address == null) this.address = new Address();
-                // TODO: review
-                return this.ExposedSupplier.Address;
-            }
-            set
-            {
-                if (this.ExposedSupplier.Address != value)
-                {
-                    this.ExposedSupplier.Address = value;
-                    this.NotifyOfPropertyChange(() => this.Address);
-                }
-            }
-        }*/
 
         public virtual string Street
         {
@@ -209,7 +174,7 @@ namespace BillsManager.ViewModels
                     if (value == string.Empty)
                         value = null;
                     this.ExposedSupplier.Street = value;
-                    this.NotifyOfPropertyChange(() => this.Street);
+                    this.NotifyOfPropertyChange();
                 }
             }
         }
@@ -224,7 +189,7 @@ namespace BillsManager.ViewModels
                     if (value == string.Empty)
                         value = null;
                     this.ExposedSupplier.Number = value;
-                    this.NotifyOfPropertyChange(() => this.Number);
+                    this.NotifyOfPropertyChange();
                 }
             }
         }
@@ -239,7 +204,7 @@ namespace BillsManager.ViewModels
                     if (value == string.Empty)
                         value = null;
                     this.ExposedSupplier.City = value;
-                    this.NotifyOfPropertyChange(() => this.City);
+                    this.NotifyOfPropertyChange();
                 }
             }
         }
@@ -255,7 +220,7 @@ namespace BillsManager.ViewModels
                     value = null;
 
                 this.ExposedSupplier.Zip = value;
-                this.NotifyOfPropertyChange(() => this.Zip);
+                this.NotifyOfPropertyChange();
             }
         }
 
@@ -270,7 +235,7 @@ namespace BillsManager.ViewModels
                     value = null;
 
                 this.ExposedSupplier.Province = value;
-                this.NotifyOfPropertyChange(() => this.Province);
+                this.NotifyOfPropertyChange();
             }
         }
 
@@ -284,7 +249,7 @@ namespace BillsManager.ViewModels
                     if (value == string.Empty)
                         value = null;
                     this.ExposedSupplier.Country = value;
-                    this.NotifyOfPropertyChange(() => this.Country);
+                    this.NotifyOfPropertyChange();
                 }
             }
         }

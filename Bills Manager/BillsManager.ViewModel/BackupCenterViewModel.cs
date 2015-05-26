@@ -53,22 +53,19 @@ namespace BillsManager.ViewModels
         #endregion
 
         #region properties
-        
+
         private DBBackupsViewModel dbBackupsViewModel;
         public DBBackupsViewModel DBBackupsViewModel
         {
             get
             {
-                if (this.dbBackupsViewModel == null)
-                    this.dbBackupsViewModel = this.dbBackupsViewModelFactory.Invoke();
-
-                return this.dbBackupsViewModel;
+                return this.dbBackupsViewModel ?? (this.dbBackupsViewModel = this.dbBackupsViewModelFactory.Invoke());
             }
         }
 
         #endregion
 
-        #region methods        
+        #region methods
         #endregion
     }
 }

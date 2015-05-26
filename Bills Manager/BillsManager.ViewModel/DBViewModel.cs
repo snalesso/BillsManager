@@ -1,4 +1,5 @@
 ﻿using BillsManager.Localization;
+using BillsManager.Models;
 using BillsManager.Services.Providers;
 using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
@@ -7,13 +8,13 @@ using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace BillsManager.ViewModels
 {
     public partial class DBViewModel : Conductor<Screen>.Collection.AllActive,
-        IHandle<SupplierCRUDEvent>,
-        IHandle<BillCRUDEvent>,
+        IHandle<CRUDMessage>,
         IHandle<ShowSuppliersBillsOrder>,
         IHandle<RollbackAuthorizationRequest>
     {
@@ -176,7 +177,7 @@ namespace BillsManager.ViewModels
                 {
                     this.dbConnectionState = value;
                     this.NotifyOfPropertyChange(() => this.ConnectionState);
-                    this.globalEventAggregator.Publish(new DBConnectionStateChangedMessage(this.ConnectionState));
+                    this.globalEventAggregator.PublishOnUIThread(new DBConnectionStateChangedMessage(this.ConnectionState));
 
                     this.NotifyOfPropertyChange(() => this.IsConnectionActive);
                 }
@@ -222,20 +223,17 @@ namespace BillsManager.ViewModels
 
         public bool Connect()
         {
-            //var progressDialog = new ProgressViewModel("Loading '" + this.DBName + "' ...");
-
             // TODO: give control to UI thread
+
+            //var progressDialog = new ProgressViewModel("Loading ...");
             //this.windowManager.ShowWindow(progressDialog);
 
             if (this.dbConnector.Connect())
             {
-                //progressDialog.TryClose();
-
                 this.ConnectionState = DBConnectionState.Connected;
 
                 this.SuppliersViewModel = this.suppliersViewModelFactory.Invoke();
                 this.BillsViewModel = this.billsViewModelFactory.Invoke();
-                //this.TagsViewModel = this.tagsViewModelFactory.Invoke();
 
                 this.SearchSuppliersViewModel = this.searchSuppliersViewModelFactory.Invoke();
                 this.SearchBillsViewModel = this.searchBillsViewModelFactory.Invoke();
@@ -246,17 +244,21 @@ namespace BillsManager.ViewModels
                 this.ActivateItem(this.SuppliersViewModel);
                 this.ActivateItem(this.BillsViewModel);
 
+                //progressDialog.TryClose();
+
                 return true;
             }
 
             //progressDialog.TryClose();
 
-            var dbConnectionErrorDialog =
-                new DialogViewModel(
-                    TranslationManager.Instance.Translate("DatabaseConnectionFailed").ToString(),
-                    TranslationManager.Instance.Translate("DatabaseConnectionFailedMessage").ToString() +
+            DialogViewModel dbConnectionErrorDialog =
+                DialogViewModel.Show(
+                    DialogType.Error,
+                    TranslationManager.Instance.Translate("DatabaseConnectionFailed"),
+                    TranslationManager.Instance.Translate("DatabaseConnectionFailedMessage") +
                     Environment.NewLine +
-                    TranslationManager.Instance.Translate("TryAgain").ToString());
+                    TranslationManager.Instance.Translate("TryAgain"))
+                .Ok();
 
             this.windowManager.ShowDialog(dbConnectionErrorDialog);
 
@@ -267,38 +269,34 @@ namespace BillsManager.ViewModels
         {
             if (this.ConnectionState == DBConnectionState.Unsaved)
             {
-                var saveRequest =
-                    new DialogViewModel(
-                        TranslationManager.Instance.Translate("SaveQuestion").ToString(),
-                        TranslationManager.Instance.Translate("ChangesNotSavedMessage").ToString() +
+                DialogViewModel saveBeforeDisconnectDialog =
+                    DialogViewModel.Show(
+                        DialogType.Question,
+                        TranslationManager.Instance.Translate("SaveQuestion"),
+                        TranslationManager.Instance.Translate("ChangesNotSavedMessage") +
                         Environment.NewLine +
                         Environment.NewLine +
-                        TranslationManager.Instance.Translate("SaveBeforeClosingQuestion").ToString(),
-                        new[]
-                        {
-                            new DialogResponse(
-                                ResponseType.Yes,
-                                TranslationManager.Instance.Translate("SaveAndExit").ToString()),
-                            new DialogResponse(
-                                ResponseType.No,
-                                TranslationManager.Instance.Translate("DontSave").ToString()),
-                            new DialogResponse(ResponseType.Cancel,
-                                TranslationManager.Instance.Translate("CancelExit").ToString())
-                        });
+                        TranslationManager.Instance.Translate("SaveBeforeClosingQuestion"))
+                    .YesNoCancel(
+                        TranslationManager.Instance.Translate("SaveAndExit"),
+                        TranslationManager.Instance.Translate("DontSave"),
+                        TranslationManager.Instance.Translate("CancelExit"));
 
-                this.windowManager.ShowDialog(saveRequest);
+                this.windowManager.ShowDialog(saveBeforeDisconnectDialog);
 
-                switch (saveRequest.FinalResponse)
+                switch (saveBeforeDisconnectDialog.FinalResponse)
                 {
                     case ResponseType.Yes:
                         if (!this.Save())
                         {
-                            var errorDialog =
-                                new DialogViewModel(
-                                    TranslationManager.Instance.Translate("DatabaseSaveFailed").ToString(),
-                                    TranslationManager.Instance.Translate("DatabaseSaveFailedMessage").ToString() +
+                            DialogViewModel errorDialog =
+                                DialogViewModel.Show(
+                                    DialogType.Error,
+                                    TranslationManager.Instance.Translate("DatabaseSaveFailed"),
+                                    TranslationManager.Instance.Translate("DatabaseSaveFailedMessage") +
                                     Environment.NewLine +
-                                    TranslationManager.Instance.Translate("TryAgain").ToString());
+                                    TranslationManager.Instance.Translate("TryAgain"))
+                                .Ok();
 
                             this.windowManager.ShowDialog(errorDialog);
 
@@ -335,12 +333,6 @@ namespace BillsManager.ViewModels
             //this.TagsViewModel = null;
 
             return true;
-        }
-
-        private void Reload()
-        {
-            if (this.Disconnect())
-                this.Connect(); // TODO: other checks needed?
         }
 
         private bool Save()
@@ -393,12 +385,7 @@ namespace BillsManager.ViewModels
         //    this.IsDirty = true; // TODO: why is it called 3 times?
         //}
 
-        public void Handle(BillCRUDEvent message)
-        {
-            this.ConnectionState = DBConnectionState.Unsaved;
-        }
-
-        public void Handle(SupplierCRUDEvent message)
+        public void Handle(CRUDMessage message)
         {
             this.ConnectionState = DBConnectionState.Unsaved;
         }
@@ -438,12 +425,10 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.connectCommand == null)
-                    this.connectCommand = new RelayCommand(
+                return this.connectCommand ?? (this.connectCommand = 
+                    new RelayCommand(
                         () => this.Connect(),
-                        () => this.ConnectionState == DBConnectionState.Disconnected);
-
-                return this.connectCommand;
+                        () => this.ConnectionState == DBConnectionState.Disconnected));
             }
         }
 
@@ -452,12 +437,10 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.disconnectCommand == null)
-                    this.disconnectCommand = new RelayCommand(
+                return this.disconnectCommand ?? (this.disconnectCommand =
+                    new RelayCommand(
                         () => this.Disconnect(),
-                        () => this.ConnectionState != DBConnectionState.Disconnected);
-
-                return this.disconnectCommand;
+                        () => this.ConnectionState != DBConnectionState.Disconnected));
             }
         }
 
@@ -466,12 +449,10 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.saveCommand == null)
-                    this.saveCommand = new RelayCommand(
+                return this.saveCommand ?? (this.saveCommand = 
+                    new RelayCommand(
                         () => this.Save(),
-                        () => this.ConnectionState == DBConnectionState.Unsaved);
-
-                return this.saveCommand;
+                        () => this.ConnectionState == DBConnectionState.Unsaved));
             }
         }
 
@@ -480,12 +461,10 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.showReportCenterCommand == null)
-                    this.showReportCenterCommand = new RelayCommand(
+                return this.showReportCenterCommand ?? (this.showReportCenterCommand = 
+                    new RelayCommand(
                         () => this.ShowReportCenter(),
-                        () => this.IsConnectionActive);
-
-                return this.showReportCenterCommand;
+                        () => this.IsConnectionActive));
             }
         }
 
@@ -494,11 +473,9 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.toggleShowFiltersCommand == null)
-                    this.toggleShowFiltersCommand = new RelayCommand(
-                        () => this.ToggleShowFilters());
-
-                return this.toggleShowFiltersCommand;
+                return this.toggleShowFiltersCommand ?? (this.toggleShowFiltersCommand =
+                    new RelayCommand(
+                        () => this.ToggleShowFilters()));
             }
         }
 

@@ -1,68 +1,70 @@
 ﻿<UserControl x:Class="BillsManager.Views.BackupCenterView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:ViewModel="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
-             xmlns:DataTemplates="clr-namespace:BillsManager.Views.DataTemplates"
-             xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
              xmlns:Caliburn="http://www.caliburnproject.org"
+             xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
+             xmlns:DataTemplates="clr-namespace:BillsManager.Views.DataTemplates"
+             xmlns:ViewModel="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
-             mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=ViewModel:BackupCenterViewModel, IsDesignTimeCreatable=True}"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             Width="Auto"
+             d:DataContext="{d:DesignInstance Type=ViewModel:BackupCenterViewModel,
+                                              IsDesignTimeCreatable=True}"
              d:DesignHeight="300"
-             Width="Auto">
+             mc:Ignorable="d">
 
     <UserControl.Resources>
         <ResourceDictionary Source="Dictionaries\Styles.xaml" />
     </UserControl.Resources>
 
     <UserControl.Background>
-        <Binding Mode="OneTime"
-                 Source="{StaticResource ViewBackgroundBrush}" />
+        <Binding Mode="OneTime" Source="{StaticResource View.Background}" />
     </UserControl.Background>
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="{StaticResource RegionSeparatorSize}" />
+            <ColumnDefinition Width="{StaticResource View.Region.Spacing.Small}" />
             <ColumnDefinition Width="77*" />
-            <ColumnDefinition Width="{StaticResource RegionSeparatorSize}" />
+            <ColumnDefinition Width="{StaticResource View.Region.Spacing.Small}" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource RegionSeparatorSize}" />
+            <RowDefinition Height="{StaticResource View.Region.Spacing.Small}" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
         <Menu Grid.Column="1">
 
-            <!--<MenuItem Header="Refresh"
-                      Command="{Binding RefreshBackupGroupsCommand, Mode=OneWay}" />
+            <!--
+                <MenuItem Header="Refresh"
+                Command="{Binding RefreshBackupGroupsCommand, Mode=OneWay}" />
+                
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+            -->
 
-            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />-->
-
-            <MenuItem Header="{loc:Translate Rollback}"
-                      Command="{Binding ActiveItem.RollbackCommand, Mode=OneWay}"
-                      CommandParameter="{Binding ActiveItem.SelectedBackupViewModel}" />
-
-            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-
-            <MenuItem Header="{loc:Translate NewBackup}"
-                      Command="{Binding ActiveItem.CreateNewBackupCommand, Mode=OneWay}" />
-            <MenuItem Header="{loc:Translate DeleteBackup}"
-                      Command="{Binding ActiveItem.DeleteBackupCommand, Mode=OneWay}"
-                      CommandParameter="{Binding ActiveItem.SelectedBackupViewModel}" />
+            <MenuItem Command="{Binding ActiveItem.RollbackCommand,
+                                        Mode=OneWay}"
+                      CommandParameter="{Binding ActiveItem.SelectedBackupViewModel}"
+                      Header="{loc:Translate Rollback}" />
 
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
-            <MenuItem Header="{loc:Translate OpenBackupsFolder}"
-                      Command="{Binding ActiveItem.OpenBackupsFolderCommand, Mode=OneWay}" />
+            <MenuItem Command="{Binding ActiveItem.CreateNewBackupCommand, Mode=OneWay}" Header="{loc:Translate NewBackup}" />
+            <MenuItem Command="{Binding ActiveItem.DeleteBackupCommand,
+                                        Mode=OneWay}"
+                      CommandParameter="{Binding ActiveItem.SelectedBackupViewModel}"
+                      Header="{loc:Translate DeleteBackup}" />
+
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+
+            <MenuItem Command="{Binding ActiveItem.OpenBackupsFolderCommand, Mode=OneWay}" Header="{loc:Translate OpenBackupsFolder}" />
 
         </Menu>
 
         <ContentControl x:Name="ActiveItem"
-                        Grid.Column="1"
-                        Grid.Row="3" />
+                        Grid.Row="3"
+                        Grid.Column="1" />
 
     </Grid>
 </UserControl>

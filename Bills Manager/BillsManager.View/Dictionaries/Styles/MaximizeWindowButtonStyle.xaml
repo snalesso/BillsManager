@@ -7,44 +7,50 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type Controls:MaximizeWindowButton}">
-        <Setter Property="Focusable"
-                Value="False" />
-        <Setter Property="Height"
-                Value="20" />
-        <Setter Property="Width"
-                Value="20" />
-        <Setter Property="Padding"
-                Value="4" />
-        <Setter Property="HorizontalContentAlignment"
-                Value="Stretch" />
-        <Setter Property="VerticalContentAlignment"
-                Value="Stretch" />
-        <Setter Property="Foreground"
-                Value="{StaticResource ResourceKey=ViewForegroundBrush}" />
-        <Setter Property="Background"
-                Value="Transparent" />
+
+        <Setter Property="Focusable" Value="False" />
+
+        <Setter Property="Height" Value="{Binding Source={StaticResource ControlBox.Buttons.Size}, Path=Height}" />
+        <Setter Property="Width" Value="{Binding Source={StaticResource ControlBox.Buttons.Size}, Path=Width}" />
+
+        <Setter Property="Padding" Value="{StaticResource ControlBox.Buttons.Padding}" />
+
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+
+        <Setter Property="Foreground" Value="{StaticResource ResourceKey=View.Foreground.Normal}" />
+        <Setter Property="Background" Value="Transparent" />
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:MaximizeWindowButton}">
-                    <Border Background="{TemplateBinding Background}"
-                            Padding="{TemplateBinding Padding}">
-                        <Path Data="{StaticResource ResourceKey=MaximizeGeometry}"
-                              Fill="{TemplateBinding Foreground}"
-                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                    <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                        <Path HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              Data="{StaticResource ResourceKey=MaximizeGeometry}"
+                              Fill="{TemplateBinding Foreground}"
                               Stretch="Uniform" />
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver"
-                                 Value="true">
-                            <Setter Property="Foreground"
-                                    Value="{StaticResource ResourceKey=ButtonNormalBackgroundBrush}" />
+
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Foreground" Value="{StaticResource ControlBox.Buttons.Generic.Background.Hover}" />
+                            <Setter Property="Foreground" Value="{StaticResource ControlBox.Buttons.Generic.BorderBrush.Hover}" />
+                            <Setter Property="Foreground" Value="{StaticResource ControlBox.Buttons.Generic.Foreground.Hover}" />
                         </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="false">
-                            <Setter Property="Foreground"
-                                    Value="{StaticResource ResourceKey=ButtonDisabledForegroundBrush}" />
+
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Foreground" Value="{StaticResource ControlBox.Buttons.Generic.Background.Pressed}" />
+                            <Setter Property="Foreground" Value="{StaticResource ControlBox.Buttons.Generic.BorderBrush.Pressed}" />
+                            <Setter Property="Foreground" Value="{StaticResource ControlBox.Buttons.Generic.Foreground.Pressed}" />
                         </Trigger>
+
+                        <!--<Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{StaticResource ControlBox.Buttons.Generic.Background.Pressed}" />
+                            <Setter Property="Foreground" Value="{StaticResource ControlBox.Buttons.Generic.BorderBrush.Pressed}" />
+                            <Setter Property="Foreground" Value="{StaticResource ControlBox.Buttons.Generic.Foreground.Pressed}" />
+                        </Trigger>-->
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

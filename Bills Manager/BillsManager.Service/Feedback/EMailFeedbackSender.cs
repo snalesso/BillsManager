@@ -1,4 +1,5 @@
 ﻿using System.Net.Mail;
+using System.Text.RegularExpressions;
 
 namespace BillsManager.Services.Feedback
 {
@@ -23,33 +24,39 @@ namespace BillsManager.Services.Feedback
 
         public bool SendFeedback(string subject, string message)
         {
+            if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+            {
+                return false;
+            }
+
+            var emailRegex = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
+
+            if (!emailRegex.IsMatch(this.toEmailAddress))
+            {
+                return false;
+            }
+
             try
             {
-                if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+                using (var mail = new MailMessage())
                 {
-                    using (var mail = new MailMessage())
+                    mail.From = new MailAddress("feedback@billsmanager.com", "Bills Manager Feedback");
+                    mail.Body = message;
+                    mail.Subject = subject;
+                    mail.To.Add(new MailAddress(toEmailAddress));
+                    mail.Priority = MailPriority.High;
+
+                    using (var mailSender = new SmtpClient())
                     {
-                        mail.From = new MailAddress("feedback@billsmanager.com", "Bills Manager Feedback");
-                        mail.Body = message;
-                        mail.Subject = subject;
-                        mail.To.Add(new MailAddress(toEmailAddress));
-                        mail.Priority = MailPriority.High;
+                        mailSender.Host = "out.aliceposta.it";
+                        //mailSender.EnableSsl = true;
+                        mailSender.Port = 25;
 
-                        using (var mailSender = new SmtpClient())
-                        {
-                            mailSender.Host = "out.aliceposta.it";
-                            //mailSender.EnableSsl = true;
-                            mailSender.Port = 25;
+                        mailSender.Send(mail);
 
-                            // URGENT: check on send success required
-                            mailSender.Send(mail);
-
-                            return true;
-                        }
+                        return true;
                     }
                 }
-                else
-                    return false;
             }
             catch
             {

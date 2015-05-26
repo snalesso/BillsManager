@@ -5,7 +5,7 @@ namespace BillsManager.Localization
 {
     public interface ITranslationProvider
     {
-        object Translate(string key);
+        string Translate(string key);
 
         IEnumerable<CultureInfo> Languages { get; }
     }

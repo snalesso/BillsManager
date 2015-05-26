@@ -11,21 +11,10 @@ namespace BillsManager.Services.Providers
     {
         #region fields
 
-        // TODO: cleanup unused variables
-
-        //private readonly string dbFolderPath = AppDomain.CurrentDomain.BaseDirectory + @"\Database\";
-        //private readonly string backupsFolderPath = AppDomain.CurrentDomain.BaseDirectory + @"\Backups\";
-
-        //private const string BILLS_DB_FILENAME = @"Bills";
-        //private const string SUPPLIERS_DB_FILENAME = @"Suppliers";
         private const string DB_NAME = @"db";
-        private const string DB_DIRECTORY_NAME = @"DB";
-        private const string DB_EXTENSION = @"bmdb";
         private const string DB_DOT_EXTENSION = @".bmdb";
         private const string BACKUP_NAME_FORMAT = @"{0:00}-{1:00}-{2:00}_{3:00}.{4:00}.{5:00}";
-        private const string BACKUP_EXTENSION = @"bmbu";
         private const string BACKUP_DOT_EXTENSION = @".bmbu";
-        private const string BACKUPS_DIRECTORY_NAME = @"Backups";
         private const string DB_TEMP_FOLDER_NAME = @"Temp";
 
         private const string NS_DATABASE = @"Database";

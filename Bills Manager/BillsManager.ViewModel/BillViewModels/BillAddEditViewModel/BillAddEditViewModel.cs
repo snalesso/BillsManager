@@ -39,7 +39,7 @@ namespace BillsManager.ViewModels
 
             this.globalEventAggregator.Subscribe(this);
 
-            this.AvailableSuppliers = availableSuppliers; // IDEA: inject SuppliersViewModel? overkill?
+            this.AvailableSuppliers = availableSuppliers;
             //this.HasChanges = false; // TODO: check if mandatory
             this.SelectedSupplier = this.AvailableSuppliers.SingleOrDefault(s => s.ID == this.SupplierID);
 
@@ -49,6 +49,8 @@ namespace BillsManager.ViewModels
                     if (e.WasClosed)
                         this.globalEventAggregator.Unsubscribe(this);
                 };
+
+            this.rulesTracker = new Validation.ValidationRulesTracker<BillAddEditViewModel>(this);
         }
 
         #endregion
@@ -70,7 +72,7 @@ namespace BillsManager.ViewModels
             }
         }
 
-        private Supplier selectedSupplier; // TODO: remove and make the get to point to the bill?
+        private Supplier selectedSupplier; // TODO: if SQL, remove and make the get to point to the bill?
         [LocalizedRequired(ErrorMessageKey = "SupplierRequired")]
         public Supplier SelectedSupplier
         {
@@ -106,7 +108,8 @@ namespace BillsManager.ViewModels
                 if (this.SupplierID != value)
                 {
                     base.SupplierID = value;
-                    this.NotifyOfPropertyChange(() => this.SupplierID);
+                    this.NotifyOfPropertyChange();
+
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
 
@@ -125,7 +128,7 @@ namespace BillsManager.ViewModels
                 if (this.RegistrationDate == value) return;
 
                 base.RegistrationDate = value;
-                this.NotifyOfPropertyChange(() => this.RegistrationDate);
+                this.NotifyOfPropertyChange();
                 this.NotifyOfPropertyChange(() => this.IsValid);
                 this.HasChanges = true;
             }
@@ -140,7 +143,7 @@ namespace BillsManager.ViewModels
                 if (this.DueDate != value)
                 {
                     base.DueDate = value;
-                    this.NotifyOfPropertyChange(() => this.DueDate);
+                    this.NotifyOfPropertyChange();
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
                 }
@@ -156,7 +159,7 @@ namespace BillsManager.ViewModels
                 if (this.ReleaseDate != value)
                 {
                     base.ReleaseDate = value;
-                    this.NotifyOfPropertyChange(() => this.ReleaseDate);
+                    this.NotifyOfPropertyChange();
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
                 }
@@ -171,7 +174,7 @@ namespace BillsManager.ViewModels
                 if (this.PaymentDate != value)
                 {
                     base.PaymentDate = value;
-                    this.NotifyOfPropertyChange(() => this.PaymentDate);
+                    this.NotifyOfPropertyChange();
                     this.NotifyOfPropertyChange(() => this.IsPaid);
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
@@ -188,7 +191,7 @@ namespace BillsManager.ViewModels
                 //if (this.Amount != value)
                 //{
                 base.Amount = value;
-                this.NotifyOfPropertyChange(() => this.Amount);
+                this.NotifyOfPropertyChange();
                 this.NotifyOfPropertyChange(() => this.IsValid);
                 this.HasChanges = true;
                 //}
@@ -201,7 +204,7 @@ namespace BillsManager.ViewModels
             set
             {
                 base.Agio = value;
-                this.NotifyOfPropertyChange(() => this.Agio);
+                this.NotifyOfPropertyChange();
                 this.HasChanges = true;
             }
         }
@@ -212,7 +215,7 @@ namespace BillsManager.ViewModels
             set
             {
                 base.AdditionalCosts = value;
-                this.NotifyOfPropertyChange(() => this.AdditionalCosts);
+                this.NotifyOfPropertyChange();
                 this.HasChanges = true;
             }
         }
@@ -226,7 +229,7 @@ namespace BillsManager.ViewModels
                 if (this.Code != value)
                 {
                     base.Code = value;
-                    this.NotifyOfPropertyChange(() => this.Code);
+                    this.NotifyOfPropertyChange();
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
                 }
@@ -242,7 +245,7 @@ namespace BillsManager.ViewModels
                 if (this.Notes != value)
                 {
                     base.Notes = value;
-                    this.NotifyOfPropertyChange(() => this.Notes);
+                    this.NotifyOfPropertyChange();
                     this.NotifyOfPropertyChange(() => this.IsValid);
                     this.HasChanges = true;
                 }
@@ -275,7 +278,7 @@ namespace BillsManager.ViewModels
             get
             {
                 return this.IsInEditMode
-                    ? (TranslationManager.Instance.Translate("EditBill").ToString() + (this.IsInEditMode & this.HasChanges ? " [*]" : string.Empty))
+                    ? (TranslationManager.Instance.Translate("EditBill").ToString() + (this.IsInEditMode & this.HasChanges ? " *" : string.Empty))
                     : TranslationManager.Instance.Translate("NewBill").ToString();
             }
         }
@@ -290,12 +293,12 @@ namespace BillsManager.ViewModels
         //{
         //    IEnumerable<Supplier> suppliers = null;
 
-        //    this.globalEventAggregator.Publish(new AvailableSuppliersRequest(s => suppliers = s));
+        //    this.globalEventAggregator.PublishOnUIThread(new AvailableSuppliersRequest(s => suppliers = s));
 
         //    return suppliers;
         //}
 
-        private void ConfirmAddEditAndClose()
+        private void ConfirmAndClose()
         {
             if (this.IsInEditMode)
                 this.EndEdit();
@@ -303,21 +306,19 @@ namespace BillsManager.ViewModels
             this.TryClose(true);
         }
 
-        private void CancelAddEditAndClose()
+        private void CancelAndClose()
         {
             // TODO: optimize
             if (this.HasChanges)
             {
-                var question = new DialogViewModel(
-                    this.IsInEditMode ?
-                    TranslationManager.Instance.Translate("CancelEdit").ToString() :
-                    TranslationManager.Instance.Translate("CancelAdd").ToString(),
-                    TranslationManager.Instance.Translate("DiscardChangesQuestion").ToString(),
-                    new[]
-                    {
-                        new DialogResponse(ResponseType.Yes, TranslationManager.Instance.Translate("Yes").ToString()),
-                        new DialogResponse(ResponseType.No, TranslationManager.Instance.Translate("No").ToString())
-                    });
+                DialogViewModel question =
+                    DialogViewModel.Show(
+                        DialogType.Question,
+                        this.IsInEditMode ?
+                        TranslationManager.Instance.Translate("CancelEdit") :
+                        TranslationManager.Instance.Translate("CancelAdd"),
+                        TranslationManager.Instance.Translate("DiscardChangesQuestion"))
+                    .YesNo();
 
                 this.windowManager.ShowDialog(question);
 
@@ -362,12 +363,10 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.confirmAddEditAndCloseCommand == null)
-                    this.confirmAddEditAndCloseCommand = new RelayCommand(
-                    () => this.ConfirmAddEditAndClose(),
-                    () => this.IsValid);
-
-                return this.confirmAddEditAndCloseCommand;
+                return this.confirmAddEditAndCloseCommand ?? (this.confirmAddEditAndCloseCommand =
+                    new RelayCommand(
+                        () => this.ConfirmAndClose(),
+                        () => this.IsValid));
             }
         }
 
@@ -376,11 +375,9 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.cancelAddEditAndCloseCommand == null)
-                    this.cancelAddEditAndCloseCommand = new RelayCommand(
-                        () => this.CancelAddEditAndClose());
-
-                return this.cancelAddEditAndCloseCommand;
+                return this.cancelAddEditAndCloseCommand ?? (this.cancelAddEditAndCloseCommand =
+                    new RelayCommand(
+                        () => this.CancelAndClose()));
             }
         }
 

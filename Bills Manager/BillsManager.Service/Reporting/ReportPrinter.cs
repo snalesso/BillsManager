@@ -18,7 +18,7 @@ namespace BillsManager.Services.Reporting
         #region fields
 
         private readonly PrintDialog printDialog;
-        private readonly IEnumerable<T> dataSource;
+        private readonly IEnumerable<T> dataSource; // TODO: convert to ICollection
         private readonly IEnumerable<PropertyInfo> properiesToShow;
         private readonly DateTime now = DateTime.Now;
 
@@ -40,7 +40,8 @@ namespace BillsManager.Services.Reporting
 
             this.printDialog = new PrintDialog();
 
-            this.pageSize = new Size(this.printDialog.PrintableAreaWidth, this.printDialog.PrintableAreaHeight);
+            this.pageSize = new Size(printDialog.PrintableAreaWidth, printDialog.PrintableAreaHeight);
+            //this.pageSize = new Size(827, 1169);
 
             this.headerFontSize = 20;
             this.HeaderRenderHeight = this.GetTextRenderHeight(22);
@@ -64,14 +65,13 @@ namespace BillsManager.Services.Reporting
 
         #region properties
 
-        private Thickness pageMargins = new Thickness(40);
+        private Thickness pageMargins = new Thickness(40, 25, 40, 30);
         public Thickness PageMargins
         {
             get { return this.pageMargins; }
             set
             {
                 if (this.pageMargins == value) return;
-
                 this.pageMargins = value;
             }
         }
@@ -294,7 +294,7 @@ namespace BillsManager.Services.Reporting
                 rootGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(this.HeaderRenderHeight, GridUnitType.Pixel) });
                 var header = this.GetHeader();
                 Grid.SetRow(header, 0);
-                Grid.SetColumnSpan(header, headers.Count() * 2);
+                Grid.SetColumnSpan(header, headers.Count * 2);
                 rootGrid.Children.Add(header);
 
                 rootGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(SECTION_SEPARATOR_HEIGHT, GridUnitType.Pixel) });
@@ -303,7 +303,7 @@ namespace BillsManager.Services.Reporting
                 rootGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(this.CommentRenderHeight, GridUnitType.Pixel) });
                 var comment = this.GetComment();
                 Grid.SetRow(comment, rootGrid.RowDefinitions.Count - 1);
-                Grid.SetColumnSpan(comment, headers.Count() * 2);
+                Grid.SetColumnSpan(comment, headers.Count * 2);
                 rootGrid.Children.Add(comment);
 
                 rootGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(SECTION_SEPARATOR_HEIGHT, GridUnitType.Pixel) });
@@ -335,7 +335,7 @@ namespace BillsManager.Services.Reporting
             // items (rows)
             var startIndex = (isFirstPage ? 0 : this.RowsInFirstPage + this.RowsInSecondaryPages * (pageNumber - 1));
             var rowsPrintableInThisPage = isFirstPage ? this.RowsInFirstPage : this.RowsInSecondaryPages;
-            //var printCount = (startIndex + rowsPrintableInThisPage <= dataSource.Count() ? rowsPrintableInThisPage : dataSource.Count() - startIndex);
+            //var printCount = (startIndex + rowsPrintableInThisPage <= dataSource.Count ? rowsPrintableInThisPage : dataSource.Count - startIndex);
             //var itemsToDisplay = this.dataSource.ToList().GetRange(startIndex, printCount);
             var endIndex = startIndex + rowsPrintableInThisPage <= this.dataSource.Count() ? startIndex + rowsPrintableInThisPage - 1 : this.dataSource.Count() - 1;
 
@@ -354,7 +354,7 @@ namespace BillsManager.Services.Reporting
                 rootGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(ROW_SEPARATOR_HEIGHT, GridUnitType.Pixel) });
             }
 
-            // a row to fill the empty space to the ned
+            // a row to fill the empty space between the last row item and the footer
             rootGrid.RowDefinitions.ElementAt(rootGrid.RowDefinitions.Count - 1).Height = new GridLength(1, GridUnitType.Star);
 
             // footer
@@ -367,27 +367,33 @@ namespace BillsManager.Services.Reporting
             Grid.SetColumnSpan(footer, rootGrid.ColumnDefinitions.Count);
             rootGrid.Children.Add(footer);
 
+            // prepare rendering
             rootGrid.Measure(this.PageSize);
             rootGrid.Arrange(new Rect(new Point(0, 0), rootGrid.DesiredSize));
-            //rootGrid.UpdateLayout();
+            rootGrid.UpdateLayout();
 
-            double actualColumnHeadersWidth = 0;
+            double actualHeadersTotalWidth = 0;
             foreach (var column in rootGrid.ColumnDefinitions)
             {
                 if (rootGrid.ColumnDefinitions.IndexOf(column) % 2 == 0)
-                    actualColumnHeadersWidth += column.ActualWidth;
+                    actualHeadersTotalWidth += column.ActualWidth;
             }
-
-            var columnHeadersAvailableWidth = (rootGrid.ActualWidth - (rootGrid.ColumnDefinitions.Count - 1) * COLUMN_SEPARATOR_WIDTH);
 
             foreach (var column in rootGrid.ColumnDefinitions)
             {
                 if (rootGrid.ColumnDefinitions.IndexOf(column) % 2 == 0)
                     column.Width =
-                        new GridLength((columnHeadersAvailableWidth * column.ActualWidth) / actualColumnHeadersWidth, GridUnitType.Pixel);
+                        new GridLength(column.ActualWidth / actualHeadersTotalWidth, GridUnitType.Star);
             }
 
-            return new DocumentPage(rootGrid);
+            // prepare rendering
+            rootGrid.Measure(this.PageSize);
+            rootGrid.Arrange(new Rect(new Point(0, 0), rootGrid.DesiredSize));
+            rootGrid.UpdateLayout();
+
+            var dp = new DocumentPage(rootGrid);
+
+            return dp;
         }
 
         #region region creators
@@ -396,7 +402,7 @@ namespace BillsManager.Services.Reporting
         {
             var root = new Grid()
             {
-                
+                //Background = Brushes.LightCoral,
                 Margin = this.PageMargins,
                 Height = this.PageSize.Height - this.PageMargins.Top - this.PageMargins.Bottom, // TODO: cache available space
                 Width = this.PageSize.Width - this.PageMargins.Left - this.PageMargins.Right,
@@ -435,7 +441,7 @@ namespace BillsManager.Services.Reporting
             };
         }
 
-        private IEnumerable<TextBlock> GetColumnHeaders()
+        private ICollection<TextBlock> GetColumnHeaders()
         {
             var columnHeaders = new List<TextBlock>();
 
@@ -523,11 +529,12 @@ namespace BillsManager.Services.Reporting
 
         #region support
 
-        private IEnumerable<PropertyInfo> GetProperties()
+        private ICollection<PropertyInfo> GetProperties()
         {
             return typeof(T)
                 .GetProperties()
-                .Where(pi => Attribute.IsDefined(pi, typeof(DisplayNameAttribute)));
+                .Where(pi => Attribute.IsDefined(pi, typeof(DisplayNameAttribute)))
+                .ToList();
         }
 
         private double GetTextRenderHeight(double fontSize)
@@ -545,7 +552,7 @@ namespace BillsManager.Services.Reporting
             this.UpdatePageCount();
         }
 
-        private int RowsInPage(bool isFirstPage) // TODO: review ushort, what if the paper size il longer?
+        private int RowsInPage(bool isFirstPage)
         {
             var spaceForRows = this.PageSize.Height - this.PageMargins.Top - this.PageMargins.Bottom;
 
@@ -597,7 +604,6 @@ namespace BillsManager.Services.Reporting
 
         private void UpdatePageCount()
         {
-            // TODO: data source items count cache?
             double dataCount = this.dataSource.Count();
             double rowsInOtherPages = dataCount - this.rowsInFirstPage;
             double otherPagesCount = rowsInOtherPages / this.RowsInSecondaryPages;

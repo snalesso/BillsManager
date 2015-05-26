@@ -7,7 +7,7 @@ namespace BillsManager.ViewModels
 {
     public static class ExtensionMethods
     {
-        public static IEnumerable<T> Where<T>(this IEnumerable<T> data, IEnumerable<Predicate<T>> predicates) // TODO: optimize
+        public static IEnumerable<T> Where<T>(this IEnumerable<T> data, IEnumerable<Predicate<T>> predicates)
         {
             return data.Where(i => predicates.All(p => p(i)));
 

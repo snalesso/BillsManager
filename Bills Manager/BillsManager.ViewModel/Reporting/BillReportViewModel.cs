@@ -49,17 +49,11 @@ namespace BillsManager.ViewModels.Reporting
             get { return string.Format("{0:N2} €", this.billDetailsViewModel.Amount); }
         }
 
-        [LocalizedDisplayName("PaymentDate")]
-        [TextAlignment(TextAlignment.Center)]
-        public string PaymentDate
+        [LocalizedDisplayName("Agio")]
+        [TextAlignment(TextAlignment.Right)]
+        public string Agio
         {
-            get
-            {
-                return
-                    this.billDetailsViewModel.PaymentDate.HasValue ?
-                    this.billDetailsViewModel.PaymentDate.Value.ToShortDateString() :
-                    string.Empty;
-            }
+            get { return string.Format("{0:N2} €", this.billDetailsViewModel.Agio); }
         }
 
         [LocalizedDisplayName("DueDate")]

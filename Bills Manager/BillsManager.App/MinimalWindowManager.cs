@@ -1,5 +1,4 @@
-﻿using BillsManager.Localization;
-using BillsManager.Views;
+﻿using BillsManager.Views;
 using BillsManager.Views.Controls;
 using Caliburn.Micro;
 using System;

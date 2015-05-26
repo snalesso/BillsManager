@@ -21,7 +21,7 @@ namespace BillsManager.ViewModels
             if (supplierName != 0) return supplierName;
 
             var code = string.Compare(this.Code, other.Code);
-            if (code != 0) return code; // URGENT: control if this string.Compare method returns the right value for bills ordering
+            if (code != 0) return code;
 
             return 0;
         }

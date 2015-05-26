@@ -5,10 +5,6 @@ namespace BillsManager.Services.Providers
 {
     public interface IBillsProvider
     {
-        //string DBPath { get; } // TODO: obsolete?
-
-        //string DBName { get; } // TODO: obsolete?
-
         uint GetLastBillID();
 
         IEnumerable<Bill> GetAllBills();

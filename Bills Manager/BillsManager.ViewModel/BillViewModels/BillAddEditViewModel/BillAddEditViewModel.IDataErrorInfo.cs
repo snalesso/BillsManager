@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using BillsManager.ViewModels.Validation;
+using System;
 
 namespace BillsManager.ViewModels
 {
@@ -7,7 +8,7 @@ namespace BillsManager.ViewModels
     {
         #region IDataErrorInfo
 
-        private ValidationRulesTracker<BillAddEditViewModel> rulesTracker;
+        private readonly ValidationRulesTracker<BillAddEditViewModel> rulesTracker;
 
         public bool IsValid // TODO: make cached?
         {
@@ -16,18 +17,18 @@ namespace BillsManager.ViewModels
 
         public string Error
         {
-            get { return this.rulesTracker.GetAllErrors(); }
+            get { return string.Join(Environment.NewLine, this.rulesTracker.GetAllErrors()); }
         }
 
         public string this[string columnName]
         {
             get
             {
-                if (this.rulesTracker == null)
-                    this.rulesTracker = new ValidationRulesTracker<BillAddEditViewModel>(this);
+                //if (this.rulesTracker == null)
+                //    this.rulesTracker = new ValidationRulesTracker<BillAddEditViewModel>(this);
 
                 var errors = this.rulesTracker.GetErrorsForProperty(columnName);
-                return errors;
+                return string.Join(Environment.NewLine, errors);
             }
         }
 

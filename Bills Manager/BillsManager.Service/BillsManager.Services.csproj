@@ -27,6 +27,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -51,6 +52,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\DBConnector\MockedDBConnector.cs" />
     <Compile Include="Feedback\EMailFeedbackSender.cs" />
     <Compile Include="Feedback\IFeedbackSender.cs" />
     <Compile Include="Data\DBConnector\IDBConnector.cs" />
@@ -78,9 +80,6 @@
       <Project>{888F670B-4396-4660-8C5A-0D43FB2C0A1D}</Project>
       <Name>BillsManager.Models</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Data\BackupsProvider\XMLBUProv-OLD.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

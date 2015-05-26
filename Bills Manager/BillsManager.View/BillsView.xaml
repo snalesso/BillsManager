@@ -26,7 +26,7 @@
     </UserControl.Resources>
 
     <UserControl.Background>
-        <Binding Mode="OneTime" Source="{StaticResource ViewBackgroundBrush}" />
+        <Binding Mode="OneTime" Source="{StaticResource View.Background}" />
     </UserControl.Background>
 
     <Controls:ListViewEx x:Name="lsvBills"
@@ -78,8 +78,8 @@
                         <DataTemplate>
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <Path Name="tick"
-                                      Width="{StaticResource ViewFontSize}"
-                                      Height="{StaticResource ViewFontSize}"
+                                      Width="{StaticResource View.FontSize}"
+                                      Height="{StaticResource View.FontSize}"
                                       Data="{StaticResource Checkmark3}"
                                       Fill="{StaticResource PaidBrush}"
                                       Stretch="Uniform"
@@ -87,8 +87,8 @@
                                                            Converter={StaticResource BooleanToVisibilityConverter},
                                                            Mode=OneWay}" />
                                 <Path Name="cross"
-                                      Width="{StaticResource ViewFontSize}"
-                                      Height="{StaticResource ViewFontSize}"
+                                      Width="{StaticResource View.FontSize}"
+                                      Height="{StaticResource View.FontSize}"
                                       Data="{StaticResource CloseGeometry}"
                                       Fill="{StaticResource NotPaidBrush}"
                                       Stretch="Uniform"
@@ -98,7 +98,7 @@
                             </StackPanel>
 
                             <DataTemplate.Triggers>
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}" Value="True">
+                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}}" Value="True">
                                     <Setter TargetName="tick" Property="Fill" Value="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}" />
                                     <Setter TargetName="cross" Property="Fill" Value="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}" />
                                 </DataTrigger>
@@ -135,7 +135,7 @@
                                     Margin="0 -5"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
-                                    CornerRadius="{StaticResource ViewCornerRadius}"
+                                    CornerRadius="{StaticResource Control.Border.CornerRadius}"
                                     Padding="5">
                                 <TextBlock x:Name="dueDate"
                                            HorizontalAlignment="Center"
@@ -145,30 +145,30 @@
                             </Border>
                             <DataTemplate.Triggers>
 
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}, Path=IsSelected}" Value="True">
+                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}}" Value="True">
                                     <Setter TargetName="border" Property="CornerRadius" Value="0" />
                                 </DataTrigger>
 
                                 <!--  {x:Static ViewModels:DueAlert.Low}  -->
                                 <DataTrigger Binding="{Binding DueAlert, Mode=OneWay}" Value="Low">
                                     <Setter TargetName="border" Property="Background" Value="{StaticResource LowDueAlertBrush}" />
-                                    <Setter TargetName="dueDate" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
+                                    <Setter TargetName="dueDate" Property="Foreground" Value="{StaticResource Button.Foreground.Normal}" />
                                 </DataTrigger>
 
 
                                 <DataTrigger Binding="{Binding DueAlert, Mode=OneWay}" Value="Medium">
                                     <Setter TargetName="border" Property="Background" Value="{StaticResource MediumDueAlertBrush}" />
-                                    <Setter TargetName="dueDate" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
+                                    <Setter TargetName="dueDate" Property="Foreground" Value="{StaticResource Button.Foreground.Normal}" />
                                 </DataTrigger>
 
                                 <DataTrigger Binding="{Binding DueAlert, Mode=OneWay}" Value="High">
                                     <Setter TargetName="border" Property="Background" Value="{StaticResource HighDueAlertBrush}" />
-                                    <Setter TargetName="dueDate" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
+                                    <Setter TargetName="dueDate" Property="Foreground" Value="{StaticResource Button.Foreground.Normal}" />
                                 </DataTrigger>
 
                                 <DataTrigger Binding="{Binding DueAlert, Mode=OneWay}" Value="Critical">
                                     <Setter TargetName="border" Property="Background" Value="{StaticResource CriticalDueAlertBrush}" />
-                                    <Setter TargetName="dueDate" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
+                                    <Setter TargetName="dueDate" Property="Foreground" Value="{StaticResource Button.Foreground.Normal}" />
                                 </DataTrigger>
 
                             </DataTemplate.Triggers>
@@ -216,7 +216,7 @@
             TargetType="{x:Type ListViewItem}">
             <Setter Property="ContextMenu">
             <Setter.Value>
-            
+
             </Setter.Value>
             </Setter>
             </Style>

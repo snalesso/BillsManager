@@ -32,6 +32,8 @@
         <ResourceDictionary Source="Styles\ListViewStyle.xaml" />
         <ResourceDictionary Source="Styles\ListViewExStyle.xaml" />
         <ResourceDictionary Source="Styles\ListViewItemStyle.xaml" />
+
+        <ResourceDictionary Source="Styles\GridViewColumnHeaderGripperStyle.xaml" />
         <ResourceDictionary Source="Styles\GridViewColumnHeaderStyle.xaml" />
 
         <ResourceDictionary Source="Styles\ComboBoxStyle.xaml" />

@@ -87,8 +87,10 @@ namespace BillsManager.ViewModels.Reporting
 
         public int PageCount
         {
-            get { 
-                return this.reportPrinter.PageCount; }
+            get
+            {
+                return this.reportPrinter.PageCount;
+            }
         }
 
         public Visual CurrentPage
@@ -143,12 +145,12 @@ namespace BillsManager.ViewModels.Reporting
             this.CurrentPageNumber = this.reportPrinter.PageCount;
         }
 
-        #endregion
-
         public void Print()
         {
             new PrintDialog().PrintDocument(this.reportPrinter, "Bills Manager Report");
         }
+
+        #endregion
 
         #endregion
 
@@ -159,12 +161,10 @@ namespace BillsManager.ViewModels.Reporting
         {
             get
             {
-                if (this.goToFirstPageCommand == null)
-                    this.goToFirstPageCommand = new RelayCommand(
+                return this.goToFirstPageCommand ?? (this.goToFirstPageCommand = 
+                    new RelayCommand(
                         () => this.GoToFirstPage(),
-                        () => this.CanGoToPreviousPage);
-
-                return this.goToFirstPageCommand;
+                        () => this.CanGoToPreviousPage));
             }
         }
 
@@ -173,12 +173,10 @@ namespace BillsManager.ViewModels.Reporting
         {
             get
             {
-                if (this.goToPreviousPageCommand == null)
-                    this.goToPreviousPageCommand = new RelayCommand(
+                return this.goToPreviousPageCommand ?? (this.goToPreviousPageCommand = 
+                    new RelayCommand(
                         () => this.GoToPreviousPage(),
-                        () => this.CanGoToPreviousPage);
-
-                return this.goToPreviousPageCommand;
+                        () => this.CanGoToPreviousPage));
             }
         }
 
@@ -187,12 +185,10 @@ namespace BillsManager.ViewModels.Reporting
         {
             get
             {
-                if (this.goToNextPageCommand == null)
-                    this.goToNextPageCommand = new RelayCommand(
+                return this.goToNextPageCommand ?? (this.goToNextPageCommand = 
+                    new RelayCommand(
                         () => this.GoToNextPage(),
-                        () => this.CanGoToNextPage);
-
-                return this.goToNextPageCommand;
+                        () => this.CanGoToNextPage));
             }
         }
 
@@ -201,12 +197,10 @@ namespace BillsManager.ViewModels.Reporting
         {
             get
             {
-                if (this.goToLastPageCommand == null)
-                    this.goToLastPageCommand = new RelayCommand(
+                return this.goToLastPageCommand ?? (this.goToLastPageCommand = 
+                    new RelayCommand(
                         () => this.GoToLastPage(),
-                        () => this.CanGoToNextPage);
-
-                return this.goToLastPageCommand;
+                        () => this.CanGoToNextPage));
             }
         }
 
@@ -215,11 +209,9 @@ namespace BillsManager.ViewModels.Reporting
         {
             get
             {
-                if (this.printCommand == null)
-                    this.printCommand = new RelayCommand(
-                        () => this.Print());
-
-                return this.printCommand;
+                return this.printCommand ?? (this.printCommand = 
+                    new RelayCommand(
+                        () => this.Print()));
             }
         }
 

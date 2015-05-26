@@ -1,5 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary>
@@ -10,36 +9,29 @@
         </ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="MenuScrollButton"
-           TargetType="{x:Type RepeatButton}">
-        <Setter Property="ClickMode"
-                Value="Hover" />
-        <Setter Property="MinWidth"
-                Value="0" />
-        <Setter Property="MinHeight"
-                Value="0" />
+    <Style x:Key="MenuScrollButton" TargetType="{x:Type RepeatButton}">
+        <Setter Property="ClickMode" Value="Hover" />
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="MinHeight" Value="0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
                     <Border x:Name="ClassicBorder"
-                            BorderThickness="1"
                             Background="{TemplateBinding Background}"
-                            CornerRadius="{StaticResource ViewCornerRadius}">
+                            BorderThickness="1"
+                            CornerRadius="{StaticResource Control.Border.CornerRadius}">
                         <ContentPresenter Margin="1"
-                                          VerticalAlignment="Center"
-                                          HorizontalAlignment="Center" />
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}"
-           TargetType="{x:Type ScrollViewer}">
-        <Setter Property="HorizontalScrollBarVisibility"
-                Value="Hidden" />
-        <Setter Property="VerticalScrollBarVisibility"
-                Value="Auto" />
+    <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}" TargetType="{x:Type ScrollViewer}">
+        <Setter Property="HorizontalScrollBarVisibility" Value="Hidden" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ScrollViewer}">
@@ -52,56 +44,58 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Border Grid.Row="1"
-                                Grid.Column="0">
-                            <ScrollContentPresenter Margin="{TemplateBinding Padding}" />
-                        </Border>
-                        <RepeatButton Style="{StaticResource MenuScrollButton}"
-                                      Grid.Row="0"
+
+                        <RepeatButton Grid.Row="0"
                                       Grid.Column="0"
                                       Command="{x:Static ScrollBar.LineUpCommand}"
                                       CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                                      Focusable="false">
+                                      Focusable="false"
+                                      Style="{StaticResource MenuScrollButton}">
                             <RepeatButton.Visibility>
-                                <MultiBinding FallbackValue="Visibility.Collapsed"
-                                              Converter="{StaticResource MenuScrollingVisibilityConverter}"
-                                              ConverterParameter="0">
-                                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                             Path="ComputedVerticalScrollBarVisibility" />
-                                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                             Path="VerticalOffset" />
-                                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                             Path="ExtentHeight" />
-                                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                             Path="ViewportHeight" />
+                                <MultiBinding Converter="{StaticResource MenuScrollingVisibilityConverter}"
+                                              ConverterParameter="0"
+                                              FallbackValue="Visibility.Collapsed">
+                                    <Binding Path="ComputedVerticalScrollBarVisibility" RelativeSource="{RelativeSource TemplatedParent}" />
+                                    <Binding Path="VerticalOffset" RelativeSource="{RelativeSource TemplatedParent}" />
+                                    <Binding Path="ExtentHeight" RelativeSource="{RelativeSource TemplatedParent}" />
+                                    <Binding Path="ViewportHeight" RelativeSource="{RelativeSource TemplatedParent}" />
                                 </MultiBinding>
                             </RepeatButton.Visibility>
-                            <Path Fill="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"
-                                  Data="{StaticResource UpArrow}" />
+                            <Path Data="{StaticResource Arrow.Up.Simple}" Fill="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
                         </RepeatButton>
-                        <RepeatButton Style="{StaticResource MenuScrollButton}"
-                                      Grid.Row="2"
+
+                        <Border Grid.Row="1" Grid.Column="0">
+                            <ScrollContentPresenter Margin="{TemplateBinding Padding}" />
+                        </Border>
+
+                        <RepeatButton Grid.Row="2"
                                       Grid.Column="0"
                                       Command="{x:Static ScrollBar.LineDownCommand}"
                                       CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                                      Focusable="false">
+                                      Focusable="false"
+                                      Style="{StaticResource MenuScrollButton}">
                             <RepeatButton.Visibility>
-                                <MultiBinding FallbackValue="Visibility.Collapsed"
-                                              Converter="{StaticResource MenuScrollingVisibilityConverter}"
-                                              ConverterParameter="100">
-                                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                             Path="ComputedVerticalScrollBarVisibility" />
-                                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                             Path="VerticalOffset" />
-                                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                             Path="ExtentHeight" />
-                                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                             Path="ViewportHeight" />
+                                <MultiBinding Converter="{StaticResource MenuScrollingVisibilityConverter}"
+                                              ConverterParameter="100"
+                                              FallbackValue="Visibility.Collapsed">
+                                    <Binding Path="ComputedVerticalScrollBarVisibility" RelativeSource="{RelativeSource TemplatedParent}" />
+                                    <Binding Path="VerticalOffset" RelativeSource="{RelativeSource TemplatedParent}" />
+                                    <Binding Path="ExtentHeight" RelativeSource="{RelativeSource TemplatedParent}" />
+                                    <Binding Path="ViewportHeight" RelativeSource="{RelativeSource TemplatedParent}" />
                                 </MultiBinding>
                             </RepeatButton.Visibility>
-                            <Path Fill="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"
-                                  Data="{StaticResource DownArrow}" />
+                            <Path Data="{StaticResource Arrow.Up.Simple}" Fill="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" RenderTransformOrigin="0.5,0.5" >
+                                <Path.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="180"/>
+                                        <TranslateTransform X="NaN" Y="NaN"/>
+                                    </TransformGroup>
+                                </Path.RenderTransform>
+                            </Path>
                         </RepeatButton>
+
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

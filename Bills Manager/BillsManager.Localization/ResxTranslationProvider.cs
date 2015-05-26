@@ -49,7 +49,7 @@ namespace BillsManager.Localization
 
         #region ITranslationProvider Members
 
-        public object Translate(string key)
+        public string Translate(string key)
         {
             var value = resourceManager.GetString(key, Thread.CurrentThread.CurrentUICulture);
             return value;

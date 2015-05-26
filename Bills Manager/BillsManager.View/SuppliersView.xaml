@@ -5,12 +5,13 @@
              xmlns:Commanding="clr-namespace:BillsManager.ViewModels.Commanding;assembly=BillsManager.ViewModels"
              xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
              xmlns:DataTemplates="clr-namespace:BillsManager.Views.DataTemplates"
-             xmlns:ViewModel="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
+             xmlns:Models="clr-namespace:BillsManager.Models;assembly=BillsManager.Models"
+             xmlns:ViewModels="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Caliburn:Bind.AtDesignTime="True"
-             d:DataContext="{d:DesignInstance Type=ViewModel:SuppliersViewModel,
+             d:DataContext="{d:DesignInstance Type=ViewModels:SuppliersViewModel,
                                               IsDesignTimeCreatable=True}"
              d:DesignHeight="250"
              d:DesignWidth="900"
@@ -21,7 +22,7 @@
     </UserControl.Resources>
 
     <UserControl.Background>
-        <Binding Mode="OneTime" Source="{StaticResource ViewBackgroundBrush}" />
+        <Binding Mode="OneTime" Source="{StaticResource View.Background}" />
     </UserControl.Background>
 
     <Controls:ListViewEx x:Name="lsvSuppliers"
@@ -52,7 +53,7 @@
                                     Margin="0 -5"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
-                                    CornerRadius="{StaticResource ViewCornerRadius}"
+                                    CornerRadius="{StaticResource Control.Border.CornerRadius}"
                                     Padding="5">
                                 <TextBlock x:Name="text" Text="{Binding Name}" />
                             </Border>
@@ -70,17 +71,17 @@
                                     </Setter>
                                 </DataTrigger>
 
-                                <DataTrigger Binding="{Binding ObligationState}" Value="{x:Static ViewModel:Obligation.Creditor}">
-                                    <Setter TargetName="obg" Property="Background" Value="{StaticResource CreditorObligationBrush}" />
-                                    <Setter TargetName="text" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
+                                <DataTrigger Binding="{Binding ObligationState}" Value="{x:Static Models:Obligation.Creditor}">
+                                    <Setter TargetName="obg" Property="Background" Value="{StaticResource Obligation.Creditor.Brush}" />
+                                    <Setter TargetName="text" Property="Foreground" Value="{StaticResource Button.Foreground.Normal}" />
                                 </DataTrigger>
 
-                                <DataTrigger Binding="{Binding ObligationState}" Value="{x:Static ViewModel:Obligation.Debtor}">
-                                    <Setter TargetName="obg" Property="Background" Value="{StaticResource DebtorObligationBrush}" />
-                                    <Setter TargetName="text" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
+                                <DataTrigger Binding="{Binding ObligationState}" Value="{x:Static Models:Obligation.Debtor}">
+                                    <Setter TargetName="obg" Property="Background" Value="{StaticResource Obligation.Debtor.Brush}" />
+                                    <Setter TargetName="text" Property="Foreground" Value="{StaticResource Button.Foreground.Normal}" />
                                 </DataTrigger>
 
-                                <DataTrigger Binding="{Binding ObligationState}" Value="{x:Static ViewModel:Obligation.Unbound}">
+                                <DataTrigger Binding="{Binding ObligationState}" Value="{x:Static Models:Obligation.Unbound}">
                                     <!--  <Setter TargetName="text" Property="Visibility" Value="Collapsed" />  -->
                                 </DataTrigger>
 
@@ -97,11 +98,11 @@
                 -->
                 <!--
                     <Path Name="obg"
-                    Data="{StaticResource NullObligationGeometry}"
-                    Fill="{StaticResource NullObligationBrush}"
+                    Data="{StaticResource Obligation.Null.Geometry}"
+                    Fill="{StaticResource Obligation.Unbound.Brush}"
                     Stretch="Uniform"
-                    Height="{StaticResource ViewFontSize}"
-                    Width="{StaticResource ViewFontSize}"
+                    Height="{StaticResource View.FontSize}"
+                    Width="{StaticResource View.FontSize}"
                     VerticalAlignment="Center" />
                 -->
                 <!--
@@ -109,7 +110,7 @@
                     Margin="-5"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    CornerRadius="{StaticResource ViewCornerRadius}"
+                    CornerRadius="{StaticResource Control.Border.CornerRadius}"
                     Padding="5">
                     <TextBlock x:Name="text"
                     Text="{Binding ObligationStateString}" />
@@ -123,15 +124,15 @@
                     </DataTrigger>
                     
                     <DataTrigger Binding="{Binding ObligationState}"
-                    Value="{x:Static ViewModel:Obligation.Creditor}">
-                    <Setter TargetName="obg" Property="Background" Value="{StaticResource CreditorObligationBrush}" />
-                    <Setter TargetName="text" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
+                    Value="{x:Static ViewModel:Obligation.Creditor.Brush}">
+                    <Setter TargetName="obg" Property="Background" Value="{StaticResource Obligation.Creditor.Brush}" />
+                    <Setter TargetName="text" Property="Foreground" Value="{StaticResource Button.Foreground.Normal}" />
                     </DataTrigger>
                     
                     <DataTrigger Binding="{Binding ObligationState}"
-                    Value="{x:Static ViewModel:Obligation.Debtor}">
-                    <Setter TargetName="obg" Property="Background" Value="{StaticResource DebtorObligationBrush}" />
-                    <Setter TargetName="text" Property="Foreground" Value="{StaticResource ButtonNormalForegroundBrush}" />
+                    Value="{x:Static ViewModel:Obligation.Debtor.Brush}">
+                    <Setter TargetName="obg" Property="Background" Value="{StaticResource Obligation.Debtor.Brush}" />
+                    <Setter TargetName="text" Property="Foreground" Value="{StaticResource Button.Foreground.Normal}" />
                     </DataTrigger>
                     
                     <DataTrigger Binding="{Binding ObligationState}"

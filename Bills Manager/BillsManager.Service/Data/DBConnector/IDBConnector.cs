@@ -2,18 +2,12 @@
 {
     public interface IDBConnector :
         IBillsProvider,
-        ISuppliersProvider/*,
-        ITagsProvider,
-        IAgentsProvider*/
+        ISuppliersProvider
     {
         bool Connect();
 
         bool Save();
 
         void Disconnect();
-
-        //string DBPath { get; } // TODO: obsolete?
-
-        //string DBName { get; }
     }
 }

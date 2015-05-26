@@ -17,7 +17,7 @@ namespace BillsManager.ViewModels
 
         private void LoadDesignTimeData()
         {
-            var db1 = new DBBackupsViewModel(new DesignTimeBackupsProvider("Negozio"));
+            //var db1 = new DBBackupsViewModel(new DesignTimeBackupsProvider("Negozio"));
             //var db2 = new DBBackupsViewModel(new DesignTimeBackupsProvider("Pelletteria"));
             //var db3 = new DBBackupsViewModel(new DesignTimeBackupsProvider("Casa"));
 
@@ -26,7 +26,7 @@ namespace BillsManager.ViewModels
             //this.Items.Add(db3);
 
             //this.ActiveItem = this.Items.FirstOrDefault();
-            this.ActiveItem = db1;
+            //this.ActiveItem = db1;
         }
 
         private class DesignTimeBackupsProvider : IBackupsProvider

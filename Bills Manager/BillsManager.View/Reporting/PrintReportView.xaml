@@ -16,25 +16,24 @@
     </UserControl.Resources>
 
     <UserControl.Background>
-        <Binding Source="{StaticResource ViewBackgroundBrush}" />
+        <Binding Source="{StaticResource View.Background}" />
     </UserControl.Background>
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"
-                              MinWidth="75" />
-            <ColumnDefinition Width="{StaticResource MarginSize}" />
+            <ColumnDefinition Width="Auto" MinWidth="75" />
+            <ColumnDefinition Width="{StaticResource View.MarginSize}" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <!--
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="{StaticResource MarginSize}" />
+                <RowDefinition Height="{StaticResource View.MarginSize}" />
             -->
             <RowDefinition />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="{StaticResource MarginSize}" />
+            <RowDefinition Height="{StaticResource View.MarginSize}" />
         </Grid.RowDefinitions>
 
         <!--
@@ -76,37 +75,33 @@
               VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="{StaticResource MarginSize}" />
+                <ColumnDefinition Width="{StaticResource View.MarginSize}" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="{StaticResource MarginSize}" />
+                <ColumnDefinition Width="{StaticResource View.MarginSize}" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="{StaticResource MarginSize}" />
+                <ColumnDefinition Width="{StaticResource View.MarginSize}" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="{StaticResource MarginSize}" />
+                <ColumnDefinition Width="{StaticResource View.MarginSize}" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="{StaticResource MarginSize}" />
-                <ColumnDefinition Width="{StaticResource MarginSize}" />
-                <ColumnDefinition Width="{StaticResource MarginSize}" />
-                <ColumnDefinition Width="{StaticResource MarginSize}" />
-                <ColumnDefinition Width="{StaticResource MarginSize}" />
-                <ColumnDefinition Width="{StaticResource MarginSize}" />
+                <ColumnDefinition Width="{StaticResource View.Region.Spacing.Medium}" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <Controls:PathButton Height="16"
-                                 Command="{Binding GoToFirstPageCommand, Mode=OneWay}"
+                                 Command="{Binding GoToFirstPageCommand,
+                                                   Mode=OneWay}"
                                  Data="{StaticResource LastLeftGeometry}"
                                  Style="{StaticResource PathButtonStyle}" />
 
             <Controls:PathButton Grid.Column="2"
                                  Height="16"
-                                 Command="{Binding GoToPreviousPageCommand, Mode=OneWay}"
-                                 Data="{StaticResource LeftArrow2}"
+                                 Command="{Binding GoToPreviousPageCommand,
+                                                   Mode=OneWay}"
+                                 Data="{StaticResource Arrow.Left.Metro}"
                                  Style="{StaticResource PathButtonStyle}" />
 
 
-            <TextBlock Grid.Column="4"
-                       VerticalAlignment="Center">
+            <TextBlock Grid.Column="4" VerticalAlignment="Center">
                 <Run Text="{Binding CurrentPageNumber}" />
                 <Run Text="/" />
                 <Run Text="{Binding PageCount, Mode=OneWay}" />
@@ -121,19 +116,22 @@
 
             <Controls:PathButton Grid.Column="6"
                                  Height="16"
-                                 Command="{Binding GoToNextPageCommand, Mode=OneWay}"
-                                 Data="{StaticResource RightArrow2}"
+                                 Command="{Binding GoToNextPageCommand,
+                                                   Mode=OneWay}"
+                                 Data="{StaticResource Arrow.Right.Metro}"
                                  Style="{StaticResource PathButtonStyle}" />
 
             <Controls:PathButton Grid.Column="8"
                                  Height="16"
-                                 Command="{Binding GoToLastPageCommand, Mode=OneWay}"
+                                 Command="{Binding GoToLastPageCommand,
+                                                   Mode=OneWay}"
                                  Data="{StaticResource LastRightGeometry}"
                                  Style="{StaticResource PathButtonStyle}" />
 
-            <Button Grid.Column="15"
+            <Button Grid.Column="10"
                     MinWidth="80"
-                    Command="{Binding PrintCommand, Mode=OneWay}"
+                    Command="{Binding PrintCommand,
+                                      Mode=OneWay}"
                     Content="{loc:Translate Print}" />
 
         </Grid>

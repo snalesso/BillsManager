@@ -12,7 +12,7 @@
 
         <Setter Property="Background" Value="Transparent" />
 
-        <Setter Property="Foreground" Value="{StaticResource ViewDisabledForegroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource View.Foreground.Disabled}" />
 
         <Setter Property="HorizontalAlignment" Value="Stretch" />
 
@@ -27,7 +27,7 @@
                             Padding="{TemplateBinding Padding}">
                         <Grid>
                             <Rectangle x:Name="line"
-                                       Width="{StaticResource ViewSeparatorLineSize}"
+                                       Width="{StaticResource Separator.Size}"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Stretch"
                                        Fill="{TemplateBinding Foreground}"

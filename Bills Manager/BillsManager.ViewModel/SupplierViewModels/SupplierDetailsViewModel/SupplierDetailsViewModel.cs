@@ -11,9 +11,9 @@ namespace BillsManager.ViewModels
     public partial class SupplierDetailsViewModel :
         SupplierViewModel,
         IHandle<BillsListChangedMessage>,
-        IHandle<BillAddedMessage>,
-        IHandle<BillDeletedMessage>,
-        IHandle<BillEditedMessage>
+        IHandle<AddedMessage<Bill>>,
+        IHandle<EditedMessage<Bill>>,
+        IHandle<DeletedMessage<Bill>>
     {
         #region fields
 
@@ -197,7 +197,7 @@ namespace BillsManager.ViewModels
         // TODO: evaluate move to SuppliersViewModel.cs
         private void AddBill()
         {
-            this.dbEventAggregator.Publish(new AddBillToSupplierOrder(this.ExposedSupplier));
+            this.dbEventAggregator.PublishOnUIThread(new AddBillToSupplierOrder(this.ExposedSupplier));
         }
 
         #region message handlers
@@ -215,47 +215,47 @@ namespace BillsManager.ViewModels
             this.ObligationAmount = newOblAmount;
         }
 
-        public void Handle(BillAddedMessage message)
+        public void Handle(AddedMessage<Bill> message)
         {
-            if (this.ID == message.Bill.SupplierID)
-                if (!message.Bill.PaymentDate.HasValue)
+            if (this.ID == message.AddedItem.SupplierID)
+                if (!message.AddedItem.PaymentDate.HasValue)
                 {
                     if (double.IsNaN(this.obligationAmount))
                         this.ObligationAmount = 0;
-                    this.ObligationAmount += -message.Bill.Amount;
+                    this.ObligationAmount += -message.AddedItem.Amount;
                 }
         }
 
-        public void Handle(BillDeletedMessage message)
+        public void Handle(DeletedMessage<Bill> message)
         {
-            if (this.ID == message.Bill.SupplierID)
-                if (!message.Bill.PaymentDate.HasValue)
-                    this.ObligationAmount += message.Bill.Amount;
+            if (this.ID == message.DeletedItem.SupplierID)
+                if (!message.DeletedItem.PaymentDate.HasValue)
+                    this.ObligationAmount += message.DeletedItem.Amount;
         }
 
-        public void Handle(BillEditedMessage message)
+        public void Handle(EditedMessage<Bill> message)
         {
-            bool supplierChanged = message.Bill.SupplierID != message.OldBill.SupplierID;
+            bool supplierChanged = message.NewItem.SupplierID != message.OldItem.SupplierID;
 
             if (supplierChanged)
             {
-                if (this.ID == message.OldBill.SupplierID)
-                    if (!message.OldBill.PaymentDate.HasValue)
-                        this.ObligationAmount += message.OldBill.Amount;
+                if (this.ID == message.OldItem.SupplierID)
+                    if (!message.OldItem.PaymentDate.HasValue)
+                        this.ObligationAmount += message.OldItem.Amount;
 
-                if (this.ID == message.Bill.SupplierID)
-                    if (!message.Bill.PaymentDate.HasValue)
-                        this.ObligationAmount += -message.Bill.Amount;
+                if (this.ID == message.NewItem.SupplierID)
+                    if (!message.NewItem.PaymentDate.HasValue)
+                        this.ObligationAmount += -message.NewItem.Amount;
             }
             else
             {
-                if (this.ID == message.Bill.SupplierID)
+                if (this.ID == message.NewItem.SupplierID)
                 {
-                    if (!message.OldBill.PaymentDate.HasValue)
-                        this.ObligationAmount += message.OldBill.Amount;
+                    if (!message.OldItem.PaymentDate.HasValue)
+                        this.ObligationAmount += message.OldItem.Amount;
 
-                    if (!message.Bill.PaymentDate.HasValue)
-                        this.ObligationAmount += -message.Bill.Amount;
+                    if (!message.NewItem.PaymentDate.HasValue)
+                        this.ObligationAmount += -message.NewItem.Amount;
                 }
             }
         }
@@ -271,15 +271,13 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.switchToEditCommand == null)
-                    this.switchToEditCommand = new RelayCommand(
+                return this.switchToEditCommand ?? (this.switchToEditCommand = 
+                    new RelayCommand(
                         () =>
                         {
                             this.TryClose();
-                            this.dbEventAggregator.Publish(new EditSupplierOrder(this.ExposedSupplier));
-                        });
-
-                return this.switchToEditCommand;
+                            this.dbEventAggregator.PublishOnUIThread(new EditSupplierOrder(this.ExposedSupplier));
+                        }));
             }
         }
 
@@ -288,14 +286,9 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.closeDetailsViewCommand == null)
-                    this.closeDetailsViewCommand = new RelayCommand(
-                    () =>
-                    {
-                        this.TryClose();
-                    });
-
-                return this.closeDetailsViewCommand;
+                return this.closeDetailsViewCommand ?? (this.closeDetailsViewCommand =
+                    new RelayCommand(
+                        () => this.TryClose()));
             }
         }
 
@@ -304,11 +297,9 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                if (this.addBillCommand == null)
-                    this.addBillCommand = new RelayCommand(
-                        () => this.AddBill());
-
-                return this.addBillCommand;
+                return this.addBillCommand ?? (addBillCommand =
+                    new RelayCommand(
+                        () => this.AddBill()));
             }
         }
 
