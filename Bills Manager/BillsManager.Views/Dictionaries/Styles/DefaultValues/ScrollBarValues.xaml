@@ -1,0 +1,98 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ViewValues.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!--  VALUES  -->
+
+    <system:Double x:Key="ScrollBar.Border.Thickness.Value">5</system:Double>
+    <Thickness x:Key="ScrollBar.Border.Thickness"
+               Bottom="{StaticResource ScrollBar.Border.Thickness.Value}"
+               Left="{StaticResource ScrollBar.Border.Thickness.Value}"
+               Right="{StaticResource ScrollBar.Border.Thickness.Value}"
+               Top="{StaticResource ScrollBar.Border.Thickness.Value}" />
+
+    <system:Double x:Key="ScrollBar.Thickness">13</system:Double>
+    <Visibility x:Key="ScrollBar.RepeatButtons.Visibility">Collapsed</Visibility>
+    <!--  <Visibility x:Key="ScrollBar.RepeatButtons.Visibility">Visible</Visibility>  -->
+
+
+    <!--  COLORS  -->
+
+    <!--  SCROLLBAR  -->
+
+    <!--  ScrollBar.Background  -->
+    <SolidColorBrush x:Key="ScrollBar.Background.Normal" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+    <SolidColorBrush x:Key="ScrollBar.Background.Hover" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+    <SolidColorBrush x:Key="ScrollBar.Background.Disabled" Color="#FFECECEC" />
+
+    <!--  ScrollBar.BorderBrush  -->
+    <!--<SolidColorBrush x:Key="ScrollBar.BorderBrush.Normal" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+    <SolidColorBrush x:Key="ScrollBar.BorderBrush.Hover" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+    <SolidColorBrush x:Key="ScrollBar.BorderBrush.Disabled" Color="#FFECECEC" />-->
+
+    <SolidColorBrush x:Key="ScrollBar.BorderBrush.Normal" Color="Transparent" />
+    <SolidColorBrush x:Key="ScrollBar.BorderBrush.Hover" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+    <SolidColorBrush x:Key="ScrollBar.BorderBrush.Disabled" Color="Transparent" />
+
+    <!--  ScrollBar.Foreground  -->
+    <SolidColorBrush x:Key="ScrollBar.Foreground.Normal" Color="{Binding Source={StaticResource View.Foreground.Normal}, Path=Color}" />
+    <SolidColorBrush x:Key="ScrollBar.Foreground.Hover" Color="{Binding Source={StaticResource View.Foreground.Normal}, Path=Color}" />
+    <SolidColorBrush x:Key="ScrollBar.Foreground.Disabled" Color="{Binding Source={StaticResource View.Foreground.Disabled}, Path=Color}" />
+
+
+    <!--  THUMB  -->
+
+    <!--  ScrollBar.Thumb.Background  -->
+    <SolidColorBrush x:Key="ScrollBar.Thumb.Background.Normal" Color="#FFD2D2D2" />
+    <SolidColorBrush x:Key="ScrollBar.Thumb.Background.Hover" Color="#FFB8B8B8" />
+    <SolidColorBrush x:Key="ScrollBar.Thumb.Background.Dragging" Color="{Binding Source={StaticResource View.Foreground.Disabled}, Path=Color}" />
+    <SolidColorBrush x:Key="ScrollBar.Thumb.Background.Disabled" Color="#FFECECEC" />
+
+    <!--  ScrollBar.Thumb.BorderBrush  -->
+    <!--<SolidColorBrush x:Key="ScrollBar.Thumb.BorderBrush.Normal" Color="#FFD2D2D2" />
+    <SolidColorBrush x:Key="ScrollBar.Thumb.BorderBrush.Hover" Color="#FFB8B8B8" />
+    <SolidColorBrush x:Key="ScrollBar.Thumb.BorderBrush.Dragging" Color="{Binding Source={StaticResource View.Foreground.Disabled}, Path=Color}" />
+    <SolidColorBrush x:Key="ScrollBar.Thumb.BorderBrush.Disabled" Color="#FFECECEC" />-->
+
+    <SolidColorBrush x:Key="ScrollBar.Thumb.BorderBrush.Normal" Color="Transparent" />
+    <SolidColorBrush x:Key="ScrollBar.Thumb.BorderBrush.Hover" Color="#FFB8B8B8" />
+    <SolidColorBrush x:Key="ScrollBar.Thumb.BorderBrush.Dragging" Color="{Binding Source={StaticResource View.Foreground.Disabled}, Path=Color}" />
+    <SolidColorBrush x:Key="ScrollBar.Thumb.BorderBrush.Disabled" Color="Transparent" />
+
+    <!--  ScrollBar.Thumb.Foreground  -->
+    <SolidColorBrush x:Key="ScrollBar.Thumb.Foreground.Normal" Color="{Binding Source={StaticResource View.Foreground.Normal}, Path=Color}" />
+    <SolidColorBrush x:Key="ScrollBar.Thumb.Foreground.Hover" Color="{Binding Source={StaticResource View.Foreground.Normal}, Path=Color}" />
+    <SolidColorBrush x:Key="ScrollBar.Thumb.Foreground.Dragging" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+    <SolidColorBrush x:Key="ScrollBar.Thumb.Foreground.Disabled" Color="{Binding Source={StaticResource View.Foreground.Disabled}, Path=Color}" />
+
+
+    <!--  REPEATBUTTON  -->
+
+    <!--  ScrollBar.RepeatButton.Background  -->
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.Background.Normal" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.Background.Hover" Color="#FFD2D2D2" />
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.Background.Pressed" Color="#FFB8B8B8" />
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.Background.Disabled" Color="#FFECECEC" />
+
+    <!--  ScrollBar.RepeatButton.BorderBrush  -->
+    <!--<SolidColorBrush x:Key="ScrollBar.RepeatButton.BorderBrush.Normal" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.BorderBrush.Hover" Color="#FFD2D2D2" />
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.BorderBrush.Pressed" Color="#FFB8B8B8" />
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.BorderBrush.Disabled" Color="#FFECECEC" />-->
+
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.BorderBrush.Normal" Color="Transparent" />
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.BorderBrush.Hover" Color="#FFD2D2D2" />
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.BorderBrush.Pressed" Color="#FFB8B8B8" />
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.BorderBrush.Disabled" Color="Transparent" />
+
+    <!--  ScrollBar.RepeatButton.Foreground  -->
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.Foreground.Normal" Color="{Binding Source={StaticResource View.Foreground.Normal}, Path=Color}" />
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.Foreground.Hover" Color="{Binding Source={StaticResource View.Foreground.Normal}, Path=Color}" />
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.Foreground.Pressed" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+    <SolidColorBrush x:Key="ScrollBar.RepeatButton.Foreground.Disabled" Color="{Binding Source={StaticResource View.Foreground.Disabled}, Path=Color}" />
+
+</ResourceDictionary>

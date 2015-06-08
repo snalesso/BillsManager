@@ -52,11 +52,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BillsManager.Model\BillsManager.Models.csproj">
+    <ProjectReference Include="..\..\BillsManager.Models\BillsManager.Models.csproj">
       <Project>{888f670b-4396-4660-8c5a-0d43fb2c0a1d}</Project>
       <Name>BillsManager.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\BillsManager.Service\BillsManager.Services.csproj">
+    <ProjectReference Include="..\..\BillsManager.Services\BillsManager.Services.csproj">
       <Project>{fc8a7a61-d9cf-4ac7-a62d-590c35a28a44}</Project>
       <Name>BillsManager.Services</Name>
     </ProjectReference>

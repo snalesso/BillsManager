@@ -125,19 +125,19 @@
       <Project>{5387db3b-6ec1-42cf-a72b-cef5adfb541a}</Project>
       <Name>BillsManager.Localization</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BillsManager.Model\BillsManager.Models.csproj">
+    <ProjectReference Include="..\BillsManager.Models\BillsManager.Models.csproj">
       <Project>{888f670b-4396-4660-8c5a-0d43fb2c0a1d}</Project>
       <Name>BillsManager.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BillsManager.Service\BillsManager.Services.csproj">
+    <ProjectReference Include="..\BillsManager.Services\BillsManager.Services.csproj">
       <Project>{fc8a7a61-d9cf-4ac7-a62d-590c35a28a44}</Project>
       <Name>BillsManager.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BillsManager.ViewModel\BillsManager.ViewModels.csproj">
+    <ProjectReference Include="..\BillsManager.ViewModels\BillsManager.ViewModels.csproj">
       <Project>{127368a5-65a5-46c6-a203-33abc22b1edd}</Project>
       <Name>BillsManager.ViewModels</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BillsManager.View\BillsManager.Views.csproj">
+    <ProjectReference Include="..\BillsManager.Views\BillsManager.Views.csproj">
       <Project>{36633953-eee1-45f3-8eef-86f7f221aa93}</Project>
       <Name>BillsManager.Views</Name>
     </ProjectReference>
@@ -164,7 +164,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>call "$(TargetDir)GroupLanguages.exe" "Languages"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

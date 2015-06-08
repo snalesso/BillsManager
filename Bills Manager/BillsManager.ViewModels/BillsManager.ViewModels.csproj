@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{127368A5-65A5-46C6-A203-33ABC22B1EDD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BillsManager.ViewModels</RootNamespace>
+    <AssemblyName>BillsManager.ViewModels</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Caliburn.Micro, Version=2.0.2.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.Core.2.0.2\lib\net45\Caliburn.Micro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Caliburn.Micro.Platform, Version=2.0.2.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.2.0.2\lib\net45\Caliburn.Micro.Platform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BackupCenterViewModel.cs" />
+    <Compile Include="BillViewModels\BillDetailsViewModel\BillDetailsViewModel.IComparable.cs" />
+    <Compile Include="BillViewModels\BillDetailsViewModel\BillDetailsViewModelComparer.cs" />
+    <Compile Include="Commanding\EventToCommand\BehaviorBinding.cs" />
+    <Compile Include="Commanding\EventToCommand\CommandBehavior.cs" />
+    <Compile Include="Commanding\EventToCommand\CommandBehaviorBinding.cs" />
+    <Compile Include="Commanding\EventToCommand\CommandBehaviorCollection.cs" />
+    <Compile Include="Commanding\EventToCommand\EventHandlerGenerator.cs" />
+    <Compile Include="Commanding\EventToCommand\ExecutionStrategy.cs" />
+    <Compile Include="DBBackupsViewModel.cs" />
+    <Compile Include="BackupViewModel.cs" />
+    <Compile Include="BillViewModels\BillAddEditViewModel\BillAddEditViewModel.cs" />
+    <Compile Include="BillViewModels\BillAddEditViewModel\BillAddEditViewModel.IEditableObject.cs" />
+    <Compile Include="BillViewModels\BillAddEditViewModel\BillAddEditViewModel.IDataErrorInfo.cs" />
+    <Compile Include="BillViewModels\BillDetailsViewModel\BillDetailsViewModel.cs" />
+    <Compile Include="BillViewModels\BillViewModel.cs" />
+    <Compile Include="DBViewModel.cs" />
+    <Compile Include="DesignTime\BackupCenterViewModel.DesignTime.cs" />
+    <Compile Include="DesignTime\BillAddEditViewModel.DesignTime.cs" />
+    <Compile Include="DesignTime\BillDetailsViewModel.DesignTime.cs" />
+    <Compile Include="DesignTime\DBViewModel.DesignTime.cs" />
+    <Compile Include="DesignTime\ProgressViewModel.DesignTime.cs" />
+    <Compile Include="DesignTime\SearchViewModelGeneric.DesignTime.cs" />
+    <Compile Include="DesignTime\SettingsViewModel.DesignTime.cs" />
+    <Compile Include="DesignTime\StatusBarViewModel.DesignTime.cs" />
+    <Compile Include="DesignTime\SupplierAddEditViewModel.DesignTime.cs" />
+    <Compile Include="Dialog\IDialogViewModelFactory.cs" />
+    <Compile Include="Dialog\ProgressViewModel.cs" />
+    <Compile Include="Messages\Database\CRUD\CRUDMessage.cs" />
+    <Compile Include="Messages\Database\DBConnectionStateChangedMessage.cs" />
+    <Compile Include="Messages\Database\CRUD\AddedMessageGeneric.cs" />
+    <Compile Include="Messages\Database\CRUD\CRUDMessageGeneric.cs" />
+    <Compile Include="Messages\Database\CRUD\EditedMessageGeneric.cs" />
+    <Compile Include="Messages\Database\CRUD\DeletedMessageGeneric.cs" />
+    <Compile Include="Messages\Database\Search\FilterMessageGeneric.cs" />
+    <Compile Include="Messages\Database\CRUD\AddBillToSupplierOrder.cs" />
+    <Compile Include="Messages\Database\View events\SelectedSupplierChagedMessage.cs" />
+    <Compile Include="Reporting\BillReportViewModel.cs" />
+    <Compile Include="Search\FilterGeneric.cs" />
+    <Compile Include="Search\SearchViewModelGeneric.cs" />
+    <Compile Include="Search\SimpleSearchBillsViewModel.cs" />
+    <Compile Include="SendFeedbackViewModel.cs" />
+    <Compile Include="Messages\Backup\RollbackAuthorizationRequest.cs" />
+    <Compile Include="Messages\Database\CRUD\AddNewSupplierOrder.cs" />
+    <Compile Include="DesignTime\DialogViewModel.DesignTime.cs" />
+    <Compile Include="DesignTime\SearchBillsViewModel.DesignTime.cs" />
+    <Compile Include="DesignTime\SearchSuppliersViewModel.DesignTime.cs" />
+    <Compile Include="Dialog\DialogResponse.cs" />
+    <Compile Include="Dialog\DialogType.cs" />
+    <Compile Include="Dialog\DialogViewModel.cs" />
+    <Compile Include="Dialog\ResponseType.cs" />
+    <Compile Include="ExtensionMethods\ExtensionMethods.cs" />
+    <Compile Include="Messages\Database\SupplierNameRequest.cs" />
+    <Compile Include="Messages\Database\View events\BillsListChangedMessage.cs" />
+    <Compile Include="Messages\Database\ShowSuppliersBillsOrder.cs" />
+    <Compile Include="Messages\Database\CRUD\EditSupplierOrder.cs" />
+    <Compile Include="Messages\Database\CRUD\EditBillOrder.cs" />
+    <Compile Include="Reporting\PrintReportViewModel.cs" />
+    <Compile Include="SettingsViewModel.cs" />
+    <Compile Include="StatusBarViewModel.cs" />
+    <Compile Include="SupplierViewModels\SupplierAddEditViewModel\SupplierAddEditViewModel.IDataErrorInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SupplierViewModels\SupplierAddEditViewModel\SupplierAddEditViewModel.IEditableObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SupplierViewModels\SupplierDetailsViewModel\SupplierDetailsViewModel.IComparable.cs" />
+    <Compile Include="SupplierViewModels\SupplierDetailsViewModel\SupplierDetailsViewModel.cs" />
+    <Compile Include="SupplierViewModels\SupplierViewModel.cs" />
+    <Compile Include="Validation\ValidationRulesTrackerGeneric.cs" />
+    <Compile Include="Search\SearchBillsViewModel.cs" />
+    <Compile Include="BillsViewModel.cs" />
+    <Compile Include="DesignTime\DBBackupsViewModel.DesignTime.cs" />
+    <Compile Include="DesignTime\BackupViewModel.DesignTime.cs" />
+    <Compile Include="DesignTime\ShellViewModel.DesignTime.cs" />
+    <Compile Include="DesignTime\SuppliersViewModel.DesignTime.cs" />
+    <Compile Include="DesignTime\SupplierDetailsViewModel.DesignTime.cs" />
+    <Compile Include="Helpers\IExecuteWithObject.cs" />
+    <Compile Include="Helpers\IExecuteWithObjectAndResult.cs" />
+    <Compile Include="Commanding\RelayCommand\RelayCommand.cs" />
+    <Compile Include="Commanding\RelayCommand\RelayCommandGeneric.cs" />
+    <Compile Include="Helpers\WeakAction.cs" />
+    <Compile Include="Helpers\WeakActionGeneric.cs" />
+    <Compile Include="Helpers\WeakFunc.cs" />
+    <Compile Include="Helpers\WeakFuncGeneric.cs" />
+    <Compile Include="DesignTime\BillsViewModel.DesignTime.cs" />
+    <Compile Include="Messages\Database\AvailableSuppliersRequest.cs" />
+    <Compile Include="Messages\Database\View events\SuppliersListChangedMessage.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Search\SearchSuppliersViewModel.cs" />
+    <Compile Include="ShellViewModel.cs" />
+    <Compile Include="SuppliersViewModel.cs" />
+    <Compile Include="SupplierViewModels\SupplierAddEditViewModel\SupplierAddEditViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BillsManager.Localization\BillsManager.Localization.csproj">
+      <Project>{5387db3b-6ec1-42cf-a72b-cef5adfb541a}</Project>
+      <Name>BillsManager.Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BillsManager.Models\BillsManager.Models.csproj">
+      <Project>{888F670B-4396-4660-8C5A-0D43FB2C0A1D}</Project>
+      <Name>BillsManager.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BillsManager.Services\BillsManager.Services.csproj">
+      <Project>{FC8A7A61-D9CF-4AC7-A62D-590C35A28A44}</Project>
+      <Name>BillsManager.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Messages\DBState\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

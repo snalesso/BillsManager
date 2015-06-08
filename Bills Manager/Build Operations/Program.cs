@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GroupLanguages
 {
@@ -13,16 +9,23 @@ namespace GroupLanguages
     {
         static void Main(string[] args)
         {
+            var newLangsFolder = args[0];
+
+            if (newLangsFolder == null ||
+                newLangsFolder == string.Empty ||
+                Path.GetInvalidFileNameChars().Any(ic => newLangsFolder.Contains(ic)))
+            {
+                Console.WriteLine();
+                Console.WriteLine("Languages folder name '" + newLangsFolder + "' not valid.");
+                Console.WriteLine();
+                return;
+            }
+
             try
             {
-                var newLangsFolder = args[0];
-
-                if (newLangsFolder == null || newLangsFolder == string.Empty)
-                    return;
-
-                foreach (var ic in Path.GetInvalidFileNameChars())
-                    if (newLangsFolder.Contains(ic))
-                        return;
+                Console.WriteLine();
+                Console.WriteLine("Started GROUPING LANGUAGES into '" + newLangsFolder + "'...");
+                Console.WriteLine();
 
                 var langsDirInfo = Directory.CreateDirectory(newLangsFolder);
 
@@ -38,12 +41,18 @@ namespace GroupLanguages
                         MoveDirectory(dir, langsDirInfo.FullName, true);
                     }
                 }
+
+                Console.WriteLine("Finished moving languages.");
+                Console.WriteLine();
             }
             catch (Exception ex)
             {
                 var now = DateTime.Now;
-                File.AppendAllText("Group Languages Exceptions.txt", 
-                    now.ToShortDateString() + " " +  now.ToShortTimeString() + " " + ex.Message + Environment.NewLine);
+                File.AppendAllText("Group Languages Exceptions.txt",
+                    now.ToShortDateString() + " " + now.ToShortTimeString() + " " + ex.Message + Environment.NewLine);
+
+                Console.WriteLine("Error moving languages.");
+                Console.WriteLine();
             }
         }
 
@@ -61,6 +70,11 @@ namespace GroupLanguages
                     if (File.Exists(movedFile))
                         File.Delete(movedFile);
                     File.Move(file, movedFile);
+
+                    Console.WriteLine("From " + file);
+                    Console.WriteLine("To " + movedFile);
+                    Console.WriteLine();
+
                 }
                 foreach (var dir in Directory.GetDirectories(source))
                 {

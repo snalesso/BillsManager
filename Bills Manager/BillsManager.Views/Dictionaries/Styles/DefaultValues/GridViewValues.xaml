@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ViewValues.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <SolidColorBrush x:Key="GridView.ColumnHeader.BorderBrush.Normal" Color="#FFD4D4D4" />
+    <SolidColorBrush x:Key="GridView.ColumnHeader.BorderBrush.Hover" Color="#FFD4D4D4" />
+    <SolidColorBrush x:Key="GridView.ColumnHeader.BorderBrush.Pressed" Color="#FF838383" />
+
+    <SolidColorBrush x:Key="GridView.ColumnHeader.Background.Normal" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+    <SolidColorBrush x:Key="GridView.ColumnHeader.Background.Hover" Color="#FFF5F5F5" />
+    <SolidColorBrush x:Key="GridView.ColumnHeader.Background.Pressed" Color="#FFA7A7A7" />
+
+    <SolidColorBrush x:Key="GridView.ColumnHeader.Foreground.Normal" Color="{Binding Source={StaticResource View.Foreground.Normal}, Path=Color}" />
+    <SolidColorBrush x:Key="GridView.ColumnHeader.Foreground.Hover" Color="{Binding Source={StaticResource View.Foreground.Normal}, Path=Color}" />
+    <SolidColorBrush x:Key="GridView.ColumnHeader.Foreground.Pressed" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+
+    <FontWeight x:Key="GridView.ColumnHeader.FontWeight">SemiBold</FontWeight>
+
+    <Thickness x:Key="GridView.ColumnHeader.BorderThickness.Normal" />
+    <Thickness x:Key="GridView.ColumnHeader.BorderThickness.Hover" />
+    <Thickness x:Key="GridView.ColumnHeader.BorderThickness.Pressed" />
+    <!--<Thickness x:Key="GridView.ColumnHeader.Padder.BorderThickness"
+               Bottom="{StaticResource Separator.Size}"
+               Left="{StaticResource Separator.Size}" />-->
+
+</ResourceDictionary>
