@@ -91,7 +91,8 @@
     <FontWeight x:Key="View.Region.Title.FontWeight">SemiBold</FontWeight>
     <SolidColorBrush x:Key="View.Region.Title.Foregound" Color="{Binding Source={StaticResource View.BorderBrush}, Path=Color}" />
 
-    <Visibility x:Key="View.Region.Title.Visibility">Collapsed</Visibility>
+    <!--<Visibility x:Key="View.Region.Title.Visibility">Collapsed</Visibility>-->
+    <Visibility x:Key="View.Region.Title.Visibility">Visible</Visibility>
 
 
     <System:Double x:Key="Separator.Size">1</System:Double>

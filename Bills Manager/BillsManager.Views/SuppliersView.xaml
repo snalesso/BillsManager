@@ -29,8 +29,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <!--<RowDefinition Height="{StaticResource View.Region.Spacing.Normal}" />-->
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource View.Region.Spacing.Normal}" />
+            <!--<RowDefinition Height="Auto" />-->
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
