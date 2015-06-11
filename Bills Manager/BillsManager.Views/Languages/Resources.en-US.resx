@@ -436,7 +436,7 @@
     <value>Cancel edit</value>
   </data>
   <data name="_currency_format" xml:space="preserve">
-    <value>{0.00:N2} $</value>
+    <value>{0:N2} $</value>
   </data>
   <data name="CreateBackup" xml:space="preserve">
     <value>Create backup</value>

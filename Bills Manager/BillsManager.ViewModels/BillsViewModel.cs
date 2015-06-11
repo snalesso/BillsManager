@@ -173,12 +173,16 @@ namespace BillsManager.ViewModels
 
         private string GetBillSummary(Bill bill)
         {
+            var currencyFormat = TranslationManager.Instance.Translate("_currency_format");
+
+            var formattedAmount = string.Format(currencyFormat, bill.Amount);
+
             return
                 this.GetSupplierName(bill.SupplierID) +
                 Environment.NewLine +
                 bill.Code +
                 Environment.NewLine +
-                string.Format(TranslationManager.Instance.Translate("_currency_format").ToString(), bill.Amount);
+                formattedAmount;
         }
 
         private string GetSupplierName(uint supplierID)
@@ -197,7 +201,7 @@ namespace BillsManager.ViewModels
 
             if (supplier != null) // TODO: safe operation? if supplier is not known by addbvm?
                 addBillVm.SelectedSupplier = supplier;
-tryAdd:
+        tryAdd:
             if (this.windowManager.ShowDialog(addBillVm) == true)
             {
                 // TODO: make it possible to show the view through a dialogviewmodel (evaluate the idea)
@@ -403,7 +407,7 @@ tryAdd:
         {
             get
             {
-                return this.addNewBillCommand ?? (this.addNewBillCommand = 
+                return this.addNewBillCommand ?? (this.addNewBillCommand =
                     new RelayCommand(
                         () => this.AddBill()));
             }
@@ -414,7 +418,7 @@ tryAdd:
         {
             get
             {
-                return this.editBillCommand ?? (this.editBillCommand = 
+                return this.editBillCommand ?? (this.editBillCommand =
                     new RelayCommand<BillDetailsViewModel>(
                         p => this.EditBill(p.ExposedBill),
                         p => p != null));
@@ -426,7 +430,7 @@ tryAdd:
         {
             get
             {
-                return this.deleteBillCommand ?? (this.deleteBillCommand = 
+                return this.deleteBillCommand ?? (this.deleteBillCommand =
                     new RelayCommand<BillDetailsViewModel>(
                         p => this.DeleteBill(p.ExposedBill),
                         p => p != null));
@@ -438,7 +442,7 @@ tryAdd:
         {
             get
             {
-                return this.payBillCommand ?? (this.payBillCommand = 
+                return this.payBillCommand ?? (this.payBillCommand =
                     new RelayCommand<BillDetailsViewModel>(
                         p => this.PayBill(p.ExposedBill),
                         p => p != null && !p.IsPaid));
@@ -450,7 +454,7 @@ tryAdd:
         {
             get
             {
-                return this.showBillDetailsCommand ?? (this.showBillDetailsCommand = 
+                return this.showBillDetailsCommand ?? (this.showBillDetailsCommand =
                     new RelayCommand<BillDetailsViewModel>(
                         p => this.ShowBillDetails(p),
                         p => p != null));
