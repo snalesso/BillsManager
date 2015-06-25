@@ -22,13 +22,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build Operations", "Build O
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillsManager.DesignTime", "BillsManager.DesignTime\BillsManager.DesignTime.csproj", "{BB73C02D-5ADE-4DB3-AB82-C6675E58C122}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Diagnostics", "Diagnostics", "{EA761715-D3C0-41B7-AE52-7903F49A59AD}"
-	ProjectSection(SolutionItems) = preProject
-		Diagnostics\Report20150618-0158.diagsession = Diagnostics\Report20150618-0158.diagsession
-		Diagnostics\Report20150618-0206.diagsession = Diagnostics\Report20150618-0206.diagsession
-		Diagnostics\Report20150618-0209.diagsession = Diagnostics\Report20150618-0209.diagsession
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceDictionariesMerger", "Build Operations\ResourceDictionariesMerger\ResourceDictionariesMerger.csproj", "{F4D11D26-8272-4DCC-B9EC-1C6184645B36}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupLanguages", "Build Operations\GroupLanguages\GroupLanguages.csproj", "{0A3C412A-7C61-4200-A3D7-794EBE21DB9A}"
