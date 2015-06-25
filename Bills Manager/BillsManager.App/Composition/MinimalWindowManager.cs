@@ -12,7 +12,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Navigation;
 
-namespace BillsManager.App
+namespace BillsManager.App.Composition
 {
     /// <summary>
     /// A service that manages windows.

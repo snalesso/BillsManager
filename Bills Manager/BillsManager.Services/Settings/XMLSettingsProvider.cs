@@ -1,29 +1,30 @@
-﻿using System;
+﻿using BillsManager.Models;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Xml.Linq;
 
-namespace BillsManager.Services.Settings
+namespace BillsManager.Services
 {
     public class XMLSettingsProvider : ISettingsProvider
     {
         #region fields
 
         // FILE PATHS
-        private const string SETTINGS_FILE_DOT_EXT = ".bmse";
-        private const string SETTINGS_FILE_NAMEWO_EXT = "settings";
-        private readonly string settingsFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, SETTINGS_FILE_NAMEWO_EXT + SETTINGS_FILE_DOT_EXT);
+        private const string SettingsFileDotExtension = ".bmse";
+        private const string SettingsFileNameWithoutExtension = "settings";
+        private readonly string settingsFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, SettingsFileNameWithoutExtension + SettingsFileDotExtension);
 
         // NAMESPACES
-        private const string NS_SETTINGS_ROOT = "settings";
-        private const string ITEM_STARTUP_DB_LOAD = "startup_db_load";
-        private const string ITEM_LANGUAGE = "language";
-        private const string ITEM_FEEDBACK_TO_EMAIL_ADDRESS = "feedback_to_email_address";
+        private const string Namespace_SettingsRoot = "settings";
+        private const string Item_StartupDBLoad = "startup_db_load";
+        private const string Item_Language = "language";
+        private const string Item_FeedbackToEmailAddress = "feedback_to_email_address";
 
         // DEFAULT VALUES
-        private const string DV_FEEDBACK_TO_EMAIL_ADDRESS = "";
-        private readonly string DV_LANGUAGE = "it-IT";
-        private const bool DV_STARTUP_DB_LOAD = true;
+        private const string Default_Language = "it-IT";
+        private const string Default_FeedbackEmailAddressee = "";
+        private const bool Default_LoadDbAtStartup = true;
 
         private readonly XDocument xmlSettings;
 
@@ -69,9 +70,9 @@ namespace BillsManager.Services.Settings
 
         public bool Save()
         {
-            this.xmlSettings.Root.Element(ITEM_LANGUAGE).SetValue(this.Settings.Language.Name);
-            this.xmlSettings.Root.Element(ITEM_STARTUP_DB_LOAD).SetValue(this.Settings.StartupDBLoad);
-            this.xmlSettings.Root.Element(ITEM_FEEDBACK_TO_EMAIL_ADDRESS).SetValue(this.Settings.FeedbackToEmailAddress);
+            this.xmlSettings.Root.Element(Item_Language).SetValue(this.Settings.Language.Name);
+            this.xmlSettings.Root.Element(Item_StartupDBLoad).SetValue(this.Settings.StartupDBLoad);
+            this.xmlSettings.Root.Element(Item_FeedbackToEmailAddress).SetValue(this.Settings.FeedbackToEmailAddress);
 
             try
             {
@@ -91,19 +92,19 @@ namespace BillsManager.Services.Settings
             newXMLSetts.Declaration = new XDeclaration("1.0", "utf-8", null);
 
             newXMLSetts.Add(
-                 new XElement(NS_SETTINGS_ROOT,
-                     new XElement(ITEM_LANGUAGE, DV_LANGUAGE),
-                     new XElement(ITEM_STARTUP_DB_LOAD, DV_STARTUP_DB_LOAD),
-                     new XElement(ITEM_FEEDBACK_TO_EMAIL_ADDRESS, DV_FEEDBACK_TO_EMAIL_ADDRESS)));
+                 new XElement(Namespace_SettingsRoot,
+                     new XElement(Item_Language, Default_Language),
+                     new XElement(Item_StartupDBLoad, Default_LoadDbAtStartup),
+                     new XElement(Item_FeedbackToEmailAddress, Item_FeedbackToEmailAddress)));
 
             return newXMLSetts;
         }
 
         protected Models.Settings ExtractSettings(XDocument XSettings)
         {
-            var ci = CultureInfo.GetCultureInfo(XSettings.Root.Element(ITEM_LANGUAGE).Value);
-            var load = (bool)XSettings.Root.Element(ITEM_STARTUP_DB_LOAD);
-            var toEmAdd = XSettings.Root.Element(ITEM_FEEDBACK_TO_EMAIL_ADDRESS).Value;
+            var ci = CultureInfo.GetCultureInfo(XSettings.Root.Element(Item_Language).Value);
+            var load = (bool)XSettings.Root.Element(Item_StartupDBLoad);
+            var toEmAdd = XSettings.Root.Element(Item_FeedbackToEmailAddress).Value;
 
             return
                 new Models.Settings(

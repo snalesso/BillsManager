@@ -8,7 +8,7 @@
              xmlns:DataTemplates="clr-namespace:BillsManager.Views.DataTemplates"
              xmlns:ViewModels="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
+             xmlns:Loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Caliburn:Bind.AtDesignTime="True"
              d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,
@@ -20,7 +20,8 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Dictionaries\Styles.xaml" />
+                <!--<ResourceDictionary Source="Dictionaries\Styles.xaml" />-->
+                <ResourceDictionary Source="Themes\Themes.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -40,8 +41,8 @@
 
         <TextBlock FontSize="{StaticResource View.Region.Title.FontSize}"
                    FontWeight="{StaticResource View.Region.Title.FontWeight}"
-                   Foreground="{StaticResource View.Region.Title.Foregound}"
-                   Text="{loc:Translate Bills}"
+                   Foreground="{StaticResource View.Region.Title.Foreground}"
+                   Text="{Loc:Translate Bills}"
                    Visibility="{StaticResource View.Region.Title.Visibility}" />
 
         <!--<Rectangle Grid.Row="2"
@@ -74,7 +75,7 @@
                 <GridView>
                     <GridViewColumn Width="155"
                                     DisplayMemberBinding="{Binding SupplierName}"
-                                    Header="{loc:Translate Supplier}">
+                                    Header="{Loc:Translate Supplier}">
                         <GridViewColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock FontWeight="{StaticResource GridView.ColumnHeader.FontWeight}" Text="{TemplateBinding Content}" />
@@ -83,14 +84,14 @@
                     </GridViewColumn>
                     <GridViewColumn Width="95"
                                     DisplayMemberBinding="{Binding Code}"
-                                    Header="{loc:Translate Number}">
+                                    Header="{Loc:Translate Number}">
                         <GridViewColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock FontWeight="{StaticResource GridView.ColumnHeader.FontWeight}" Text="{TemplateBinding Content}" />
                             </DataTemplate>
                         </GridViewColumn.HeaderTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="95" Header="{loc:Translate Amount}">
+                    <GridViewColumn Width="95" Header="{Loc:Translate Amount}">
                         <GridViewColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock HorizontalAlignment="Right"
@@ -104,7 +105,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="70" Header="{loc:Translate Paid_toBill}">
+                    <GridViewColumn Width="70" Header="{Loc:Translate Paid_toBill}">
                         <GridViewColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock HorizontalAlignment="Center"
@@ -145,7 +146,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="110" Header="{loc:Translate Release}">
+                    <GridViewColumn Width="110" Header="{Loc:Translate Release}">
                         <GridViewColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock HorizontalAlignment="Center"
@@ -162,7 +163,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="110" Header="{loc:Translate Due}">
+                    <GridViewColumn Width="110" Header="{Loc:Translate Due}">
                         <GridViewColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock HorizontalAlignment="Center"
@@ -218,7 +219,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="85" Header="{loc:Translate Agio}">
+                    <GridViewColumn Width="85" Header="{Loc:Translate Agio}">
                         <GridViewColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock HorizontalAlignment="Right"
@@ -232,7 +233,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="85" Header="{loc:Translate AdditionalCosts}">
+                    <GridViewColumn Width="85" Header="{Loc:Translate AdditionalCosts}">
                         <GridViewColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock HorizontalAlignment="Right"
@@ -246,7 +247,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="Auto" Header="{loc:Translate Notes}">
+                    <GridViewColumn Width="Auto" Header="{Loc:Translate Notes}">
                         <GridViewColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock FontWeight="{StaticResource GridView.ColumnHeader.FontWeight}" Text="{TemplateBinding Content}" />
@@ -280,7 +281,7 @@
                     <MenuItem Command="{Binding PayBillCommand,
                                                 Mode=OneWay}"
                               CommandParameter="{Binding SelectedBillViewModel}"
-                              Header="{loc:Translate Pay}">
+                              Header="{Loc:Translate Pay}">
                         <MenuItem.Icon>
                             <Controls:AutoGreyableImage Source="Images/generic/pay-16.png" />
                         </MenuItem.Icon>
@@ -288,7 +289,7 @@
 
                     <Separator />
 
-                    <MenuItem Command="{Binding AddNewBillCommand, Mode=OneWay}" Header="{loc:Translate Add}">
+                    <MenuItem Command="{Binding AddNewBillCommand, Mode=OneWay}" Header="{Loc:Translate Add}">
                         <MenuItem.Icon>
                             <Controls:AutoGreyableImage Source="Images/generic/add-16.png" />
                         </MenuItem.Icon>
@@ -297,7 +298,7 @@
                     <MenuItem Command="{Binding EditBillCommand,
                                                 Mode=OneWay}"
                               CommandParameter="{Binding SelectedBillViewModel}"
-                              Header="{loc:Translate Edit}">
+                              Header="{Loc:Translate Edit}">
                         <MenuItem.Icon>
                             <Controls:AutoGreyableImage Source="Images/generic/edit-16.png" />
                         </MenuItem.Icon>
@@ -306,7 +307,7 @@
                     <MenuItem Command="{Binding DeleteBillCommand,
                                                 Mode=OneWay}"
                               CommandParameter="{Binding SelectedBillViewModel}"
-                              Header="{loc:Translate Delete}">
+                              Header="{Loc:Translate Delete}">
                         <MenuItem.Icon>
                             <Controls:AutoGreyableImage Source="Images/generic/delete-16.png" />
                         </MenuItem.Icon>
@@ -317,7 +318,7 @@
                     <MenuItem Command="{Binding ShowBillDetailsCommand,
                                                 Mode=OneWay}"
                               CommandParameter="{Binding SelectedBillViewModel}"
-                              Header="{loc:Translate Details}">
+                              Header="{Loc:Translate Details}">
                         <MenuItem.Icon>
                             <Controls:AutoGreyableImage Source="Images/generic/details-16.png" />
                         </MenuItem.Icon>

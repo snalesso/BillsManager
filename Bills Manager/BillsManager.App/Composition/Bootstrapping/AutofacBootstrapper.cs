@@ -1,10 +1,10 @@
 ﻿using Autofac;
 using BillsManager.Localization;
-using BillsManager.Services.Feedback;
 //using BillsManager.App.Modules;
-using BillsManager.Services.Providers;
+using BillsManager.Services.Data;
+using BillsManager.Services.Feedback;
 using BillsManager.Services.Reporting;
-using BillsManager.Services.Settings;
+using BillsManager.Services;
 using BillsManager.ViewModels;
 using BillsManager.ViewModels.Reporting;
 //using BillsManager.ViewModels.Search;
@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-namespace BillsManager.App.Bootstrappers
+namespace BillsManager.App.Composition.Bootstrapping
 {
     // TIP: https://code.google.com/p/autofac/wiki/RelationshipTypes
     public class AutofacBootstrapper : BootstrapperEx<ShellViewModel>
@@ -38,7 +38,8 @@ namespace BillsManager.App.Bootstrappers
 #if !DEBUG
             builder.RegisterInstance(new XMLDBConnector(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"DB\db.bmdb"))).AsImplementedInterfaces().SingleInstance();
 #else
-            builder.RegisterInstance(new MockedDBConnector(12, 7)).AsImplementedInterfaces().SingleInstance();
+            builder.RegisterInstance(new XMLDBConnector(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"DB\db.bmdb"))).AsImplementedInterfaces().SingleInstance();
+            //builder.RegisterInstance(new MockedDBConnector(12, 7)).AsImplementedInterfaces().SingleInstance();
 #endif
             builder.RegisterType<XMLBackupsProvider>().As<IBackupsProvider>().SingleInstance();
 
@@ -46,6 +47,7 @@ namespace BillsManager.App.Bootstrappers
 
             builder.Register<EMailFeedbackSender>(
                 ctx => new EMailFeedbackSender(ctx.Resolve<ISettingsProvider>().Settings.FeedbackToEmailAddress))
+                //ctx => new EMailFeedbackSender("nalesso.sergio@gmail.com"))
                 .As<IFeedbackSender>().SingleInstance();
 
             builder.RegisterInstance(

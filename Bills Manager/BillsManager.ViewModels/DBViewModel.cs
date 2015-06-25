@@ -1,6 +1,6 @@
 ﻿using BillsManager.Localization;
 using BillsManager.Models;
-using BillsManager.Services.Providers;
+using BillsManager.Services.Data;
 using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
 using BillsManager.ViewModels.Reporting;

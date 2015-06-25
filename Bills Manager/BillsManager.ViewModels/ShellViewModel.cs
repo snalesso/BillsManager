@@ -1,5 +1,5 @@
 using BillsManager.Localization;
-using BillsManager.Services.Settings;
+using BillsManager.Services;
 using BillsManager.ViewModels.Commanding;
 //using BillsManager.ViewModels.Search;
 using Caliburn.Micro;

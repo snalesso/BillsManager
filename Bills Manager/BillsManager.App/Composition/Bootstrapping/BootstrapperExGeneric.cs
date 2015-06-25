@@ -1,14 +1,13 @@
 ﻿using Autofac;
-using BillsManager.App.Modules;
+using BillsManager.App.Composition.Bootstrapping.Modules;
 using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using IContainer = Autofac.IContainer;
 
-namespace BillsManager.App.Bootstrappers
+namespace BillsManager.App.Composition.Bootstrapping
 {
     public class BootstrapperEx<TRootViewModel> : BootstrapperBase
         where TRootViewModel : IScreen

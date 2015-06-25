@@ -96,10 +96,10 @@ namespace BillsManager.ViewModels
 
             var bills = new List<BillDetailsViewModel>();
 
-            bills.Add(new BillDetailsViewModel(newBill) /*{ SupplierName = "faewf" }*/);
-            bills.Add(new BillDetailsViewModel(newBill2) /*{ SupplierName = "fawef" }*/);
-            bills.Add(new BillDetailsViewModel(newBill3) /*{ SupplierName = "gres" }*/);
-            bills.Add(new BillDetailsViewModel(newBill4) /*{ SupplierName = "erg" }*/);
+            //bills.Add(new BillDetailsViewModel(newBill) /*{ SupplierName = "faewf" }*/);
+            //bills.Add(new BillDetailsViewModel(newBill2) /*{ SupplierName = "fawef" }*/);
+            //bills.Add(new BillDetailsViewModel(newBill3) /*{ SupplierName = "gres" }*/);
+            //bills.Add(new BillDetailsViewModel(newBill4) /*{ SupplierName = "erg" }*/);
 
             this.BillViewModels = new ObservableCollection<BillDetailsViewModel>(bills);
 

@@ -299,7 +299,7 @@
                       Margin="0 0 4 0"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center"
-                      Data="{StaticResource RightArrow}"
+                      Data="{StaticResource Arrow.Right.Metro}"
                       Fill="{TemplateBinding Foreground}" />
 
             </Grid>

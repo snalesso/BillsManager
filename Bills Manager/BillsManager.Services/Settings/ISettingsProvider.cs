@@ -1,4 +1,6 @@
-﻿namespace BillsManager.Services.Settings
+﻿using BillsManager.Models;
+
+namespace BillsManager.Services
 {
     public interface ISettingsProvider
     {

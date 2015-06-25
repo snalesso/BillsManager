@@ -1,13 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Values.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-            <MenuScrollingVisibilityConverter x:Key="MenuScrollingVisibilityConverter" />
-        </ResourceDictionary>
+        <ResourceDictionary Source="Values.xaml" />
     </ResourceDictionary.MergedDictionaries>
+
+    <MenuScrollingVisibilityConverter x:Key="MenuScrollingVisibilityConverter" />
 
     <Style x:Key="MenuScrollButton" TargetType="{x:Type RepeatButton}">
         <Setter Property="ClickMode" Value="Hover" />

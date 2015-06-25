@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="BillsManager.Views.Reporting.PrintReportView"
+﻿<UserControl x:Class="BillsManager.Views.PrintReportView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
+             xmlns:Loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Width="Auto"
              Height="Auto"
@@ -12,7 +12,8 @@
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <ResourceDictionary Source="/BillsManager.Views;component/Dictionaries/Styles.xaml" />
+        <!--<ResourceDictionary Source="/BillsManager.Views;component/Dictionaries/Styles.xaml" />-->
+        <ResourceDictionary Source="/BillsManager.Views;component/Themes/Themes.xaml" />
     </UserControl.Resources>
 
     <UserControl.Background>
@@ -132,7 +133,7 @@
                     MinWidth="80"
                     Command="{Binding PrintCommand,
                                       Mode=OneWay}"
-                    Content="{loc:Translate Print}" />
+                    Content="{Loc:Translate Print}" />
 
         </Grid>
 

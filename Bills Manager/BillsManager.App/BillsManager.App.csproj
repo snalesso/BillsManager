@@ -38,7 +38,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>images\Product-documentation.ico</ApplicationIcon>
+    <ApplicationIcon>Images\Product-documentation.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>
@@ -94,14 +94,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SingleInstance.cs" />
+    <Compile Include="Composition\SingleInstance.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bootstrapping\AutofacBootstrapper.cs" />
-    <Compile Include="Bootstrapping\BootstrapperEx.cs" />
-    <Compile Include="Bootstrapping\Modules\EventAggregationAutoSubscriptionModule.cs" />
-    <Compile Include="Bootstrapping\Modules\EventAggregationAutoUnsubscriptionModule.cs" />
-    <Compile Include="MinimalWindowManager.cs" />
+    <Compile Include="Composition\Bootstrapping\AutofacBootstrapper.cs" />
+    <Compile Include="Composition\Bootstrapping\BootstrapperExGeneric.cs" />
+    <Compile Include="Composition\Bootstrapping\Modules\EventAggregationAutoSubscriptionModule.cs" />
+    <Compile Include="Composition\Bootstrapping\Modules\EventAggregationAutoUnsubscriptionModule.cs" />
+    <Compile Include="Composition\MinimalWindowManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -143,7 +143,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\Product-documentation.ico" />
+    <Resource Include="Images\Product-documentation.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

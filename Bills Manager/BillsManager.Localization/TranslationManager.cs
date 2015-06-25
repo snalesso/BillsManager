@@ -23,13 +23,7 @@ namespace BillsManager.Localization
         private static TranslationManager instance;
         public static TranslationManager Instance
         {
-            get
-            {
-                if (instance == null)
-                    instance = new TranslationManager();
-
-                return instance;
-            }
+            get { return instance ?? (instance = new TranslationManager()); }
         }
 
         public CultureInfo CurrentLanguage
@@ -50,14 +44,7 @@ namespace BillsManager.Localization
 
         public IEnumerable<CultureInfo> Languages
         {
-            get
-            {
-                if (this.TranslationProvider != null)
-                {
-                    return this.TranslationProvider.Languages;
-                }
-                return Enumerable.Empty<CultureInfo>();
-            }
+            get { return this.TranslationProvider.Languages ?? Enumerable.Empty<CultureInfo>(); }
         }
 
         // TODO: if translation provider changes, available languages have to be updated
@@ -74,9 +61,7 @@ namespace BillsManager.Localization
                 var translatedValue = this.TranslationProvider.Translate(key);
 
                 if (translatedValue != null)
-                {
                     return translatedValue;
-                }
             }
             return string.Format("!{0}!", key);
         }

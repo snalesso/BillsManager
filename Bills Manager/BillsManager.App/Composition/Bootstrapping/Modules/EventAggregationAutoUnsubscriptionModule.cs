@@ -2,7 +2,7 @@
 using Autofac.Core;
 using Caliburn.Micro;
 
-namespace BillsManager.App.Modules
+namespace BillsManager.App.Composition.Bootstrapping.Modules
 {
     public class EventAggregationAutoUnsubscriptionModule : Module
     {

@@ -4,14 +4,15 @@
              xmlns:Behaviors="clr-namespace:BillsManager.Views.Behaviors"
              xmlns:ViewModel="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
+             xmlns:Loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DataContext="{d:DesignInstance Type=ViewModel:SupplierAddEditViewModel,
                                               IsDesignTimeCreatable=True}"
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <ResourceDictionary Source="Dictionaries\Styles.xaml" />
+        <!--<ResourceDictionary Source="Dictionaries\Styles.xaml" />-->
+        <ResourceDictionary Source="Themes\Themes.xaml" />
     </UserControl.Resources>
 
     <UserControl.Background>
@@ -71,14 +72,14 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    FontWeight="Bold"
-                   Text="{loc:Translate Details}" />
+                   Text="{Loc:Translate Details}" />
 
         <TextBlock Grid.Row="3"
                    Grid.Column="1"
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate Name}" />
+                   Text="{Loc:Translate Name}" />
         <TextBox Grid.Row="3"
                  Grid.Column="3"
                  Grid.ColumnSpan="5"
@@ -95,7 +96,7 @@
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate Notes}" />
+                   Text="{Loc:Translate Notes}" />
         <TextBox Grid.Row="5"
                  Grid.Column="3"
                  Grid.ColumnSpan="5"
@@ -112,21 +113,21 @@
 
 
 
-        <!--  Contacts  -->
         <TextBlock Grid.Row="8"
                    Grid.Column="1"
                    Grid.ColumnSpan="7"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    FontWeight="Bold"
-                   Text="{loc:Translate Address}" />
+                   Text="{Loc:Translate Address}" />
 
+        <!--  Contacts  -->
         <TextBlock Grid.Row="10"
                    Grid.Column="1"
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Center"
-                   Text="{loc:Translate City}" />
+                   Text="{Loc:Translate City}" />
         <TextBox Grid.Row="10"
                  Grid.Column="3"
                  VerticalAlignment="Center"
@@ -140,12 +141,12 @@
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate ZIP}" />
+                   Text="{Loc:Translate ZIP}" />
         <TextBox Grid.Row="10"
                  Grid.Column="7"
                  VerticalAlignment="Center"
                  Behaviors:TextBoxBehavior.FilterInput="true"
-                 Behaviors:TextBoxBehavior.InputFormat="{loc:Translate _onlyNumbers_regex}"
+                 Behaviors:TextBoxBehavior.InputFormat="{Loc:Translate _onlyNumbers_regex}"
                  MaxLength="5"
                  MaxLines="1"
                  TabIndex="3"
@@ -155,6 +156,30 @@
 
 
 
+        <TextBlock Grid.Row="12"
+                   Grid.Column="1"
+                   Margin="25,0,0,0"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   Text="{Loc:Translate Province}" />
+        <TextBox Grid.Row="12"
+                 Grid.Column="3"
+                 VerticalAlignment="Center"
+                 Behaviors:TextBoxBehavior.FilterInput="true"
+                 Behaviors:TextBoxBehavior.InputFormat="{Loc:Translate _onlyLetters_regex}"
+                 MaxLength="2"
+                 MaxLines="1"
+                 TabIndex="4"
+                 Text="{Binding Path=Province,
+                                UpdateSourceTrigger=PropertyChanged,
+                                ValidatesOnDataErrors=True}" />
+
+        <TextBlock Grid.Row="12"
+                   Grid.Column="5"
+                   Margin="25,0,0,0"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   Text="{Loc:Translate Country}" />
         <!--  Agents  -->
         <!--
             <TextBlock Grid.Column="1"
@@ -164,7 +189,7 @@
             HorizontalAlignment="Center"
             Text="Agents"
             VerticalAlignment="Center" />
-            
+
             <TextBlock Grid.Column="1"
             Grid.Row="31"
             HorizontalAlignment="Right"
@@ -184,7 +209,7 @@
             </DataTemplate>
             </ListBox.ItemTemplate>
             </ListBox>
-            
+
             <StackPanel Grid.Column="3"
             Grid.ColumnSpan="5"
             Grid.Row="33"
@@ -209,30 +234,6 @@
             </StackPanel>
         -->
 
-        <TextBlock Grid.Row="12"
-                   Grid.Column="1"
-                   Margin="25,0,0,0"
-                   HorizontalAlignment="Right"
-                   VerticalAlignment="Top"
-                   Text="{loc:Translate Province}" />
-        <TextBox Grid.Row="12"
-                 Grid.Column="3"
-                 VerticalAlignment="Center"
-                 Behaviors:TextBoxBehavior.FilterInput="true"
-                 Behaviors:TextBoxBehavior.InputFormat="{loc:Translate _onlyLetters_regex}"
-                 MaxLength="2"
-                 MaxLines="1"
-                 TabIndex="4"
-                 Text="{Binding Path=Province,
-                                UpdateSourceTrigger=PropertyChanged,
-                                ValidatesOnDataErrors=True}" />
-
-        <TextBlock Grid.Row="12"
-                   Grid.Column="5"
-                   Margin="25,0,0,0"
-                   HorizontalAlignment="Right"
-                   VerticalAlignment="Top"
-                   Text="{loc:Translate Country}" />
         <TextBox Grid.Row="12"
                  Grid.Column="7"
                  VerticalAlignment="Center"
@@ -246,7 +247,7 @@
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate Street}" />
+                   Text="{Loc:Translate Street}" />
         <TextBox Grid.Row="14"
                  Grid.Column="3"
                  VerticalAlignment="Center"
@@ -260,7 +261,7 @@
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate Number}" />
+                   Text="{Loc:Translate Number}" />
         <TextBox Grid.Row="14"
                  Grid.Column="7"
                  VerticalAlignment="Center"
@@ -275,14 +276,14 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    FontWeight="Bold"
-                   Text="{loc:Translate Contacts}" />
+                   Text="{Loc:Translate Contacts}" />
 
         <TextBlock Grid.Row="19"
                    Grid.Column="1"
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate AgentName}" />
+                   Text="{Loc:Translate AgentName}" />
         <TextBox Grid.Row="19"
                  Grid.Column="3"
                  TabIndex="8"
@@ -293,7 +294,7 @@
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate AgentSurname}" />
+                   Text="{Loc:Translate AgentSurname}" />
         <TextBox Grid.Row="19"
                  Grid.Column="7"
                  TabIndex="9"
@@ -304,7 +305,7 @@
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate AgentPhone}" />
+                   Text="{Loc:Translate AgentPhone}" />
         <TextBox Grid.Row="21"
                  Grid.Column="3"
                  TabIndex="10"
@@ -315,7 +316,7 @@
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate Phone}" />
+                   Text="{Loc:Translate Phone}" />
         <TextBox Grid.Row="25"
                  Grid.Column="3"
                  VerticalAlignment="Center"
@@ -329,7 +330,7 @@
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate Fax}" />
+                   Text="{Loc:Translate Fax}" />
         <TextBox Grid.Row="25"
                  Grid.Column="7"
                  VerticalAlignment="Center"
@@ -343,7 +344,7 @@
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate Email}" />
+                   Text="{Loc:Translate Email}" />
         <TextBox Grid.Row="27"
                  Grid.Column="3"
                  VerticalAlignment="Center"
@@ -360,7 +361,7 @@
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate Website}" />
+                   Text="{Loc:Translate Website}" />
         <TextBox Grid.Row="27"
                  Grid.Column="7"
                  VerticalAlignment="Center"
@@ -377,7 +378,7 @@
 
             <Button Width="80"
                     Command="{Binding Path=ConfirmAddEditAndCloseCommand}"
-                    Content="{loc:Translate Ok}"
+                    Content="{Loc:Translate Ok}"
                     TabIndex="15">
                 <Button.Margin>
                     <Thickness Right="{StaticResource View.MarginSize.Value}" />
@@ -386,7 +387,7 @@
 
             <Button Width="80"
                     Command="{Binding Path=CancelAddEditAndCloseCommand}"
-                    Content="{loc:Translate Cancel}"
+                    Content="{Loc:Translate Cancel}"
                     IsCancel="True"
                     TabIndex="16" />
 

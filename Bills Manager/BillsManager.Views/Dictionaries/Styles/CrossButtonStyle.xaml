@@ -19,10 +19,10 @@
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
 
         <Setter Property="Background" Value="{StaticResource ControlBox.Buttons.Close.Background.Normal}" />
-        <Setter Property="BorderBrush" Value="{StaticResource ControlBox.Close.BorderBrush.Normal}" />
-        <Setter Property="Foreground" Value="{StaticResource ControlBox.Close.Foreground.Normal}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlBox.Buttons.Close.BorderBrush.Normal}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlBox.Buttons.Close.Foreground.Normal}" />
 
-        <Setter Property="BorderThickness" Value="{StaticResource ControlBox.BorderThickness}" />
+        <Setter Property="BorderThickness" Value="{StaticResource ControlBox.Buttons.BorderThickness}" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -43,14 +43,14 @@
 
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter Property="Foreground" Value="{StaticResource ControlBox.Buttons.Close.Background.Hover}" />
-                            <Setter Property="Foreground" Value="{StaticResource ControlBox.Close.BorderBrush.Hover}" />
-                            <Setter Property="Foreground" Value="{StaticResource ControlBox.Close.Foreground.Hover}" />
+                            <Setter Property="Foreground" Value="{StaticResource ControlBox.Buttons.Close.BorderBrush.Hover}" />
+                            <Setter Property="Foreground" Value="{StaticResource ControlBox.Buttons.Close.Foreground.Hover}" />
                         </Trigger>
 
                         <Trigger Property="IsPressed" Value="true">
                             <Setter Property="Foreground" Value="{StaticResource ControlBox.Buttons.Close.Background.Pressed}" />
-                            <Setter Property="Foreground" Value="{StaticResource ControlBox.Close.BorderBrush.Pressed}" />
-                            <Setter Property="Foreground" Value="{StaticResource ControlBox.Close.Foreground.Pressed}" />
+                            <Setter Property="Foreground" Value="{StaticResource ControlBox.Buttons.Close.BorderBrush.Pressed}" />
+                            <Setter Property="Foreground" Value="{StaticResource ControlBox.Buttons.Close.Foreground.Pressed}" />
                         </Trigger>
 
                         <!--<Trigger Property="IsEnabled" Value="false">

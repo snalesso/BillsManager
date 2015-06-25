@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace BillsManager.Services.Providers
+namespace BillsManager.Services.Data
 {
     public class XMLBackupsProvider : IBackupsProvider
     {

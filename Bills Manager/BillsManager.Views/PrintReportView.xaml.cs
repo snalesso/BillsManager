@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace BillsManager.Views.Reporting
+namespace BillsManager.Views
 {
     /// <summary>
     /// Interaction logic for PrintReportView.xaml

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BillsManager.Services.Providers
+namespace BillsManager.Services.Data
 {
     public partial class MockedDBConnector : IDBConnector
     {

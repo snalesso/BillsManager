@@ -1,4 +1,5 @@
-﻿using BillsManager.App.Bootstrappers;
+﻿using BillsManager.App.Composition;
+using BillsManager.App.Composition.Bootstrapping;
 using System;
 using System.Collections.Generic;
 using System.Windows;

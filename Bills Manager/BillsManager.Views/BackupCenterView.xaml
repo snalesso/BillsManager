@@ -6,7 +6,7 @@
              xmlns:DataTemplates="clr-namespace:BillsManager.Views.DataTemplates"
              xmlns:ViewModel="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
+             xmlns:Loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Width="Auto"
              d:DataContext="{d:DesignInstance Type=ViewModel:BackupCenterViewModel,
@@ -15,7 +15,8 @@
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <ResourceDictionary Source="Dictionaries\Styles.xaml" />
+        <!--<ResourceDictionary Source="Dictionaries\Styles.xaml" />-->
+        <ResourceDictionary Source="Themes\Themes.xaml" />
     </UserControl.Resources>
 
     <UserControl.Background>
@@ -39,26 +40,26 @@
             <!--
                 <MenuItem Header="Refresh"
                 Command="{Binding RefreshBackupGroupsCommand, Mode=OneWay}" />
-                
+
                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
             -->
 
             <MenuItem Command="{Binding ActiveItem.RollbackCommand,
                                         Mode=OneWay}"
                       CommandParameter="{Binding ActiveItem.SelectedBackupViewModel}"
-                      Header="{loc:Translate Rollback}" />
+                      Header="{Loc:Translate Rollback}" />
 
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
-            <MenuItem Command="{Binding ActiveItem.CreateNewBackupCommand, Mode=OneWay}" Header="{loc:Translate NewBackup}" />
+            <MenuItem Command="{Binding ActiveItem.CreateNewBackupCommand, Mode=OneWay}" Header="{Loc:Translate NewBackup}" />
             <MenuItem Command="{Binding ActiveItem.DeleteBackupCommand,
                                         Mode=OneWay}"
                       CommandParameter="{Binding ActiveItem.SelectedBackupViewModel}"
-                      Header="{loc:Translate DeleteBackup}" />
+                      Header="{Loc:Translate DeleteBackup}" />
 
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
-            <MenuItem Command="{Binding ActiveItem.OpenBackupsFolderCommand, Mode=OneWay}" Header="{loc:Translate OpenBackupsFolder}" />
+            <MenuItem Command="{Binding ActiveItem.OpenBackupsFolderCommand, Mode=OneWay}" Header="{Loc:Translate OpenBackupsFolder}" />
 
         </Menu>
 

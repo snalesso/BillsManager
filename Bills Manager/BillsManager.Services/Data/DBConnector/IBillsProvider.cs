@@ -1,7 +1,7 @@
 ﻿using BillsManager.Models;
 using System.Collections.Generic;
 
-namespace BillsManager.Services.Providers
+namespace BillsManager.Services.Data
 {
     public interface IBillsProvider
     {

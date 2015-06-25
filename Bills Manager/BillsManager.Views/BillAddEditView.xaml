@@ -5,13 +5,14 @@
              xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
              xmlns:ViewModels="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
+             xmlns:Loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DataContext="{d:DesignInstance Type=ViewModels:BillAddEditViewModel}"
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <ResourceDictionary Source="Dictionaries\Styles.xaml" />
+        <!--<ResourceDictionary Source="Dictionaries\Styles.xaml" />-->
+        <ResourceDictionary Source="Themes\Themes.xaml" />
     </UserControl.Resources>
 
     <UserControl.Background>
@@ -57,7 +58,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    FontWeight="Bold"
-                   Text="{loc:Translate Details}" />
+                   Text="{Loc:Translate Details}" />
 
 
         <TextBlock Grid.Row="3"
@@ -65,7 +66,7 @@
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate Date}" />
+                   Text="{Loc:Translate Date}" />
         <DatePicker x:Name="dtpReleaseDate"
                     Grid.Row="3"
                     Grid.Column="3"
@@ -84,7 +85,7 @@
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate Due}" />
+                   Text="{Loc:Translate Due}" />
         <DatePicker Grid.Row="3"
                     Grid.Column="7"
                     Width="Auto"
@@ -101,7 +102,7 @@
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate Paid_toBill}" />
+                   Text="{Loc:Translate Paid_toBill}" />
         <CheckBox Grid.Row="5"
                   Grid.Column="3"
                   HorizontalAlignment="Left"
@@ -115,7 +116,7 @@
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate Payment}" />
+                   Text="{Loc:Translate Payment}" />
         <DatePicker Grid.Row="5"
                     Grid.Column="7"
                     Width="Auto"
@@ -133,7 +134,7 @@
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate Amount}" />
+                   Text="{Loc:Translate Amount}" />
         <TextBox Grid.Row="7"
                  Grid.Column="3"
                  HorizontalAlignment="Stretch"
@@ -155,7 +156,7 @@
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate Number}" />
+                   Text="{Loc:Translate Number}" />
         <TextBox Grid.Row="7"
                  Grid.Column="7"
                  HorizontalAlignment="Stretch"
@@ -173,7 +174,7 @@
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate Agio}" />
+                   Text="{Loc:Translate Agio}" />
         <TextBox Grid.Row="9"
                  Grid.Column="3"
                  HorizontalAlignment="Stretch"
@@ -194,7 +195,7 @@
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate AdditionalCosts}" />
+                   Text="{Loc:Translate AdditionalCosts}" />
         <TextBox Grid.Row="9"
                  Grid.Column="7"
                  HorizontalAlignment="Stretch"
@@ -215,7 +216,7 @@
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate Supplier}" />
+                   Text="{Loc:Translate Supplier}" />
         <ComboBox x:Name="cbxSupplier"
                   Grid.Row="11"
                   Grid.Column="3"
@@ -245,7 +246,7 @@
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate Notes}" />
+                   Text="{Loc:Translate Notes}" />
         <TextBox Grid.Row="13"
                  Grid.Column="3"
                  Grid.ColumnSpan="5"
@@ -268,7 +269,7 @@
                     Orientation="Horizontal">
             <Button Width="80"
                     Command="{Binding ConfirmAddEditAndCloseCommand}"
-                    Content="{loc:Translate Ok}"
+                    Content="{Loc:Translate Ok}"
                     TabIndex="10">
                 <Button.Margin>
                     <Thickness Right="{StaticResource View.MarginSize.Value}" />
@@ -276,7 +277,7 @@
             </Button>
             <Button Width="80"
                     Command="{Binding CancelAddEditAndCloseCommand}"
-                    Content="{loc:Translate Cancel}"
+                    Content="{Loc:Translate Cancel}"
                     IsCancel="True"
                     TabIndex="11" />
         </StackPanel>

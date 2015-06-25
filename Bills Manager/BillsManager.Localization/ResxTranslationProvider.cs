@@ -20,14 +20,14 @@ namespace BillsManager.Localization
 
         public ResxTranslationProvider(string baseName, Assembly assembly)
         {
-            resourceManager = new ResourceManager(baseName, assembly);
+            this.resourceManager = new ResourceManager(baseName, assembly);
 
             var avLangs = CultureInfo.GetCultures(CultureTypes.SpecificCultures)
-                .Where(c =>
+                .Where(culture =>
                 {
                     try
                     {
-                        assembly.GetSatelliteAssembly(c);
+                        assembly.GetSatelliteAssembly(culture);
                         return true;
                     }
                     catch (Exception)

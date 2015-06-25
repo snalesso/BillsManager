@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:ViewModels="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
+             xmlns:Loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DataContext="{d:DesignInstance Type=ViewModels:StatusBarViewModel,
                                               IsDesignTimeCreatable=True}"
@@ -12,7 +12,8 @@
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <ResourceDictionary Source="Dictionaries\Styles.xaml" />
+        <!--<ResourceDictionary Source="Dictionaries\Styles.xaml" />-->
+        <ResourceDictionary Source="Themes\Themes.xaml" />
     </UserControl.Resources>
 
     <StatusBar FontSize="{StaticResource View.FontSize}" Foreground="{StaticResource StatusBar.Foreground}">
@@ -21,12 +22,12 @@
 
         <TextBlock Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Run Text="{Binding SuppliersCount}" />
-            <Run Text="{loc:Translate Suppliers}" />
+            <Run Text="{Loc:Translate Suppliers}" />
         </TextBlock>
 
         <TextBlock Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Run Text="{Binding BillsCount}" />
-            <Run Text="{loc:Translate Bills}" />
+            <Run Text="{Loc:Translate Bills}" />
         </TextBlock>
 
     </StatusBar>

@@ -2,7 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
+             xmlns:Loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              MinWidth="400"
              MinHeight="200"
@@ -11,8 +11,14 @@
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <ResourceDictionary Source="/BillsManager.Views;component/Dictionaries/Styles.xaml" />
+        <!--<ResourceDictionary Source="/BillsManager.Views;component/Dictionaries/Styles.xaml" />-->
+        <ResourceDictionary Source="/BillsManager.Views;component/Themes\Themes.xaml" />
     </UserControl.Resources>
+
+    <UserControl.Background>
+        <Binding Mode="OneTime" Source="{StaticResource View.Background}" />
+    </UserControl.Background>
+
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -36,7 +42,7 @@
                    Grid.Column="1"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate Subject}" />
+                   Text="{Loc:Translate Subject}" />
         <TextBox Grid.Row="1"
                  Grid.Column="3"
                  MaxLines="1"
@@ -47,7 +53,7 @@
                    Grid.Column="1"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{loc:Translate Message}" />
+                   Text="{Loc:Translate Message}" />
         <TextBox Grid.Row="3"
                  Grid.Column="3"
                  AcceptsReturn="True"
@@ -64,7 +70,7 @@
                     Orientation="Horizontal">
 
             <CheckBox VerticalAlignment="Center"
-                      Content="{loc:Translate CloseAfterSend}"
+                      Content="{Loc:Translate CloseAfterSend}"
                       IsChecked="{Binding CloseAfterSend}">
                 <CheckBox.Margin>
                     <Thickness Right="{StaticResource View.MarginSize.Value}" />
@@ -73,7 +79,7 @@
 
             <Button MinWidth="80"
                     Command="{Binding SendFeedbackCommand}"
-                    Content="{loc:Translate SendFeedback}">
+                    Content="{Loc:Translate SendFeedback}">
                 <Button.Margin>
                     <Thickness Right="{StaticResource View.MarginSize.Value}" />
                 </Button.Margin>
@@ -81,7 +87,7 @@
 
             <Button MinWidth="80"
                     Command="{Binding CancelCommand}"
-                    Content="{loc:Translate Cancel}" />
+                    Content="{Loc:Translate Cancel}" />
         </StackPanel>
 
     </Grid>

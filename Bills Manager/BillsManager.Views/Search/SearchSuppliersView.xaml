@@ -3,14 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:ViewModel="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
+             xmlns:Loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DataContext="{d:DesignInstance Type=ViewModel:SearchSuppliersViewModel,
                                               IsDesignTimeCreatable=True}"
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <ResourceDictionary Source="/BillsManager.Views;component/Dictionaries/Styles.xaml" />
+        <!--<ResourceDictionary Source="/BillsManager.Views;component/Dictionaries/Styles.xaml" />-->
+        <ResourceDictionary Source="/BillsManager.Views;component/Themes\Themes.xaml" />
     </UserControl.Resources>
 
     <UserControl.Background>
@@ -42,7 +43,7 @@
         <TextBlock Grid.Row="1"
                    Margin="0 2"
                    Foreground="{StaticResource View.Title.Foreground}"
-                   Text="{loc:Translate Obligation}" />
+                   Text="{Loc:Translate Obligation}" />
 
         <StackPanel Grid.Row="3"
                     HorizontalAlignment="Left"
@@ -67,7 +68,7 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Command="{Binding SendFilterCommand}"
-                Content="{loc:Translate DoFilter}"
+                Content="{Loc:Translate DoFilter}"
                 Focusable="False" />
 
         <Button Grid.Row="3"
@@ -75,7 +76,7 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Command="{Binding ExitSearchCommand}"
-                Content="{loc:Translate ShowAll}"
+                Content="{Loc:Translate ShowAll}"
                 Focusable="False" />
 
         <!--<Rectangle Grid.Row="4"

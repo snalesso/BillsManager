@@ -8,7 +8,7 @@ namespace BillsManager.Localization
     {
         #region fields
 
-        private string key;
+        private readonly string key;
 
         #endregion
 
@@ -24,7 +24,7 @@ namespace BillsManager.Localization
 
         #region properties
 
-        public object Value
+        public string Value
         {
             get { return TranslationManager.Instance.Translate(this.key); }
         }

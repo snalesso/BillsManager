@@ -41,7 +41,7 @@ namespace BillsManager.ViewModels
 
             this.AvailableSuppliers = availableSuppliers;
             //this.HasChanges = false; // TODO: check if mandatory
-            this.SelectedSupplier = this.AvailableSuppliers.SingleOrDefault(s => s.ID == this.SupplierID);
+            this.SelectedSupplier = this.AvailableSuppliers.FirstOrDefault(s => s.ID == this.SupplierID);
 
             this.Deactivated +=
                 (s, e) =>
@@ -280,6 +280,10 @@ namespace BillsManager.ViewModels
                 return this.IsInEditMode
                     ? (TranslationManager.Instance.Translate("EditBill").ToString() + (this.IsInEditMode & this.HasChanges ? " *" : string.Empty))
                     : TranslationManager.Instance.Translate("NewBill").ToString();
+            }
+            set // TODO: review
+            {
+
             }
         }
 

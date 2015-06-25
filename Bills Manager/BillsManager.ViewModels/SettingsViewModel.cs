@@ -1,6 +1,6 @@
 ﻿using BillsManager.Localization;
 using BillsManager.Models;
-using BillsManager.Services.Settings;
+using BillsManager.Services;
 using BillsManager.ViewModels.Commanding;
 using Caliburn.Micro;
 using System;

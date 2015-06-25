@@ -8,7 +8,7 @@
              xmlns:Models="clr-namespace:BillsManager.Models;assembly=BillsManager.Models"
              xmlns:ViewModels="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
+             xmlns:Loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              MinWidth="200"
              Caliburn:Bind.AtDesignTime="True"
@@ -19,7 +19,8 @@
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <ResourceDictionary Source="Dictionaries\Styles.xaml" />
+        <!--<ResourceDictionary Source="Dictionaries\Styles.xaml" />-->
+        <ResourceDictionary Source="Themes\Themes.xaml" />
     </UserControl.Resources>
 
     <UserControl.Background>
@@ -37,8 +38,8 @@
 
         <TextBlock FontSize="{StaticResource View.Region.Title.FontSize}"
                    FontWeight="{StaticResource View.Region.Title.FontWeight}"
-                   Foreground="{StaticResource View.Region.Title.Foregound}"
-                   Text="{loc:Translate Suppliers}"
+                   Foreground="{StaticResource View.Region.Title.Foreground}"
+                   Text="{Loc:Translate Suppliers}"
                    Visibility="{StaticResource View.Region.Title.Visibility}" />
 
         <!--<Rectangle Grid.Row="2"
@@ -69,10 +70,10 @@
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="Auto" Header="{loc:Translate Name}">
+                    <GridViewColumn Width="Auto" Header="{Loc:Translate Name}">
                         <GridViewColumn.HeaderTemplate>
                             <DataTemplate>
-                                <TextBlock FontWeight="{StaticResource View.Region.Title.FontWeight}" Text="{loc:Translate Name}" />
+                                <TextBlock FontWeight="{StaticResource View.Region.Title.FontWeight}" Text="{Loc:Translate Name}" />
                             </DataTemplate>
                         </GridViewColumn.HeaderTemplate>
                         <GridViewColumn.CellTemplate>
@@ -120,7 +121,7 @@
 
                     <!--
                     <GridViewColumn Width="100"
-                    Header="{loc:Translate Obligation}">
+                    Header="{Loc:Translate Obligation}">
                     <GridViewColumn.CellTemplate>
                     <DataTemplate>
                     -->
@@ -175,7 +176,7 @@
                     </GridViewColumn>
                     <GridViewColumn Width="Auto"
                     DisplayMemberBinding="{Binding Notes}"
-                    Header="{loc:Translate Notes}" />
+                    Header="{Loc:Translate Notes}" />
                     -->
                 </GridView>
             </ListView.View>
@@ -183,7 +184,7 @@
             <ListView.ContextMenu>
                 <ContextMenu>
 
-                    <MenuItem Command="{Binding SelectedSupplierViewModel.AddBillCommand, Mode=OneWay}" Header="{loc:Translate AddBill}">
+                    <MenuItem Command="{Binding SelectedSupplierViewModel.AddBillCommand, Mode=OneWay}" Header="{Loc:Translate AddBill}">
                         <MenuItem.Icon>
                             <Controls:AutoGreyableImage Source="Images/bills/bill-add-24.png" />
                         </MenuItem.Icon>
@@ -192,7 +193,7 @@
                     <MenuItem Command="{Binding ShowSuppliersBillsCommand,
                                                 Mode=OneWay}"
                               CommandParameter="{Binding SelectedSupplierViewModel}"
-                              Header="{loc:Translate ShowBills}">
+                              Header="{Loc:Translate ShowBills}">
                         <MenuItem.Icon>
                             <Controls:AutoGreyableImage Source="Images/generic/search-16.png" />
                         </MenuItem.Icon>
@@ -200,7 +201,7 @@
 
                     <Separator />
 
-                    <MenuItem Command="{Binding AddNewSupplierCommand, Mode=OneWay}" Header="{loc:Translate Add}">
+                    <MenuItem Command="{Binding AddNewSupplierCommand, Mode=OneWay}" Header="{Loc:Translate Add}">
                         <MenuItem.Icon>
                             <Controls:AutoGreyableImage Source="Images/generic/add-16.png" />
                         </MenuItem.Icon>
@@ -209,7 +210,7 @@
                     <MenuItem Command="{Binding EditSupplierCommand,
                                                 Mode=OneWay}"
                               CommandParameter="{Binding SelectedSupplierViewModel}"
-                              Header="{loc:Translate Edit}">
+                              Header="{Loc:Translate Edit}">
                         <MenuItem.Icon>
                             <Controls:AutoGreyableImage Source="Images/generic/edit-16.png" />
                         </MenuItem.Icon>
@@ -218,7 +219,7 @@
                     <MenuItem Command="{Binding DeleteSupplierCommand,
                                                 Mode=OneWay}"
                               CommandParameter="{Binding SelectedSupplierViewModel}"
-                              Header="{loc:Translate Delete}">
+                              Header="{Loc:Translate Delete}">
                         <MenuItem.Icon>
                             <Controls:AutoGreyableImage Source="Images/generic/delete-16.png" />
                         </MenuItem.Icon>
@@ -229,7 +230,7 @@
                     <MenuItem Command="{Binding ShowSupplierDetailsCommand,
                                                 Mode=OneWay}"
                               CommandParameter="{Binding SelectedSupplierViewModel}"
-                              Header="{loc:Translate Details}">
+                              Header="{Loc:Translate Details}">
                         <MenuItem.Icon>
                             <Controls:AutoGreyableImage Source="Images/generic/details-16.png" />
                         </MenuItem.Icon>
@@ -238,7 +239,7 @@
                     <MenuItem Command="{Binding CopyEMailCommand,
                                                 Mode=OneWay}"
                               CommandParameter="{Binding SelectedSupplierViewModel}"
-                              Header="{loc:Translate CopyEmail}">
+                              Header="{Loc:Translate CopyEmail}">
                         <MenuItem.Icon>
                             <Controls:AutoGreyableImage Source="Images/generic/email-16.png" />
                         </MenuItem.Icon>

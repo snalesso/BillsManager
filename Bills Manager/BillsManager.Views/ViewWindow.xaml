@@ -20,7 +20,8 @@
     <Controls:WindowEx.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Dictionaries\Styles.xaml" />
+                <!--<ResourceDictionary Source="Dictionaries\Styles.xaml" />-->
+                <ResourceDictionary Source="Themes\Themes.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <Style x:Key="ViewWindowStyle" TargetType="{x:Type Controls:WindowEx}">
@@ -70,7 +71,7 @@
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
 
-                                        <Grid x:Name="CaptionBar" HorizontalAlignment="Stretch" >
+                                        <Grid x:Name="CaptionBar" HorizontalAlignment="Stretch">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition Width="{StaticResource View.MarginSize}" />

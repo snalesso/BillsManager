@@ -10,7 +10,8 @@
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <ResourceDictionary Source="/BillsManager.Views;component/Dictionaries/Styles.xaml" />
+        <!--<ResourceDictionary Source="/BillsManager.Views;component/Dictionaries/Styles.xaml" />-->
+        <ResourceDictionary Source="/BillsManager.Views;component/Themes/Themes.xaml" />
     </UserControl.Resources>
 
     <Grid>

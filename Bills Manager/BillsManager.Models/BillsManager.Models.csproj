@@ -52,6 +52,7 @@
     <Compile Include="Entities\Backup\Backup.cs" />
     <Compile Include="Entities\Bill\Bill.cs" />
     <Compile Include="Entities\Bill\Bill.ICloneable.cs" />
+    <Compile Include="Entities\Settings\ISettings.cs" />
     <Compile Include="Enums\DBConnectionState.cs" />
     <Compile Include="Enums\DueAlert.cs" />
     <Compile Include="Enums\Obligation.cs" />

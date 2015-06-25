@@ -110,9 +110,6 @@
     <Compile Include="DataTemplates\SupplierDataTemplate.xaml.cs">
       <DependentUpon>SupplierDataTemplate.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataTemplates\TagDataTemplate.xaml.cs">
-      <DependentUpon>TagDataTemplate.xaml</DependentUpon>
-    </Compile>
     <Compile Include="DBBackupsView.xaml.cs">
       <DependentUpon>DBBackupsView.xaml</DependentUpon>
     </Compile>
@@ -126,9 +123,9 @@
       <DependentUpon>ProgressView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Languages\Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SendFeedbackView.xaml.cs">
       <DependentUpon>SendFeedbackView.xaml</DependentUpon>
@@ -145,7 +142,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Reporting\PrintReportView.xaml.cs">
+    <Compile Include="PrintReportView.xaml.cs">
       <DependentUpon>PrintReportView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Search\SearchBillsView.xaml.cs">
@@ -179,9 +176,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Languages\Resources.resx">
+      <SubType>Designer</SubType>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />
@@ -216,10 +213,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DataTemplates\TagDataTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="DBBackupsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -236,10 +229,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Styles\ButtonStyle.xaml">
+    <None Include="Dictionaries\Styles\ButtonStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
+    </None>
     <Page Include="DataTemplates\BillDataTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -248,207 +241,211 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dictionaries\Styles\CheckBoxStyle.xaml">
+    <None Include="Dictionaries\Styles\CheckBoxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\CloseWindowButtonStyle.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\CloseWindowButtonStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Dictionaries\Styles\ComboBoxItemStyle.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\ComboBoxItemStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\ComboBoxStyle.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\ComboBoxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\ContextMenuStyle.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\ContextMenuStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\DatePickerStyle.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\DatePickerStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\ErrorTemplate.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\DetailHeaderTextBlockStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\GridSplitterExStyle.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\ErrorTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\GridSplitterStyle.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\GridSplitterExStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\GridViewColumnHeaderGripperStyle.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\GridSplitterStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\GridViewColumnHeaderStyle.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\GridViewColumnHeaderGripperStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\DefaultValues\ControlBoxValues.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\GridViewColumnHeaderStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\DefaultValues\GridViewValues.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\DefaultValues\ControlBoxValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\ListBoxItemStyle.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\DefaultValues\GridViewValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\ListBoxExStyle.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\ListBoxItemStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\ListViewExStyle.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\ListBoxExStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\ListViewItemStyle.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\ListViewExStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\ListViewStyle.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\ListViewItemStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\NormalizeWindowButtonStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Dictionaries\Styles\CrossButtonStyle.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\ListViewStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\ExpanderStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\MenuItemStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\MenuScrollViewerStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\MenuStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\MinimizeWindowButtonStyle.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\NormalizeWindowButtonStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Dictionaries\Styles\MaximizeWindowButtonStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Dictionaries\Styles\PathButtonStyle.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\CrossButtonStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\StatusBarStyle.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\ExpanderStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\ToolbarSeparatorStyle.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\MenuItemStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\DefaultValues.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Dictionaries\Styles\Values.xaml">
+    </None>
+    <None Include="Dictionaries\Styles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\DefaultValues\ButtonValues.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\MenuScrollViewerStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\DefaultValues\CheckBoxValues.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\MenuStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\DefaultValues\Converters.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\MinimizeWindowButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Dictionaries\Styles\MaximizeWindowButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Dictionaries\Styles\PathButtonStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\DefaultValues\DBConnectionStateValues.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\StatusBarStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\DefaultValues\DueAlertValues.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\ToolbarSeparatorStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\DefaultValues\Geometries.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\DefaultValues.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Dictionaries\Styles\Values.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\DefaultValues\ListBoxItemValues.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\DefaultValues\ButtonValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\DefaultValues\ListItemValues.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\DefaultValues\CheckBoxValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\DefaultValues\MenuItemValues.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\DefaultValues\Converters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\DefaultValues\MenuValues.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\DefaultValues\DBConnectionStateValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\TextBoxStyle.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\DefaultValues\DueAlertValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\DefaultValues\ObligationValues.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\DefaultValues\Geometries.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\DefaultValues\ScrollBarValues.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\DefaultValues\ListBoxItemValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\DefaultValues\TextBoxValues.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\DefaultValues\ListItemValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dictionaries\Styles\DefaultValues\ViewValues.xaml">
+    </None>
+    <None Include="Dictionaries\Styles\DefaultValues\MenuItemValues.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
+    </None>
+    <None Include="Dictionaries\Styles\DefaultValues\MenuValues.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Include="Dictionaries\Styles\TextBoxStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Include="Dictionaries\Styles\DefaultValues\ObligationValues.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Include="Dictionaries\Styles\DefaultValues\ScrollBarValues.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Include="Dictionaries\Styles\DefaultValues\TextBoxValues.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Include="Dictionaries\Styles\DefaultValues\ViewValues.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </None>
     <None Include="Dictionaries\StyleTests.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </None>
-    <Page Include="Dictionaries\Styles\ScrollBarStyle.xaml">
+    <None Include="Dictionaries\Styles\ScrollBarStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
+    </None>
     <Page Include="SendFeedbackView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Reporting\PrintReportView.xaml">
+    <Page Include="PrintReportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -484,12 +481,24 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Themes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ViewWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BillsManager.DesignTime\BillsManager.DesignTime.csproj">
+      <Project>{bb73c02d-5ade-4db3-ab82-c6675e58c122}</Project>
+      <Name>BillsManager.DesignTime</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BillsManager.Localization\BillsManager.Localization.csproj">
       <Project>{5387db3b-6ec1-42cf-a72b-cef5adfb541a}</Project>
       <Name>BillsManager.Localization</Name>
@@ -499,7 +508,7 @@
       <Name>BillsManager.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\BillsManager.ViewModels\BillsManager.ViewModels.csproj">
-      <Project>{127368A5-65A5-46C6-A203-33ABC22B1EDD}</Project>
+      <Project>{127368a5-65a5-46c6-a203-33abc22b1edd}</Project>
       <Name>BillsManager.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
@@ -626,7 +635,7 @@
     <Resource Include="Images\tools\settings\settings-24.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Fonts\" />
+    <Folder Include="Reporting\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\.NETFramework\v4.5\Microsoft.Expression.Blend.WPF.targets" />

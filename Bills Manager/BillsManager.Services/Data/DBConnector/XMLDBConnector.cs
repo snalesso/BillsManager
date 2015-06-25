@@ -1,12 +1,13 @@
 ﻿using BillsManager.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 
-namespace BillsManager.Services.Providers
+namespace BillsManager.Services.Data
 {
     public class XMLDBConnector : IDBConnector
     {
@@ -57,7 +58,17 @@ namespace BillsManager.Services.Providers
         {
             try
             {
+#if DEBUG
+                var sw = new Stopwatch();
+                sw.Start();
+#endif
                 this.xmlDB = XDocument.Load(this.dbPath);
+#if DEBUG
+                sw.Stop();
+                Debug.WriteLine(string.Empty);
+                Debug.WriteLine(this.GetType().Name + " Connect() executed in " + sw.ElapsedMilliseconds + " ms");
+                Debug.WriteLine(string.Empty);
+#endif
             }
             catch
             {
@@ -517,7 +528,7 @@ namespace BillsManager.Services.Providers
         //    throw new NotImplementedException();
         //}
 
-        #endregion*/
+#endregion*/
 
         #region support methods
 

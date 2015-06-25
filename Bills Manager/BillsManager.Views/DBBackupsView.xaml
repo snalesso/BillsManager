@@ -6,7 +6,7 @@
              xmlns:Datatemplates="clr-namespace:BillsManager.Views.DataTemplates"
              xmlns:ViewModels="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
+             xmlns:Loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DataContext="{d:DesignInstance Type=ViewModels:DBBackupsViewModel,
                                               IsDesignTimeCreatable=True}"
@@ -15,10 +15,11 @@
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <ResourceDictionary Source="Dictionaries\Styles.xaml" />
+        <!--<ResourceDictionary Source="Dictionaries\Styles.xaml" />-->
+        <ResourceDictionary Source="Themes\Themes.xaml" />
     </UserControl.Resources>
 
-    <Controls:ListBoxEx EmptyMessage="{loc:Translate NoBackupsAvailable}"
+    <Controls:ListBoxEx EmptyMessage="{Loc:Translate NoBackupsAvailable}"
                         ItemsSource="{Binding BackupViewModels}"
                         SelectedItem="{Binding SelectedBackupViewModel}"
                         ShowEmptyMessage="True">
@@ -42,26 +43,26 @@
             <RowDefinition Height="{StaticResource View.MarginSize}" />
             <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            
+
             <TextBlock Text="{Binding Path=CreationTime, StringFormat=\{0:F\}, Mode=OneTime}" />
-            
+
             <TextBlock Grid.Row="2">
             <Run Text="Suppliers:" />
             <Run Text="{Binding Path=SuppliersCount, Mode=OneTime}" />
             </TextBlock>
-            
+
             <TextBlock Grid.Row="4">
             <Run Text="Bills:" />
             <Run Text="{Binding Path=BillsCount, Mode=OneTime}" />
             </TextBlock>
-            
+
             <TextBlock Grid.Row="6"
             Visibility="{Binding HasNoRollbacks, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Run Text="Used " />
             <Run Text="{Binding Path=TimesUsedForRollback, Mode=OneTime}" />
             <Run Text=" times to restore" />
             </TextBlock>
-            
+
             <Expander Grid.Row="6"
             Visibility="{Binding HasRollbacks, Converter={StaticResource BooleanToVisibilityConverter}}"
             BorderThickness="0"
@@ -76,7 +77,7 @@
             <Run Text=" times to restore" />
             </TextBlock>
             </Expander.Header>
-            
+
             <ItemsControl ItemsSource="{Binding RollbackDates}">
             <ItemsControl.ItemTemplate>
             <DataTemplate>
@@ -86,7 +87,7 @@
             </ItemsControl.ItemTemplate>
             </ItemsControl>
             </Expander>
-            
+
             </Grid>
             </DataTemplate>
             </Controls:ListBoxEx.ItemTemplate>

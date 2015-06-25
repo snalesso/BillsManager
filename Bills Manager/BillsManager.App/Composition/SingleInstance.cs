@@ -8,7 +8,7 @@
 // </summary>
 //-----------------------------------------------------------------------
 
-namespace BillsManager.App
+namespace BillsManager.App.Composition
 {
     using System;
     using System.Collections;

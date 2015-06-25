@@ -78,7 +78,6 @@
     <Compile Include="DBViewModel.cs" />
     <Compile Include="DesignTime\BackupCenterViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\BillAddEditViewModel.DesignTime.cs" />
-    <Compile Include="DesignTime\BillDetailsViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\DBViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\ProgressViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\SearchViewModelGeneric.DesignTime.cs" />
@@ -135,7 +134,6 @@
     <Compile Include="DesignTime\BackupViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\ShellViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\SuppliersViewModel.DesignTime.cs" />
-    <Compile Include="DesignTime\SupplierDetailsViewModel.DesignTime.cs" />
     <Compile Include="Helpers\IExecuteWithObject.cs" />
     <Compile Include="Helpers\IExecuteWithObjectAndResult.cs" />
     <Compile Include="Commanding\RelayCommand\RelayCommand.cs" />

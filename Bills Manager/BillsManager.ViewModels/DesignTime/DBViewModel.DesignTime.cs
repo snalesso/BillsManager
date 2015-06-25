@@ -1,4 +1,4 @@
-﻿using BillsManager.Services.Providers;
+﻿using BillsManager.Services.Data;
 using Caliburn.Micro;
 using System;
 using System.Collections.Generic;

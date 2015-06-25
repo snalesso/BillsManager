@@ -50,6 +50,8 @@
 
         <ResourceDictionary Source="Styles\StatusBarStyle.xaml" />
 
+        <ResourceDictionary Source="Styles\DetailHeaderTextBlockStyle.xaml" />
+
         <!--  <ResourceDictionary Source="Styles\WindowExStyle.xaml" />  -->
 
     </ResourceDictionary.MergedDictionaries>

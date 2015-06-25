@@ -1,4 +1,4 @@
-﻿namespace BillsManager.Services.Providers
+﻿namespace BillsManager.Services.Data
 {
     public interface IDBConnector :
         IBillsProvider,

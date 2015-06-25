@@ -24,13 +24,16 @@ namespace BillsManager.ViewModels
 
         #region ctor
 
+        protected BillDetailsViewModel() { }
+
         public BillDetailsViewModel(
             IWindowManager windowManager,
             IEventAggregator globalEventAggregator,
             Bill bill)
         {
-            if (bill == null)
-                throw new ArgumentNullException("bill cannot be null");
+            // TODO: review
+            //if (bill == null)
+            //    throw new ArgumentNullException("bill cannot be null");
 
             this.exposedBill = bill;
 
@@ -195,6 +198,7 @@ namespace BillsManager.ViewModels
         public new string DisplayName
         {
             get { return this.Code + " - " + this.SupplierName; }
+            set { }
         }
 
         #endregion

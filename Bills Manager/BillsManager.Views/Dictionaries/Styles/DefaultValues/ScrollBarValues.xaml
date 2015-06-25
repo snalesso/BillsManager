@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+                    xmlns:System="clr-namespace:System;assembly=mscorlib">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ViewValues.xaml" />
@@ -8,14 +8,14 @@
 
     <!--  VALUES  -->
 
-    <system:Double x:Key="ScrollBar.Border.Thickness.Value">5</system:Double>
+    <System:Double x:Key="ScrollBar.Border.Thickness.Value">5</System:Double>
     <Thickness x:Key="ScrollBar.Border.Thickness"
                Bottom="{StaticResource ScrollBar.Border.Thickness.Value}"
                Left="{StaticResource ScrollBar.Border.Thickness.Value}"
                Right="{StaticResource ScrollBar.Border.Thickness.Value}"
                Top="{StaticResource ScrollBar.Border.Thickness.Value}" />
 
-    <system:Double x:Key="ScrollBar.Thickness">13</system:Double>
+    <System:Double x:Key="ScrollBar.Thickness">13</System:Double>
     <Visibility x:Key="ScrollBar.RepeatButtons.Visibility">Collapsed</Visibility>
     <!--  <Visibility x:Key="ScrollBar.RepeatButtons.Visibility">Visible</Visibility>  -->
 

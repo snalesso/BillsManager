@@ -24,6 +24,8 @@ namespace BillsManager.ViewModels
 
         #region ctor
 
+        protected SupplierDetailsViewModel() { }
+
         public SupplierDetailsViewModel(
             IWindowManager windowManager,
             IEventAggregator dbEventAggregator,
