@@ -195,7 +195,7 @@
                    Margin="25,0,0,0"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
-                   Text="{Loc:Translate AdditionalCosts}" />
+                   Text="{Loc:Translate Costs}" />
         <TextBox Grid.Row="9"
                  Grid.Column="7"
                  HorizontalAlignment="Stretch"

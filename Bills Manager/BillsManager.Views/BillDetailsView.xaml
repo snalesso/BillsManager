@@ -84,7 +84,7 @@
         <TextBlock Grid.Row="5"
                    Grid.Column="2"
                    Style="{StaticResource DetailHeaderTextblockStyle}"
-                   Text="{Loc:Translate AdditionalCosts}" />
+                   Text="{Loc:Translate Costs}" />
         <TextBlock Grid.Row="5"
                    Grid.Column="4"
                    HorizontalAlignment="Left"

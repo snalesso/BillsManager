@@ -31,11 +31,11 @@ namespace BillsManager.Models
             DateTime? paymentDate, 
             Double amount, 
             Double agio, 
-            Double additionalCosts, 
+            Double costs, 
             string code, 
             string notes)
         {
-            this.AdditionalCosts = additionalCosts;
+            this.AdditionalCosts = costs;
             this.Agio = agio;
             this.Amount = amount;
             this.Code = code;

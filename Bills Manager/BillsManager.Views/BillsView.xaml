@@ -233,7 +233,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="85" Header="{Loc:Translate AdditionalCosts}">
+                    <GridViewColumn Width="85" Header="{Loc:Translate Costs}">
                         <GridViewColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock HorizontalAlignment="Right"

@@ -74,7 +74,7 @@ namespace BillsManager.ViewModels
             // START
             this.ActivateItem(this.DBViewModel);
 
-            if (this.settingsProvider.Settings.StartupDBLoad)
+            if (this.settingsProvider.Settings.StartupDBLoad) // URGENT: remove the option: there is no connect button anymore
                 this.DBViewModel.Connect();
         }
 
