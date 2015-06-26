@@ -25,9 +25,6 @@ namespace BillsManager.Services.Data
         private const string NS_SUPPLIERS = @"Suppliers";
         private const string ITEM_SUPPLIER = @"Supplier";
 
-        private const string NS_TAGS = @"Tags";
-        private const string ITEM_TAG = @"Tag";
-
         private const string NS_AGENTS = @"Agents";
         private const string ITEM_AGENT = @"Agent";
 
@@ -550,9 +547,9 @@ namespace BillsManager.Services.Data
                     NS_DATABASE_ROOT,
                     new XAttribute(ATT_CREATION_DATE, DateTime.Today),
                     new XElement(NS_BILLS, new XAttribute(ATT_LAST_ID, START_INDEX)),
-                    new XElement(NS_SUPPLIERS, new XAttribute(ATT_LAST_ID, START_INDEX)),
+                    new XElement(NS_SUPPLIERS, new XAttribute(ATT_LAST_ID, START_INDEX))/*,
                     new XElement(NS_TAGS, new XAttribute(ATT_LAST_ID, START_INDEX))/*,
-                        new XElement(NS_AGENTS, new XAttribute(ATT_LAST_ID, START_INDEX))*/));
+                    new XElement(NS_AGENTS, new XAttribute(ATT_LAST_ID, START_INDEX))*/));
 
             Directory.CreateDirectory(Path.GetDirectoryName(this.dbPath));
 

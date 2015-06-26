@@ -9,8 +9,11 @@ namespace GroupLanguages
     {
         static void Main(string[] args)
         {
-            var newLangsFolder = args[0];
-
+//#if DEBUG
+            var newLangsFolder = "Languages";
+//#else
+//            var newLangsFolder = args[0];
+//#endif
             if (newLangsFolder == null ||
                 newLangsFolder == string.Empty ||
                 Path.GetInvalidFileNameChars().Any(ic => newLangsFolder.Contains(ic)))
