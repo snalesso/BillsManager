@@ -23,7 +23,7 @@ namespace BillsManager.Services
 
         // DEFAULT VALUES
         private const string Default_Language = "it-IT";
-        private const string Default_FeedbackEmailAddressee = "";
+        private const string Default_FeedbackEmailAddressee = "nalessosergio@gmail.com";
         private const bool Default_LoadDbAtStartup = true;
 
         private readonly XDocument xmlSettings;
