@@ -8,7 +8,7 @@
 
     <ControlTemplate x:Key="ErrorTemplate">
 
-        <Border Background="{StaticResource View.Background}"
+        <Border Background="{x:Null}"
                 BorderBrush="{StaticResource ErrorTemplate.BorderBrush}"
                 BorderThickness="1"
                 CornerRadius="{StaticResource Control.Border.CornerRadius}">

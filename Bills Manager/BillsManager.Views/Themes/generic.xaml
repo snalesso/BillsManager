@@ -1194,7 +1194,7 @@
     </Setter>
   </Style>
   <ControlTemplate x:Key="ErrorTemplate">
-    <Border Background="{StaticResource View.Background}" BorderBrush="{StaticResource ErrorTemplate.BorderBrush}" BorderThickness="1" CornerRadius="{StaticResource Control.Border.CornerRadius}">
+    <Border Background="{x:Null}" BorderBrush="{StaticResource ErrorTemplate.BorderBrush}" BorderThickness="1" CornerRadius="{StaticResource Control.Border.CornerRadius}">
       <Grid>
         <Path HorizontalAlignment="Right" VerticalAlignment="Top" Data="{StaticResource TopRightLittleCorner}" Fill="{StaticResource ErrorTemplate.BorderBrush}" />
         <AdornedElementPlaceholder x:Name="adorner" Margin="-1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
