@@ -2,7 +2,7 @@
 using BillsManager.Services.Reporting;
 using System.Windows;
 
-namespace BillsManager.ViewModels.Reporting
+namespace BillsManager.ViewModels
 {
     // TODO: review base class
     public class BillReportViewModel

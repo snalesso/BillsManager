@@ -8,7 +8,8 @@
 
     <ControlTemplate x:Key="ErrorTemplate">
 
-        <Border BorderBrush="{StaticResource ErrorTemplate.BorderBrush}"
+        <Border Background="{StaticResource View.Background}"
+                BorderBrush="{StaticResource ErrorTemplate.BorderBrush}"
                 BorderThickness="1"
                 CornerRadius="{StaticResource Control.Border.CornerRadius}">
             <Grid>
@@ -33,6 +34,7 @@
                                                   ElementName=adorner}" />
                     </Border>
                 </Controls:PopupEx>
+
             </Grid>
         </Border>
 

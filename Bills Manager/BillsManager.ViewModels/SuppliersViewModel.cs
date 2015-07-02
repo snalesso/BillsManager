@@ -24,11 +24,13 @@ namespace BillsManager.ViewModels
         #region fields
 
         private readonly IWindowManager windowManager;
-        private readonly IEventAggregator dbEventAggregator;
+        private readonly IEventAggregator globalEventAggregator;
         private readonly ISuppliersProvider suppliersProvider;
 
         private readonly Func<Supplier, SupplierAddEditViewModel> supplierAddEditViewModelFactory;
         private readonly Func<Supplier, SupplierDetailsViewModel> supplierDetailsViewModelFactory;
+
+        private readonly IComparer<SupplierDetailsViewModel> supplierDetailsVMComparer = new SupplierDetailsViewModelComparer();
 
         #endregion
 
@@ -44,21 +46,21 @@ namespace BillsManager.ViewModels
             // SERVICES
             this.suppliersProvider = suppliersProvider;
             this.windowManager = windowManager;
-            this.dbEventAggregator = globalEventAggregator;
+            this.globalEventAggregator = globalEventAggregator;
 
             // FACTORIES
             this.supplierAddEditViewModelFactory = supplierAddEditViewModelFactory;
             this.supplierDetailsViewModelFactory = supplierDetailsViewModelFactory;
 
             // SUBSCRIPTIONS
-            this.dbEventAggregator.Subscribe(this);
+            this.globalEventAggregator.Subscribe(this);
 
             // HANDLERS
             this.Deactivated +=
                 (s, e) =>
                 {
                     if (e.WasClosed)
-                        this.dbEventAggregator.Unsubscribe(this);
+                        this.globalEventAggregator.Unsubscribe(this);
                 };
 
             // UI
@@ -76,32 +78,37 @@ namespace BillsManager.ViewModels
         public ObservableCollection<SupplierDetailsViewModel> SupplierViewModels
         {
             get { return this.supplierViewModels; }
-            private set
+            set
             {
                 if (this.supplierViewModels != value)
                 {
                     this.supplierViewModels = value;
-                    this.NotifyOfPropertyChange();
-                    this.NotifyOfPropertyChange(() => this.FilteredSupplierViewModels);
+                    this.NotifyOfPropertyChange(() => this.SupplierViewModels);
+                    this.FilteredSupplierViewModels =
+                        new ReadOnlyObservableCollectionEx<SupplierDetailsViewModel>(
+                            this.SupplierViewModels,
+                            this.Filters != null ? this.Filters.Select(f => f.Execute) : null,
+                            this.supplierDetailsVMComparer);
 
+                    // IDEA: #IF !DEBUG ?
                     if (!Execute.InDesignMode)
-                        this.dbEventAggregator.PublishOnUIThread(new SuppliersListChangedMessage(this.SupplierViewModels.Select(svm => svm.ExposedSupplier).ToList()));
+                        this.globalEventAggregator.PublishOnUIThread(new SuppliersListChangedMessage(this.SupplierViewModels.Select(svm => svm.ExposedSupplier).ToList()));
                 }
             }
         }
 
-        public ReadOnlyObservableCollection<SupplierDetailsViewModel> FilteredSupplierViewModels
+        private ReadOnlyObservableCollectionEx<SupplierDetailsViewModel> filteredSupplierViewModels;
+        public ReadOnlyObservableCollectionEx<SupplierDetailsViewModel> FilteredSupplierViewModels
         {
-            get
+            get { return this.filteredSupplierViewModels; }
+            private set
             {
-                if (this.Filters != null)
+                // TODO: remove set / make lazy get?
 
-                    return new ReadOnlyObservableCollection<SupplierDetailsViewModel>(
-                        new ObservableCollection<SupplierDetailsViewModel>(
-                            this.SupplierViewModels.Where(this.Filters.Select(filter => filter.Execute))));
+                if (this.filteredSupplierViewModels == value) return;
 
-                else
-                    return new ReadOnlyObservableCollection<SupplierDetailsViewModel>(this.SupplierViewModels);
+                this.filteredSupplierViewModels = value;
+                this.NotifyOfPropertyChange(() => this.FilteredSupplierViewModels);
             }
         }
 
@@ -117,7 +124,7 @@ namespace BillsManager.ViewModels
                     this.NotifyOfPropertyChange();
 
                     var newSelSupp = value != null ? value.ExposedSupplier : null;
-                    this.dbEventAggregator.PublishOnUIThread(new SelectedSupplierChagedMessage(newSelSupp));
+                    this.globalEventAggregator.PublishOnUIThread(new SelectedSupplierChagedMessage(newSelSupp));
                 }
             }
         }
@@ -126,13 +133,13 @@ namespace BillsManager.ViewModels
         public IEnumerable<Filter<SupplierDetailsViewModel>> Filters
         {
             get { return this.filters; }
-            set
+            private set
             {
                 if (this.filters != value)
                 {
                     this.filters = value;
                     this.NotifyOfPropertyChange();
-                    this.NotifyOfPropertyChange(() => this.FilteredSupplierViewModels);
+                    this.UpdateFilters();
                 }
             }
         }
@@ -170,26 +177,24 @@ namespace BillsManager.ViewModels
         private void AddSupplier()
         {
             {
-                //var newVM = new SupplierAddEditViewModel(this.windowManager, this.dbEventAggregator, new Supplier(this.suppliersProvider.GetLastSupplierID() + 1));
-                var newSvm = this.supplierAddEditViewModelFactory.Invoke(new Supplier(this.suppliersProvider.GetLastSupplierID() + 1));
+                var addSupplierVM = this.supplierAddEditViewModelFactory.Invoke(new Supplier(this.suppliersProvider.GetLastSupplierID() + 1));
 
-tryAdd: // TODO: optimize
-                if (this.windowManager.ShowDialog(newSvm) == true)
+            tryAdd: // TODO: optimize
+                if (this.windowManager.ShowDialog(addSupplierVM) == true)
                 {
-                    if (this.suppliersProvider.Add(newSvm.ExposedSupplier))
+                    if (this.suppliersProvider.Add(addSupplierVM.ExposedSupplier))
                     {
-                        var newSuppDetVM = this.supplierDetailsViewModelFactory.Invoke(newSvm.ExposedSupplier);
+                        var newSupplierDetailsVM = this.supplierDetailsViewModelFactory.Invoke(addSupplierVM.ExposedSupplier);
 
-                        this.SupplierViewModels.AddSorted(newSuppDetVM);
-                        this.NotifyOfPropertyChange(() => this.FilteredSupplierViewModels);
+                        this.SupplierViewModels.Add(newSupplierDetailsVM);
 
-                        this.SelectedSupplierViewModel = newSuppDetVM;
+                        this.SelectedSupplierViewModel = newSupplierDetailsVM;
 
-                        this.dbEventAggregator.PublishOnUIThread(new AddedMessage<Supplier>(newSvm.ExposedSupplier));
+                        this.globalEventAggregator.PublishOnUIThread(new AddedMessage<Supplier>(addSupplierVM.ExposedSupplier));
                     }
                     else // TODO: reshow the dialog with this suppVM
                     {
-                        DialogViewModel dialog =
+                        var dialog =
                             DialogViewModel
                             .Show(
                                 DialogType.Error,
@@ -210,29 +215,26 @@ tryAdd: // TODO: optimize
         private void EditSupplier(Supplier supplier)
         {
             Supplier oldSupplier = (Supplier)supplier.Clone();
-            //var editVM = new SupplierAddEditViewModel(this.windowManager, this.dbEventAggregator, supplier);
-            var editVM = this.supplierAddEditViewModelFactory.Invoke(supplier);
+            var editSupplierVM = this.supplierAddEditViewModelFactory.Invoke(supplier);
 
-            editVM.BeginEdit();
+            editSupplierVM.BeginEdit();
 
-            if (this.windowManager.ShowDialog(editVM) == true)
+            if (this.windowManager.ShowDialog(editSupplierVM) == true)
             {
-                if (this.suppliersProvider.Edit(editVM.ExposedSupplier))
+                if (this.suppliersProvider.Edit(editSupplierVM.ExposedSupplier))
                 {
                     // TODO: move to this.EditSupplier
-                    var editedSuppVM = this.SupplierViewModels.FirstOrDefault(svm => svm.ExposedSupplier == supplier);
-                    var wasSelected = this.SelectedSupplierViewModel == editedSuppVM;
-                    this.SupplierViewModels.SortEdited(editedSuppVM);
+                    var editedSupplierDetailsVM = this.SupplierViewModels.FirstOrDefault(svm => svm.ExposedSupplier == supplier);
+                    editedSupplierDetailsVM.Refresh();
 
-                    if (wasSelected) // TODO: not working
-                        this.SelectedSupplierViewModel = editedSuppVM;
+                    this.SelectedSupplierViewModel = null;
 
-                    this.dbEventAggregator.PublishOnUIThread(new EditedMessage<Supplier>(oldSupplier, editVM.ExposedSupplier));
+                    this.globalEventAggregator.PublishOnUIThread(new EditedMessage<Supplier>(oldSupplier, editSupplierVM.ExposedSupplier));
                 }
                 else
                 {
                     // URGENT: dont exit if changes are not saved
-                    DialogViewModel dialog =
+                    var dialog =
                         DialogViewModel.Show(
                             DialogType.Error,
                             TranslationManager.Instance.Translate("EditFailed").ToString(),
@@ -266,8 +268,8 @@ tryAdd: // TODO: optimize
                 this.NotifyOfPropertyChange(() => this.FilteredSupplierViewModels);
 
                 this.SelectedSupplierViewModel = null;
-                this.dbEventAggregator.PublishOnUIThread(new SuppliersListChangedMessage(this.SupplierViewModels.Select(svm => svm.ExposedSupplier).ToList()));
-                this.dbEventAggregator.PublishOnUIThread(new DeletedMessage<Supplier>(supplier));
+                this.globalEventAggregator.PublishOnUIThread(new SuppliersListChangedMessage(this.SupplierViewModels.Select(svm => svm.ExposedSupplier).ToList()));
+                this.globalEventAggregator.PublishOnUIThread(new DeletedMessage<Supplier>(supplier));
             }
         }
 
@@ -284,7 +286,7 @@ tryAdd: // TODO: optimize
 
         private void ShowSupplierBills(Supplier supplier)
         {
-            this.dbEventAggregator.PublishOnUIThread(new ShowSuppliersBillsOrder(supplier));
+            this.globalEventAggregator.PublishOnUIThread(new ShowSuppliersBillsOrder(supplier));
         }
 
         private void CopyEMail(SupplierDetailsViewModel supplierVM)
@@ -326,9 +328,18 @@ tryAdd: // TODO: optimize
         {
             this.EditSupplier(message.Supplier);
         }
+
         public void Handle(FilterMessage<BillDetailsViewModel> message)
         {
             // TODO: when bills are filtered by a supplier, select that supplier
+        }
+
+        #endregion
+
+        #region support
+        private void UpdateFilters()
+        {
+            this.FilteredSupplierViewModels.Filters = (this.Filters != null ? this.Filters.Select(f => f.Execute) : null);
         }
 
         #endregion
@@ -353,7 +364,7 @@ tryAdd: // TODO: optimize
         {
             get
             {
-                return this.editSupplierCommand ?? (this.editSupplierCommand = 
+                return this.editSupplierCommand ?? (this.editSupplierCommand =
                     new RelayCommand<SupplierDetailsViewModel>(
                         p => this.EditSupplier(p.ExposedSupplier),
                         p => p != null));

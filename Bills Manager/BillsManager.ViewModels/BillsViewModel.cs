@@ -92,7 +92,6 @@ namespace BillsManager.ViewModels
                         this.globalEventAggregator.PublishOnUIThread(new BillsListChangedMessage(this.BillViewModels.Select(bvm => bvm.ExposedBill).ToList())); // TODO: move to filtered?
                 }
             }
-
         }
 
         private ReadOnlyObservableCollectionEx<BillDetailsViewModel> filteredBillViewModels;
@@ -134,7 +133,7 @@ namespace BillsManager.ViewModels
                 if (this.filters == value) return;
 
                 this.filters = value;
-                this.NotifyOfPropertyChange(() => this.Filters);
+                this.NotifyOfPropertyChange();
                 this.UpdateFilters();
                 this.NotifyOfPropertyChange(() => this.FiltersDescription);
             }
@@ -196,35 +195,37 @@ namespace BillsManager.ViewModels
 
         private void AddBill(Supplier supplier = null)
         {
-            var supps = this.GetAvailableSuppliers();
-            var addBillVm = this.billAddEditViewModelFactory.Invoke(supps, new Bill(this.billsProvider.GetLastBillID() + 1));
+            var availableSuppliers = this.GetAvailableSuppliers();
+            var addBillVM = this.billAddEditViewModelFactory.Invoke(availableSuppliers, new Bill(this.billsProvider.GetLastBillID() + 1));
 
-            if (supplier != null) // TODO: safe operation? if supplier is not known by addbvm?
-                addBillVm.SelectedSupplier = supplier;
+            // TODO: check availableSuppliers.Contains(supplier) ??
+            addBillVM.SelectedSupplier = supplier;
+
         tryAdd:
-            if (this.windowManager.ShowDialog(addBillVm) == true)
+            if (this.windowManager.ShowDialog(addBillVM) == true)
             {
                 // TODO: make it possible to show the view through a dialogviewmodel (evaluate the idea)
-                if (this.billsProvider.Add(addBillVm.ExposedBill))
+                if (this.billsProvider.Add(addBillVM.ExposedBill))
                 {
-                    var newBillDetailsVm = this.billDetailsViewModelFactory.Invoke(addBillVm.ExposedBill);
+                    var newBillDetailsVM = this.billDetailsViewModelFactory.Invoke(addBillVM.ExposedBill);
 
-                    this.BillViewModels.Add(newBillDetailsVm);
+                    this.BillViewModels.Add(newBillDetailsVM);
 
-                    this.SelectedBillViewModel = newBillDetailsVm;
+                    this.SelectedBillViewModel = newBillDetailsVM;
 
-                    this.globalEventAggregator.PublishOnUIThread(new AddedMessage<Bill>(newBillDetailsVm.ExposedBill));
+                    this.globalEventAggregator.PublishOnUIThread(new AddedMessage<Bill>(newBillDetailsVM.ExposedBill));
                 }
                 else
                 {
-                    this.windowManager.ShowDialog(
-                        DialogViewModel.Show(
+                    var dialog = DialogViewModel.Show(
                             DialogType.Error,
                             TranslationManager.Instance.Translate("AddBillFailed"),
                             TranslationManager.Instance.Translate("AddBillFailedMessage") +
                             Environment.NewLine +
                             TranslationManager.Instance.Translate("TryAgain"))
-                        .Ok());
+                        .Ok();
+
+                    this.windowManager.ShowDialog(dialog);
 
                     goto tryAdd;
                 }
@@ -234,33 +235,33 @@ namespace BillsManager.ViewModels
         private void EditBill(Bill bill)
         {
             var supps = this.GetAvailableSuppliers();
-            var baeVM = this.billAddEditViewModelFactory.Invoke(supps, bill);
+            Bill oldBill = (Bill)bill.Clone();
+            var editBillVM = this.billAddEditViewModelFactory.Invoke(supps, bill);
 
-            Bill oldVersion = (Bill)bill.Clone();
+            editBillVM.BeginEdit();
 
-            baeVM.BeginEdit();
-
-            if (this.windowManager.ShowDialog(baeVM) == true)
+            if (this.windowManager.ShowDialog(editBillVM) == true)
             {
-                if (this.billsProvider.Edit(baeVM.ExposedBill)) // URGENT: if the DB action fails, changes have to be rolled back!!
+                if (this.billsProvider.Edit(editBillVM.ExposedBill)) // URGENT: if the DB action fails, changes have to be rolled back!!
                 {
-                    var editedBillVM = this.BillViewModels.FirstOrDefault(bvm => bvm.ExposedBill == bill);
-                    editedBillVM.Refresh();
+                    var editedBillDetailsVM = this.BillViewModels.FirstOrDefault(bvm => bvm.ExposedBill == bill);
+                    editedBillDetailsVM.Refresh();
 
                     this.SelectedBillViewModel = null;
 
-                    this.globalEventAggregator.PublishOnUIThread(new EditedMessage<Bill>(oldVersion, baeVM.ExposedBill)); // TODO: move to confirm add edit command in addeditbvm
+                    this.globalEventAggregator.PublishOnUIThread(new EditedMessage<Bill>(oldBill, editBillVM.ExposedBill)); // TODO: move to confirm add edit command in addeditbvm
                 }
                 else
                 {
-                    this.windowManager.ShowDialog(
-                        DialogViewModel.Show(
-                            DialogType.Error,
-                            TranslationManager.Instance.Translate("EditFailed"),
-                            TranslationManager.Instance.Translate("EditFailedMessage") +
-                            Environment.NewLine +
-                            TranslationManager.Instance.Translate("TryAgain"))
-                        .Ok());
+                    var dialog = DialogViewModel.Show(
+                          DialogType.Error,
+                          TranslationManager.Instance.Translate("EditFailed"),
+                          TranslationManager.Instance.Translate("EditFailedMessage") +
+                          Environment.NewLine +
+                          TranslationManager.Instance.Translate("TryAgain"))
+                      .Ok();
+
+                    this.windowManager.ShowDialog(dialog);
                 }
             }
         }
@@ -350,8 +351,10 @@ namespace BillsManager.ViewModels
                 if (this.billsProvider.Delete(bvm.ExposedBill))
                     this.BillViewModels.Remove(bvm);
                 else
-                    throw new ApplicationException("Couldn't delete this bill: " + Environment.NewLine + Environment.NewLine + this.GetBillSummary(bvm.ExposedBill));
+                    throw new ApplicationException("Couldn't delete this bill: " + Environment.NewLine + Environment.NewLine + this.GetBillSummary(bvm.ExposedBill)); // TODO handle
             }
+
+            this.globalEventAggregator.PublishOnUIThread(new BillsListChangedMessage(this.BillViewModels.Select(bvm => bvm.ExposedBill).ToList()));
 
             // if there was an error during the romve operation on the db
             // this point wouldn't be reached

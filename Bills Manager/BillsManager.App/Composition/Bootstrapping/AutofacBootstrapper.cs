@@ -1,12 +1,11 @@
 ﻿using Autofac;
 using BillsManager.Localization;
+using BillsManager.Services;
 //using BillsManager.App.Modules;
 using BillsManager.Services.Data;
 using BillsManager.Services.Feedback;
 using BillsManager.Services.Reporting;
-using BillsManager.Services;
 using BillsManager.ViewModels;
-using BillsManager.ViewModels.Reporting;
 //using BillsManager.ViewModels.Search;
 using BillsManager.Views;
 using Caliburn.Micro;
@@ -36,10 +35,11 @@ namespace BillsManager.App.Composition.Bootstrapping
             builder.RegisterType<XMLSettingsProvider>().As<ISettingsProvider>().SingleInstance();
 
 #if !DEBUG
+            // DON'T TOUCH
             builder.RegisterInstance(new XMLDBConnector(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"DB\db.bmdb"))).AsImplementedInterfaces().SingleInstance();
 #else
             builder.RegisterInstance(new XMLDBConnector(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"DB\db.bmdb"))).AsImplementedInterfaces().SingleInstance();
-            //builder.RegisterInstance(new MockedDBConnector(12, 7)).AsImplementedInterfaces().SingleInstance();
+            builder.RegisterInstance(new MockedDBConnector(0, 7)).AsImplementedInterfaces().SingleInstance();
 #endif
             builder.RegisterType<XMLBackupsProvider>().As<IBackupsProvider>().SingleInstance();
 

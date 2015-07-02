@@ -89,7 +89,7 @@
 
         <!--
             <Style.Triggers>
-            
+
             <Trigger Property="IsEnabled"
             Value="False">
             <Setter Property="Background"
@@ -99,7 +99,7 @@
             <Setter Property="Foreground"
             Value="{StaticResource Button.Foreground.Disabled}" />
             </Trigger>
-            
+
             </Style.Triggers>
         -->
 

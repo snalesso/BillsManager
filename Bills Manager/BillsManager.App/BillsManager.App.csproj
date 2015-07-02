@@ -164,7 +164,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>call "$(SolutionDir)BillsManager.App\$(OutDir)GroupLanguages.exe"</PostBuildEvent>
+    <PostBuildEvent>call "$(TargetDir)GroupLanguages.exe" "Languages"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

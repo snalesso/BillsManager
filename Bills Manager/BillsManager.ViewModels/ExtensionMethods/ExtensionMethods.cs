@@ -39,6 +39,7 @@ namespace BillsManager.ViewModels
             //}
         }
 
+        [Obsolete]
         public static void AddSorted<T>(this IList<T> list, T item, IComparer<T> comparer = null)
         {
             if (comparer == null)
@@ -51,6 +52,7 @@ namespace BillsManager.ViewModels
             list.Insert(i, item);
         }
 
+        [Obsolete]
         public static void SortEdited<T>(this IList<T> list, T item, IComparer<T> comparer = null)
         {
             if (comparer == null)

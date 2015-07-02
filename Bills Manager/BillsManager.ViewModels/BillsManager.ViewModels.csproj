@@ -126,6 +126,7 @@
     </Compile>
     <Compile Include="SupplierViewModels\SupplierDetailsViewModel\SupplierDetailsViewModel.IComparable.cs" />
     <Compile Include="SupplierViewModels\SupplierDetailsViewModel\SupplierDetailsViewModel.cs" />
+    <Compile Include="SupplierViewModels\SupplierDetailsViewModel\SupplierDetailsViewModelComparer.cs" />
     <Compile Include="SupplierViewModels\SupplierViewModel.cs" />
     <Compile Include="Validation\ValidationRulesTrackerGeneric.cs" />
     <Compile Include="Search\SearchBillsViewModel.cs" />

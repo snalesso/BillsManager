@@ -3,7 +3,6 @@ using BillsManager.Models;
 using BillsManager.Services.Data;
 using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
-using BillsManager.ViewModels.Reporting;
 using Caliburn.Micro;
 using System;
 using System.Collections.Generic;

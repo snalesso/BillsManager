@@ -2,11 +2,11 @@
 
 namespace BillsManager.ViewModels
 {
-    public class BillDetailsViewModelComparer : IComparer<BillDetailsViewModel>
+    public class SupplierDetailsViewModelComparer : IComparer<SupplierDetailsViewModel>
     {
         #region IComparer<BillDetailsViewModel> Members
 
-        public int Compare(BillDetailsViewModel x, BillDetailsViewModel y)
+        public int Compare(SupplierDetailsViewModel x, SupplierDetailsViewModel y)
         {
             var change = x.CompareTo(y);
 
@@ -15,6 +15,6 @@ namespace BillsManager.ViewModels
 
         #endregion
 
-        public BillDetailsViewModelComparer() { }
+        public SupplierDetailsViewModelComparer() { }
     }
 }

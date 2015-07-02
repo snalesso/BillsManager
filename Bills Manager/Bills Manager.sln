@@ -11,6 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillsManager.ViewModels", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillsManager.Views", "BillsManager.Views\BillsManager.Views.csproj", "{36633953-EEE1-45F3-8EEF-86F7F221AA93}"
 	ProjectSection(ProjectDependencies) = postProject
+		{F4D11D26-8272-4DCC-B9EC-1C6184645B36} = {F4D11D26-8272-4DCC-B9EC-1C6184645B36}
 		{0A3C412A-7C61-4200-A3D7-794EBE21DB9A} = {0A3C412A-7C61-4200-A3D7-794EBE21DB9A}
 	EndProjectSection
 EndProject

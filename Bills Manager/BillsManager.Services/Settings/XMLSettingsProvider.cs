@@ -95,7 +95,7 @@ namespace BillsManager.Services
                  new XElement(Namespace_SettingsRoot,
                      new XElement(Item_Language, Default_Language),
                      new XElement(Item_StartupDBLoad, Default_LoadDbAtStartup),
-                     new XElement(Item_FeedbackToEmailAddress, Item_FeedbackToEmailAddress)));
+                     new XElement(Item_FeedbackToEmailAddress, Default_FeedbackEmailAddressee)));
 
             return newXMLSetts;
         }

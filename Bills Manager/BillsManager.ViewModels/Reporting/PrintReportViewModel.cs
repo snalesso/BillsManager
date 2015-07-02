@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace BillsManager.ViewModels.Reporting
+namespace BillsManager.ViewModels
 {
     public class PrintReportViewModel/*<T>*/ : Screen
     /*where T : class*/

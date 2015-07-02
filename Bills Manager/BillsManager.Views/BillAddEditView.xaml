@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Behaviors="clr-namespace:BillsManager.Views.Behaviors"
              xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
+             xmlns:Loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:ViewModels="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:Loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DataContext="{d:DesignInstance Type=ViewModels:BillAddEditViewModel}"
              mc:Ignorable="d">
@@ -147,7 +147,8 @@
                  TabIndex="4"
                  Text="{Binding Amount,
                                 StringFormat=\{0:0.00##\},
-                                ValidatesOnDataErrors=True}"
+                                ValidatesOnDataErrors=True,
+                                UpdateSourceTrigger=PropertyChanged}"
                  TextAlignment="Right" />
 
 
@@ -186,7 +187,8 @@
                  MaxLines="1"
                  TabIndex="6"
                  Text="{Binding Agio,
-                                StringFormat=\{0:0.00##\}}"
+                                StringFormat=\{0:0.00##\},
+                                UpdateSourceTrigger=PropertyChanged}"
                  TextAlignment="Right" />
 
 
@@ -207,7 +209,8 @@
                  MaxLines="1"
                  TabIndex="7"
                  Text="{Binding AdditionalCosts,
-                                StringFormat=\{0:0.00##\}}"
+                                StringFormat=\{0:0.00##\},
+                                UpdateSourceTrigger=PropertyChanged}"
                  TextAlignment="Right" />
 
 

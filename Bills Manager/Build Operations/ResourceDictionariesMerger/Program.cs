@@ -16,32 +16,32 @@ namespace ResourceDictionariesMerger
 
         static void Main(string[] args)
         {
-#if !DEBUG
-            if (args.Length < 2)
-            {
-                Console.WriteLine("Both start and destionation dictionaries' paths are needed.");
-                Console.WriteLine();
-                Console.WriteLine("Press [Enter] to exit ...");
-                Console.ReadLine();
-                return;
-            }
+//#if !DEBUG
+//            if (args.Length < 2)
+//            {
+//                Console.WriteLine("Both start and destionation dictionaries' paths are needed.");
+//                Console.WriteLine();
+//                Console.WriteLine("Press [Enter] to exit ...");
+//                Console.ReadLine();
+//                return;
+//            }
 
-            if (!File.Exists(args[0]))
-            {
-                Debug.WriteLine("Start dictionary file not found.");
-                Console.WriteLine();
-                Console.WriteLine("Press [Enter] to exit ...");
-                return;
-            }
+//            if (!File.Exists(args[0]))
+//            {
+//                Debug.WriteLine("Start dictionary file not found.");
+//                Console.WriteLine();
+//                Console.WriteLine("Press [Enter] to exit ...");
+//                return;
+//            }
 
-            string startDictionaryPath = args[0];
-            string destinationDictionaryPath = args[1];
-#else
+//            string startDictionaryPath = args[0];
+//            string destinationDictionaryPath = args[1];
+//#else
             //const string startDictionaryPath = @"D:\Source\Workspaces\billsmanager\Bills Manager\BillsManager.Views\Dictionaries\Styles.xaml";
             //const string destinationDictionaryPath = @"D:\Test\MergedDictionary.xaml";
             const string startDictionaryPath = @"D:\Source\Workspaces\billsmanager\Bills Manager\BillsManager.Views\Dictionaries\Styles.xaml";
-            const string destinationDictionaryPath = @"D:\Source\Workspaces\billsmanager\Bills Manager\BillsManager.Views\Themes\generic.xaml";
-#endif
+            const string destinationDictionaryPath = @"D:\Source\Workspaces\billsmanager\Bills Manager\BillsManager.Views\Themes\Generic.xaml";
+//#endif
             XNamespace ResourceDictionaryRootNamespace = @"http://schemas.microsoft.com/winfx/2006/xaml/presentation";
 
             // prepare the xml for the new resource dictionary
