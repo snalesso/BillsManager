@@ -17,8 +17,8 @@ namespace BillsManager.ViewModels
     {
         #region fields
 
-        protected readonly IWindowManager windowManager;
-        protected readonly IEventAggregator globalEventAggregator;
+        protected readonly IWindowManager _windowManager;
+        protected readonly IEventAggregator _globalEventAggregator;
 
         #endregion
 
@@ -37,10 +37,10 @@ namespace BillsManager.ViewModels
 
             this.exposedBill = bill;
 
-            this.windowManager = windowManager;
-            this.globalEventAggregator = globalEventAggregator;
+            this._windowManager = windowManager;
+            this._globalEventAggregator = globalEventAggregator;
 
-            this.globalEventAggregator.Subscribe(this);
+            this._globalEventAggregator.Subscribe(this);
 
             //this.SupplierName = this.GetSupplierName(this.SupplierID);
 
@@ -49,7 +49,7 @@ namespace BillsManager.ViewModels
                 {
                     if (e.WasClosed)
                     {
-                        this.globalEventAggregator.Unsubscribe(this);
+                        this._globalEventAggregator.Unsubscribe(this);
                     }
                 };
         }
@@ -165,9 +165,9 @@ namespace BillsManager.ViewModels
 
                 var remDays = (this.DueDate - DateTime.Today).TotalDays;
 
-                if (remDays >= 15)
+                if /*(remDays >= 15)
                     return DueAlert.None;
-                else if (remDays >= 7)
+                else if*/ (remDays >= 7)
                     return DueAlert.Low;
                 else if (remDays >= 3)
                     return DueAlert.Medium;
@@ -211,14 +211,14 @@ namespace BillsManager.ViewModels
         {
             // TODO: move supplier logic to BillsViewModel (same for supp's obligation amount)
             string supp = string.Empty;
-            this.globalEventAggregator.PublishOnUIThread(new SupplierNameRequest(this.SupplierID, s => supp = s));
+            this._globalEventAggregator.PublishOnUIThread(new SupplierNameRequest(this.SupplierID, s => supp = s));
             return supp;
         }
 
         private void SwitchToEdit()
         {
             this.TryClose();
-            this.globalEventAggregator.PublishOnUIThread(new EditBillOrder(this.ExposedBill));
+            this._globalEventAggregator.PublishOnUIThread(new EditBillOrder(this.ExposedBill));
         }
 
         #region message handlers

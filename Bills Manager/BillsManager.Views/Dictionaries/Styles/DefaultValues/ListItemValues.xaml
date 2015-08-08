@@ -26,7 +26,7 @@
     <SolidColorBrush x:Key="ListItem.Background.Selected" Color="#FF22A4FF" />
     <SolidColorBrush x:Key="ListItem.Background.Pressed" Color="#FF0074E7" />
 
-    <SolidColorBrush x:Key="ListItem.BorderBrush.Normal" Color="Black" />
+    <SolidColorBrush x:Key="ListItem.BorderBrush.Normal" Color="Transparent" />
     <SolidColorBrush x:Key="ListItem.BorderBrush.Hover" Color="#FFCCE5FF" />
     <SolidColorBrush x:Key="ListItem.BorderBrush.Selected" Color="#FF22A4FF" />
     <SolidColorBrush x:Key="ListItem.BorderBrush.Pressed" Color="#FF0074E7" />
@@ -36,7 +36,7 @@
     <SolidColorBrush x:Key="ListItem.Foreground.Selected" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
     <SolidColorBrush x:Key="ListItem.Foreground.Pressed" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
 
-    <SolidColorBrush x:Key="ListItem.LineDivider.Brush" Color="#FFC3C3C3"/>
+    <SolidColorBrush x:Key="ListItem.LineDivider.Brush" Color="#FFC3C3C3" />
 
     <System:Double x:Key="ListItem.Padding.Value">5</System:Double>
 

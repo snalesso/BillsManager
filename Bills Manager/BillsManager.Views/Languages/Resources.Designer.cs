@@ -601,6 +601,15 @@ namespace BillsManager.Views.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0:N2} €.
+        /// </summary>
+        public static string currency_Format {
+            get {
+                return ResourceManager.GetString("currency_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Database.
         /// </summary>
         public static string Database {

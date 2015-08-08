@@ -3,7 +3,6 @@ using System.Windows;
 
 namespace BillsManager.Views.Controls
 {
-    // TODO: move controls ns to extended controls library
     public sealed class ListBoxEx : ListBox
     {        
         public static readonly DependencyProperty ShowEmptyMessageDependencyProperty = DependencyProperty.Register("ShowEmptyMessage",

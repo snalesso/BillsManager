@@ -1,32 +1,22 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Values.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="{x:Type ComboBoxItem}"
-           TargetType="{x:Type ComboBoxItem}">
+    <Style x:Key="{x:Type ComboBoxItem}" TargetType="{x:Type ComboBoxItem}">
 
-        <Setter Property="HorizontalContentAlignment"
-                Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
-        <Setter Property="VerticalContentAlignment"
-                Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
 
-        <Setter Property="Padding"
-                Value="3" />
+        <Setter Property="Padding" Value="3" />
 
-        <Setter Property="Margin"
-                Value="0" />
+        <Setter Property="Margin" Value="0" />
 
-        <Setter Property="Background"
-                Value="{StaticResource MenuItemBackgroundBrush}" />
-        <Setter Property="Foreground"
-                Value="{StaticResource MenuItemForegroundBrush}" />
-        <Setter Property="BorderBrush"
-                Value="{StaticResource MenuItemBorderBrush}" />
-        <Setter Property="BorderThickness"
-                Value="1" />
+        <Setter Property="Background" Value="{StaticResource ListItem.Background.Normal}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ListItem.BorderBrush.Normal}" />
+        <Setter Property="Foreground" Value="{StaticResource ListItem.Foreground.Normal}" />
+        <Setter Property="BorderThickness" Value="{StaticResource View.Border.Thickness}" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -34,11 +24,10 @@
 
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            CornerRadius="0"
                             BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="0"
                             Padding="{TemplateBinding Padding}">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Border>
 
                 </ControlTemplate>
@@ -46,29 +35,21 @@
         </Setter>
 
         <Style.Triggers>
-            
-            <Trigger Property="IsHighlighted"
-                     Value="true">
-                <Setter Property="Background"
-                        Value="{StaticResource MenuHoverBackgroundBrush}" />
-                <Setter Property="BorderBrush"
-                        Value="{StaticResource MenuHoverBorderBrush}" />
-                <Setter Property="Foreground"
-                        Value="{StaticResource MenuHoverForegroundBrush}" />
+
+            <Trigger Property="IsHighlighted" Value="true">
+                <Setter Property="Background" Value="{StaticResource ListItem.Background.Selected}" />
+                <Setter Property="BorderBrush" Value="{StaticResource ListItem.BorderBrush.Selected}" />
+                <Setter Property="Foreground" Value="{StaticResource ListItem.Foreground.Selected}" />
             </Trigger>
-            
-            <Trigger Property="IsEnabled"
-                     Value="false">
-                <Setter Property="Background"
-                        Value="{StaticResource MenuDisabledBackgroundBrush}" />
-                <Setter Property="BorderBrush"
-                        Value="{StaticResource MenuDisabledBorderBrush}" />
-                <Setter Property="Foreground"
-                        Value="{StaticResource MenuDisabledForegroundBrush}" />
+
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Background" Value="{StaticResource Control.Background.Disabled}" />
+                <Setter Property="BorderBrush" Value="{StaticResource Control.Background.Disabled}" />
+                <Setter Property="Foreground" Value="{StaticResource View.Foreground.Disabled}" />
             </Trigger>
-            
+
         </Style.Triggers>
-        
+
     </Style>
 
 </ResourceDictionary>

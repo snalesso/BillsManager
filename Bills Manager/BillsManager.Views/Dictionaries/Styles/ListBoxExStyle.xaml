@@ -9,7 +9,7 @@
     <Style TargetType="{x:Type Controls:ListBoxEx}">
 
         <Setter Property="Background" Value="{StaticResource View.Background}" />
-        <Setter Property="BorderBrush" Value="{StaticResource View.BorderBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Control.BorderBrush.Normal}" />
         <Setter Property="Foreground" Value="{StaticResource View.Foreground.Normal}" />
 
         <Setter Property="BorderThickness" Value="0" />

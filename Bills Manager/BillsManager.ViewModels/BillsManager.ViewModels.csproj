@@ -94,7 +94,7 @@
     <Compile Include="Messages\Database\CRUD\DeletedMessageGeneric.cs" />
     <Compile Include="Messages\Database\Search\FilterMessageGeneric.cs" />
     <Compile Include="Messages\Database\CRUD\AddBillToSupplierOrder.cs" />
-    <Compile Include="Messages\Database\View events\SelectedSupplierChagedMessage.cs" />
+    <Compile Include="Messages\Database\View events\SelectedSupplierChangedMessage.cs" />
     <Compile Include="Reporting\BillReportViewModel.cs" />
     <Compile Include="Search\FilterGeneric.cs" />
     <Compile Include="Search\SearchViewModelGeneric.cs" />

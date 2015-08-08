@@ -4,7 +4,10 @@
     <!--  light violet #FF9A73D6  -->
     <SolidColorBrush x:Key="DBConnectionState.NotConnected" Color="#FF9A73D6" />
 
-    <!--  #FF00A500  -->
+    <!--  dark green #FF00A500  -->
+    <!--  green #FF00C200  -->
+    <!--  light green #FF23D723  -->
+    <!--  blue #FF22A4FF  -->
     <SolidColorBrush x:Key="DBConnectionState.Connected" Color="#FF22A4FF" />
     <!--  #FFE26C00  -->
     <SolidColorBrush x:Key="DBConnectionState.Unsaved" Color="#FFFF8900" />

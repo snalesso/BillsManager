@@ -9,7 +9,7 @@
             <Setter.Value>
                 <ControlTemplate>
                     <Border Background="{StaticResource View.Background}"
-                            BorderBrush="{StaticResource View.BorderBrush}"
+                            BorderBrush="{StaticResource Control.BorderBrush.Normal}"
                             BorderThickness="{StaticResource View.Border.Thickness}" />
                 </ControlTemplate>
             </Setter.Value>
@@ -21,7 +21,7 @@
 
         <Setter Property="Foreground" Value="{StaticResource View.Foreground.Normal}" />
         <Setter Property="Background" Value="{StaticResource View.Background}" />
-        <Setter Property="BorderBrush" Value="{StaticResource View.BorderBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Control.BorderBrush.Normal}" />
         <Setter Property="BorderThickness" Value="{StaticResource View.Border.Thickness}" />
         <Setter Property="Padding">
             <Setter.Value>

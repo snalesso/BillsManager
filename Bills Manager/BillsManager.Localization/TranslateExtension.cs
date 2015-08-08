@@ -52,7 +52,7 @@ namespace BillsManager.Localization
                     bindingMode = BindingMode.Default;
             }
 
-            var propertyName = this.GetPropertyName(() => td.Value);
+            var propertyName = this.GetPropertyName(() => td.Value); // TODO nameof
 
             var binding =
                 new Binding(propertyName)

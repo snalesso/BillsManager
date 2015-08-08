@@ -15,7 +15,7 @@
 
         <Setter Property="Background" Value="{StaticResource View.Background}" />
 
-        <Setter Property="BorderBrush" Value="{StaticResource View.BorderBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Control.BorderBrush.Normal}" />
 
         <Setter Property="BorderThickness" Value="{StaticResource View.Border.Thickness}" />
 
@@ -104,7 +104,7 @@
 
         <Setter Property="Background" Value="{StaticResource View.Background}" />
 
-        <Setter Property="BorderBrush" Value="{StaticResource View.BorderBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Control.BorderBrush.Normal}" />
 
         <Setter Property="BorderThickness" Value="{StaticResource View.Border.Thickness}" />
 
@@ -202,18 +202,18 @@
                                     Grid.ColumnSpan="2"
                                     IsHitTestVisible="False"
                                     Opacity="0">
-                                    
+
                                     <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    
+
                                     <Rectangle Grid.Row="0"
                                     Grid.Column="0"
                                     Fill="#A5FFFFFF"
                                     RadiusX="1"
                                     RadiusY="1" />
-                                    
+
                                     <Rectangle Grid.Row="0"
                                     Grid.Column="1"
                                     Width="19"
@@ -254,7 +254,7 @@
                     <Setter Property="Background"
                     Value="{StaticResource Button.Background.Disabled}" />
                 -->
-                <Setter Property="BorderBrush" Value="{StaticResource Button.BorderBrush.Disabled}" />
+                <Setter Property="BorderBrush" Value="{StaticResource Control.BorderBrush.Disabled}" />
                 <Setter Property="Foreground" Value="{StaticResource View.Foreground.Disabled}" />
             </Trigger>
 

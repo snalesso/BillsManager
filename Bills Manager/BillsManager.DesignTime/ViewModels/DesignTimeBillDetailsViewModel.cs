@@ -9,8 +9,8 @@ namespace BillsManager.DesignTime.ViewModels
     {
         #region field
 
-        Supplier supplier;
-        Bill bill;
+        Supplier _supplier;
+        Bill _bill;
 
         #endregion
 
@@ -24,13 +24,21 @@ namespace BillsManager.DesignTime.ViewModels
             }
         }
 
+        public DesignTimeBillDetailsViewModel(Bill b)
+        {
+            if (Execute.InDesignMode)
+            {
+                this.ExposedBill = b;
+            }
+        }
+
         #endregion
 
         #region methods
 
         void LoadDesignTimeData()
         {
-            this.supplier = new Supplier(
+            this._supplier = new Supplier(
                    53,
                    "Faber-Castell",
                    "Via Stromboli",
@@ -49,9 +57,9 @@ namespace BillsManager.DesignTime.ViewModels
                    "347-7892234"
                );
 
-            this.bill = new Bill(
+            this._bill = new Bill(
                 0,
-                this.supplier.ID,
+                this._supplier.ID,
                 DateTime.Today.AddDays(-2),
                 DateTime.Today.AddDays(14),
                 DateTime.Today.AddDays(-8),
@@ -62,12 +70,12 @@ namespace BillsManager.DesignTime.ViewModels
                 "X3V-KDM",
                 "call agent for reduction @additional comments to trigger validation rule");
 
-            this.ExposedBill = this.bill;
+            this.ExposedBill = this._bill;
         }
 
         public new string SupplierName
         {
-            get { return this.supplier.Name; }
+            get { return this._supplier.Name; }
         }
 
         #endregion

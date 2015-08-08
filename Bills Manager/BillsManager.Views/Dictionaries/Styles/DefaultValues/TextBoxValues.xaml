@@ -4,10 +4,12 @@
         <ResourceDictionary Source="ViewValues.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <SolidColorBrush x:Key="TextBox.Background.Normal" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+    <SolidColorBrush x:Key="TextBox.BorderBrush.Normal" Color="{Binding Source={StaticResource Control.BorderBrush.Normal}, Path=Color}" />
+    <SolidColorBrush x:Key="TextBox.Foreground.Normal" Color="{Binding Source={StaticResource View.Foreground.Normal}, Path=Color}" />
+
     <SolidColorBrush x:Key="TextBox.Background.Disabled" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
-
-    <SolidColorBrush x:Key="TextBox.BorderBrush.Disabled" Color="{Binding Source={StaticResource View.Foreground.Disabled}, Path=Color}" />
-
+    <SolidColorBrush x:Key="TextBox.BorderBrush.Disabled" Color="{Binding Source={StaticResource Control.BorderBrush.Disabled}, Path=Color}" />
     <SolidColorBrush x:Key="TextBox.Foreground.Disabled" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
 
 </ResourceDictionary>

@@ -6,13 +6,12 @@
              xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
              xmlns:Converters="clr-namespace:BillsManager.Views.Converters"
              xmlns:DataTemplates="clr-namespace:BillsManager.Views.DataTemplates"
+             xmlns:DesignTime.ViewModels="clr-namespace:BillsManager.DesignTime.ViewModels;assembly=BillsManager.DesignTime"
+             xmlns:Loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:ViewModels="clr-namespace:BillsManager.ViewModels;assembly=BillsManager.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:Loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Caliburn:Bind.AtDesignTime="True"
-             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,
-                                              Type={x:Type ViewModels:BillsViewModel}}"
              d:DesignHeight="250"
              d:DesignWidth="900"
              mc:Ignorable="d">

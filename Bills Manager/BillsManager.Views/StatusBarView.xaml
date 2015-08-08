@@ -18,7 +18,7 @@
 
     <StatusBar FontSize="{StaticResource View.FontSize}" Foreground="{StaticResource StatusBar.Foreground}">
 
-        <TextBlock Text="{Binding ConnectionStateString, Mode=OneWay}" />
+        <TextBlock Text="{Binding ConnectionStateString}" />
 
         <TextBlock Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Run Text="{Binding SuppliersCount}" />

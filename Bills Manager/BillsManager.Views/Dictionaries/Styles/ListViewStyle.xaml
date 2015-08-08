@@ -8,9 +8,9 @@
 
         <Setter Property="BorderThickness" Value="0" />
 
-        <Setter Property="Background" Value="{StaticResource View.Background}" />
-        <Setter Property="BorderBrush" Value="{StaticResource View.BorderBrush}" />
-        <Setter Property="Foreground" Value="{StaticResource View.Foreground.Normal}" />
+        <Setter Property="Background" Value="{StaticResource ListItem.Background.Normal}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ListItem.BorderBrush.Normal}" />
+        <Setter Property="Foreground" Value="{StaticResource ListItem.Foreground.Normal}" />
 
     </Style>
 

@@ -18,8 +18,11 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
 
-        <Setter Property="Foreground" Value="{StaticResource View.Foreground.Normal}" />
-        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Background" Value="{StaticResource ControlBox.Buttons.Generic.Background.Normal}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ControlBox.Buttons.Generic.BorderBrush.Normal}" />
+        <Setter Property="Foreground" Value="{StaticResource ControlBox.Buttons.Generic.Foreground.Normal}" />
+
+        <Setter Property="BorderThickness" Value="{StaticResource ControlBox.Buttons.BorderThickness}" />
 
         <Setter Property="Template">
             <Setter.Value>

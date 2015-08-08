@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace BillsManager.Views.Converters
 {
-    class MultiBooleanToVisibilityConverter : IMultiValueConverter
+    public class MultiBooleanToVisibilityConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

@@ -1,24 +1,28 @@
 ﻿<ResourceDictionary xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:Converters="clr-namespace:BillsManager.Views.Converters" xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" xmlns:Controls="clr-namespace:BillsManager.Views.Controls" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Ignorable="d" xmlns:Models="clr-namespace:BillsManager.Models;assembly=BillsManager.Models" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
   <SolidColorBrush x:Key="View.Background" Color="White" />
-  <SolidColorBrush x:Key="View.BorderBrush" Color="#FF22A4FF" />
+  <SolidColorBrush x:Key="View.BorderBrush" Color="#FF4E4E4E" />
   <SolidColorBrush x:Key="View.Title.Foreground" Color="{Binding Source={StaticResource View.BorderBrush}, Path=Color}" />
-  <System:Double x:Key="View.Title.FontSize">18</System:Double>
+  <System:Double x:Key="View.Title.FontSize">16</System:Double>
   <FontWeight x:Key="View.Title.FontWeight">SemiBold</FontWeight>
   <SolidColorBrush x:Key="View.Foreground.Normal" Color="#FF2E2E2E" />
   <SolidColorBrush x:Key="View.Foreground.Disabled" Color="#FFA0A0A0" />
   <SolidColorBrush x:Key="PaidBrush" Color="#FF00B400" />
   <SolidColorBrush x:Key="NotPaidBrush" Color="#FFE44141" />
+  <SolidColorBrush x:Key="Control.Background.Normal" Color="#FF22A4FF" />
+  <SolidColorBrush x:Key="Control.BorderBrush.Normal" Color="#FF22A4FF" />
+  <SolidColorBrush x:Key="Control.Background.Disabled" Color="#FFCCEAFF" />
+  <SolidColorBrush x:Key="Control.BorderBrush.Disabled" Color="{Binding Source={StaticResource Control.Background.Disabled}, Path=Color}" />
   <SolidColorBrush x:Key="ErrorTemplate.BorderBrush" Color="#FFE44141" />
   <SolidColorBrush x:Key="ErrorTemplate.BackgroundBrush" Color="#FFE44141" />
   <SolidColorBrush x:Key="ErrorTemplate.ForegroundBrush" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
   <SolidColorBrush x:Key="WarningBackgroundBrush" Color="#FFFF8900" />
   <SolidColorBrush x:Key="WarningForegroundBrush" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
   <SolidColorBrush x:Key="StatusBar.Foreground" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
-  <System:Double x:Key="View.FontSize">12</System:Double>
+  <System:Double x:Key="View.FontSize">11</System:Double>
   <System:Double x:Key="Control.Border.CornerRadius.Value">0</System:Double>
   <CornerRadius x:Key="Control.Border.CornerRadius" BottomLeft="{StaticResource Control.Border.CornerRadius.Value}" BottomRight="{StaticResource Control.Border.CornerRadius.Value}" TopLeft="{StaticResource Control.Border.CornerRadius.Value}" TopRight="{StaticResource Control.Border.CornerRadius.Value}" />
   <CornerRadius x:Key="ViewWindow.Border.CornerRadius">0</CornerRadius>
-  <Thickness x:Key="ViewWindow.ResizeBorder.Thickness">8</Thickness>
+  <Thickness x:Key="ViewWindow.ResizeBorder.Thickness">5</Thickness>
   <System:Double x:Key="View.Border.Thickness.Value">1</System:Double>
   <Thickness x:Key="View.Border.Thickness" Bottom="{StaticResource View.Border.Thickness.Value}" Left="{StaticResource View.Border.Thickness.Value}" Right="{StaticResource View.Border.Thickness.Value}" Top="{StaticResource View.Border.Thickness.Value}" />
   <Thickness x:Key="View.Border.Padding.Normal">0</Thickness>
@@ -32,7 +36,7 @@
   <GridLength x:Key="View.Region.Spacing.Large">32</GridLength>
   <System:Double x:Key="View.Region.Title.FontSize">16</System:Double>
   <FontWeight x:Key="View.Region.Title.FontWeight">SemiBold</FontWeight>
-  <SolidColorBrush x:Key="View.Region.Title.Foreground" Color="{Binding Source={StaticResource View.BorderBrush}, Path=Color}" />
+  <SolidColorBrush x:Key="View.Region.Title.Foreground" Color="{Binding Source={StaticResource Control.BorderBrush.Normal}, Path=Color}" />
   <Visibility x:Key="View.Region.Title.Visibility">Visible</Visibility>
   <System:Double x:Key="Separator.Size">1</System:Double>
   <System:Double x:Key="Menu.Icon.Size.Value">26</System:Double>
@@ -40,7 +44,7 @@
   <System:Double x:Key="MenuItem.IconSize">16</System:Double>
   <System:Double x:Key="Path.Size.Value">10</System:Double>
   <Size x:Key="Path.Size" Width="{StaticResource Path.Size.Value}" Height="{StaticResource Path.Size.Value}" />
-  <SolidColorBrush x:Key="Button.Background.Normal" Color="{Binding Source={StaticResource View.BorderBrush}, Path=Color}" />
+  <SolidColorBrush x:Key="Button.Background.Normal" Color="#FF22A4FF" />
   <SolidColorBrush x:Key="Button.BorderBrush.Normal" Color="{Binding Source={StaticResource Button.Background.Normal}, Path=Color}" />
   <SolidColorBrush x:Key="Button.Foreground.Normal" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
   <SolidColorBrush x:Key="Button.Background.Hover" Color="#FF64C1FF" />
@@ -52,7 +56,7 @@
   <SolidColorBrush x:Key="Button.Background.Focused" Color="{Binding Source={StaticResource Button.Background.Normal}, Path=Color}" />
   <SolidColorBrush x:Key="Button.BorderBrush.Focused" Color="{Binding Source={StaticResource Button.BorderBrush.Pressed}, Path=Color}" />
   <SolidColorBrush x:Key="Button.Foreground.Focused" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
-  <SolidColorBrush x:Key="Button.Background.Disabled" Color="#FFCCEAFF" />
+  <SolidColorBrush x:Key="Button.Background.Disabled" Color="{Binding Source={StaticResource Control.Background.Disabled}, Path=Color}" />
   <SolidColorBrush x:Key="Button.BorderBrush.Disabled" Color="{Binding Source={StaticResource Button.Background.Disabled}, Path=Color}" />
   <SolidColorBrush x:Key="Button.Foreground.Disabled" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
   <SolidColorBrush x:Key="DefaultButton.Background.Normal" Color="#FF34C234" />
@@ -90,7 +94,7 @@
   <Size x:Key="ControlBox.Buttons.Size" Width="28" Height="22" />
   <SolidColorBrush x:Key="ControlBox.Buttons.Close.Background.Normal" Color="Transparent" />
   <SolidColorBrush x:Key="ControlBox.Buttons.Close.BorderBrush.Normal" Color="{Binding Source={StaticResource ControlBox.Buttons.Close.Background.Normal}, Path=Color}" />
-  <SolidColorBrush x:Key="ControlBox.Buttons.Close.Foreground.Normal" Color="{Binding Source={StaticResource View.Foreground.Normal}, Path=Color}" />
+  <SolidColorBrush x:Key="ControlBox.Buttons.Close.Foreground.Normal" Color="{Binding Source={StaticResource View.BorderBrush}, Path=Color}" />
   <SolidColorBrush x:Key="ControlBox.Buttons.Close.Background.Hover" Color="{Binding Source={StaticResource ControlBox.Buttons.Close.Background.Normal}, Path=Color}" />
   <SolidColorBrush x:Key="ControlBox.Buttons.Close.BorderBrush.Hover" Color="{Binding Source={StaticResource ControlBox.Buttons.Close.BorderBrush.Normal}, Path=Color}" />
   <SolidColorBrush x:Key="ControlBox.Buttons.Close.Foreground.Hover" Color="{Binding Source={StaticResource CancelButton.Background.Normal}, Path=Color}" />
@@ -99,7 +103,7 @@
   <SolidColorBrush x:Key="ControlBox.Buttons.Close.Foreground.Pressed" Color="{Binding Source={StaticResource CancelButton.Background.Pressed}, Path=Color}" />
   <SolidColorBrush x:Key="ControlBox.Buttons.Generic.Background.Normal" Color="Transparent" />
   <SolidColorBrush x:Key="ControlBox.Buttons.Generic.BorderBrush.Normal" Color="{Binding Source={StaticResource ControlBox.Buttons.Close.Background.Normal}, Path=Color}" />
-  <SolidColorBrush x:Key="ControlBox.Buttons.Generic.Foreground.Normal" Color="{Binding Source={StaticResource View.Foreground.Normal}, Path=Color}" />
+  <SolidColorBrush x:Key="ControlBox.Buttons.Generic.Foreground.Normal" Color="{Binding Source={StaticResource View.BorderBrush}, Path=Color}" />
   <SolidColorBrush x:Key="ControlBox.Buttons.Generic.Background.Hover" Color="{Binding Source={StaticResource ControlBox.Buttons.Generic.Background.Normal}, Path=Color}" />
   <SolidColorBrush x:Key="ControlBox.Buttons.Generic.BorderBrush.Hover" Color="{Binding Source={StaticResource ControlBox.Buttons.Generic.BorderBrush.Normal}, Path=Color}" />
   <SolidColorBrush x:Key="ControlBox.Buttons.Generic.Foreground.Hover" Color="{Binding Source={StaticResource Button.Background.Normal}, Path=Color}" />
@@ -196,8 +200,11 @@
   <SolidColorBrush x:Key="MenuItemDisabledForegroundBrush" Color="{Binding Source={StaticResource View.Foreground.Disabled}, Path=Color}" />
   <SolidColorBrush x:Key="MenuItemCheckedBackgroundBrush" Color="#FFB669FF" />
   <SolidColorBrush x:Key="MenuItemCheckedForegroundBrush" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+  <SolidColorBrush x:Key="TextBox.Background.Normal" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+  <SolidColorBrush x:Key="TextBox.BorderBrush.Normal" Color="{Binding Source={StaticResource Control.BorderBrush.Normal}, Path=Color}" />
+  <SolidColorBrush x:Key="TextBox.Foreground.Normal" Color="{Binding Source={StaticResource View.Foreground.Normal}, Path=Color}" />
   <SolidColorBrush x:Key="TextBox.Background.Disabled" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
-  <SolidColorBrush x:Key="TextBox.BorderBrush.Disabled" Color="{Binding Source={StaticResource View.Foreground.Disabled}, Path=Color}" />
+  <SolidColorBrush x:Key="TextBox.BorderBrush.Disabled" Color="{Binding Source={StaticResource Control.BorderBrush.Disabled}, Path=Color}" />
   <SolidColorBrush x:Key="TextBox.Foreground.Disabled" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
   <SolidColorBrush x:Key="Obligation.Debtor.Brush" Color="#FF00B400" />
   <SolidColorBrush x:Key="Obligation.Unbound.Brush" Color="Transparent" />
@@ -219,7 +226,7 @@
   <SolidColorBrush x:Key="ListItem.Background.Hover" Color="#FFCCE5FF" />
   <SolidColorBrush x:Key="ListItem.Background.Selected" Color="#FF22A4FF" />
   <SolidColorBrush x:Key="ListItem.Background.Pressed" Color="#FF0074E7" />
-  <SolidColorBrush x:Key="ListItem.BorderBrush.Normal" Color="Black" />
+  <SolidColorBrush x:Key="ListItem.BorderBrush.Normal" Color="Transparent" />
   <SolidColorBrush x:Key="ListItem.BorderBrush.Hover" Color="#FFCCE5FF" />
   <SolidColorBrush x:Key="ListItem.BorderBrush.Selected" Color="#FF22A4FF" />
   <SolidColorBrush x:Key="ListItem.BorderBrush.Pressed" Color="#FF0074E7" />
@@ -233,9 +240,9 @@
   <Thickness x:Key="ListItem.BorderThickness.Normal" />
   <SolidColorBrush x:Key="NoneDueAlertBrush" Color="Transparent" />
   <SolidColorBrush x:Key="LowDueAlertBrush" Color="#FF00B400" />
-  <SolidColorBrush x:Key="MediumDueAlertBrush" Color="#FFFF8900" />
+  <SolidColorBrush x:Key="MediumDueAlertBrush" Color="#FFFF8500" />
   <SolidColorBrush x:Key="HighDueAlertBrush" Color="#FFE44141" />
-  <SolidColorBrush x:Key="CriticalDueAlertBrush" Color="#FFBF0058" />
+  <SolidColorBrush x:Key="CriticalDueAlertBrush" Color="#FFAA1414" />
   <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
   <Converters:RowAlternatorConverter x:Key="RowAlternatorConverter" Color1="{StaticResource ListItem.Background.Alternation.1}" Color2="{StaticResource ListItem.Background.Alternation.2}" />
   <System:Double x:Key="ScrollBar.Border.Thickness.Value">5</System:Double>
@@ -1054,8 +1061,10 @@
     <Setter Property="Padding" Value="{StaticResource ControlBox.Buttons.Padding}" />
     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     <Setter Property="VerticalContentAlignment" Value="Stretch" />
-    <Setter Property="Foreground" Value="{StaticResource View.Foreground.Normal}" />
-    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Background" Value="{StaticResource ControlBox.Buttons.Generic.Background.Normal}" />
+    <Setter Property="BorderBrush" Value="{StaticResource ControlBox.Buttons.Generic.BorderBrush.Normal}" />
+    <Setter Property="Foreground" Value="{StaticResource ControlBox.Buttons.Generic.Foreground.Normal}" />
+    <Setter Property="BorderThickness" Value="{StaticResource ControlBox.Buttons.BorderThickness}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Controls:NormalizeWindowButton}">
@@ -1090,8 +1099,10 @@
     <Setter Property="Padding" Value="{StaticResource ControlBox.Buttons.Padding}" />
     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     <Setter Property="VerticalContentAlignment" Value="Stretch" />
-    <Setter Property="Foreground" Value="{StaticResource ResourceKey=View.Foreground.Normal}" />
-    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Background" Value="{StaticResource ControlBox.Buttons.Generic.Background.Normal}" />
+    <Setter Property="BorderBrush" Value="{StaticResource ControlBox.Buttons.Generic.BorderBrush.Normal}" />
+    <Setter Property="Foreground" Value="{StaticResource ControlBox.Buttons.Generic.Foreground.Normal}" />
+    <Setter Property="BorderThickness" Value="{StaticResource ControlBox.Buttons.BorderThickness}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Controls:MaximizeWindowButton}">
@@ -1126,8 +1137,10 @@
     <Setter Property="Padding" Value="{StaticResource ControlBox.Buttons.Padding}" />
     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     <Setter Property="VerticalContentAlignment" Value="Stretch" />
-    <Setter Property="Foreground" Value="{StaticResource View.Foreground.Normal}" />
-    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Background" Value="{StaticResource ControlBox.Buttons.Generic.Background.Normal}" />
+    <Setter Property="BorderBrush" Value="{StaticResource ControlBox.Buttons.Generic.BorderBrush.Normal}" />
+    <Setter Property="Foreground" Value="{StaticResource ControlBox.Buttons.Generic.Foreground.Normal}" />
+    <Setter Property="BorderThickness" Value="{StaticResource ControlBox.Buttons.BorderThickness}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Controls:MinimizeWindowButton}">
@@ -1221,9 +1234,9 @@
     </ControlTemplate.Triggers>
   </ControlTemplate>
   <Style x:Key="{x:Type TextBoxBase}" TargetType="{x:Type TextBoxBase}">
-    <Setter Property="Background" Value="{StaticResource View.Background}" />
-    <Setter Property="BorderBrush" Value="{StaticResource View.BorderBrush}" />
-    <Setter Property="Foreground" Value="{StaticResource View.Foreground.Normal}" />
+    <Setter Property="Background" Value="{StaticResource TextBox.Background.Normal}" />
+    <Setter Property="BorderBrush" Value="{StaticResource TextBox.BorderBrush.Normal}" />
+    <Setter Property="Foreground" Value="{StaticResource TextBox.Foreground.Normal}" />
     <Setter Property="BorderThickness" Value="{StaticResource View.Border.Thickness}" />
     <Setter Property="Padding" Value="1" />
     <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
@@ -1232,6 +1245,27 @@
     <Setter Property="AllowDrop" Value="true" />
     <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
     <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+    <Setter Property="ContextMenu">
+      <Setter.Value>
+        <ContextMenu>
+          <MenuItem Command="ApplicationCommands.Copy">
+            <MenuItem.Icon>
+              <Controls:AutoGreyableImage Source="/BillsManager.Views;component\Images/generic/copy-16.png" />
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Command="ApplicationCommands.Cut">
+            <MenuItem.Icon>
+              <Controls:AutoGreyableImage Source="/BillsManager.Views;component\Images/generic/cut-16.png" />
+            </MenuItem.Icon>
+          </MenuItem>
+          <MenuItem Command="ApplicationCommands.Paste">
+            <MenuItem.Icon>
+              <Controls:AutoGreyableImage Source="/BillsManager.Views;component\Images/generic/paste-16.png" />
+            </MenuItem.Icon>
+          </MenuItem>
+        </ContextMenu>
+      </Setter.Value>
+    </Setter>
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type TextBoxBase}">
@@ -1254,7 +1288,7 @@
   </Style>
   <Style TargetType="{x:Type Controls:ListBoxEx}">
     <Setter Property="Background" Value="{StaticResource View.Background}" />
-    <Setter Property="BorderBrush" Value="{StaticResource View.BorderBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource Control.BorderBrush.Normal}" />
     <Setter Property="Foreground" Value="{StaticResource View.Foreground.Normal}" />
     <Setter Property="BorderThickness" Value="0" />
     <Setter Property="Padding" Value="0" />
@@ -1331,9 +1365,9 @@
   </Style>
   <Style TargetType="{x:Type ListView}">
     <Setter Property="BorderThickness" Value="0" />
-    <Setter Property="Background" Value="{StaticResource View.Background}" />
-    <Setter Property="BorderBrush" Value="{StaticResource View.BorderBrush}" />
-    <Setter Property="Foreground" Value="{StaticResource View.Foreground.Normal}" />
+    <Setter Property="Background" Value="{StaticResource ListItem.Background.Normal}" />
+    <Setter Property="BorderBrush" Value="{StaticResource ListItem.BorderBrush.Normal}" />
+    <Setter Property="Foreground" Value="{StaticResource ListItem.Foreground.Normal}" />
   </Style>
   <Style TargetType="{x:Type Controls:ListViewEx}" BasedOn="{StaticResource {x:Type ListView}}"></Style>
   <Style TargetType="{x:Type ListViewItem}">
@@ -1556,7 +1590,7 @@
     <Setter Property="FocusVisualStyle" Value="{StaticResource ComboBoxFocusVisual}" />
     <Setter Property="Background" Value="{StaticResource MenuItemBackgroundBrush}" />
     <Setter Property="Foreground" Value="{StaticResource MenuItemForegroundBrush}" />
-    <Setter Property="BorderBrush" Value="{StaticResource Menu.BorderBrush.Normal}" />
+    <Setter Property="BorderBrush" Value="{StaticResource Control.BorderBrush.Normal}" />
     <Setter Property="BorderThickness" Value="{StaticResource View.Border.Thickness}" />
     <Setter Property="Padding" Value="4 2" />
     <!--
@@ -1645,14 +1679,14 @@
     <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
     <Setter Property="Padding" Value="3" />
     <Setter Property="Margin" Value="0" />
-    <Setter Property="Background" Value="{StaticResource MenuItemBackgroundBrush}" />
-    <Setter Property="Foreground" Value="{StaticResource MenuItemForegroundBrush}" />
-    <Setter Property="BorderBrush" Value="{StaticResource MenuItemBorderBrush}" />
-    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="Background" Value="{StaticResource ListItem.Background.Normal}" />
+    <Setter Property="BorderBrush" Value="{StaticResource ListItem.BorderBrush.Normal}" />
+    <Setter Property="Foreground" Value="{StaticResource ListItem.Foreground.Normal}" />
+    <Setter Property="BorderThickness" Value="{StaticResource View.Border.Thickness}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ComboBoxItem}">
-          <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="0" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+          <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0" Padding="{TemplateBinding Padding}">
             <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
           </Border>
         </ControlTemplate>
@@ -1660,14 +1694,14 @@
     </Setter>
     <Style.Triggers>
       <Trigger Property="IsHighlighted" Value="true">
-        <Setter Property="Background" Value="{StaticResource MenuHoverBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{StaticResource MenuHoverBorderBrush}" />
-        <Setter Property="Foreground" Value="{StaticResource MenuHoverForegroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource ListItem.Background.Selected}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ListItem.BorderBrush.Selected}" />
+        <Setter Property="Foreground" Value="{StaticResource ListItem.Foreground.Selected}" />
       </Trigger>
       <Trigger Property="IsEnabled" Value="false">
-        <Setter Property="Background" Value="{StaticResource MenuDisabledBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{StaticResource MenuDisabledBorderBrush}" />
-        <Setter Property="Foreground" Value="{StaticResource MenuDisabledForegroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource Control.Background.Disabled}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Control.Background.Disabled}" />
+        <Setter Property="Foreground" Value="{StaticResource View.Foreground.Disabled}" />
       </Trigger>
     </Style.Triggers>
   </Style>
@@ -1675,7 +1709,7 @@
     <Setter Property="Control.Template">
       <Setter.Value>
         <ControlTemplate>
-          <Border Background="{StaticResource View.Background}" BorderBrush="{StaticResource View.BorderBrush}" BorderThickness="{StaticResource View.Border.Thickness}" />
+          <Border Background="{StaticResource View.Background}" BorderBrush="{StaticResource Control.BorderBrush.Normal}" BorderThickness="{StaticResource View.Border.Thickness}" />
         </ControlTemplate>
       </Setter.Value>
     </Setter>
@@ -1683,7 +1717,7 @@
   <Style x:Key="{x:Type CheckBox}" TargetType="{x:Type CheckBox}">
     <Setter Property="Foreground" Value="{StaticResource View.Foreground.Normal}" />
     <Setter Property="Background" Value="{StaticResource View.Background}" />
-    <Setter Property="BorderBrush" Value="{StaticResource View.BorderBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource Control.BorderBrush.Normal}" />
     <Setter Property="BorderThickness" Value="{StaticResource View.Border.Thickness}" />
     <Setter Property="Padding">
       <Setter.Value>
@@ -1828,7 +1862,7 @@
   <Style TargetType="{x:Type DatePickerTextBox}">
     <Setter Property="Foreground" Value="{StaticResource View.Foreground.Normal}" />
     <Setter Property="Background" Value="{StaticResource View.Background}" />
-    <Setter Property="BorderBrush" Value="{StaticResource View.BorderBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource Control.BorderBrush.Normal}" />
     <Setter Property="BorderThickness" Value="{StaticResource View.Border.Thickness}" />
     <Setter Property="Padding" Value="0" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -1879,7 +1913,7 @@
     <Setter Property="OverridesDefaultStyle" Value="True" />
     <Setter Property="Foreground" Value="{StaticResource View.Foreground.Normal}" />
     <Setter Property="Background" Value="{StaticResource View.Background}" />
-    <Setter Property="BorderBrush" Value="{StaticResource View.BorderBrush}" />
+    <Setter Property="BorderBrush" Value="{StaticResource Control.BorderBrush.Normal}" />
     <Setter Property="BorderThickness" Value="{StaticResource View.Border.Thickness}" />
     <Setter Property="Padding" Value="3 2" />
     <Setter Property="Width" Value="130" />
@@ -1921,18 +1955,18 @@
                                     Grid.ColumnSpan="2"
                                     IsHitTestVisible="False"
                                     Opacity="0">
-                                    
+
                                     <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    
+
                                     <Rectangle Grid.Row="0"
                                     Grid.Column="0"
                                     Fill="#A5FFFFFF"
                                     RadiusX="1"
                                     RadiusY="1" />
-                                    
+
                                     <Rectangle Grid.Row="0"
                                     Grid.Column="1"
                                     Width="19"
@@ -1955,7 +1989,7 @@
                     <Setter Property="Background"
                     Value="{StaticResource Button.Background.Disabled}" />
                 -->
-        <Setter Property="BorderBrush" Value="{StaticResource Button.BorderBrush.Disabled}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Control.BorderBrush.Disabled}" />
         <Setter Property="Foreground" Value="{StaticResource View.Foreground.Disabled}" />
       </Trigger>
     </Style.Triggers>

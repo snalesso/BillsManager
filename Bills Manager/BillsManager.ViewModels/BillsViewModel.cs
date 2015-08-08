@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace BillsManager.ViewModels
 {
-    public sealed partial class BillsViewModel :
+    public partial class BillsViewModel :
         Screen,
         IHandle<FilterMessage<BillDetailsViewModel>>,
         IHandle<DeletedMessage<Supplier>>,
@@ -20,18 +20,23 @@ namespace BillsManager.ViewModels
     {
         #region fields
 
-        private readonly IWindowManager windowManager;
-        private readonly IEventAggregator globalEventAggregator;
-        private readonly IBillsProvider billsProvider;
+        private readonly IWindowManager _windowManager;
+        private readonly IEventAggregator _globalEventAggregator;
+        private readonly IBillsProvider _billsProvider;
 
-        private readonly Func<IEnumerable<Supplier>, Bill, BillAddEditViewModel> billAddEditViewModelFactory;
-        private readonly Func<Bill, BillDetailsViewModel> billDetailsViewModelFactory;
+        private readonly Func<IEnumerable<Supplier>, Bill, BillAddEditViewModel> _billAddEditViewModelFactory;
+        private readonly Func<Bill, BillDetailsViewModel> _billDetailsViewModelFactory;
 
-        private readonly IComparer<BillDetailsViewModel> billDetailsVMComparer = new BillDetailsViewModelComparer();
+        private readonly IComparer<BillDetailsViewModel> _billDetailsVMComparer = new BillDetailsViewModelComparer();
 
         #endregion
 
-        #region ctor
+        #region ctors
+
+        /// <summary>
+        /// Provides a way for design time mocking
+        /// </summary>
+        protected BillsViewModel() { }
 
         public BillsViewModel(
             IWindowManager windowManager,
@@ -41,23 +46,23 @@ namespace BillsManager.ViewModels
             Func<Bill, BillDetailsViewModel> billDetailsViewModelFactory)
         {
             // SERVICES
-            this.windowManager = windowManager;
-            this.globalEventAggregator = globalEventAggregator;
-            this.billsProvider = billsProvider;
+            this._windowManager = windowManager;
+            this._globalEventAggregator = globalEventAggregator;
+            this._billsProvider = billsProvider;
 
             // FACTORIES
-            this.billAddEditViewModelFactory = billAddEditViewModelFactory;
-            this.billDetailsViewModelFactory = billDetailsViewModelFactory;
+            this._billAddEditViewModelFactory = billAddEditViewModelFactory;
+            this._billDetailsViewModelFactory = billDetailsViewModelFactory;
 
             // SUBSCRIPTIONS
-            this.globalEventAggregator.Subscribe(this);
+            this._globalEventAggregator.Subscribe(this);
 
             // HANDLERS
             this.Deactivated +=
                 (s, e) =>
                 {
                     if (e.WasClosed)
-                        this.globalEventAggregator.Unsubscribe(this);
+                        this._globalEventAggregator.Unsubscribe(this);
                 };
 
             // UI
@@ -72,7 +77,7 @@ namespace BillsManager.ViewModels
         #region properties
 
         private ObservableCollection<BillDetailsViewModel> billViewModels;
-        private ObservableCollection<BillDetailsViewModel> BillViewModels
+        protected ObservableCollection<BillDetailsViewModel> BillViewModels
         {
             get { return this.billViewModels; }
             set
@@ -85,11 +90,11 @@ namespace BillsManager.ViewModels
                         new ReadOnlyObservableCollectionEx<BillDetailsViewModel>(
                             this.BillViewModels,
                             this.Filters != null ? this.Filters.Select(f => f.Execute) : null,
-                            this.billDetailsVMComparer);
+                            this._billDetailsVMComparer);
 
                     // IDEA: #IF !DEBUG ?
                     if (!Execute.InDesignMode)
-                        this.globalEventAggregator.PublishOnUIThread(new BillsListChangedMessage(this.BillViewModels.Select(bvm => bvm.ExposedBill).ToList())); // TODO: move to filtered?
+                        this._globalEventAggregator.PublishOnUIThread(new BillsListChangedMessage(this.BillViewModels.Select(bvm => bvm.ExposedBill).ToList())); // TODO: move to filtered?
                 }
             }
         }
@@ -98,14 +103,14 @@ namespace BillsManager.ViewModels
         public ReadOnlyObservableCollectionEx<BillDetailsViewModel> FilteredBillViewModels
         {
             get { return this.filteredBillViewModels; }
-            private set
+            protected set
             {
                 // TODO: remove set / make lazy get?
 
                 if (this.filteredBillViewModels == value) return;
 
                 this.filteredBillViewModels = value;
-                this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
+                this.NotifyOfPropertyChange();
             }
         }
 
@@ -118,7 +123,7 @@ namespace BillsManager.ViewModels
                 if (this.selectedBillViewModel == value) return;
 
                 this.selectedBillViewModel = value;
-                this.NotifyOfPropertyChange(() => this.SelectedBillViewModel);
+                this.NotifyOfPropertyChange();
 
             }
         }
@@ -134,7 +139,7 @@ namespace BillsManager.ViewModels
 
                 this.filters = value;
                 this.NotifyOfPropertyChange();
-                this.UpdateFilters();
+                this.UpdateCollectionFilters();
                 this.NotifyOfPropertyChange(() => this.FiltersDescription);
             }
         }
@@ -161,9 +166,9 @@ namespace BillsManager.ViewModels
 
         public void LoadBills()
         {
-            var bills = this.billsProvider.GetAllBills();
+            var bills = this._billsProvider.GetAllBills();
 
-            var billVMs = bills.Select(bill => this.billDetailsViewModelFactory.Invoke(bill)).ToList();
+            var billVMs = bills.Select(bill => this._billDetailsViewModelFactory.Invoke(bill)).ToList();
 
             billVMs.Sort();
 
@@ -187,7 +192,8 @@ namespace BillsManager.ViewModels
         private string GetSupplierName(uint supplierID)
         {
             string supp = null;
-            this.globalEventAggregator.PublishOnUIThread(new SupplierNameRequest(supplierID, s => supp = s));
+            if (!Execute.InDesignMode)
+                this._globalEventAggregator.PublishOnUIThread(new SupplierNameRequest(supplierID, s => supp = s));
             return supp;
         }
 
@@ -196,24 +202,25 @@ namespace BillsManager.ViewModels
         private void AddBill(Supplier supplier = null)
         {
             var availableSuppliers = this.GetAvailableSuppliers();
-            var addBillVM = this.billAddEditViewModelFactory.Invoke(availableSuppliers, new Bill(this.billsProvider.GetLastBillID() + 1));
+            var addBillVM = this._billAddEditViewModelFactory.Invoke(availableSuppliers, new Bill(this._billsProvider.GetLastBillID() + 1));
 
             // TODO: check availableSuppliers.Contains(supplier) ??
             addBillVM.SelectedSupplier = supplier;
 
         tryAdd:
-            if (this.windowManager.ShowDialog(addBillVM) == true)
+            if (this._windowManager.ShowDialog(addBillVM) == true)
             {
                 // TODO: make it possible to show the view through a dialogviewmodel (evaluate the idea)
-                if (this.billsProvider.Add(addBillVM.ExposedBill))
+                if (this._billsProvider.Add(addBillVM.ExposedBill))
                 {
-                    var newBillDetailsVM = this.billDetailsViewModelFactory.Invoke(addBillVM.ExposedBill);
+                    var newBillDetailsVM = this._billDetailsViewModelFactory.Invoke(addBillVM.ExposedBill);
 
                     this.BillViewModels.Add(newBillDetailsVM);
 
                     this.SelectedBillViewModel = newBillDetailsVM;
 
-                    this.globalEventAggregator.PublishOnUIThread(new AddedMessage<Bill>(newBillDetailsVM.ExposedBill));
+                    if (!Execute.InDesignMode)
+                        this._globalEventAggregator.PublishOnUIThread(new AddedMessage<Bill>(newBillDetailsVM.ExposedBill));
                 }
                 else
                 {
@@ -225,7 +232,7 @@ namespace BillsManager.ViewModels
                             TranslationManager.Instance.Translate("TryAgain"))
                         .Ok();
 
-                    this.windowManager.ShowDialog(dialog);
+                    this._windowManager.ShowDialog(dialog);
 
                     goto tryAdd;
                 }
@@ -236,20 +243,21 @@ namespace BillsManager.ViewModels
         {
             var supps = this.GetAvailableSuppliers();
             Bill oldBill = (Bill)bill.Clone();
-            var editBillVM = this.billAddEditViewModelFactory.Invoke(supps, bill);
+            var editBillVM = this._billAddEditViewModelFactory.Invoke(supps, bill);
 
             editBillVM.BeginEdit();
 
-            if (this.windowManager.ShowDialog(editBillVM) == true)
+            if (this._windowManager.ShowDialog(editBillVM) == true)
             {
-                if (this.billsProvider.Edit(editBillVM.ExposedBill)) // URGENT: if the DB action fails, changes have to be rolled back!!
+                if (this._billsProvider.Edit(editBillVM.ExposedBill)) // URGENT: if the DB action fails, changes have to be rolled back!!
                 {
                     var editedBillDetailsVM = this.BillViewModels.FirstOrDefault(bvm => bvm.ExposedBill == bill);
                     editedBillDetailsVM.Refresh();
 
                     this.SelectedBillViewModel = null;
 
-                    this.globalEventAggregator.PublishOnUIThread(new EditedMessage<Bill>(oldBill, editBillVM.ExposedBill)); // TODO: move to confirm add edit command in addeditbvm
+                    if (!Execute.InDesignMode)
+                        this._globalEventAggregator.PublishOnUIThread(new EditedMessage<Bill>(oldBill, editBillVM.ExposedBill)); // TODO: move to confirm add edit command in addeditbvm
                 }
                 else
                 {
@@ -261,7 +269,7 @@ namespace BillsManager.ViewModels
                           TranslationManager.Instance.Translate("TryAgain"))
                       .Ok();
 
-                    this.windowManager.ShowDialog(dialog);
+                    this._windowManager.ShowDialog(dialog);
                 }
             }
         }
@@ -278,18 +286,19 @@ namespace BillsManager.ViewModels
                     this.GetBillSummary(bill))
                 .YesNo(TranslationManager.Instance.Translate("Delete"));
 
-            this.windowManager.ShowDialog(deleteBillConfirmationDialog);
+            this._windowManager.ShowDialog(deleteBillConfirmationDialog);
 
             if (deleteBillConfirmationDialog.FinalResponse == ResponseType.Yes)
             {
-                if (this.billsProvider.Delete(bill))
+                if (this._billsProvider.Delete(bill))
                 {
                     this.BillViewModels.Remove(this.BillViewModels.FirstOrDefault(bvm => bvm.ExposedBill == bill));
                     //this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);
 
                     this.SelectedBillViewModel = null;
 
-                    this.globalEventAggregator.PublishOnUIThread(new DeletedMessage<Bill>(bill));
+                    if (!Execute.InDesignMode)
+                        this._globalEventAggregator.PublishOnUIThread(new DeletedMessage<Bill>(bill));
                 }
             }
         }
@@ -307,27 +316,28 @@ namespace BillsManager.ViewModels
                 .YesNo(
                     TranslationManager.Instance.Translate("PayBill"));
 
-            if (this.windowManager.ShowDialog(payBillConfirmationDialog) == true)
+            if (this._windowManager.ShowDialog(payBillConfirmationDialog) == true)
             {
                 Bill oldVersion = (Bill)bill.Clone();
 
                 bill.PaymentDate = DateTime.Today;
 
-                if (this.billsProvider.Edit(bill))
+                if (this._billsProvider.Edit(bill))
                 {
                     var editedVM = this.BillViewModels.FirstOrDefault(bvm => bvm.ExposedBill == bill);
                     editedVM.Refresh();
 
                     this.SelectedBillViewModel = null;
 
-                    this.globalEventAggregator.PublishOnUIThread(new EditedMessage<Bill>(oldVersion, bill));
+                    if (!Execute.InDesignMode)
+                        this._globalEventAggregator.PublishOnUIThread(new EditedMessage<Bill>(oldVersion, bill));
                 }
             }
         }
 
         private void ShowBillDetails(BillDetailsViewModel billDetailsViewModel)
         {
-            this.windowManager.ShowDialog(billDetailsViewModel, settings: new Dictionary<string, object>() { { "CanClose", true } });
+            this._windowManager.ShowDialog(billDetailsViewModel, settings: new Dictionary<string, object>() { { "CanClose", true } });
         }
 
         #endregion
@@ -348,13 +358,14 @@ namespace BillsManager.ViewModels
 
             foreach (var bvm in bvmsToDelete)
             {
-                if (this.billsProvider.Delete(bvm.ExposedBill))
+                if (this._billsProvider.Delete(bvm.ExposedBill))
                     this.BillViewModels.Remove(bvm);
                 else
-                    throw new ApplicationException("Couldn't delete this bill: " + Environment.NewLine + Environment.NewLine + this.GetBillSummary(bvm.ExposedBill)); // TODO handle
+                    throw new ApplicationException("Couldn't delete this bill: " + Environment.NewLine + Environment.NewLine + this.GetBillSummary(bvm.ExposedBill)); // TODO handle with rollback
             }
 
-            this.globalEventAggregator.PublishOnUIThread(new BillsListChangedMessage(this.BillViewModels.Select(bvm => bvm.ExposedBill).ToList()));
+            if (!Execute.InDesignMode)
+                this._globalEventAggregator.PublishOnUIThread(new BillsListChangedMessage(this.BillViewModels.Select(bvm => bvm.ExposedBill).ToList()));
 
             // if there was an error during the romve operation on the db
             // this point wouldn't be reached
@@ -387,7 +398,7 @@ namespace BillsManager.ViewModels
 
         #region support
 
-        private void UpdateFilters()
+        private void UpdateCollectionFilters()
         {
             this.FilteredBillViewModels.Filters = (this.Filters != null ? this.Filters.Select(f => f.Execute) : null);
         }
@@ -395,7 +406,8 @@ namespace BillsManager.ViewModels
         private IEnumerable<Supplier> GetAvailableSuppliers()
         {
             IEnumerable<Supplier> supps = Enumerable.Empty<Supplier>();
-            this.globalEventAggregator.PublishOnUIThread(new AvailableSuppliersRequest((s) => supps = s));
+            if (!Execute.InDesignMode)
+                this._globalEventAggregator.PublishOnUIThread(new AvailableSuppliersRequest((s) => supps = s));
             return supps;
         }
 

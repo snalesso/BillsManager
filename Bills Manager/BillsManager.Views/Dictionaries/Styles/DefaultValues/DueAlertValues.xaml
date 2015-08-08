@@ -7,11 +7,13 @@
     <!--  FF74B400    rotten green  -->
     <SolidColorBrush x:Key="LowDueAlertBrush" Color="#FF00B400" />
 
-    <SolidColorBrush x:Key="MediumDueAlertBrush" Color="#FFFF8900" />
+    <SolidColorBrush x:Key="MediumDueAlertBrush" Color="#FFFF8500" />
 
     <SolidColorBrush x:Key="HighDueAlertBrush" Color="#FFE44141" />
     <!--  FFD10065  -->
-    <SolidColorBrush x:Key="CriticalDueAlertBrush" Color="#FFBF0058" />
+    <!--  FFBF0058  -->
+    <!--  FFAF1717  -->
+    <SolidColorBrush x:Key="CriticalDueAlertBrush" Color="#FFAA1414" />
 
 
 </ResourceDictionary>

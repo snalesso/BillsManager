@@ -124,7 +124,7 @@ namespace BillsManager.ViewModels
                     this.NotifyOfPropertyChange();
 
                     var newSelSupp = value != null ? value.ExposedSupplier : null;
-                    this.globalEventAggregator.PublishOnUIThread(new SelectedSupplierChagedMessage(newSelSupp));
+                    this.globalEventAggregator.PublishOnUIThread(new SelectedSupplierChangedMessage(newSelSupp));
                 }
             }
         }
@@ -262,14 +262,18 @@ namespace BillsManager.ViewModels
 
             if (deleteSupplierQuestion.FinalResponse == ResponseType.Yes)
             {
-                this.suppliersProvider.Delete(supplier);
-                this.SupplierViewModels.Remove(this.SupplierViewModels.FirstOrDefault(svm => svm.ExposedSupplier == supplier));
+                if (this.suppliersProvider.Delete(supplier))
+                {
+                    if (this.SelectedSupplierViewModel.ExposedSupplier == supplier)
+                        this.SelectedSupplierViewModel = null;
 
-                this.NotifyOfPropertyChange(() => this.FilteredSupplierViewModels);
+                    this.SupplierViewModels.Remove(this.SupplierViewModels.FirstOrDefault(svm => svm.ExposedSupplier == supplier));
 
-                this.SelectedSupplierViewModel = null;
-                this.globalEventAggregator.PublishOnUIThread(new SuppliersListChangedMessage(this.SupplierViewModels.Select(svm => svm.ExposedSupplier).ToList()));
-                this.globalEventAggregator.PublishOnUIThread(new DeletedMessage<Supplier>(supplier));
+                    this.NotifyOfPropertyChange(() => this.FilteredSupplierViewModels);
+                    this.globalEventAggregator.PublishOnUIThread(new DeletedMessage<Supplier>(supplier));
+
+                    //this.globalEventAggregator.PublishOnUIThread(new SuppliersListChangedMessage(this.SupplierViewModels.Select(svm => svm.ExposedSupplier).ToList()));
+                }
             }
         }
 

@@ -689,4 +689,7 @@
   <data name="Costs" xml:space="preserve">
     <value>Spese</value>
   </data>
+  <data name="currency_Format" xml:space="preserve">
+    <value>{0:N2} €</value>
+  </data>
 </root>

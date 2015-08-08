@@ -2,9 +2,9 @@
 
 namespace BillsManager.ViewModels.Messages
 {
-    public class SelectedSupplierChagedMessage
+    public class SelectedSupplierChangedMessage
     {
-        public SelectedSupplierChagedMessage(Supplier selectedSupplier)
+        public SelectedSupplierChangedMessage(Supplier selectedSupplier)
         {
             this.selectedSupplier = selectedSupplier;
         }

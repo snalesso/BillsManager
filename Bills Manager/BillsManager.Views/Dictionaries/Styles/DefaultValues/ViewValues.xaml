@@ -3,11 +3,12 @@
                     xmlns:System="clr-namespace:System;assembly=mscorlib">
 
     <SolidColorBrush x:Key="View.Background" Color="White" />
-    <!--  FF1C97FF  -->
-    <SolidColorBrush x:Key="View.BorderBrush" Color="#FF22A4FF" />
+    <!--  #FF1C97FF  -->
+    <!--  #FF22A4FF  -->
+    <SolidColorBrush x:Key="View.BorderBrush" Color="#FF4E4E4E" />
 
     <SolidColorBrush x:Key="View.Title.Foreground" Color="{Binding Source={StaticResource View.BorderBrush}, Path=Color}" />
-    <System:Double x:Key="View.Title.FontSize">18</System:Double>
+    <System:Double x:Key="View.Title.FontSize">16</System:Double>
     <FontWeight x:Key="View.Title.FontWeight">SemiBold</FontWeight>
 
     <!--  #FF3C3C3C  -->
@@ -28,6 +29,12 @@
     <SolidColorBrush x:Key="NotPaidBrush" Color="#FFE44141" />
 
 
+
+    <SolidColorBrush x:Key="Control.Background.Normal" Color="#FF22A4FF" />
+    <SolidColorBrush x:Key="Control.BorderBrush.Normal" Color="#FF22A4FF" />
+
+    <SolidColorBrush x:Key="Control.Background.Disabled" Color="#FFCCEAFF" />
+    <SolidColorBrush x:Key="Control.BorderBrush.Disabled" Color="{Binding Source={StaticResource Control.Background.Disabled}, Path=Color}" />
 
 
     <SolidColorBrush x:Key="ErrorTemplate.BorderBrush" Color="#FFE44141" />
@@ -50,7 +57,7 @@
     <SolidColorBrush x:Key="StatusBar.Foreground" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
 
 
-    <System:Double x:Key="View.FontSize">12</System:Double>
+    <System:Double x:Key="View.FontSize">11</System:Double>
 
 
     <System:Double x:Key="Control.Border.CornerRadius.Value">0</System:Double>
@@ -63,7 +70,7 @@
 
     <CornerRadius x:Key="ViewWindow.Border.CornerRadius">0</CornerRadius>
 
-    <Thickness x:Key="ViewWindow.ResizeBorder.Thickness">8</Thickness>
+    <Thickness x:Key="ViewWindow.ResizeBorder.Thickness">5</Thickness>
 
 
     <System:Double x:Key="View.Border.Thickness.Value">1</System:Double>
@@ -89,7 +96,7 @@
 
     <System:Double x:Key="View.Region.Title.FontSize">16</System:Double>
     <FontWeight x:Key="View.Region.Title.FontWeight">SemiBold</FontWeight>
-    <SolidColorBrush x:Key="View.Region.Title.Foreground" Color="{Binding Source={StaticResource View.BorderBrush}, Path=Color}" />
+    <SolidColorBrush x:Key="View.Region.Title.Foreground" Color="{Binding Source={StaticResource Control.BorderBrush.Normal}, Path=Color}" />
 
     <!--<Visibility x:Key="View.Region.Title.Visibility">Collapsed</Visibility>-->
     <Visibility x:Key="View.Region.Title.Visibility">Visible</Visibility>

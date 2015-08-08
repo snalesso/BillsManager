@@ -18,20 +18,16 @@ namespace BillsManager.ViewModels
         IHandle<DeletedMessage<Supplier>>,
         IHandle<EditedMessage<Bill>>,
         IHandle<ShowSuppliersBillsOrder>,
-        IHandle<SelectedSupplierChagedMessage>
+        IHandle<SelectedSupplierChangedMessage>
     {
         #region fields
 
         private IEventAggregator globalEventAggregator;
 
         private Filter<BillDetailsViewModel> supplierNameFilter;
-
         private Filter<BillDetailsViewModel> isPaidFilter;
-
         private Filter<BillDetailsViewModel> releaseDateFilter;
-
         private Filter<BillDetailsViewModel> dueDateFilter;
-
 
         #endregion
 
@@ -67,14 +63,14 @@ namespace BillsManager.ViewModels
         {
             this.supplierNameFilter =
                 new Filter<BillDetailsViewModel>(
-                    bdvm => bdvm.SupplierID == this.SelectedSupplier.ID,
+                    bdvm => /*this.SelectedSupplier != null ?*/ bdvm.SupplierID == this.SelectedSupplier.ID /*: true*/,
                     () =>
                         TranslationManager.Instance.Translate("By").ToString().ToLower(TranslationManager.Instance.CurrentLanguage) +
                         " " + this.SelectedSupplier.Name);
 
             this.isPaidFilter =
                 new Filter<BillDetailsViewModel>(
-                    bdvm => bdvm.IsPaid == this.IsPaidFilterValue,
+                    bdvm => this.IsPaidFilterValue.HasValue ? bdvm.IsPaid == this.IsPaidFilterValue : true,
                     () =>
                         this.IsPaidFilterValue.HasValue ?
                         (this.IsPaidFilterValue == true ? TranslationManager.Instance.Translate("Paid_toBills").ToString() :
@@ -83,12 +79,12 @@ namespace BillsManager.ViewModels
 
             this.dueDateFilter =
                 new Filter<BillDetailsViewModel>(
-                    bdvm => bdvm.DueDate == this.DueDateFilterValue,
+                    bdvm => this.DueDateFilterValue.HasValue ? bdvm.DueDate == this.DueDateFilterValue : true,
                     () => TranslationManager.Instance.Translate("DuedOn_toBills").ToString() + " " + this.DueDateFilterValue.Value.ToShortDateString());
 
             this.releaseDateFilter =
                 new Filter<BillDetailsViewModel>(
-                    bdvm => bdvm.ReleaseDate == this.ReleaseDateFilterValue,
+                    bdvm => this.ReleaseDateFilterValue.HasValue ? bdvm.ReleaseDate == this.ReleaseDateFilterValue : true,
                     () => TranslationManager.Instance.Translate("ReleasedOn_toBills").ToString() + " " + this.ReleaseDateFilterValue.Value.ToShortDateString());
         }
 
@@ -307,10 +303,13 @@ namespace BillsManager.ViewModels
         public void Handle(DeletedMessage<Supplier> message)
         {
             this.AvailableSuppliers = this.AvailableSuppliers.Where(supplier => supplier != message.DeletedItem);
-            this.SelectedSupplier =
-                (this.SelectedSupplier == message.DeletedItem ?
-                this.AvailableSuppliers.FirstOrDefault() :
-                this.SelectedSupplier);
+
+            if (this.SelectedSupplier == message.DeletedItem)
+            {
+                this.SelectedSupplier = null;
+                this.UseSupplierFilter = false;
+                this.SendFilters();
+            }
         }
 
 
@@ -345,13 +344,19 @@ namespace BillsManager.ViewModels
             this.SendFilters();
         }
 
-        public void Handle(SelectedSupplierChagedMessage message)
+        public void Handle(SelectedSupplierChangedMessage message)
         {
             if (!this.UseSupplierFilter) return;
 
-            if (!this.AvailableSuppliers.Contains(message.SelectedSupplier)) return;
+            if (!this.AvailableSuppliers.Contains(message.SelectedSupplier))
+            {
+                this.UseSupplierFilter = false;
+            }
+            else
+            {
+                this.SelectedSupplier = message.SelectedSupplier;
+            }
 
-            this.SelectedSupplier = message.SelectedSupplier;
             this.SendFilters();
         }
 

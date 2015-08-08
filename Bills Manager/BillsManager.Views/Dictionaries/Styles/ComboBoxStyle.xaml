@@ -182,7 +182,7 @@
 
         <Setter Property="Background" Value="{StaticResource MenuItemBackgroundBrush}" />
         <Setter Property="Foreground" Value="{StaticResource MenuItemForegroundBrush}" />
-        <Setter Property="BorderBrush" Value="{StaticResource Menu.BorderBrush.Normal}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Control.BorderBrush.Normal}" />
 
         <Setter Property="BorderThickness" Value="{StaticResource View.Border.Thickness}" />
 

@@ -60,12 +60,14 @@ namespace BillsManager.ViewModels
         {
             get
             {
-                return
+                var tcs =
                     /*TranslationManager.Instance.Translate(*/
                     typeof(DBConnectionState)
                     .GetMember(this.ConnectionState.ToString())[0]
                     .GetAttributes<DisplayNameAttribute>(true).FirstOrDefault().DisplayName
                     /*).ToString()*/;
+
+                return tcs;
             }
         }
 

@@ -5,7 +5,8 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!--  COMMON BUTTON  -->
-    <SolidColorBrush x:Key="Button.Background.Normal" Color="{Binding Source={StaticResource View.BorderBrush}, Path=Color}" />
+
+    <SolidColorBrush x:Key="Button.Background.Normal" Color="#FF22A4FF" />
     <SolidColorBrush x:Key="Button.BorderBrush.Normal" Color="{Binding Source={StaticResource Button.Background.Normal}, Path=Color}" />
     <SolidColorBrush x:Key="Button.Foreground.Normal" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
 
@@ -21,11 +22,14 @@
     <SolidColorBrush x:Key="Button.BorderBrush.Focused" Color="{Binding Source={StaticResource Button.BorderBrush.Pressed}, Path=Color}" />
     <SolidColorBrush x:Key="Button.Foreground.Focused" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
 
-    <SolidColorBrush x:Key="Button.Background.Disabled" Color="#FFCCEAFF" />
+    <SolidColorBrush x:Key="Button.Background.Disabled" Color="{Binding Source={StaticResource Control.Background.Disabled}, Path=Color}" />
     <SolidColorBrush x:Key="Button.BorderBrush.Disabled" Color="{Binding Source={StaticResource Button.Background.Disabled}, Path=Color}" />
     <SolidColorBrush x:Key="Button.Foreground.Disabled" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
 
     <!--  DEFAULT BUTTON  -->
+
+    <!--  green #FF34C234  -->
+    <!--  blue  #FF22A4FF  -->
     <SolidColorBrush x:Key="DefaultButton.Background.Normal" Color="#FF34C234" />
     <SolidColorBrush x:Key="DefaultButton.BorderBrush.Normal" Color="{Binding Source={StaticResource DefaultButton.Background.Normal}, Path=Color}" />
     <SolidColorBrush x:Key="DefaultButton.Foreground.Normal" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
@@ -47,6 +51,9 @@
     <SolidColorBrush x:Key="DefaultButton.Foreground.Disabled" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
 
     <!--  CANCEL BUTTON  -->
+
+    <!--  red   #FFE44141  -->
+    <!--  blue  #FF22A4FF  -->
     <SolidColorBrush x:Key="CancelButton.Background.Normal" Color="#FFE44141" />
     <SolidColorBrush x:Key="CancelButton.BorderBrush.Normal" Color="{Binding Source={StaticResource CancelButton.Background.Normal}, Path=Color}" />
     <SolidColorBrush x:Key="CancelButton.Foreground.Normal" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />

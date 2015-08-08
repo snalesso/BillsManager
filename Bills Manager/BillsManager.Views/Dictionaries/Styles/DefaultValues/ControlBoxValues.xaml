@@ -19,7 +19,7 @@
     <SolidColorBrush x:Key="ControlBox.Buttons.Close.Background.Normal" Color="Transparent" />
     <!--  FFC50000  -->
     <SolidColorBrush x:Key="ControlBox.Buttons.Close.BorderBrush.Normal" Color="{Binding Source={StaticResource ControlBox.Buttons.Close.Background.Normal}, Path=Color}" />
-    <SolidColorBrush x:Key="ControlBox.Buttons.Close.Foreground.Normal" Color="{Binding Source={StaticResource View.Foreground.Normal}, Path=Color}" />
+    <SolidColorBrush x:Key="ControlBox.Buttons.Close.Foreground.Normal" Color="{Binding Source={StaticResource View.BorderBrush}, Path=Color}" />
 
     <SolidColorBrush x:Key="ControlBox.Buttons.Close.Background.Hover" Color="{Binding Source={StaticResource ControlBox.Buttons.Close.Background.Normal}, Path=Color}" />
     <SolidColorBrush x:Key="ControlBox.Buttons.Close.BorderBrush.Hover" Color="{Binding Source={StaticResource ControlBox.Buttons.Close.BorderBrush.Normal}, Path=Color}" />
@@ -32,7 +32,7 @@
     <!--  GENERIC  -->
     <SolidColorBrush x:Key="ControlBox.Buttons.Generic.Background.Normal" Color="Transparent" />
     <SolidColorBrush x:Key="ControlBox.Buttons.Generic.BorderBrush.Normal" Color="{Binding Source={StaticResource ControlBox.Buttons.Close.Background.Normal}, Path=Color}" />
-    <SolidColorBrush x:Key="ControlBox.Buttons.Generic.Foreground.Normal" Color="{Binding Source={StaticResource View.Foreground.Normal}, Path=Color}" />
+    <SolidColorBrush x:Key="ControlBox.Buttons.Generic.Foreground.Normal" Color="{Binding Source={StaticResource View.BorderBrush}, Path=Color}" />
 
     <SolidColorBrush x:Key="ControlBox.Buttons.Generic.Background.Hover" Color="{Binding Source={StaticResource ControlBox.Buttons.Generic.Background.Normal}, Path=Color}" />
     <SolidColorBrush x:Key="ControlBox.Buttons.Generic.BorderBrush.Hover" Color="{Binding Source={StaticResource ControlBox.Buttons.Generic.BorderBrush.Normal}, Path=Color}" />

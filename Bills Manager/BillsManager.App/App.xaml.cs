@@ -11,12 +11,16 @@ namespace BillsManager.App
     /// </summary>
     public partial class App : Application, ISingleInstanceApp
     {
-        private readonly AutofacBootstrapper boot;
+        private readonly AutofacBootstrapper _bootstrapper;
 
         public App()
         {
-            this.boot = new AutofacBootstrapper();
+            this._bootstrapper = new AutofacBootstrapper();
         }
+
+        #region single instance
+
+        // Single Instance by Microsoft: http://www.codeproject.com/Articles/84270/WPF-Single-Instance-Application
 
         private const string Unique = "BillsManagerByNalessoSergio_PEACE";
         [STAThread]
@@ -39,5 +43,7 @@ namespace BillsManager.App
             // TODO: bring to front
             return true;
         }
+
+        #endregion
     }
 }
