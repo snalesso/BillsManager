@@ -78,7 +78,6 @@
     <Compile Include="DBViewModel.cs" />
     <Compile Include="DesignTime\BackupCenterViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\BillAddEditViewModel.DesignTime.cs" />
-    <Compile Include="DesignTime\DBViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\ProgressViewModel.DesignTime.cs" />
     <Compile Include="DesignTime\SearchViewModelGeneric.DesignTime.cs" />
     <Compile Include="DesignTime\SettingsViewModel.DesignTime.cs" />
@@ -143,7 +142,6 @@
     <Compile Include="Helpers\WeakActionGeneric.cs" />
     <Compile Include="Helpers\WeakFunc.cs" />
     <Compile Include="Helpers\WeakFuncGeneric.cs" />
-    <Compile Include="DesignTime\BillsViewModel.DesignTime.cs" />
     <Compile Include="Messages\Database\AvailableSuppliersRequest.cs" />
     <Compile Include="Messages\Database\View events\SuppliersListChangedMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
