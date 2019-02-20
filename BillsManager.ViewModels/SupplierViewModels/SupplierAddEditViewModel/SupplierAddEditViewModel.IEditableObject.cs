@@ -9,7 +9,7 @@ namespace BillsManager.ViewModels
 
         #region fields
 
-        private Supplier exposedSupplierBackup;
+        private Supplier _uneditedSupplier;
 
         #endregion
 
@@ -50,31 +50,31 @@ namespace BillsManager.ViewModels
 
         public void BeginEdit()
         {
-            this.exposedSupplierBackup = (Supplier)this.ExposedSupplier.Clone();
+            this._uneditedSupplier = (Supplier)this.ExposedSupplier.Clone();
 
             this.IsInEditMode = true;
         }
 
         private void RevertChanges()
         {
-            this.eMail = this.exposedSupplierBackup.eMail;
-            this.Name = this.exposedSupplierBackup.Name;
-            this.Notes = this.exposedSupplierBackup.Notes;
-            this.Phone = this.exposedSupplierBackup.Phone;
-            this.Fax = this.exposedSupplierBackup.Fax;
-            this.Website = this.exposedSupplierBackup.Website;
+            this.eMail = this._uneditedSupplier.eMail;
+            this.Name = this._uneditedSupplier.Name;
+            this.Notes = this._uneditedSupplier.Notes;
+            this.Phone = this._uneditedSupplier.Phone;
+            this.Fax = this._uneditedSupplier.Fax;
+            this.Website = this._uneditedSupplier.Website;
 
-            //this.Address = this.exposedSupplierBackup.Address; // TODO: review
-            this.Street = this.exposedSupplierBackup.Street;
-            this.Number = this.exposedSupplierBackup.Number;
-            this.Zip = this.exposedSupplierBackup.Zip;
-            this.City = this.exposedSupplierBackup.City;
-            this.Province = this.exposedSupplierBackup.Province;
-            this.Country = this.exposedSupplierBackup.Country;
+            //this.Address = this._uneditedSupplier.Address; // TODO: review
+            this.Street = this._uneditedSupplier.Street;
+            this.Number = this._uneditedSupplier.Number;
+            this.Zip = this._uneditedSupplier.Zip;
+            this.City = this._uneditedSupplier.City;
+            this.Province = this._uneditedSupplier.Province;
+            this.Country = this._uneditedSupplier.Country;
 
-            this.AgentName = this.exposedSupplierBackup.AgentName;
-            this.AgentSurname = this.exposedSupplierBackup.AgentSurname;
-            this.AgentPhone = this.exposedSupplierBackup.AgentPhone;
+            this.AgentName = this._uneditedSupplier.AgentName;
+            this.AgentSurname = this._uneditedSupplier.AgentSurname;
+            this.AgentPhone = this._uneditedSupplier.AgentPhone;
         }
 
         public void CancelEdit()
@@ -88,7 +88,7 @@ namespace BillsManager.ViewModels
         {
             this.HasChanges = false;
 
-            this.exposedSupplierBackup = null;
+            this._uneditedSupplier = null;
 
             this.IsInEditMode = false;
         }

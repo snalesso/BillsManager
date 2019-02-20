@@ -16,11 +16,10 @@ namespace BillsManager.ViewModels
 
         private readonly IWindowManager windowManager;
         private readonly IEventAggregator globalEventAggregator;
-        private readonly ISettingsProvider settingsProvider;
+        private readonly ISettingsService settingsProvider;
         // main region
         private readonly Func<DBViewModel> dbViewModelFactory;
         // tools
-        private readonly Func<BackupCenterViewModel> backupCenterViewModelFactory;
         private readonly Func<SendFeedbackViewModel> sendFeedbackViewModelFactory;
         private readonly Func<SettingsViewModel> settingsViewModelFactory;
         // other UI regions
@@ -34,11 +33,10 @@ namespace BillsManager.ViewModels
         public ShellViewModel(
             IWindowManager windowManager,
             IEventAggregator globalEventAggregator,
-            ISettingsProvider settingsProvider,
+            ISettingsService settingsProvider,
             Func<DBViewModel> dbViewModelFactory,
             //Func<SearchViewModel<BillDetailsViewModel>> searchBillsViewModelFactory,
             Func<StatusBarViewModel> statusBarViewModelFactory,
-            Func<BackupCenterViewModel> backupCenterViewModelFactory,
             Func<SendFeedbackViewModel> sendFeedbackViewModelFactory,
             Func<SettingsViewModel> settingsViewModelFactory)
         {
@@ -52,7 +50,6 @@ namespace BillsManager.ViewModels
             this.dbViewModelFactory = dbViewModelFactory;
             //this.searchBillsViewModelFactory = searchBillsViewModelFactory;
             this.statusBarViewModelFactory = statusBarViewModelFactory;
-            this.backupCenterViewModelFactory = backupCenterViewModelFactory;
             this.sendFeedbackViewModelFactory = sendFeedbackViewModelFactory;
             this.settingsViewModelFactory = settingsViewModelFactory;
 
@@ -117,20 +114,6 @@ namespace BillsManager.ViewModels
 
         #region methods
 
-        private void ShowBackupCenter()
-        {
-            this.windowManager.ShowDialog(
-                this.backupCenterViewModelFactory.Invoke(),
-                settings: new Dictionary<string, object>
-                {
-                    //{"ResizeMode", ResizeMode.CanResize},
-                    {"SizeToContent", SizeToContent.Width},
-                    //{"ResizeDirections", new Thickness(0, 1, 0, 1)},
-                    {"CanClose", true}/*,
-                    {"ShowInTaskbar", true}*/
-                });
-        }
-
         private void ShowSendFeedback()
         {
             this.windowManager.ShowDialog(
@@ -154,17 +137,6 @@ namespace BillsManager.ViewModels
         #endregion
 
         #region commands
-
-        private RelayCommand showBackupCenterCommand;
-        public RelayCommand ShowBackupCenterCommand
-        {
-            get
-            {
-                return this.showBackupCenterCommand ?? (this.showBackupCenterCommand =
-                    new RelayCommand(
-                        () => this.ShowBackupCenter()));
-            }
-        }
 
         private RelayCommand showSendFeedbackCommand;
         public RelayCommand ShowSendFeedbackCommand

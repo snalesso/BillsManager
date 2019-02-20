@@ -150,18 +150,6 @@
   <data name="And" xml:space="preserve">
     <value>E</value>
   </data>
-  <data name="Backup" xml:space="preserve">
-    <value>Backup</value>
-  </data>
-  <data name="BackupCenter" xml:space="preserve">
-    <value>Centro Backup</value>
-  </data>
-  <data name="_rollbacksCount_format" xml:space="preserve">
-    <value>{0} rollbacks</value>
-  </data>
-  <data name="Backups" xml:space="preserve">
-    <value>Backups</value>
-  </data>
   <data name="Bill" xml:space="preserve">
     <value>Fattura</value>
   </data>
@@ -221,9 +209,6 @@
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Elimina</value>
-  </data>
-  <data name="DeleteBackup" xml:space="preserve">
-    <value>Elimina backup</value>
   </data>
   <data name="DeleteBill" xml:space="preserve">
     <value>Elimina fattura</value>
@@ -288,9 +273,6 @@
   <data name="Name" xml:space="preserve">
     <value>Nome</value>
   </data>
-  <data name="NewBackup" xml:space="preserve">
-    <value>Nuovo backup</value>
-  </data>
   <data name="New_toBill" xml:space="preserve">
     <value>Nuova</value>
   </data>
@@ -299,9 +281,6 @@
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
-  </data>
-  <data name="NoBackupsAvailable" xml:space="preserve">
-    <value>Nessun backup disponibile</value>
   </data>
   <data name="Not" xml:space="preserve">
     <value>Non</value>
@@ -320,9 +299,6 @@
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
-  </data>
-  <data name="OpenBackupsFolder" xml:space="preserve">
-    <value>Apri cartella dei backups</value>
   </data>
   <data name="PaidOn_toBill" xml:space="preserve">
     <value>Pagata il</value>
@@ -371,9 +347,6 @@
   </data>
   <data name="PrintReport" xml:space="preserve">
     <value>Stampa report</value>
-  </data>
-  <data name="Rollback" xml:space="preserve">
-    <value>Rollback</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Salva</value>
@@ -438,41 +411,11 @@
   <data name="_currency_format" xml:space="preserve">
     <value>{0:N2} €</value>
   </data>
-  <data name="CreateBackup" xml:space="preserve">
-    <value>Crea backup</value>
-  </data>
-  <data name="CreateBackupQuestion" xml:space="preserve">
-    <value>Sei sicuro di voler creare un nuovo backup?</value>
-  </data>
   <data name="OperationMayTakeAWhile" xml:space="preserve">
     <value>Questa operazione potrebbe richiedere del tempo</value>
   </data>
-  <data name="RollbackCompleted" xml:space="preserve">
-    <value>Rollback completato</value>
-  </data>
-  <data name="RollbackFailed" xml:space="preserve">
-    <value>Rollback fallito</value>
-  </data>
-  <data name="RollbackCanceled" xml:space="preserve">
-    <value>Rollback annullato</value>
-  </data>
-  <data name="RollbackCompletedMessage" xml:space="preserve">
-    <value>Il rollback è stato completato!</value>
-  </data>
-  <data name="RollbackFailedMessage" xml:space="preserve">
-    <value>Non è stato possibile completare il rollback</value>
-  </data>
   <data name="TryAgain" xml:space="preserve">
     <value>Riprova</value>
-  </data>
-  <data name="RollbackCanceledMessage" xml:space="preserve">
-    <value>Il rollback è stato annullato</value>
-  </data>
-  <data name="ConfirmRollbackQuestion" xml:space="preserve">
-    <value>Sei sicuro di voler effettuare il rollback al seguente backup?</value>
-  </data>
-  <data name="DeleteBackupQuestion" xml:space="preserve">
-    <value>Vuoi davvero eliminare questo backup?</value>
   </data>
   <data name="IConfirm" xml:space="preserve">
     <value>Confermo</value>

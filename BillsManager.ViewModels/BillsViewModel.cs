@@ -1,6 +1,6 @@
 ﻿using BillsManager.Localization;
 using BillsManager.Models;
-using BillsManager.Services.Data;
+using BillsManager.Services.DB;
 using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
 using Caliburn.Micro;
@@ -22,7 +22,7 @@ namespace BillsManager.ViewModels
 
         private readonly IWindowManager _windowManager;
         private readonly IEventAggregator _globalEventAggregator;
-        private readonly IBillsProvider _billsProvider;
+        private readonly IBillsRepository _billsProvider;
 
         private readonly Func<IEnumerable<Supplier>, Bill, BillAddEditViewModel> _billAddEditViewModelFactory;
         private readonly Func<Bill, BillDetailsViewModel> _billDetailsViewModelFactory;
@@ -41,7 +41,7 @@ namespace BillsManager.ViewModels
         public BillsViewModel(
             IWindowManager windowManager,
             IEventAggregator globalEventAggregator,
-            IBillsProvider billsProvider,
+            IBillsRepository billsProvider,
             Func<IEnumerable<Supplier>, Bill, BillAddEditViewModel> billAddEditViewModelFactory,
             Func<Bill, BillDetailsViewModel> billDetailsViewModelFactory)
         {
@@ -367,7 +367,7 @@ namespace BillsManager.ViewModels
             if (!Execute.InDesignMode)
                 this._globalEventAggregator.PublishOnUIThread(new BillsListChangedMessage(this.BillViewModels.Select(bvm => bvm.ExposedBill).ToList()));
 
-            // if there was an error during the romve operation on the db
+            // if there was an error during the remove operation on the db
             // this point wouldn't be reached
             //if (this.Filters == null)
             //    this.NotifyOfPropertyChange(() => this.FilteredBillViewModels);

@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using BillsManager.Services.Data;
+using BillsManager.Services.DB;
 using System.Collections.ObjectModel;
 using BillsManager.ViewModels;
 

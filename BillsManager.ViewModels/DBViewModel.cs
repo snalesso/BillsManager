@@ -1,6 +1,6 @@
 ﻿using BillsManager.Localization;
 using BillsManager.Models;
-using BillsManager.Services.Data;
+using BillsManager.Services.DB;
 using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
 using Caliburn.Micro;
@@ -14,14 +14,13 @@ namespace BillsManager.ViewModels
 {
     public partial class DBViewModel : Conductor<Screen>.Collection.AllActive,
         IHandle<CRUDMessage>,
-        IHandle<ShowSuppliersBillsOrder>,
-        IHandle<RollbackAuthorizationRequest>
+        IHandle<ShowSuppliersBillsOrder>
     {
         #region fields
 
         private readonly IWindowManager windowManager;
         private readonly IEventAggregator globalEventAggregator;
-        private readonly IDBConnector dbConnector;
+        private readonly IDBService dbConnector;
 
         private readonly Func<SuppliersViewModel> suppliersViewModelFactory;
         private readonly Func<BillsViewModel> billsViewModelFactory;
@@ -39,7 +38,7 @@ namespace BillsManager.ViewModels
         public DBViewModel(
             IWindowManager windowManager,
             IEventAggregator dbEventAggregator,
-            IDBConnector dbConnector,
+            IDBService dbConnector,
             Func<SuppliersViewModel> suppliersViewModelFactory,
             Func<BillsViewModel> billsViewModelFactory,
             //Func<TagsViewModel> tagsViewModelFactory,
@@ -393,24 +392,6 @@ namespace BillsManager.ViewModels
         {
             if (!this.ShowFilters)
                 this.ShowFilters = true;
-        }
-
-        public void Handle(RollbackAuthorizationRequest message)
-        {
-            var canRollback = true;
-            var wasConnected = this.ConnectionState != DBConnectionState.Disconnected;
-
-            if (wasConnected)
-                canRollback = this.Disconnect();
-
-            if (canRollback) // if the user confirms the disconnection
-            {
-                message.ConfirmAuthorization();
-                if (wasConnected)
-                    this.Connect();
-            }
-            else
-                message.NegateAuthorization();
         }
 
         #endregion

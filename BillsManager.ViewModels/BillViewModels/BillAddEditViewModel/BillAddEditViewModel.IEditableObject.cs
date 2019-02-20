@@ -7,7 +7,7 @@ namespace BillsManager.ViewModels
     {
         #region IEditableObject
 
-        private Bill exposedBillBackup;
+        private Bill _uneditedBill;
 
         private bool isInEditMode = false;
         public bool IsInEditMode
@@ -40,7 +40,7 @@ namespace BillsManager.ViewModels
 
         public void BeginEdit()
         {
-            this.exposedBillBackup = (Bill)this.ExposedBill.Clone(); // TODO: ICloneable<T> ?
+            this._uneditedBill = (Bill)this.ExposedBill.Clone(); // TODO: ICloneable<T> ?
 
             this.IsInEditMode = true;
         }
@@ -48,16 +48,16 @@ namespace BillsManager.ViewModels
         private void RevertChanges()
         {
             // TODO: check for full coverage
-            this.AdditionalCosts = this.exposedBillBackup.AdditionalCosts;
-            this.Agio = this.exposedBillBackup.Agio;
-            this.Amount = this.exposedBillBackup.Amount;
-            this.Code = this.exposedBillBackup.Code;
-            this.DueDate = this.exposedBillBackup.DueDate;
-            this.Notes = this.exposedBillBackup.Notes;
-            this.PaymentDate = this.exposedBillBackup.PaymentDate;
-            this.RegistrationDate = this.exposedBillBackup.RegistrationDate;
-            this.ReleaseDate = this.exposedBillBackup.ReleaseDate;
-            this.SupplierID = this.exposedBillBackup.SupplierID;
+            this.AdditionalCosts = this._uneditedBill.AdditionalCosts;
+            this.Agio = this._uneditedBill.Agio;
+            this.Amount = this._uneditedBill.Amount;
+            this.Code = this._uneditedBill.Code;
+            this.DueDate = this._uneditedBill.DueDate;
+            this.Notes = this._uneditedBill.Notes;
+            this.PaymentDate = this._uneditedBill.PaymentDate;
+            this.RegistrationDate = this._uneditedBill.RegistrationDate;
+            this.ReleaseDate = this._uneditedBill.ReleaseDate;
+            this.SupplierID = this._uneditedBill.SupplierID;
         }
 
         public void CancelEdit()
@@ -71,7 +71,7 @@ namespace BillsManager.ViewModels
         {
             this.HasChanges = false;
 
-            this.exposedBillBackup = null;
+            this._uneditedBill = null;
 
             this.IsInEditMode = false;
         }

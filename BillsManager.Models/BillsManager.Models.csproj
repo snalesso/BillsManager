@@ -49,7 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\ObjectModel\ReadOnlyObservableCollectionEx.cs" />
-    <Compile Include="Entities\Backup\Backup.cs" />
     <Compile Include="Entities\Bill\Bill.cs" />
     <Compile Include="Entities\Bill\Bill.ICloneable.cs" />
     <Compile Include="Entities\Settings\ISettings.cs" />

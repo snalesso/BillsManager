@@ -132,12 +132,6 @@
   <data name="And" xml:space="preserve">
     <value>And</value>
   </data>
-  <data name="Backup" xml:space="preserve">
-    <value>Backup</value>
-  </data>
-  <data name="Backups" xml:space="preserve">
-    <value>Backups</value>
-  </data>
   <data name="Bill" xml:space="preserve">
     <value>Bill</value>
   </data>
@@ -282,9 +276,6 @@
   <data name="Report" xml:space="preserve">
     <value>Report</value>
   </data>
-  <data name="Rollback" xml:space="preserve">
-    <value>Rollback</value>
-  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -333,12 +324,6 @@
   <data name="AgentSurname" xml:space="preserve">
     <value>Agent surname</value>
   </data>
-  <data name="BackupCenter" xml:space="preserve">
-    <value>Backup Center</value>
-  </data>
-  <data name="_rollbacksCount_format" xml:space="preserve">
-    <value>{0} rollbacks</value>
-  </data>
   <data name="BillDetails" xml:space="preserve">
     <value>Bill details</value>
   </data>
@@ -350,9 +335,6 @@
   </data>
   <data name="CopyEmail" xml:space="preserve">
     <value>Copy email</value>
-  </data>
-  <data name="DeleteBackup" xml:space="preserve">
-    <value>Delete backup</value>
   </data>
   <data name="DeleteBill" xml:space="preserve">
     <value>Delete bill</value>
@@ -378,17 +360,8 @@
   <data name="Message" xml:space="preserve">
     <value>Message</value>
   </data>
-  <data name="NewBackup" xml:space="preserve">
-    <value>New backup</value>
-  </data>
-  <data name="NoBackupsAvailable" xml:space="preserve">
-    <value>No backups available</value>
-  </data>
   <data name="NotPaid_toBill" xml:space="preserve">
     <value>Not paid</value>
-  </data>
-  <data name="OpenBackupsFolder" xml:space="preserve">
-    <value>Open backups folder</value>
   </data>
   <data name="PayBill" xml:space="preserve">
     <value>Pay bill</value>
@@ -438,41 +411,11 @@
   <data name="_currency_format" xml:space="preserve">
     <value>{0:N2} $</value>
   </data>
-  <data name="CreateBackup" xml:space="preserve">
-    <value>Create backup</value>
-  </data>
-  <data name="CreateBackupQuestion" xml:space="preserve">
-    <value>Are you sure you want to create a new backup?</value>
-  </data>
   <data name="OperationMayTakeAWhile" xml:space="preserve">
     <value>This operation may take a while</value>
   </data>
-  <data name="RollbackCanceled" xml:space="preserve">
-    <value>Rollback canceled</value>
-  </data>
-  <data name="RollbackCompleted" xml:space="preserve">
-    <value>Rollback completed</value>
-  </data>
-  <data name="RollbackFailed" xml:space="preserve">
-    <value>Rollback failed</value>
-  </data>
-  <data name="RollbackCompletedMessage" xml:space="preserve">
-    <value>Rollback has completed successfully!</value>
-  </data>
-  <data name="RollbackFailedMessage" xml:space="preserve">
-    <value>Rollback has failed</value>
-  </data>
   <data name="TryAgain" xml:space="preserve">
     <value>Please try again</value>
-  </data>
-  <data name="RollbackCanceledMessage" xml:space="preserve">
-    <value>Rollback has been canceled</value>
-  </data>
-  <data name="ConfirmRollbackQuestion" xml:space="preserve">
-    <value>Are you sure you want to rollback to the following backup?</value>
-  </data>
-  <data name="DeleteBackupQuestion" xml:space="preserve">
-    <value>Do you really want to delete the following backup?</value>
   </data>
   <data name="IConfirm" xml:space="preserve">
     <value>I confirm</value>

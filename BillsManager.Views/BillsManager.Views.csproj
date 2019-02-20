@@ -71,9 +71,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BackupCenterView.xaml.cs">
-      <DependentUpon>BackupCenterView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Behaviors\TextBoxBehavior.cs" />
     <Compile Include="BillDetailsView.xaml.cs">
       <DependentUpon>BillDetailsView.xaml</DependentUpon>
@@ -98,9 +95,6 @@
     <Compile Include="Controls\WindowEx.cs" />
     <Compile Include="Converters\MultiBooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\RowAlternatorConverter.cs" />
-    <Compile Include="DataTemplates\BackupDataTemplate.xaml.cs">
-      <DependentUpon>BackupDataTemplate.xaml</DependentUpon>
-    </Compile>
     <Compile Include="DataTemplates\BillDataTemplate.xaml.cs">
       <DependentUpon>BillDataTemplate.xaml</DependentUpon>
     </Compile>
@@ -109,9 +103,6 @@
     </Compile>
     <Compile Include="DataTemplates\SupplierDataTemplate.xaml.cs">
       <DependentUpon>SupplierDataTemplate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="DBBackupsView.xaml.cs">
-      <DependentUpon>DBBackupsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DBView.xaml.cs">
       <DependentUpon>DBView.xaml</DependentUpon>
@@ -189,10 +180,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="BackupCenterView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="BillDetailsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -205,15 +192,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DataTemplates\BackupDataTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="DataTemplates\DBDataTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="DBBackupsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -13,7 +13,7 @@ namespace BillsManager.ViewModels
     {
         #region fields
 
-        private readonly ISettingsProvider settingsProvider;
+        private readonly ISettingsService settingsProvider;
 
         private readonly Settings oldSettings;
 
@@ -22,7 +22,7 @@ namespace BillsManager.ViewModels
         #region ctor
 
         public SettingsViewModel(
-            ISettingsProvider settingsProvider)
+            ISettingsService settingsProvider)
         {
             this.settingsProvider = settingsProvider;
 

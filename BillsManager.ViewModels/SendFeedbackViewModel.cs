@@ -10,7 +10,7 @@ namespace BillsManager.ViewModels
         #region fields
 
         private readonly IWindowManager windowManager;
-        private readonly IFeedbackSender feedbackSender;
+        private readonly IFeedbackService feedbackSender;
 
         #endregion
 
@@ -18,7 +18,7 @@ namespace BillsManager.ViewModels
 
         public SendFeedbackViewModel(
             IWindowManager windowManager,
-            IFeedbackSender feedbackSender)
+            IFeedbackService feedbackSender)
         {
             this.windowManager = windowManager;
             this.feedbackSender = feedbackSender;

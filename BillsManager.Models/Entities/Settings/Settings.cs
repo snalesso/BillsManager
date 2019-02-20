@@ -18,6 +18,7 @@ namespace BillsManager.Models
 
         public CultureInfo Language { get; set; }
 
+        // TODO: remove
         public bool StartupDBLoad { get; set; }
 
         public string FeedbackToEmailAddress { get; set; }

@@ -1,6 +1,6 @@
 ﻿using BillsManager.Localization;
 using BillsManager.Models;
-using BillsManager.Services.Data;
+using BillsManager.Services.DB;
 using BillsManager.ViewModels.Commanding;
 using BillsManager.ViewModels.Messages;
 using Caliburn.Micro;
@@ -25,7 +25,7 @@ namespace BillsManager.ViewModels
 
         private readonly IWindowManager windowManager;
         private readonly IEventAggregator globalEventAggregator;
-        private readonly ISuppliersProvider suppliersProvider;
+        private readonly ISuppliersRepository suppliersProvider;
 
         private readonly Func<Supplier, SupplierAddEditViewModel> supplierAddEditViewModelFactory;
         private readonly Func<Supplier, SupplierDetailsViewModel> supplierDetailsViewModelFactory;
@@ -39,7 +39,7 @@ namespace BillsManager.ViewModels
         public SuppliersViewModel(
             IWindowManager windowManager,
             IEventAggregator globalEventAggregator,
-            ISuppliersProvider suppliersProvider,
+            ISuppliersRepository suppliersProvider,
             Func<Supplier, SupplierAddEditViewModel> supplierAddEditViewModelFactory,
             Func<Supplier, SupplierDetailsViewModel> supplierDetailsViewModelFactory)
         {

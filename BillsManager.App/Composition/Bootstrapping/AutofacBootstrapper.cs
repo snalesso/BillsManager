@@ -2,7 +2,7 @@
 using BillsManager.Localization;
 using BillsManager.Services;
 //using BillsManager.App.Modules;
-using BillsManager.Services.Data;
+using BillsManager.Services.DB;
 using BillsManager.Services.Feedback;
 using BillsManager.Services.Reporting;
 using BillsManager.ViewModels;
@@ -32,23 +32,22 @@ namespace BillsManager.App.Composition.Bootstrapping
             // builder.RegisterModule<EventAggregationAutoUnsubscriptionModule>();
 
             // SERVICES
-            builder.RegisterType<XMLSettingsProvider>().As<ISettingsProvider>().SingleInstance();
+            builder.RegisterType<XMLSettingsService>().As<ISettingsService>().SingleInstance();
 
 #if !DEBUG
             // DON'T TOUCH
             builder.RegisterInstance(new XMLDBConnector(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"DB\db.bmdb"))).AsImplementedInterfaces().SingleInstance();
 #else
-            builder.RegisterInstance(new XMLDBConnector(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"DB\db.bmdb"))).AsImplementedInterfaces().SingleInstance();
+            builder.RegisterInstance(new XMLDBService(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"DB\db.bmdb"))).AsImplementedInterfaces().SingleInstance();
             builder.RegisterInstance(new MockedDBConnector(0, 7)).AsImplementedInterfaces().SingleInstance();
 #endif
-            builder.RegisterType<XMLBackupsProvider>().As<IBackupsProvider>().SingleInstance();
 
             builder.RegisterGeneric(typeof(ReportPrinter<>)).As(typeof(ReportPrinter<>)).InstancePerDependency();
 
-            builder.Register<EMailFeedbackSender>(
-                ctx => new EMailFeedbackSender(ctx.Resolve<ISettingsProvider>().Settings.FeedbackToEmailAddress))
+            builder.Register<EMailFeedbackService>(
+                ctx => new EMailFeedbackService(ctx.Resolve<ISettingsService>().Settings.FeedbackToEmailAddress))
                 //ctx => new EMailFeedbackSender("nalesso.sergio@gmail.com"))
-                .As<IFeedbackSender>().SingleInstance();
+                .As<IFeedbackService>().SingleInstance();
 
             builder.RegisterInstance(
                 new ResxTranslationProvider(
@@ -63,7 +62,7 @@ namespace BillsManager.App.Composition.Bootstrapping
                 .OnActivated(
                 (tm) =>
                 {
-                    tm.Instance.CurrentLanguage = tm.Context.Resolve<ISettingsProvider>().Settings.Language;
+                    tm.Instance.CurrentLanguage = tm.Context.Resolve<ISettingsService>().Settings.Language;
                     tm.Instance.TranslationProvider = tm.Context.Resolve<ITranslationProvider>();
                 });
 
@@ -82,8 +81,6 @@ namespace BillsManager.App.Composition.Bootstrapping
             //    });
 
             builder.RegisterType<StatusBarViewModel>().AsSelf().SingleInstance();
-
-            builder.RegisterType<BackupCenterViewModel>().AsSelf().SingleInstance();
 
             builder.RegisterType<SendFeedbackViewModel>().AsSelf().InstancePerDependency();
 
@@ -110,18 +107,6 @@ namespace BillsManager.App.Composition.Bootstrapping
                                     header,
                                     comment);
                         };
-                });
-
-            builder.Register<Func<DBBackupsViewModel>>(
-                c =>
-                {
-                    var ctx = c.Resolve<IComponentContext>();
-
-                    return
-                        () => new DBBackupsViewModel(
-                            ctx.Resolve<IWindowManager>(),
-                            ctx.Resolve<IEventAggregator>(),
-                            ctx.Resolve<Func<string, IBackupsProvider>>().Invoke(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Backups\")));
                 });
         }
 
