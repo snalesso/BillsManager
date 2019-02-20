@@ -1,0 +1,7 @@
+D:\Dev\Repos\GitHub\snalesso\BillsManager2\BillsManager.App\bin\Debug\GroupLanguages.exe.config
+D:\Dev\Repos\GitHub\snalesso\BillsManager2\BillsManager.App\bin\Debug\GroupLanguages.exe
+D:\Dev\Repos\GitHub\snalesso\BillsManager2\BillsManager.App\bin\Debug\GroupLanguages.pdb
+D:\Dev\Repos\GitHub\snalesso\BillsManager2\Build Operations\GroupLanguages\obj\Debug\GroupLanguages.csprojAssemblyReference.cache
+D:\Dev\Repos\GitHub\snalesso\BillsManager2\Build Operations\GroupLanguages\obj\Debug\GroupLanguages.csproj.CoreCompileInputs.cache
+D:\Dev\Repos\GitHub\snalesso\BillsManager2\Build Operations\GroupLanguages\obj\Debug\GroupLanguages.exe
+D:\Dev\Repos\GitHub\snalesso\BillsManager2\Build Operations\GroupLanguages\obj\Debug\GroupLanguages.pdb

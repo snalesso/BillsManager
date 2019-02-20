@@ -39,8 +39,8 @@ namespace ResourceDictionariesMerger
 //#else
             //const string startDictionaryPath = @"D:\Source\Workspaces\billsmanager\Bills Manager\BillsManager.Views\Dictionaries\Styles.xaml";
             //const string destinationDictionaryPath = @"D:\Test\MergedDictionary.xaml";
-            const string startDictionaryPath = @"D:\Source\Workspaces\billsmanager\Bills Manager\BillsManager.Views\Dictionaries\Styles.xaml";
-            const string destinationDictionaryPath = @"D:\Source\Workspaces\billsmanager\Bills Manager\BillsManager.Views\Themes\Generic.xaml";
+            const string startDictionaryPath = @"..\..\..\BillsManager.Views\Dictionaries\Styles.xaml";
+            const string destinationDictionaryPath = @"..\..\..\BillsManager.Views\Themes\Generic.xaml";
 //#endif
             XNamespace ResourceDictionaryRootNamespace = @"http://schemas.microsoft.com/winfx/2006/xaml/presentation";
 

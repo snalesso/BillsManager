@@ -1,0 +1,7 @@
+D:\Dev\Repos\GitHub\snalesso\BillsManager2\BillsManager.Views\bin\Debug\ResourceDictionariesMerger.exe.config
+D:\Dev\Repos\GitHub\snalesso\BillsManager2\BillsManager.Views\bin\Debug\ResourceDictionariesMerger.exe
+D:\Dev\Repos\GitHub\snalesso\BillsManager2\BillsManager.Views\bin\Debug\ResourceDictionariesMerger.pdb
+D:\Dev\Repos\GitHub\snalesso\BillsManager2\Build Operations\ResourceDictionariesMerger\obj\Debug\ResourceDictionariesMerger.csprojAssemblyReference.cache
+D:\Dev\Repos\GitHub\snalesso\BillsManager2\Build Operations\ResourceDictionariesMerger\obj\Debug\ResourceDictionariesMerger.csproj.CoreCompileInputs.cache
+D:\Dev\Repos\GitHub\snalesso\BillsManager2\Build Operations\ResourceDictionariesMerger\obj\Debug\ResourceDictionariesMerger.exe
+D:\Dev\Repos\GitHub\snalesso\BillsManager2\Build Operations\ResourceDictionariesMerger\obj\Debug\ResourceDictionariesMerger.pdb
