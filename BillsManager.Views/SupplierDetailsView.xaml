@@ -1,0 +1,203 @@
+﻿<UserControl x:Class="BillsManager.Views.SupplierDetailsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Controls="clr-namespace:BillsManager.Views.Controls"
+             xmlns:DesignTime.ViewModels="clr-namespace:BillsManager.DesignTime.ViewModels;assembly=BillsManager.DesignTime"
+             xmlns:Loc="clr-namespace:BillsManager.Localization;assembly=BillsManager.Localization"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             MinWidth="400"
+             d:DataContext="{d:DesignInstance Type=DesignTime.ViewModels:DesignTimeSupplierDetailsViewModel,
+                                              IsDesignTimeCreatable=True}"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <!--<ResourceDictionary Source="Dictionaries\Styles.xaml" />-->
+        <ResourceDictionary Source="Themes\Themes.xaml" />
+    </UserControl.Resources>
+
+    <UserControl.Background>
+        <Binding Mode="OneTime" Source="{StaticResource View.Background}" />
+    </UserControl.Background>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{StaticResource View.Region.Spacing.Normal}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource View.Region.Spacing.Normal}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource View.Region.Spacing.Normal}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource View.Region.Spacing.Normal}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource View.Region.Spacing.Normal}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource View.Region.Spacing.Normal}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource View.Region.Spacing.Normal}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource View.Region.Spacing.Normal}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource View.Region.Spacing.Normal}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource View.Region.Spacing.Normal}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource View.Region.Spacing.Medium}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource View.Region.Spacing.Normal}" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{StaticResource View.Region.Spacing.Normal}" />
+            <ColumnDefinition Width="{StaticResource View.Region.Spacing.Large}" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="{StaticResource View.Region.Spacing.Normal}" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="{StaticResource View.Region.Spacing.Normal}" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="1"
+                   Grid.Column="2"
+                   Style="{StaticResource DetailHeaderTextblockStyle}"
+                   Text="{Loc:Translate Name}" />
+        <TextBlock Grid.Row="1"
+                   Grid.Column="4"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Text="{Binding Name,
+                                  Mode=OneTime}"
+                   TextAlignment="Right" />
+
+        <TextBlock Grid.Row="3"
+                   Grid.Column="2"
+                   Style="{StaticResource DetailHeaderTextblockStyle}"
+                   Text="{Loc:Translate Address}" />
+        <TextBlock Grid.Row="3"
+                   Grid.Column="4"
+                   VerticalAlignment="Center"
+                   Text="{Binding FullAddress,
+                                  Mode=OneTime}" />
+
+        <TextBlock Grid.Row="5"
+                   Grid.Column="2"
+                   Style="{StaticResource DetailHeaderTextblockStyle}"
+                   Text="{Loc:Translate Obligation}" />
+        <TextBlock Grid.Row="5"
+                   Grid.Column="4"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center">
+            <Run Text="{Binding ObligationStateString, Mode=OneWay}" />
+            <Run Text="   " />
+            <Run Text="{Binding ObligationAmount, StringFormat=\{0:N2\} €, Mode=OneTime}" />
+        </TextBlock>
+
+        <TextBlock Grid.Row="7"
+                   Grid.Column="2"
+                   Style="{StaticResource DetailHeaderTextblockStyle}"
+                   Text="{Loc:Translate Agent}" />
+        <TextBlock Grid.Row="7"
+                   Grid.Column="4"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center">
+            <Run Text="{Binding AgentName, Mode=OneTime}" />
+            <Run Text="{Binding AgentSurname, Mode=OneTime}" />
+        </TextBlock>
+
+        <TextBlock Grid.Row="9"
+                   Grid.Column="2"
+                   Style="{StaticResource DetailHeaderTextblockStyle}"
+                   Text="{Loc:Translate AgentPhone}" />
+        <TextBlock Grid.Row="9"
+                   Grid.Column="4"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Text="{Binding AgentPhone,
+                                  Mode=OneTime}" />
+
+        <TextBlock Grid.Row="11"
+                   Grid.Column="2"
+                   Style="{StaticResource DetailHeaderTextblockStyle}"
+                   Text="{Loc:Translate Phone}" />
+        <TextBlock Grid.Row="11"
+                   Grid.Column="4"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Text="{Binding Phone,
+                                  Mode=OneTime}" />
+
+        <TextBlock Grid.Row="13"
+                   Grid.Column="2"
+                   Style="{StaticResource DetailHeaderTextblockStyle}"
+                   Text="{Loc:Translate Fax}" />
+        <TextBlock Grid.Row="13"
+                   Grid.Column="4"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Text="{Binding Fax,
+                                  Mode=OneTime}" />
+
+        <TextBlock Grid.Row="15"
+                   Grid.Column="2"
+                   Style="{StaticResource DetailHeaderTextblockStyle}"
+                   Text="{Loc:Translate Email}" />
+        <TextBlock Grid.Row="15"
+                   Grid.Column="4"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center">
+            <Controls:HyperlinkEx NavigateUri="{Binding eMail, StringFormat=mailto:\{0\}, Mode=OneTime}">
+                <TextBlock Text="{Binding eMail, Mode=OneTime}" />
+            </Controls:HyperlinkEx>
+        </TextBlock>
+
+        <TextBlock Grid.Row="17"
+                   Grid.Column="2"
+                   Style="{StaticResource DetailHeaderTextblockStyle}"
+                   Text="{Loc:Translate Website}" />
+        <TextBlock Grid.Row="17"
+                   Grid.Column="4"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center">
+            <Controls:HyperlinkEx NavigateUri="{Binding Website, Mode=OneTime}">
+                <TextBlock Text="{Binding Website, Mode=OneTime}" />
+            </Controls:HyperlinkEx>
+        </TextBlock>
+
+        <TextBlock Grid.Row="19"
+                   Grid.Column="2"
+                   Style="{StaticResource DetailHeaderTextblockStyle}"
+                   Text="{Loc:Translate Notes}" />
+        <TextBlock Grid.Row="19"
+                   Grid.Column="4"
+                   MaxWidth="390"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Text="{Binding Notes,
+                                  Mode=OneTime}"
+                   TextTrimming="CharacterEllipsis"
+                   TextWrapping="Wrap" />
+
+        <StackPanel Grid.Row="21"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="3"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+
+            <Button MinWidth="80"
+                    Command="{Binding SwitchToEditCommand,
+                                      Mode=OneTime}"
+                    Content="{Loc:Translate Edit}"
+                    IsDefault="True">
+                <Button.Margin>
+                    <Thickness Right="{StaticResource View.MarginSize.Value}" />
+                </Button.Margin>
+            </Button>
+
+            <Button MinWidth="80"
+                    Command="{Binding CloseDetailsViewCommand,
+                                      Mode=OneTime}"
+                    Content="{Loc:Translate Close}"
+                    IsCancel="True" />
+
+        </StackPanel>
+
+    </Grid>
+</UserControl>

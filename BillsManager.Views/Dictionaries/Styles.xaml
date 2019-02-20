@@ -1,0 +1,59 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+
+        <ResourceDictionary Source="Styles\Values.xaml" />
+
+        <ResourceDictionary Source="Styles\MenuItemStyle.xaml" />
+        <ResourceDictionary Source="Styles\MenuStyle.xaml" />
+        <ResourceDictionary Source="Styles\MenuScrollViewerStyle.xaml" />
+        <ResourceDictionary Source="Styles\ContextMenuStyle.xaml" />
+
+        <ResourceDictionary Source="Styles\ButtonStyle.xaml" />
+        <ResourceDictionary Source="Styles\PathButtonStyle.xaml" />
+
+        <ResourceDictionary Source="Styles\ExpanderStyle.xaml" />
+
+        <ResourceDictionary Source="Styles\ToolBarSeparatorStyle.xaml" />
+
+        <ResourceDictionary Source="Styles\CloseWindowButtonStyle.xaml" />
+        <ResourceDictionary Source="Styles\NormalizeWindowButtonStyle.xaml" />
+        <ResourceDictionary Source="Styles\MaximizeWindowButtonStyle.xaml" />
+        <ResourceDictionary Source="Styles\MinimizeWindowButtonStyle.xaml" />
+
+        <ResourceDictionary Source="Styles\CrossButtonStyle.xaml" />
+
+        <ResourceDictionary Source="Styles\ErrorTemplate.xaml" />
+        <ResourceDictionary Source="Styles\TextBoxStyle.xaml" />
+
+        <ResourceDictionary Source="Styles\ListBoxExStyle.xaml" />
+        <ResourceDictionary Source="Styles\ListBoxItemStyle.xaml" />
+
+        <ResourceDictionary Source="Styles\ListViewStyle.xaml" />
+        <ResourceDictionary Source="Styles\ListViewExStyle.xaml" />
+        <ResourceDictionary Source="Styles\ListViewItemStyle.xaml" />
+
+        <ResourceDictionary Source="Styles\GridViewColumnHeaderGripperStyle.xaml" />
+        <ResourceDictionary Source="Styles\GridViewColumnHeaderStyle.xaml" />
+
+        <ResourceDictionary Source="Styles\ComboBoxStyle.xaml" />
+        <ResourceDictionary Source="Styles\ComboBoxItemStyle.xaml" />
+
+        <ResourceDictionary Source="Styles\CheckBoxStyle.xaml" />
+
+        <ResourceDictionary Source="Styles\GridSplitterStyle.xaml" />
+        <ResourceDictionary Source="Styles\GridSplitterExStyle.xaml" />
+
+        <ResourceDictionary Source="Styles\DatePickerStyle.xaml" />
+
+        <ResourceDictionary Source="Styles\ScrollBarStyle.xaml" />
+
+        <ResourceDictionary Source="Styles\StatusBarStyle.xaml" />
+
+        <ResourceDictionary Source="Styles\DetailHeaderTextBlockStyle.xaml" />
+
+        <!--  <ResourceDictionary Source="Styles\WindowExStyle.xaml" />  -->
+
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ViewValues.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <SolidColorBrush x:Key="Obligation.Debtor.Brush" Color="#FF00B400" />
+
+    <SolidColorBrush x:Key="Obligation.Unbound.Brush" Color="Transparent" />
+
+    <SolidColorBrush x:Key="Obligation.Creditor.Brush" Color="{Binding Source={StaticResource NotPaidBrush}, Path=Color}" />
+
+    <Geometry x:Key="Obligation.Debtor.Geometry">M 0,4.5 L 4.5,0 L 9,4.5 L 9,8 L 4.5,3.5 L 0,8 Z</Geometry>
+
+    <!--
+        <GeometryGroup x:Key="Obligation.Null.Geometry">
+        <GeometryGroup.Children>
+        <Geometry>M 0,2 L 9,2 L 9,4 L 0,4 Z</Geometry>
+        <Geometry>M 0,5 L 9,5 L 9,7 L 0,7 Z</Geometry>
+        </GeometryGroup.Children>
+        </GeometryGroup>
+    -->
+
+    <Geometry x:Key="Obligation.Null.Geometry">M 0,2 L 9,2 L 9,4 L 0,4 Z</Geometry>
+
+    <Geometry x:Key="Obligation.Creditor.Geometry">M 0,1 L 4.5,5.5 L 9,1 L 9,4.5 L 4.5,9 L 0,4.5 Z</Geometry>
+
+</ResourceDictionary>

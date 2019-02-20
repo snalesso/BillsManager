@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="DefaultValues\ButtonValues.xaml" />
+        <ResourceDictionary Source="DefaultValues\ControlBoxValues.xaml" />
+        <ResourceDictionary Source="DefaultValues\Geometries.xaml" />
+        <ResourceDictionary Source="DefaultValues\ViewValues.xaml" />
+        <ResourceDictionary Source="DefaultValues\MenuValues.xaml" />
+        <ResourceDictionary Source="DefaultValues\MenuItemValues.xaml" />
+        <ResourceDictionary Source="DefaultValues\TextBoxValues.xaml" />
+        <ResourceDictionary Source="DefaultValues\ObligationValues.xaml" />
+        <ResourceDictionary Source="DefaultValues\DBConnectionStateValues.xaml" />
+        <ResourceDictionary Source="DefaultValues\CheckBoxValues.xaml" />
+        <ResourceDictionary Source="DefaultValues\ListBoxItemValues.xaml" />
+        <ResourceDictionary Source="DefaultValues\ListItemValues.xaml" />
+        <ResourceDictionary Source="DefaultValues\DueAlertValues.xaml" />
+        <ResourceDictionary Source="DefaultValues\Converters.xaml" />
+        <ResourceDictionary Source="DefaultValues\ScrollBarValues.xaml" />
+        <ResourceDictionary Source="DefaultValues\GridViewValues.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

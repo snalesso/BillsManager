@@ -1,0 +1,687 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Agent" xml:space="preserve">
+    <value>Agent</value>
+  </data>
+  <data name="Agents" xml:space="preserve">
+    <value>Agents</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="And" xml:space="preserve">
+    <value>And</value>
+  </data>
+  <data name="Backup" xml:space="preserve">
+    <value>Backup</value>
+  </data>
+  <data name="Backups" xml:space="preserve">
+    <value>Backups</value>
+  </data>
+  <data name="Bill" xml:space="preserve">
+    <value>Bill</value>
+  </data>
+  <data name="Bills" xml:space="preserve">
+    <value>Bills</value>
+  </data>
+  <data name="BillsManager" xml:space="preserve">
+    <value>Bills Manager</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Center" xml:space="preserve">
+    <value>Center</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Connect" xml:space="preserve">
+    <value>Connect</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="Pay" xml:space="preserve">
+    <value>Pay</value>
+  </data>
+  <data name="PaidOn_toBill" xml:space="preserve">
+    <value>Paid on</value>
+  </data>
+  <data name="Paid_Male" xml:space="preserve">
+    <value>Paid</value>
+  </data>
+  <data name="Paid_toBill" xml:space="preserve">
+    <value>Paid</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Obligation" xml:space="preserve">
+    <value>Obligation</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>Number</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="Not" xml:space="preserve">
+    <value>Not</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="New_toSupplier" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Debtor" xml:space="preserve">
+    <value>Debtor</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Disconnect" xml:space="preserve">
+    <value>Disconnect</value>
+  </data>
+  <data name="Due" xml:space="preserve">
+    <value>Due</value>
+  </data>
+  <data name="DuesOn" xml:space="preserve">
+    <value>Dues on</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="Feedback" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="Filters" xml:space="preserve">
+    <value>Filters</value>
+  </data>
+  <data name="Folder" xml:space="preserve">
+    <value>Folder</value>
+  </data>
+  <data name="MobilePhone" xml:space="preserve">
+    <value>Mobile phone</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="New_toBill" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="Creditor" xml:space="preserve">
+    <value>Creditor</value>
+  </data>
+  <data name="Database" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="Province" xml:space="preserve">
+    <value>Province</value>
+  </data>
+  <data name="RegisteredOn_toBill" xml:space="preserve">
+    <value>Registered on</value>
+  </data>
+  <data name="Registering" xml:space="preserve">
+    <value>Registering</value>
+  </data>
+  <data name="Release" xml:space="preserve">
+    <value>Release</value>
+  </data>
+  <data name="Report" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="Rollback" xml:space="preserve">
+    <value>Rollback</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="Street" xml:space="preserve">
+    <value>Street</value>
+  </data>
+  <data name="Supplier" xml:space="preserve">
+    <value>Supplier</value>
+  </data>
+  <data name="Suppliers" xml:space="preserve">
+    <value>Suppliers</value>
+  </data>
+  <data name="Surname" xml:space="preserve">
+    <value>Surname</value>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>Website</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="ZIP" xml:space="preserve">
+    <value>ZIP</value>
+  </data>
+  <data name="AddBill" xml:space="preserve">
+    <value>Add bill</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="AddSupplier" xml:space="preserve">
+    <value>Add supplier</value>
+  </data>
+  <data name="AgentName" xml:space="preserve">
+    <value>Agent name</value>
+  </data>
+  <data name="AgentPhone" xml:space="preserve">
+    <value>Agent phone</value>
+  </data>
+  <data name="AgentSurname" xml:space="preserve">
+    <value>Agent surname</value>
+  </data>
+  <data name="BackupCenter" xml:space="preserve">
+    <value>Backup Center</value>
+  </data>
+  <data name="_rollbacksCount_format" xml:space="preserve">
+    <value>{0} rollbacks</value>
+  </data>
+  <data name="BillDetails" xml:space="preserve">
+    <value>Bill details</value>
+  </data>
+  <data name="CloseAfterSend" xml:space="preserve">
+    <value>Close after sending</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Contacts</value>
+  </data>
+  <data name="CopyEmail" xml:space="preserve">
+    <value>Copy email</value>
+  </data>
+  <data name="DeleteBackup" xml:space="preserve">
+    <value>Delete backup</value>
+  </data>
+  <data name="DeleteBill" xml:space="preserve">
+    <value>Delete bill</value>
+  </data>
+  <data name="DeleteSupplier" xml:space="preserve">
+    <value>Delete supplier</value>
+  </data>
+  <data name="Disconnected_toDB" xml:space="preserve">
+    <value>Disconnected</value>
+  </data>
+  <data name="DueDate" xml:space="preserve">
+    <value>Due date</value>
+  </data>
+  <data name="EditBill" xml:space="preserve">
+    <value>Edit bill</value>
+  </data>
+  <data name="EditSupplier" xml:space="preserve">
+    <value>Edit supplier</value>
+  </data>
+  <data name="Find" xml:space="preserve">
+    <value>Find</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="NewBackup" xml:space="preserve">
+    <value>New backup</value>
+  </data>
+  <data name="NoBackupsAvailable" xml:space="preserve">
+    <value>No backups available</value>
+  </data>
+  <data name="NotPaid_toBill" xml:space="preserve">
+    <value>Not paid</value>
+  </data>
+  <data name="OpenBackupsFolder" xml:space="preserve">
+    <value>Open backups folder</value>
+  </data>
+  <data name="PayBill" xml:space="preserve">
+    <value>Pay bill</value>
+  </data>
+  <data name="PaymentDate" xml:space="preserve">
+    <value>Payment date</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="ReleaseDate" xml:space="preserve">
+    <value>Release date</value>
+  </data>
+  <data name="PrintReport" xml:space="preserve">
+    <value>Print report</value>
+  </data>
+  <data name="SendFeedback" xml:space="preserve">
+    <value>Send feedback</value>
+  </data>
+  <data name="ShowAll" xml:space="preserve">
+    <value>Show all</value>
+  </data>
+  <data name="ShowBills" xml:space="preserve">
+    <value>Show bills</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Subject</value>
+  </data>
+  <data name="SupplierDetails" xml:space="preserve">
+    <value>Supplier details</value>
+  </data>
+  <data name="Connected_toDB" xml:space="preserve">
+    <value>Connected</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="DiscardChangesQuestion" xml:space="preserve">
+    <value>Are you sure you want to discard all the changes?</value>
+  </data>
+  <data name="CancelAdd" xml:space="preserve">
+    <value>Cancel add</value>
+  </data>
+  <data name="CancelEdit" xml:space="preserve">
+    <value>Cancel edit</value>
+  </data>
+  <data name="_currency_format" xml:space="preserve">
+    <value>{0:N2} $</value>
+  </data>
+  <data name="CreateBackup" xml:space="preserve">
+    <value>Create backup</value>
+  </data>
+  <data name="CreateBackupQuestion" xml:space="preserve">
+    <value>Are you sure you want to create a new backup?</value>
+  </data>
+  <data name="OperationMayTakeAWhile" xml:space="preserve">
+    <value>This operation may take a while</value>
+  </data>
+  <data name="RollbackCanceled" xml:space="preserve">
+    <value>Rollback canceled</value>
+  </data>
+  <data name="RollbackCompleted" xml:space="preserve">
+    <value>Rollback completed</value>
+  </data>
+  <data name="RollbackFailed" xml:space="preserve">
+    <value>Rollback failed</value>
+  </data>
+  <data name="RollbackCompletedMessage" xml:space="preserve">
+    <value>Rollback has completed successfully!</value>
+  </data>
+  <data name="RollbackFailedMessage" xml:space="preserve">
+    <value>Rollback has failed</value>
+  </data>
+  <data name="TryAgain" xml:space="preserve">
+    <value>Please try again</value>
+  </data>
+  <data name="RollbackCanceledMessage" xml:space="preserve">
+    <value>Rollback has been canceled</value>
+  </data>
+  <data name="ConfirmRollbackQuestion" xml:space="preserve">
+    <value>Are you sure you want to rollback to the following backup?</value>
+  </data>
+  <data name="DeleteBackupQuestion" xml:space="preserve">
+    <value>Do you really want to delete the following backup?</value>
+  </data>
+  <data name="IConfirm" xml:space="preserve">
+    <value>I confirm</value>
+  </data>
+  <data name="FeedbackSent" xml:space="preserve">
+    <value>Feedback sent</value>
+  </data>
+  <data name="FeedbackSentMessage" xml:space="preserve">
+    <value>Your feedback has been sent</value>
+  </data>
+  <data name="FeedbackNotSent" xml:space="preserve">
+    <value>Feedback not sent</value>
+  </data>
+  <data name="FeedbackNotSentMessage" xml:space="preserve">
+    <value>An error has occurred while sending your feedback</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="FeedbackAddressee" xml:space="preserve">
+    <value>Feedback addressee</value>
+  </data>
+  <data name="EditFailedMessage" xml:space="preserve">
+    <value>An error has occurred while saving the edits</value>
+  </data>
+  <data name="SaveQuestion" xml:space="preserve">
+    <value>Do you wish to save?</value>
+  </data>
+  <data name="ChangesNotSavedMessage" xml:space="preserve">
+    <value>There are some changes that haven't been saved yet</value>
+  </data>
+  <data name="SaveBeforeClosingQuestion" xml:space="preserve">
+    <value>Do you wish to save before closing?</value>
+  </data>
+  <data name="Unsaved_toDB" xml:space="preserve">
+    <value>Unsaved</value>
+  </data>
+  <data name="CancelExit" xml:space="preserve">
+    <value>Cancel closing</value>
+  </data>
+  <data name="Creditor_toSupplier" xml:space="preserve">
+    <value>Creditor</value>
+  </data>
+  <data name="Debtor_toSupplier" xml:space="preserve">
+    <value>Debtor</value>
+  </data>
+  <data name="Unbound_toSupplier" xml:space="preserve">
+    <value>Unbound</value>
+  </data>
+  <data name="DoFilter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="Paid_toBills" xml:space="preserve">
+    <value>Paid</value>
+  </data>
+  <data name="NotPaid_toBills" xml:space="preserve">
+    <value>Not paid</value>
+  </data>
+  <data name="NewBill" xml:space="preserve">
+    <value>New bill</value>
+  </data>
+  <data name="All_toBills" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="PayBillQuestion" xml:space="preserve">
+    <value>Are you sure you want to pay this bill?</value>
+  </data>
+  <data name="DeleteBillQuestion" xml:space="preserve">
+    <value>Do you really want to delete this bill?</value>
+  </data>
+  <data name="DeleteSupplierQuestion" xml:space="preserve">
+    <value>Do you really want to delete this supplier?</value>
+  </data>
+  <data name="NewSupplier" xml:space="preserve">
+    <value>New supplier</value>
+  </data>
+  <data name="ConnectAutomatically" xml:space="preserve">
+    <value>Connect automatically</value>
+  </data>
+  <data name="By" xml:space="preserve">
+    <value>By</value>
+  </data>
+  <data name="DuedOn_toBill" xml:space="preserve">
+    <value>Dued on</value>
+  </data>
+  <data name="ReleasedOn_toBill" xml:space="preserve">
+    <value>Released on</value>
+  </data>
+  <data name="AllTheBills" xml:space="preserve">
+    <value>All the bills</value>
+  </data>
+  <data name="DuedOn_toBills" xml:space="preserve">
+    <value>Dued on</value>
+  </data>
+  <data name="ReleasedOn_toBills" xml:space="preserve">
+    <value>Released on</value>
+  </data>
+  <data name="_shortDate_format" xml:space="preserve">
+    <value>{0:MM/dd/yyyy}</value>
+  </data>
+  <data name="OverdueXDaysAgo_toBill_format" xml:space="preserve">
+    <value>Overdue {0} days ago</value>
+  </data>
+  <data name="OverdueYesterday_toBill" xml:space="preserve">
+    <value>Overdue yesterday</value>
+  </data>
+  <data name="OverduesToday_toBill" xml:space="preserve">
+    <value>Overdues today</value>
+  </data>
+  <data name="OverduesTomorrow_toBill" xml:space="preserve">
+    <value>Overdues tomorrow</value>
+  </data>
+  <data name="OverduesInXDays_toBill_format" xml:space="preserve">
+    <value>Overdues in {0} days</value>
+  </data>
+  <data name="Critical_toDueAlert" xml:space="preserve">
+    <value>Critical</value>
+  </data>
+  <data name="Low_toDueAlert" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="Medium_toDueAlert" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="None_toDueAlert" xml:space="preserve">
+    <value>Null</value>
+  </data>
+  <data name="DatabaseSaveFailed" xml:space="preserve">
+    <value>Database save failed</value>
+  </data>
+  <data name="EditFailed" xml:space="preserve">
+    <value>Edit failed</value>
+  </data>
+  <data name="AddBillFailed" xml:space="preserve">
+    <value>Add bill failed</value>
+  </data>
+  <data name="AddBillFailedMessage" xml:space="preserve">
+    <value>Couldn't add the bill</value>
+  </data>
+  <data name="AddSupplierFailedMessage" xml:space="preserve">
+    <value>Couldn't add the supplier</value>
+  </data>
+  <data name="AddSupplierFailed" xml:space="preserve">
+    <value>Add supplier failed</value>
+  </data>
+  <data name="DatabaseSaveFailedMessage" xml:space="preserve">
+    <value>Couldn't save the database</value>
+  </data>
+  <data name="DatabaseConnectionFailed" xml:space="preserve">
+    <value>Database connection failed</value>
+  </data>
+  <data name="DatabaseConnectionFailedMessage" xml:space="preserve">
+    <value>Couldn't connect to the database</value>
+  </data>
+  <data name="SupplierRequired" xml:space="preserve">
+    <value>You must select a supplier</value>
+  </data>
+  <data name="DateRequired" xml:space="preserve">
+    <value>You must specify a due date</value>
+  </data>
+  <data name="ReleaseDateRequired" xml:space="preserve">
+    <value>You must specify a release date</value>
+  </data>
+  <data name="AmountRequired" xml:space="preserve">
+    <value>You must specify an amount</value>
+  </data>
+  <data name="CannotExceedChars_format" xml:space="preserve">
+    <value>You cannot exceed {1} characters</value>
+  </data>
+  <data name="CannotStayBelowChars_format" xml:space="preserve">
+    <value>You must enter at least {0} characters</value>
+  </data>
+  <data name="MustStayWithinChars_format" xml:space="preserve">
+    <value>You must stay within {0} and {1} characters</value>
+  </data>
+  <data name="NameRequired" xml:space="preserve">
+    <value>You must specify a name</value>
+  </data>
+  <data name="MustBeNChars_format" xml:space="preserve">
+    <value>Must be {0} characters long</value>
+  </data>
+  <data name="Debtor_toSuppliers" xml:space="preserve">
+    <value>Debtors</value>
+  </data>
+  <data name="Creditor_toSuppliers" xml:space="preserve">
+    <value>Creditors</value>
+  </data>
+  <data name="Undound_toSuppliers" xml:space="preserve">
+    <value>Unbound</value>
+  </data>
+  <data name="Agio" xml:space="preserve">
+    <value>Agio</value>
+  </data>
+  <data name="AdditionalCosts" xml:space="preserve">
+    <value>Additional costs</value>
+  </data>
+  <data name="DontSave" xml:space="preserve">
+    <value>Don't save</value>
+  </data>
+  <data name="SaveAndExit" xml:space="preserve">
+    <value>Save and exit</value>
+  </data>
+  <data name="Released_toBill" xml:space="preserve">
+    <value>Released</value>
+  </data>
+  <data name="Costs" xml:space="preserve">
+    <value>Costs</value>
+  </data>
+  <data name="currency_Format" xml:space="preserve">
+    <value>{0:N2} $</value>
+  </data>
+</root>

@@ -1,0 +1,100 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Values.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="EmptyCheckBoxFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border Background="{StaticResource View.Background}"
+                            BorderBrush="{StaticResource Control.BorderBrush.Normal}"
+                            BorderThickness="{StaticResource View.Border.Thickness}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="{x:Type CheckBox}" TargetType="{x:Type CheckBox}">
+
+        <Setter Property="Foreground" Value="{StaticResource View.Foreground.Normal}" />
+        <Setter Property="Background" Value="{StaticResource View.Background}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Control.BorderBrush.Normal}" />
+        <Setter Property="BorderThickness" Value="{StaticResource View.Border.Thickness}" />
+        <Setter Property="Padding">
+            <Setter.Value>
+                <Thickness Left="{StaticResource View.Region.Spacing.SmallValue}" Right="{StaticResource View.Region.Spacing.SmallValue}" />
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+
+        <Setter Property="FocusVisualStyle" Value="{StaticResource EmptyCheckBoxFocusVisual}" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+
+                    <BulletDecorator>
+                        <BulletDecorator.Bullet>
+                            <Border x:Name="CheckMark"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{StaticResource Control.Border.CornerRadius}"
+                                    Padding="1">
+                                <Path x:Name="CheckMarkPath"
+                                      Width="{StaticResource Checkbox.Checkmark.Size}"
+                                      Height="{StaticResource Checkbox.Checkmark.Size}"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Data="{StaticResource Checkmark3}"
+                                      Fill="{StaticResource PaidBrush}"
+                                      Stretch="Uniform" />
+                            </Border>
+                        </BulletDecorator.Bullet>
+                        <BulletDecorator.Child>
+
+                            <ContentPresenter Grid.Column="1"
+                                              Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              RecognizesAccessKey="True" />
+                        </BulletDecorator.Child>
+                    </BulletDecorator>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="Content" Value="{x:Null}">
+                            <Setter Property="Padding" Value="0" />
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="false">
+                            <Setter TargetName="CheckMarkPath" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter TargetName="CheckMarkPath" Property="Data" Value="{StaticResource NullCheckedGeometry}" />
+                            <Setter TargetName="CheckMarkPath" Property="Fill" Value="{StaticResource Checkbox.States.Null.Brush}" />
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="CheckMark" Property="Background" Value="{StaticResource {x:Static SystemColors.ControlBrushKey}}" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="CheckMark" Property="Background" Value="{StaticResource {x:Static SystemColors.ControlBrushKey}}" />
+                            <Setter TargetName="CheckMarkPath" Property="Fill" Value="{StaticResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                            <Setter Property="Foreground" Value="{StaticResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

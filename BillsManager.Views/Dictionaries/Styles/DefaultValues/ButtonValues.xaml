@@ -1,0 +1,77 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ViewValues.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!--  COMMON BUTTON  -->
+
+    <SolidColorBrush x:Key="Button.Background.Normal" Color="#FF22A4FF" />
+    <SolidColorBrush x:Key="Button.BorderBrush.Normal" Color="{Binding Source={StaticResource Button.Background.Normal}, Path=Color}" />
+    <SolidColorBrush x:Key="Button.Foreground.Normal" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+
+    <SolidColorBrush x:Key="Button.Background.Hover" Color="#FF64C1FF" />
+    <SolidColorBrush x:Key="Button.BorderBrush.Hover" Color="{Binding Source={StaticResource Button.Background.Hover}, Path=Color}" />
+    <SolidColorBrush x:Key="Button.Foreground.Hover" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+
+    <SolidColorBrush x:Key="Button.Background.Pressed" Color="#FF0082D9" />
+    <SolidColorBrush x:Key="Button.BorderBrush.Pressed" Color="{Binding Source={StaticResource Button.Background.Pressed}, Path=Color}" />
+    <SolidColorBrush x:Key="Button.Foreground.Pressed" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+
+    <SolidColorBrush x:Key="Button.Background.Focused" Color="{Binding Source={StaticResource Button.Background.Normal}, Path=Color}" />
+    <SolidColorBrush x:Key="Button.BorderBrush.Focused" Color="{Binding Source={StaticResource Button.BorderBrush.Pressed}, Path=Color}" />
+    <SolidColorBrush x:Key="Button.Foreground.Focused" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+
+    <SolidColorBrush x:Key="Button.Background.Disabled" Color="{Binding Source={StaticResource Control.Background.Disabled}, Path=Color}" />
+    <SolidColorBrush x:Key="Button.BorderBrush.Disabled" Color="{Binding Source={StaticResource Button.Background.Disabled}, Path=Color}" />
+    <SolidColorBrush x:Key="Button.Foreground.Disabled" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+
+    <!--  DEFAULT BUTTON  -->
+
+    <!--  green #FF34C234  -->
+    <!--  blue  #FF22A4FF  -->
+    <SolidColorBrush x:Key="DefaultButton.Background.Normal" Color="#FF34C234" />
+    <SolidColorBrush x:Key="DefaultButton.BorderBrush.Normal" Color="{Binding Source={StaticResource DefaultButton.Background.Normal}, Path=Color}" />
+    <SolidColorBrush x:Key="DefaultButton.Foreground.Normal" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+
+    <SolidColorBrush x:Key="DefaultButton.Background.Hover" Color="#FF71D871" />
+    <SolidColorBrush x:Key="DefaultButton.BorderBrush.Hover" Color="{Binding Source={StaticResource DefaultButton.Background.Hover}, Path=Color}" />
+    <SolidColorBrush x:Key="DefaultButton.Foreground.Hover" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+
+    <SolidColorBrush x:Key="DefaultButton.Background.Pressed" Color="#FF2BA62B" />
+    <SolidColorBrush x:Key="DefaultButton.BorderBrush.Pressed" Color="{Binding Source={StaticResource DefaultButton.Background.Pressed}, Path=Color}" />
+    <SolidColorBrush x:Key="DefaultButton.Foreground.Pressed" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+
+    <SolidColorBrush x:Key="DefaultButton.Background.Focused" Color="{Binding Source={StaticResource DefaultButton.Background.Normal}, Path=Color}" />
+    <SolidColorBrush x:Key="DefaultButton.BorderBrush.Focused" Color="{Binding Source={StaticResource DefaultButton.BorderBrush.Pressed}, Path=Color}" />
+    <SolidColorBrush x:Key="DefaultButton.Foreground.Focused" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+
+    <SolidColorBrush x:Key="DefaultButton.Background.Disabled" Color="#FFBEF2BE" />
+    <SolidColorBrush x:Key="DefaultButton.BorderBrush.Disabled" Color="{Binding Source={StaticResource DefaultButton.Background.Disabled}, Path=Color}" />
+    <SolidColorBrush x:Key="DefaultButton.Foreground.Disabled" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+
+    <!--  CANCEL BUTTON  -->
+
+    <!--  red   #FFE44141  -->
+    <!--  blue  #FF22A4FF  -->
+    <SolidColorBrush x:Key="CancelButton.Background.Normal" Color="#FFE44141" />
+    <SolidColorBrush x:Key="CancelButton.BorderBrush.Normal" Color="{Binding Source={StaticResource CancelButton.Background.Normal}, Path=Color}" />
+    <SolidColorBrush x:Key="CancelButton.Foreground.Normal" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+
+    <SolidColorBrush x:Key="CancelButton.Background.Hover" Color="#FFF76666" />
+    <SolidColorBrush x:Key="CancelButton.BorderBrush.Hover" Color="{Binding Source={StaticResource CancelButton.Background.Hover}, Path=Color}" />
+    <SolidColorBrush x:Key="CancelButton.Foreground.Hover" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+
+    <SolidColorBrush x:Key="CancelButton.Background.Pressed" Color="#FFCF2828" />
+    <SolidColorBrush x:Key="CancelButton.BorderBrush.Pressed" Color="{Binding Source={StaticResource CancelButton.Background.Pressed}, Path=Color}" />
+    <SolidColorBrush x:Key="CancelButton.Foreground.Pressed" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+
+    <SolidColorBrush x:Key="CancelButton.Background.Focused" Color="{Binding Source={StaticResource CancelButton.Background.Normal}, Path=Color}" />
+    <SolidColorBrush x:Key="CancelButton.BorderBrush.Focused" Color="{Binding Source={StaticResource CancelButton.BorderBrush.Pressed}, Path=Color}" />
+    <SolidColorBrush x:Key="CancelButton.Foreground.Focused" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+
+    <SolidColorBrush x:Key="CancelButton.Background.Disabled" Color="#FFFFD3D3" />
+    <SolidColorBrush x:Key="CancelButton.BorderBrush.Disabled" Color="{Binding Source={StaticResource CancelButton.Background.Disabled}, Path=Color}" />
+    <SolidColorBrush x:Key="CancelButton.Foreground.Disabled" Color="{Binding Source={StaticResource View.Background}, Path=Color}" />
+
+</ResourceDictionary>
