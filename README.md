@@ -1,3 +1,5 @@
 # BillsManager
 
-![alt text](https://github.com/snalesso/BillsManager/blob/master/d4ad052e-9829-461f-bd0f-100da0453df7)
+This is a copy of an [old Codeplx repository](https://archive.codeplex.com/?p=billsmanager) of mine.
+
+![Screenshot of the application](https://github.com/snalesso/BillsManager/blob/master/screenshot.png)
