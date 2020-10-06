@@ -1,0 +1,76 @@
+﻿<UserControl
+    x:Class="Billy.UI.Wpf.Presentation.ShellView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:MaterialDesginThemes="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:Presentation="clr-namespace:Billy.UI.Wpf.Presentation"
+    xmlns:Presentation_Billing="clr-namespace:Billy.UI.Wpf.Presentation.Billing"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance Type=Presentation:ShellViewModel,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="250"
+    d:DesignWidth="550"
+    mc:Ignorable="d">
+
+    <Grid>
+
+        <!--<TabControl>
+            <TabControl.Items>
+
+                <TabItem>
+
+                    <TabItem.Header>
+                        <TextBlock
+                            MaterialDesginThemes:TextBlockAssist.AutoToolTip="True"
+                            Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                            Text="Suppliers" />
+                    </TabItem.Header>
+
+                    <TabItem.Content>-->
+
+        <Presentation_Billing:SuppliersView Margin="4,5" DataContext="{Binding SuppliersViewModel}" />
+
+        <!--</TabItem.Content>
+
+                </TabItem>
+
+                <TabItem>
+
+                    <TabItem.Header >
+                        <TextBlock
+                            MaterialDesginThemes:TextBlockAssist.AutoToolTip="True"
+                            Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                            Text="Bills" />
+                    </TabItem.Header>
+
+                    <TabItem.Content>
+                        <Presentation_Billing:BillsView />
+                    </TabItem.Content>
+
+                </TabItem>
+
+            </TabControl.Items>
+        </TabControl>-->
+
+        <!--<Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300" MinWidth="300" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Presentation_Billing:SuppliersView DataContext="{Binding SuppliersViewModel}" />
+
+            <GridSplitter
+            Grid.Column="1"
+            Width="1"
+            Background="LightGray" />
+
+            <Presentation_Billing:BillsView Grid.Column="2" />
+
+        </Grid>-->
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,3 @@
+Number		ErrorCode			Message
+2627			-2146232060		"Violation of UNIQUE KEY constraint 'UQ_Supplier_Name'. Cannot insert duplicate key in object 'dbo.Supplier'. The duplicate key value is (Nome di Prova 637369724641891108).\r\nThe statement has been terminated."
+3621										"The statement has been terminated."
