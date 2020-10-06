@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <StartupObject>Billy.UI.Wpf.EntryPoint</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Composition\Autofac\Modules\**" />
+    <EmbeddedResource Remove="Composition\Autofac\Modules\**" />
+    <None Remove="Composition\Autofac\Modules\**" />
+    <Page Remove="Composition\Autofac\Modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Presentation\Billing\BillingViewModelsProxy.cs" />
+    <Compile Remove="Presentation\Billing\Extractor.cs" />
+    <Compile Remove="Presentation\Billing\IValueTracker.cs" />
+    <Compile Remove="Presentation\Billing\IValueTracker1.cs" />
+    <Compile Remove="Presentation\Billing\ObjectEditorViewModel_Old.cs" />
+    <Compile Remove="Presentation\Billing\PropertyTracker.cs" />
+    <Compile Remove="Presentation\Billing\PropertyTracker1.cs" />
+    <Compile Remove="Presentation\Billing\SimpleEditorViewModel.cs" />
+    <Compile Remove="Presentation\Billing\SupplierEditorViewModel_Old.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="5.2.0" />
+    <PackageReference Include="Caliburn.Micro" Version="4.0.136-rc" />
+    <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
+    <PackageReference Include="ReactiveUI" Version="11.5.35" />
+    <PackageReference Include="ReactiveUI.Events.WPF" Version="11.5.35" />
+    <PackageReference Include="ReactiveUI.WPF" Version="11.5.35" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Billy.Application\Billy.Application.csproj" />
+    <ProjectReference Include="..\Billy.Core\Billy.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\Billing\" />
+  </ItemGroup>
+
+</Project>

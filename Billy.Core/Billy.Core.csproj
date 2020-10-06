@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.35" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="2.0.1" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.113.1" />
+    <PackageReference Include="System.Reactive" Version="4.4.1" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Remove="Domain\Billing\Reporting\**" />
+    <EmbeddedResource Remove="Domain\Billing\Reporting\**" />
+    <None Remove="Domain\Billing\Reporting\**" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Remove="Domain\Billing\Models\IBill.cs" />
+    <Compile Remove="Domain\Billing\Models\ISupplier.cs" />
+    <Compile Remove="Domain\Billing\Models\NewBill.cs" />
+    <Compile Remove="Domain\Billing\Models\NewSupplier.cs" />
+    <Compile Remove="Domain\Billing\Persistence\SQL\SQLite3\Dapper\DapperSQLite3BillsRepository.cs" />
+    <Compile Remove="Domain\Models\INotifyingTrackableErroring.cs" />
+    <Compile Remove="Domain\Persistence\SQL\MSSQLServer\MSSQLServerSchemaHelper.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Domain\Billing\Persistence\SQL\SQLite3\EFCore\" />
+    <Folder Include="Domain\Persistence\SQL\MSSQLServer\" />
+    <Folder Include="Domain\Persistence\SQL\SQLite3\RepoDb\" />
+  </ItemGroup>
+  
+</Project>
