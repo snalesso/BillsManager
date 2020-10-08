@@ -17,8 +17,8 @@ namespace Billy.UI.Wpf.Core
         /// </summary>
         public T ActiveItem
         {
-            get => _activeItem;
-            set => ActivateItemAsync(value, CancellationToken.None);
+            get => this._activeItem;
+            set => this.ActivateItemAsync(value, CancellationToken.None);
         }
 
         /// <summary>
@@ -27,8 +27,8 @@ namespace Billy.UI.Wpf.Core
         /// <value></value>
         object IHaveActiveItem.ActiveItem
         {
-            get => ActiveItem;
-            set => ActiveItem = (T)value;
+            get => this.ActiveItem;
+            set => this.ActiveItem = (T)value;
         }
 
         /// <summary>
@@ -40,17 +40,17 @@ namespace Billy.UI.Wpf.Core
         /// <returns>A task that represents the asynchronous operation.</returns>
         protected virtual async Task ChangeActiveItemAsync(T newItem, bool closePrevious, CancellationToken cancellationToken)
         {
-            await ScreenExtensions.TryDeactivateAsync(_activeItem, closePrevious, cancellationToken);
+            await ScreenExtensions.TryDeactivateAsync(this._activeItem, closePrevious, cancellationToken);
 
-            newItem = EnsureItem(newItem);
+            newItem = this.EnsureItem(newItem);
 
-            _activeItem = newItem;
-            NotifyOfPropertyChange(nameof(ActiveItem));
+            this._activeItem = newItem;
+            this.NotifyOfPropertyChange(nameof(this.ActiveItem));
 
-            if (IsActive)
+            if (this.IsActive)
                 await ScreenExtensions.TryActivateAsync(newItem, cancellationToken);
 
-            OnActivationProcessed(_activeItem, true);
+            this.OnActivationProcessed(this._activeItem, true);
         }
 
         /// <summary>
@@ -59,6 +59,6 @@ namespace Billy.UI.Wpf.Core
         /// <param name="newItem">The new item to activate.</param>
         /// <param name="closePrevious">Indicates whether or not to close the previous active item.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        protected Task ChangeActiveItemAsync(T newItem, bool closePrevious) => ChangeActiveItemAsync(newItem, closePrevious, default);
+        protected Task ChangeActiveItemAsync(T newItem, bool closePrevious) => this.ChangeActiveItemAsync(newItem, closePrevious, default);
     }
 }

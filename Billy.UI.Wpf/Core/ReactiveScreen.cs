@@ -20,7 +20,7 @@ namespace Billy.UI.Wpf.Core
         /// </summary>
         public ReactiveScreen()
         {
-            _displayName = GetType().FullName;
+            this._displayName = this.GetType().FullName;
         }
 
         /// <summary>
@@ -29,10 +29,10 @@ namespace Billy.UI.Wpf.Core
         /// </summary>
         public virtual bool IsInitialized
         {
-            get => _isInitialized;
+            get => this._isInitialized;
             private set
             {
-                _isInitialized = value;
+                this._isInitialized = value;
                 this.RaisePropertyChanged();
             }
         }
@@ -42,10 +42,10 @@ namespace Billy.UI.Wpf.Core
         /// </summary>
         public virtual object Parent
         {
-            get => _parent;
+            get => this._parent;
             set
             {
-                _parent = value;
+                this._parent = value;
                 this.RaisePropertyChanged();
             }
         }
@@ -55,10 +55,10 @@ namespace Billy.UI.Wpf.Core
         /// </summary>
         public virtual string DisplayName
         {
-            get => _displayName;
+            get => this._displayName;
             set
             {
-                _displayName = value;
+                this._displayName = value;
                 this.RaisePropertyChanged();
             }
         }
@@ -69,10 +69,10 @@ namespace Billy.UI.Wpf.Core
         /// </summary>
         public virtual bool IsActive
         {
-            get => _isActive;
+            get => this._isActive;
             private set
             {
-                _isActive = value;
+                this._isActive = value;
                 this.RaisePropertyChanged();
             }
         }
@@ -94,20 +94,20 @@ namespace Billy.UI.Wpf.Core
 
         async Task IActivate.ActivateAsync(CancellationToken cancellationToken)
         {
-            if (IsActive)
+            if (this.IsActive)
                 return;
 
             var initialized = false;
 
-            if (!IsInitialized)
+            if (!this.IsInitialized)
             {
-                await OnInitializeAsync(cancellationToken);
-                IsInitialized = initialized = true;
+                await this.OnInitializeAsync(cancellationToken);
+                this.IsInitialized = initialized = true;
             }
 
             Log.Info("Activating {0}.", this);
-            await OnActivateAsync(cancellationToken);
-            IsActive = true;
+            await this.OnActivateAsync(cancellationToken);
+            this.IsActive = true;
 
             Activated?.Invoke(this, new ActivationEventArgs
             {
@@ -117,7 +117,7 @@ namespace Billy.UI.Wpf.Core
 
         async Task IDeactivate.DeactivateAsync(bool close, CancellationToken cancellationToken)
         {
-            if (IsActive || IsInitialized && close)
+            if (this.IsActive || this.IsInitialized && close)
             {
                 AttemptingDeactivation?.Invoke(this, new DeactivationEventArgs
                 {
@@ -125,8 +125,8 @@ namespace Billy.UI.Wpf.Core
                 });
 
                 Log.Info("Deactivating {0}.", this);
-                await OnDeactivateAsync(close, cancellationToken);
-                IsActive = false;
+                await this.OnDeactivateAsync(close, cancellationToken);
+                this.IsActive = false;
 
                 Deactivated?.Invoke(this, new DeactivationEventArgs
                 {
@@ -135,7 +135,7 @@ namespace Billy.UI.Wpf.Core
 
                 if (close)
                 {
-                    Views.Clear();
+                    this.Views.Clear();
                     Log.Info("Closed {0}.", this);
                 }
             }
@@ -158,12 +158,12 @@ namespace Billy.UI.Wpf.Core
         /// <param name="dialogResult">The dialog result.</param>
         public virtual async Task TryCloseAsync(bool? dialogResult = null)
         {
-            if (Parent is IConductor conductor)
+            if (this.Parent is IConductor conductor)
             {
                 await conductor.CloseItemAsync(this, CancellationToken.None);
             }
 
-            var closeAction = PlatformProvider.Current.GetViewCloseAction(this, Views.Values, dialogResult);
+            var closeAction = PlatformProvider.Current.GetViewCloseAction(this, this.Views.Values, dialogResult);
 
             await Execute.OnUIThreadAsync(async () => await closeAction(CancellationToken.None));
         }

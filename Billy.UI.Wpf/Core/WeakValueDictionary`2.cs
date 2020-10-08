@@ -143,8 +143,7 @@ namespace Billy.UI.Wpf.Core
 
         bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item)
         {
-            TValue value;
-            if (!this.TryGetValue(item.Key, out value))
+            if (!this.TryGetValue(item.Key, out TValue value))
             {
                 return false;
             }
@@ -175,8 +174,7 @@ namespace Billy.UI.Wpf.Core
 
         bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item)
         {
-            TValue value;
-            if (!this.TryGetValue(item.Key, out value))
+            if (!this.TryGetValue(item.Key, out TValue value))
             {
                 return false;
             }
@@ -229,8 +227,7 @@ namespace Billy.UI.Wpf.Core
         /// <returns></returns>
         public bool ContainsKey(TKey key)
         {
-            TValue dummy;
-            return this.TryGetValue(key, out dummy);
+            return this.TryGetValue(key, out TValue dummy);
         }
 
         /// <summary>
@@ -257,8 +254,7 @@ namespace Billy.UI.Wpf.Core
         {
             this.CleanIfNeeded();
 
-            WeakReference wr;
-            if (!this.inner.TryGetValue(key, out wr))
+            if (!this.inner.TryGetValue(key, out WeakReference wr))
             {
                 value = null;
                 return false;
@@ -288,8 +284,7 @@ namespace Billy.UI.Wpf.Core
         {
             get
             {
-                TValue result;
-                if (!this.TryGetValue(key, out result))
+                if (!this.TryGetValue(key, out TValue result))
                 {
                     throw new KeyNotFoundException();
                 }

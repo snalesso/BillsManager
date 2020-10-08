@@ -43,8 +43,7 @@ namespace Billy.UI.Wpf.Core
             this.OnViewAttached(nonGeneratedView, context);
             ViewAttached(this, new ViewAttachedEventArgs { View = nonGeneratedView, Context = context });
 
-            var activatable = this as IActivate;
-            if (activatable == null || activatable.IsActive)
+            if (!(this is IActivate activatable) || activatable.IsActive)
             {
                 PlatformProvider.Current.ExecuteOnLayoutUpdated(nonGeneratedView, this.OnViewReady);
             }
@@ -57,8 +56,8 @@ namespace Billy.UI.Wpf.Core
         private static void AttachViewReadyOnActivated(IActivate activatable, object nonGeneratedView)
         {
             var viewReference = new WeakReference(nonGeneratedView);
-            EventHandler<ActivationEventArgs> handler = null;
-            handler = (s, e) =>
+
+            void handler(object s, ActivationEventArgs e)
             {
                 ((IActivate)s).Activated -= handler;
                 var view = viewReference.Target;
@@ -66,7 +65,8 @@ namespace Billy.UI.Wpf.Core
                 {
                     PlatformProvider.Current.ExecuteOnLayoutUpdated(view, ((ReactiveViewAware)s).OnViewReady);
                 }
-            };
+            }
+
             activatable.Activated += handler;
         }
 
@@ -102,8 +102,7 @@ namespace Billy.UI.Wpf.Core
         /// <returns>The view.</returns>
         public virtual object GetView(object context = null)
         {
-            object view;
-            this.Views.TryGetValue(context ?? DefaultContext, out view);
+            this.Views.TryGetValue(context ?? DefaultContext, out var view);
             return view;
         }
     }

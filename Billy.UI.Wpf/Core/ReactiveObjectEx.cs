@@ -14,7 +14,7 @@ namespace Billy.UI.Wpf.Core
         /// </summary>
         public ReactiveObjectEx()
         {
-            IsNotifying = true;
+            this.IsNotifying = true;
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Billy.UI.Wpf.Core
         /// </summary>
         public virtual void Refresh()
         {
-            NotifyOfPropertyChange(string.Empty);
+            this.NotifyOfPropertyChange(string.Empty);
         }
 
         /// <summary>
@@ -42,15 +42,15 @@ namespace Billy.UI.Wpf.Core
         /// <param name = "propertyName">Name of the property.</param>
         public virtual void NotifyOfPropertyChange([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
         {
-            if (IsNotifying && PropertyChanged != null)
+            if (this.IsNotifying && PropertyChanged != null)
             {
                 if (PlatformProvider.Current.PropertyChangeNotificationsOnUIThread)
                 {
-                    OnUIThread(() => OnPropertyChanged(new PropertyChangedEventArgs(propertyName)));
+                    this.OnUIThread(() => this.OnPropertyChanged(new PropertyChangedEventArgs(propertyName)));
                 }
                 else
                 {
-                    OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
+                    this.OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
                 }
             }
         }
@@ -99,7 +99,7 @@ namespace Billy.UI.Wpf.Core
 
             oldValue = newValue;
 
-            NotifyOfPropertyChange(propertyName ?? string.Empty);
+            this.NotifyOfPropertyChange(propertyName ?? string.Empty);
 
             return true;
         }
