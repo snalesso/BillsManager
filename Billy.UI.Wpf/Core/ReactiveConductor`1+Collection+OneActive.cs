@@ -28,7 +28,7 @@ namespace Billy.UI.Wpf.Core
                 /// </summary>
                 public OneActive()
                 {
-                    _items.CollectionChanged += (s, e) =>
+                    this._items.CollectionChanged += (s, e) =>
                     {
                         switch (e.Action)
                         {
@@ -43,7 +43,7 @@ namespace Billy.UI.Wpf.Core
                                 e.OldItems.OfType<IChild>().Apply(x => x.Parent = null);
                                 break;
                             case NotifyCollectionChangedAction.Reset:
-                                _items.OfType<IChild>().Apply(x => x.Parent = this);
+                                this._items.OfType<IChild>().Apply(x => x.Parent = this);
                                 break;
                         }
                     };
@@ -52,13 +52,13 @@ namespace Billy.UI.Wpf.Core
                 /// <summary>
                 /// Gets the items that are currently being conducted.
                 /// </summary>
-                public IObservableCollection<T> Items => _items;
+                public IObservableCollection<T> Items => this._items;
 
                 /// <summary>
                 /// Gets the children.
                 /// </summary>
                 /// <returns>The collection of children.</returns>
-                public override IEnumerable<T> GetChildren() => _items;
+                public override IEnumerable<T> GetChildren() => this._items;
 
                 /// <summary>
                 /// Activates the specified item.
@@ -68,18 +68,18 @@ namespace Billy.UI.Wpf.Core
                 /// <returns>A task that represents the asynchronous operation.</returns>
                 public override async Task ActivateItemAsync(T item, CancellationToken cancellationToken = default)
                 {
-                    if (item != null && item.Equals(ActiveItem))
+                    if (item != null && item.Equals(this.ActiveItem))
                     {
-                        if (IsActive)
+                        if (this.IsActive)
                         {
                             await ScreenExtensions.TryActivateAsync(item, cancellationToken);
-                            OnActivationProcessed(item, true);
+                            this.OnActivationProcessed(item, true);
                         }
 
                         return;
                     }
 
-                    await ChangeActiveItemAsync(item, false, cancellationToken);
+                    await this.ChangeActiveItemAsync(item, false, cancellationToken);
                 }
 
                 /// <summary>
@@ -98,28 +98,28 @@ namespace Billy.UI.Wpf.Core
                         await ScreenExtensions.TryDeactivateAsync(item, false, cancellationToken);
                     else
                     {
-                        var closeResult = await CloseStrategy.ExecuteAsync(new[] { item }, CancellationToken.None);
+                        var closeResult = await this.CloseStrategy.ExecuteAsync(new[] { item }, CancellationToken.None);
 
                         if (closeResult.CloseCanOccur)
-                            await CloseItemCoreAsync(item, cancellationToken);
+                            await this.CloseItemCoreAsync(item, cancellationToken);
                     }
                 }
 
                 private async Task CloseItemCoreAsync(T item, CancellationToken cancellationToken = default)
                 {
-                    if (item.Equals(ActiveItem))
+                    if (item.Equals(this.ActiveItem))
                     {
-                        var index = _items.IndexOf(item);
-                        var next = DetermineNextItemToActivate(_items, index);
+                        var index = this._items.IndexOf(item);
+                        var next = this.DetermineNextItemToActivate(this._items, index);
 
-                        await ChangeActiveItemAsync(next, true);
+                        await this.ChangeActiveItemAsync(next, true);
                     }
                     else
                     {
                         await ScreenExtensions.TryDeactivateAsync(item, true, cancellationToken);
                     }
 
-                    _items.Remove(item);
+                    this._items.Remove(item);
                 }
 
                 /// <summary>
@@ -139,7 +139,7 @@ namespace Billy.UI.Wpf.Core
                     if (toRemoveAt > -1 && toRemoveAt < list.Count - 1)
                         return list[toRemoveAt];
 
-                    return default(T);
+                    return default;
                 }
 
                 /// <summary>
@@ -149,26 +149,26 @@ namespace Billy.UI.Wpf.Core
                 /// <returns>A task that represents the asynchronous operation.</returns>
                 public override async Task<bool> CanCloseAsync(CancellationToken cancellationToken = default)
                 {
-                    var closeResult = await CloseStrategy.ExecuteAsync(_items.ToList(), cancellationToken);
+                    var closeResult = await this.CloseStrategy.ExecuteAsync(this._items.ToList(), cancellationToken);
 
                     if (!closeResult.CloseCanOccur && closeResult.Children.Any())
                     {
                         var closable = closeResult.Children;
 
-                        if (closable.Contains(ActiveItem))
+                        if (closable.Contains(this.ActiveItem))
                         {
-                            var list = _items.ToList();
-                            var next = ActiveItem;
+                            var list = this._items.ToList();
+                            var next = this.ActiveItem;
                             do
                             {
                                 var previous = next;
-                                next = DetermineNextItemToActivate(list, list.IndexOf(previous));
+                                next = this.DetermineNextItemToActivate(list, list.IndexOf(previous));
                                 list.Remove(previous);
                             } while (closable.Contains(next));
 
-                            var previousActive = ActiveItem;
-                            await ChangeActiveItemAsync(next, true);
-                            _items.Remove(previousActive);
+                            var previousActive = this.ActiveItem;
+                            await this.ChangeActiveItemAsync(next, true);
+                            this._items.Remove(previousActive);
 
                             var stillToClose = closable.ToList();
                             stillToClose.Remove(previousActive);
@@ -180,7 +180,7 @@ namespace Billy.UI.Wpf.Core
                             await deactivate.DeactivateAsync(true, cancellationToken);
                         }
 
-                        _items.RemoveRange(closable);
+                        this._items.RemoveRange(closable);
                     }
 
                     return closeResult.CloseCanOccur;
@@ -193,7 +193,7 @@ namespace Billy.UI.Wpf.Core
                 /// <returns>A task that represents the asynchronous operation.</returns>
                 protected override Task OnActivateAsync(CancellationToken cancellationToken)
                 {
-                    return ScreenExtensions.TryActivateAsync(ActiveItem, cancellationToken);
+                    return ScreenExtensions.TryActivateAsync(this.ActiveItem, cancellationToken);
                 }
 
                 /// <summary>
@@ -206,16 +206,16 @@ namespace Billy.UI.Wpf.Core
                 {
                     if (close)
                     {
-                        foreach (var deactivate in _items.OfType<IDeactivate>())
+                        foreach (var deactivate in this._items.OfType<IDeactivate>())
                         {
                             await deactivate.DeactivateAsync(true, cancellationToken);
                         }
 
-                        _items.Clear();
+                        this._items.Clear();
                     }
                     else
                     {
-                        await ScreenExtensions.TryDeactivateAsync(ActiveItem, false, cancellationToken);
+                        await ScreenExtensions.TryDeactivateAsync(this.ActiveItem, false, cancellationToken);
                     }
                 }
 
@@ -228,16 +228,16 @@ namespace Billy.UI.Wpf.Core
                 {
                     if (newItem == null)
                     {
-                        newItem = DetermineNextItemToActivate(_items, ActiveItem != null ? _items.IndexOf(ActiveItem) : 0);
+                        newItem = this.DetermineNextItemToActivate(this._items, this.ActiveItem != null ? this._items.IndexOf(this.ActiveItem) : 0);
                     }
                     else
                     {
-                        var index = _items.IndexOf(newItem);
+                        var index = this._items.IndexOf(newItem);
 
                         if (index == -1)
-                            _items.Add(newItem);
+                            this._items.Add(newItem);
                         else
-                            newItem = _items[index];
+                            newItem = this._items[index];
                     }
 
                     return base.EnsureItem(newItem);

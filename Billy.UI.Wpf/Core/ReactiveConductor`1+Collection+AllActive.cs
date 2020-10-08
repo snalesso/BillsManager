@@ -30,7 +30,7 @@ namespace Billy.UI.Wpf.Core
                 public AllActive(bool openPublicItems)
                     : this()
                 {
-                    _openPublicItems = openPublicItems;
+                    this._openPublicItems = openPublicItems;
                 }
 
                 /// <summary>
@@ -38,7 +38,7 @@ namespace Billy.UI.Wpf.Core
                 /// </summary>
                 public AllActive()
                 {
-                    _items.CollectionChanged += (s, e) =>
+                    this._items.CollectionChanged += (s, e) =>
                     {
                         switch (e.Action)
                         {
@@ -53,7 +53,7 @@ namespace Billy.UI.Wpf.Core
                                 e.OldItems.OfType<IChild>().Apply(x => x.Parent = null);
                                 break;
                             case NotifyCollectionChangedAction.Reset:
-                                _items.OfType<IChild>().Apply(x => x.Parent = this);
+                                this._items.OfType<IChild>().Apply(x => x.Parent = this);
                                 break;
                         }
                     };
@@ -62,14 +62,14 @@ namespace Billy.UI.Wpf.Core
                 /// <summary>
                 /// Gets the items that are currently being conducted.
                 /// </summary>
-                public IObservableCollection<T> Items => _items;
+                public IObservableCollection<T> Items => this._items;
 
                 /// <summary>
                 /// Called when activating.
                 /// </summary>
                 protected override Task OnActivateAsync(CancellationToken cancellationToken)
                 {
-                    return Task.WhenAll(_items.OfType<IActivate>().Select(x => x.ActivateAsync(cancellationToken)));
+                    return Task.WhenAll(this._items.OfType<IActivate>().Select(x => x.ActivateAsync(cancellationToken)));
                 }
 
                 /// <summary>
@@ -80,13 +80,13 @@ namespace Billy.UI.Wpf.Core
                 /// <returns>A task that represents the asynchronous operation.</returns>
                 protected override async Task OnDeactivateAsync(bool close, CancellationToken cancellationToken)
                 {
-                    foreach (var deactivate in _items.OfType<IDeactivate>())
+                    foreach (var deactivate in this._items.OfType<IDeactivate>())
                     {
                         await deactivate.DeactivateAsync(close, cancellationToken);
                     }
 
                     if (close)
-                        _items.Clear();
+                        this._items.Clear();
                 }
 
                 /// <summary>
@@ -96,7 +96,7 @@ namespace Billy.UI.Wpf.Core
                 /// <returns>A task that represents the asynchronous operation.</returns>
                 public override async Task<bool> CanCloseAsync(CancellationToken cancellationToken = default)
                 {
-                    var closeResult = await CloseStrategy.ExecuteAsync(_items.ToList(), cancellationToken);
+                    var closeResult = await this.CloseStrategy.ExecuteAsync(this._items.ToList(), cancellationToken);
 
                     if (!closeResult.CloseCanOccur && closeResult.Children.Any())
                     {
@@ -105,7 +105,7 @@ namespace Billy.UI.Wpf.Core
                             await deactivate.DeactivateAsync(true, cancellationToken);
                         }
 
-                        _items.RemoveRange(closeResult.Children);
+                        this._items.RemoveRange(closeResult.Children);
                     }
 
                     return closeResult.CloseCanOccur;
@@ -116,12 +116,12 @@ namespace Billy.UI.Wpf.Core
                 /// </summary>
                 protected override async Task OnInitializeAsync(CancellationToken cancellationToken)
                 {
-                    if (_openPublicItems)
-                        await Task.WhenAll(GetType().GetRuntimeProperties()
+                    if (this._openPublicItems)
+                        await Task.WhenAll(this.GetType().GetRuntimeProperties()
                             .Where(x => x.Name != "Parent" && typeof(T).GetTypeInfo().IsAssignableFrom(x.PropertyType.GetTypeInfo()))
                             .Select(x => x.GetValue(this, null))
                             .Cast<T>()
-                            .Select(i => ActivateItemAsync(i, cancellationToken)));
+                            .Select(i => this.ActivateItemAsync(i, cancellationToken)));
                 }
 
                 /// <summary>
@@ -135,12 +135,12 @@ namespace Billy.UI.Wpf.Core
                     if (item == null)
                         return;
 
-                    item = EnsureItem(item);
+                    item = this.EnsureItem(item);
 
-                    if (IsActive)
+                    if (this.IsActive)
                         await ScreenExtensions.TryActivateAsync(item, cancellationToken);
 
-                    OnActivationProcessed(item, true);
+                    this.OnActivationProcessed(item, true);
                 }
 
                 /// <summary>
@@ -157,10 +157,10 @@ namespace Billy.UI.Wpf.Core
 
                     if (close)
                     {
-                        var closeResult = await CloseStrategy.ExecuteAsync(new[] { item }, CancellationToken.None);
+                        var closeResult = await this.CloseStrategy.ExecuteAsync(new[] { item }, CancellationToken.None);
 
                         if (closeResult.CloseCanOccur)
-                            await CloseItemCoreAsync(item, cancellationToken);
+                            await this.CloseItemCoreAsync(item, cancellationToken);
                     }
                     else
                         await ScreenExtensions.TryDeactivateAsync(item, false, cancellationToken);
@@ -172,13 +172,13 @@ namespace Billy.UI.Wpf.Core
                 /// <returns>The collection of children.</returns>
                 public override IEnumerable<T> GetChildren()
                 {
-                    return _items;
+                    return this._items;
                 }
 
                 private async Task CloseItemCoreAsync(T item, CancellationToken cancellationToken = default)
                 {
                     await ScreenExtensions.TryDeactivateAsync(item, true, cancellationToken);
-                    _items.Remove(item);
+                    this._items.Remove(item);
                 }
 
                 /// <summary>
@@ -188,12 +188,12 @@ namespace Billy.UI.Wpf.Core
                 /// <returns>The item to be activated.</returns>
                 protected override T EnsureItem(T newItem)
                 {
-                    var index = _items.IndexOf(newItem);
+                    var index = this._items.IndexOf(newItem);
 
                     if (index == -1)
-                        _items.Add(newItem);
+                        this._items.Add(newItem);
                     else
-                        newItem = _items[index];
+                        newItem = this._items[index];
 
                     return base.EnsureItem(newItem);
                 }

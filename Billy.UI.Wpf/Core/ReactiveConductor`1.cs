@@ -13,25 +13,25 @@ namespace Billy.UI.Wpf.Core
         /// <inheritdoc />
         public override async Task ActivateItemAsync(T item, CancellationToken cancellationToken = default)
         {
-            if (item != null && item.Equals(ActiveItem))
+            if (item != null && item.Equals(this.ActiveItem))
             {
-                if (IsActive)
+                if (this.IsActive)
                 {
                     await ScreenExtensions.TryActivateAsync(item, cancellationToken);
-                    OnActivationProcessed(item, true);
+                    this.OnActivationProcessed(item, true);
                 }
                 return;
             }
 
-            var closeResult = await CloseStrategy.ExecuteAsync(new[] { ActiveItem }, cancellationToken);
+            var closeResult = await this.CloseStrategy.ExecuteAsync(new[] { this.ActiveItem }, cancellationToken);
 
             if (closeResult.CloseCanOccur)
             {
-                await ChangeActiveItemAsync(item, true, cancellationToken);
+                await this.ChangeActiveItemAsync(item, true, cancellationToken);
             }
             else
             {
-                OnActivationProcessed(item, false);
+                this.OnActivationProcessed(item, false);
             }
         }
 
@@ -44,16 +44,16 @@ namespace Billy.UI.Wpf.Core
         /// <returns>A task that represents the asynchronous operation.</returns>
         public override async Task DeactivateItemAsync(T item, bool close, CancellationToken cancellationToken = default)
         {
-            if (item == null || !item.Equals(ActiveItem))
+            if (item == null || !item.Equals(this.ActiveItem))
             {
                 return;
             }
 
-            var closeResult = await CloseStrategy.ExecuteAsync(new[] { ActiveItem }, CancellationToken.None);
+            var closeResult = await this.CloseStrategy.ExecuteAsync(new[] { this.ActiveItem }, CancellationToken.None);
 
             if (closeResult.CloseCanOccur)
             {
-                await ChangeActiveItemAsync(default(T), close);
+                await this.ChangeActiveItemAsync(default, close);
             }
         }
 
@@ -64,7 +64,7 @@ namespace Billy.UI.Wpf.Core
         /// <returns>A task that represents the asynchronous operation.</returns>
         public override async Task<bool> CanCloseAsync(CancellationToken cancellationToken = default)
         {
-            var closeResult = await CloseStrategy.ExecuteAsync(new[] { ActiveItem }, cancellationToken);
+            var closeResult = await this.CloseStrategy.ExecuteAsync(new[] { this.ActiveItem }, cancellationToken);
 
             return closeResult.CloseCanOccur;
         }
@@ -75,7 +75,7 @@ namespace Billy.UI.Wpf.Core
         /// <returns>A task that represents the asynchronous operation.</returns>
         protected override Task OnActivateAsync(CancellationToken cancellationToken)
         {
-            return ScreenExtensions.TryActivateAsync(ActiveItem, cancellationToken);
+            return ScreenExtensions.TryActivateAsync(this.ActiveItem, cancellationToken);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Billy.UI.Wpf.Core
         /// <returns>A task that represents the asynchronous operation.</returns>
         protected override Task OnDeactivateAsync(bool close, CancellationToken cancellationToken)
         {
-            return ScreenExtensions.TryDeactivateAsync(ActiveItem, close, cancellationToken);
+            return ScreenExtensions.TryDeactivateAsync(this.ActiveItem, close, cancellationToken);
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Billy.UI.Wpf.Core
         /// <returns>The collection of children.</returns>
         public override IEnumerable<T> GetChildren()
         {
-            return new[] { ActiveItem };
+            return new[] { this.ActiveItem };
         }
     }
 }

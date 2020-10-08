@@ -22,18 +22,18 @@ namespace Billy.UI.Wpf.Core
         /// <value>The close strategy.</value>
         public ICloseStrategy<T> CloseStrategy
         {
-            get => _closeStrategy ?? (_closeStrategy = new DefaultCloseStrategy<T>());
-            set => _closeStrategy = value;
+            get => this._closeStrategy ??= new DefaultCloseStrategy<T>();
+            set => this._closeStrategy = value;
         }
 
         Task IConductor.DeactivateItemAsync(object item, bool close, CancellationToken cancellationToken)
         {
-            return DeactivateItemAsync((T)item, close, cancellationToken);
+            return this.DeactivateItemAsync((T)item, close, cancellationToken);
         }
 
         IEnumerable IParent.GetChildren()
         {
-            return GetChildren();
+            return this.GetChildren();
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Billy.UI.Wpf.Core
 
         Task IConductor.ActivateItemAsync(object item, CancellationToken cancellationToken)
         {
-            return ActivateItemAsync((T)item, cancellationToken);
+            return this.ActivateItemAsync((T)item, cancellationToken);
         }
 
         /// <summary>
