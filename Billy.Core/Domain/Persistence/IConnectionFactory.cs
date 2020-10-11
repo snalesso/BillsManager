@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Threading.Tasks;
 
-namespace Billy.Core.Domain.Persistence
+namespace Billy.Domain.Persistence
 {
     public interface IConnectionFactory<TConnection>
         where TConnection : IDbConnection

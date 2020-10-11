@@ -8,13 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Composition\Autofac\Modules\**" />
-    <EmbeddedResource Remove="Composition\Autofac\Modules\**" />
-    <None Remove="Composition\Autofac\Modules\**" />
-    <Page Remove="Composition\Autofac\Modules\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Presentation\Billing\BillingViewModelsProxy.cs" />
     <Compile Remove="Presentation\Billing\Extractor.cs" />
     <Compile Remove="Presentation\Billing\IValueTracker.cs" />
@@ -36,12 +29,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Caliburn.Micro.ReactiveUI\src\Caliburn.Micro.ReactiveUI\Caliburn.Micro.ReactiveUI.csproj" />
     <ProjectReference Include="..\Billy.Application\Billy.Application.csproj" />
     <ProjectReference Include="..\Billy.Core\Billy.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\Billing\" />
   </ItemGroup>
 
 </Project>

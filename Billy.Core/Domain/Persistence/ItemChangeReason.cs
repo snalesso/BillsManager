@@ -1,4 +1,4 @@
-﻿namespace Billy.Core.Domain.Persistence
+﻿namespace Billy.Domain.Persistence
 {
     public enum ItemChangeReason
     {

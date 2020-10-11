@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Text;
 using Billy.Domain.Billing.Models;
 
-namespace Billy.Core.Domain.Billing.Application.DTOs
+namespace Billy.Billing.Application.DTOs
 {
-    public sealed class SupplierDTO
+    public sealed class SupplierDto
     {
         /* TODO: what happens if underlying entity changes property and for some reason UI re-scans the DTO?
          * better copy properties and not return from the source? probably yes */
         private readonly Supplier _supplier;
 
-        internal SupplierDTO(Supplier supplier)
+        public SupplierDto(Supplier supplier)
         {
             this._supplier = supplier;
         }

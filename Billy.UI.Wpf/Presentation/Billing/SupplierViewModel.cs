@@ -5,22 +5,23 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Billy.Core.Domain.Billing.Application.DTOs;
+using Billy.Billing.Application.DTOs;
 using Billy.Domain.Billing.Models;
-using Billy.Domain.Billing.Persistence;
+using Billy.Billing.Persistence;
 using Billy.UI.Wpf.Services;
 using Caliburn.Micro;
+using Caliburn.Micro.ReactiveUI;
 using ReactiveUI;
 
 namespace Billy.UI.Wpf.Presentation.Billing
 {
-    public class SupplierViewModel : Screen, IDisposable
+    public class SupplierViewModel : ReactiveScreen, IDisposable
     {
         #region constants & fields
 
         //private readonly IDialogService _dialogService;
 
-        private readonly SupplierDTO _supplierDto;
+        private readonly SupplierDto _supplierDto;
         //private readonly Func<Supplier, EditSupplierViewModel> _editSupplierTagsViewModelFactoryMethod;
 
         #endregion
@@ -28,7 +29,7 @@ namespace Billy.UI.Wpf.Presentation.Billing
         #region constructors
 
         public SupplierViewModel(
-            SupplierDTO supplierDto
+            SupplierDto supplierDto
             //, ISuppliersRepository suppliersRepository,
             //, IDialogService dialogService,
             //, Func<Supplier, EditSupplierViewModel> editSupplierViewModelFactoryMethod
@@ -45,7 +46,7 @@ namespace Billy.UI.Wpf.Presentation.Billing
         #region properties
 
         [Obsolete("Find a way to not expose this, maybe making this VM editable.")]
-        public SupplierDTO SupplierDto => this._supplierDto;
+        public SupplierDto SupplierDto => this._supplierDto;
 
         public int Id => this._supplierDto.Id;
         public string Name => this._supplierDto.Name;

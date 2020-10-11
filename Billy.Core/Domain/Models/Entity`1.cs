@@ -8,8 +8,6 @@ namespace Billy.Domain.Models
     public abstract class Entity<TIdentity> : /*Entity, IEntity,*/ IEquatable<Entity<TIdentity>>, INotifyPropertyChanged
         where TIdentity : IEquatable<TIdentity>
     {
-        #region artificial id
-
         protected Entity(TIdentity id)
         {
             //this.EnsureIsWellFormattedId(id);
@@ -18,19 +16,6 @@ namespace Billy.Domain.Models
         }
 
         public TIdentity Id { get; }
-
-        #endregion
-
-        //#region Entity
-
-        //protected override IEnumerable<object> GetIdentityIngredients()
-        //{
-        //    yield return this.Id;
-        //}
-
-        //#endregion
-
-        #region Entity<TIdentity>
 
         public override bool Equals(object obj)
         {
@@ -61,8 +46,6 @@ namespace Billy.Domain.Models
 
             return this.Id.Equals(other.Id);
         }
-
-        #endregion
 
         #region operators
 

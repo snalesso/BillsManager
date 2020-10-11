@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Billy.Core.Domain.Persistence.SQL
+namespace Billy.Domain.Persistence.SQL
 {
     public static class DbSchemaHelper
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Billy.Core.Domain.Persistence
+namespace Billy.Domain.Persistence
 {
     public interface IUnitOfWork : IDisposable // TODO: IAsyncDisposable
     {

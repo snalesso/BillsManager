@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Billy.Domain.Models;
 
-namespace Billy.Core.Domain.Persistence
+namespace Billy.Domain.Persistence
 {
     public interface IEntityRepository<TEntity, TIdentity>
         where TEntity : Entity<TIdentity>

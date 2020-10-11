@@ -5,7 +5,7 @@ using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace Billy.Core.Domain.Persistence
+namespace Billy.Domain.Persistence
 {
     public static class DbDataReaderExtensions
     {

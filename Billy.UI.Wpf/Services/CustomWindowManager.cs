@@ -15,7 +15,7 @@ namespace Billy.UI.Wpf.Services
     /// <summary>
     /// A service that manages windows.
     /// </summary>
-    [Obsolete("Use " + nameof(StyledWindowManager) + " as it adds custom functionalities without rewriting the entire class.")]
+    [Obsolete("Use " + nameof(MaterialDesignWindowManager) + " as it adds custom functionalities without rewriting the entire class.")]
     public class CustomWindowManager : IWindowManager
     {
         /// <summary>
@@ -173,7 +173,7 @@ namespace Billy.UI.Wpf.Services
             }
             else
             {
-                window = new StyledWindow
+                window = new MaterialDesignWindow
                 {
                     Content = view,
                     SizeToContent = SizeToContent.WidthAndHeight

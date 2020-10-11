@@ -1,6 +1,8 @@
 ﻿using Billy.Billing.Application;
+using Billy.Billing.Services;
 using Billy.Domain.Billing.Models;
 using Caliburn.Micro;
+using Caliburn.Micro.ReactiveUI;
 using ReactiveUI;
 using System;
 using System.Diagnostics;
@@ -13,7 +15,7 @@ namespace Billy.UI.Wpf.Presentation.Billing
 {
     public class AddSupplierViewModel :
         //EditSupplierViewModel
-        Screen // TODO: make Conductor.AllActive, where items are child-entities/ValueObject editors
+        ReactiveScreen // TODO: make Conductor.AllActive, where items are child-entities/ValueObject editors
         , IDisposable
     {
         #region constants & fields
