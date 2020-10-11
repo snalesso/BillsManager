@@ -1,12 +1,10 @@
 ﻿using System;
-using Billy.Core.Billing;
 using Billy.Domain.Billing.Models;
-using Caliburn.Micro;
-using ReactiveUI;
+using Caliburn.Micro.ReactiveUI;
 
 namespace Billy.UI.Wpf.Presentation.Billing
 {
-    public class EditBillViewModel : Screen
+    public class EditBillViewModel : ReactiveScreen
     {
         #region constants & fields
 

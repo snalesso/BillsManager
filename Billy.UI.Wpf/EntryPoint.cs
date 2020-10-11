@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Caliburn.Micro.ReactiveUI;
+using ReactiveUI;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +15,20 @@ namespace Billy.UI.Wpf
         [STAThread]
         public static void Main()
         {
+            //var x = new Xfewfwe();
+            //x.PropertyChanged += X_PropertyChanged;
+
+            //var ro = x as ReactiveObject;
+            ////ro.PropertyChanged += Ro_PropertyChanged;
+
+            //var roex = x as ReactiveObjectEx;
+            //roex.PropertyChanged += Roex_PropertyChanged;
+
+            //var rs = x as ReactiveScreen;
+            //rs.PropertyChanged += Rs_PropertyChanged;
+
+            //x.Name = "fewofjwejfwoe";
+
             if (_wasCreatedNew && _mutex.WaitOne(TimeSpan.Zero, true))
             {
                 var app = new App();
@@ -26,5 +42,39 @@ namespace Billy.UI.Wpf
                 MessageBox.Show($"{nameof(Billy)} is already running!", "Already running", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
             }
         }
+
+        //private static void Rs_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        //{
+        //    MessageBox.Show("here from rs");
+        //    //throw new NotImplementedException();
+        //}
+
+        //private static void Roex_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        //{
+        //    MessageBox.Show("here from roex");
+        //    //throw new NotImplementedException();
+        //}
+
+        //private static void Ro_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        //{
+        //    MessageBox.Show("here from ro");
+        //    //throw new NotImplementedException();
+        //}
+
+        //private static void X_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        //{
+        //    MessageBox.Show("here from feawfawefaw");
+        //    //throw new NotImplementedException();
+        //}
     }
+
+    //public class Xfewfwe : ReactiveScreen // ReactiveObject
+    //{
+    //    private string _name;
+    //    public string Name
+    //    {
+    //        get => this._name;
+    //        set => this.RaiseAndSetIfChanged(ref this._name, value);
+    //    }
+    //}
 }

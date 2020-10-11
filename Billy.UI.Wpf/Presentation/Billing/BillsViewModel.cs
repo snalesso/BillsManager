@@ -4,14 +4,14 @@ using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using Billy.Core.Billing;
-using Billy.Domain.Billing.Persistence;
+using Billy.Billing.Persistence;
 using Caliburn.Micro;
+using Caliburn.Micro.ReactiveUI;
 using ReactiveUI;
 
 namespace Billy.UI.Wpf.Presentation.Billing
 {
-    public class BillsViewModel : Screen, IDisposable
+    public class BillsViewModel : ReactiveScreen, IDisposable
     {
         #region constants & fields
 

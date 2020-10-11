@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Billy.Core.Domain.Persistence
+namespace Billy.Domain.Persistence
 {
     public sealed class ItemEventArgs<T> : EventArgs
     {

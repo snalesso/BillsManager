@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Billy.Domain.Models;
 
-namespace Billy.Core.Domain.Persistence
+namespace Billy.Domain.Persistence
 {
     // TODO: save to a copy, if save failes, reload data to undo changes to in memory entities
     // TODO: guard from concurrent Deserialize/Serialize, ecc.

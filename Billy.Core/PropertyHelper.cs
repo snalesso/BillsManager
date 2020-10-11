@@ -9,17 +9,12 @@ namespace Billy
     {
         public static string GetMemberName(this Expression expression)
         {
-            switch (expression.NodeType)
+            return expression.NodeType switch
             {
-                case ExpressionType.MemberAccess:
-                    return ((MemberExpression)expression).Member.Name;
-
-                case ExpressionType.Convert:
-                    return GetMemberName(((UnaryExpression)expression).Operand);
-
-                default:
-                    throw new NotSupportedException(expression.NodeType.ToString());
-            }
+                ExpressionType.MemberAccess => ((MemberExpression)expression).Member.Name,
+                ExpressionType.Convert => GetMemberName(((UnaryExpression)expression).Operand),
+                _ => throw new NotSupportedException(expression.NodeType.ToString()),
+            };
         }
 
         public static string GetMemberName<TObject, TMember>(this Expression<Func<TObject, TMember>> expression)

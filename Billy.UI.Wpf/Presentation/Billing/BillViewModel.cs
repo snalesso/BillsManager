@@ -6,14 +6,15 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Billy.Domain.Billing.Models;
-using Billy.Domain.Billing.Persistence;
+using Billy.Billing.Persistence;
 using Billy.UI.Wpf.Services;
 using Caliburn.Micro;
+using Caliburn.Micro.ReactiveUI;
 using ReactiveUI;
 
 namespace Billy.UI.Wpf.Presentation.Billing
 {
-    public class BillViewModel : Screen, IDisposable
+    public class BillViewModel : ReactiveScreen, IDisposable
     {
         #region constants & fields
 

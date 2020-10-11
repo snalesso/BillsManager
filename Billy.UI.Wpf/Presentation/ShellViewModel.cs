@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 using Billy.UI.Wpf.Presentation.Billing;
 using Billy.UI.Wpf.Services;
 using Caliburn.Micro;
+using Caliburn.Micro.ReactiveUI;
 
 // TODO: change/remove .Presentation namespace name
 namespace Billy.UI.Wpf.Presentation
 {
-    public class ShellViewModel : Conductor<IScreen>.Collection.AllActive, IDisposable
+    public class ShellViewModel : ReactiveConductor<IScreen>.Collection.AllActive, IDisposable
     {
         #region constancts & fields
 

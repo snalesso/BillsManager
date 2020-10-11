@@ -1,31 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Reactive;
 using System.Reactive.Disposables;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Windows.Documents;
 using Billy.Billing.Application;
-using Billy.Core.Domain.Billing.Application.DTOs;
+using Billy.Billing.Application.DTOs;
 using Billy.Domain.Billing.Models;
-using Billy.Domain.Billing.Persistence;
+using Billy.Billing.Persistence;
 using Caliburn.Micro;
 using ReactiveUI;
-using Billy.Billing.Application;
 using System.Threading.Tasks;
 using System.Threading;
+using Caliburn.Micro.ReactiveUI;
+using Billy.Billing.Services;
 
 namespace Billy.UI.Wpf.Presentation.Billing
 {
-    public class EditSupplierViewModel : Screen
+    public class EditSupplierViewModel : ReactiveScreen
     {
         #region constants & fields
 
         private readonly ISuppliersService _suppliersService;
-        private readonly SupplierDTO _supplierDto;
+        private readonly SupplierDto _supplierDto;
 
         #endregion
 
@@ -33,7 +28,7 @@ namespace Billy.UI.Wpf.Presentation.Billing
 
         public EditSupplierViewModel(
             ISuppliersService suppliersService,
-            SupplierDTO supplierDto)
+            SupplierDto supplierDto)
         {
             this._suppliersService = suppliersService ?? throw new ArgumentNullException(nameof(suppliersService));
             this._supplierDto = supplierDto ?? throw new ArgumentNullException(nameof(supplierDto));

@@ -12,12 +12,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Documents;
 using Billy.Billing.Application;
-using Billy.Core.Domain.Billing.Application.DTOs;
-//using Billy.Core.Domain.Billing.Application.DTOs;
+using Billy.Billing.Application.DTOs;
 using Billy.Domain.Billing.Models;
-using Billy.Domain.Billing.Persistence;
+using Billy.Billing.Persistence;
 using Billy.UI.Wpf.Services;
 using Caliburn.Micro;
+using Caliburn.Micro.ReactiveUI;
 using DynamicData;
 using DynamicData.Aggregation;
 using DynamicData.Alias;
@@ -32,10 +32,11 @@ using DynamicData.List;
 using DynamicData.Operators;
 using DynamicData.PLinq;
 using ReactiveUI;
+using Billy.Billing.Services;
 
 namespace Billy.UI.Wpf.Presentation.Billing
 {
-    public class SuppliersViewModel : Screen, IDisposable
+    public class SuppliersViewModel : ReactiveScreen, IDisposable
     {
         #region constants & fields
 
@@ -45,7 +46,7 @@ namespace Billy.UI.Wpf.Presentation.Billing
         //private readonly ISuppliersRepository _suppliersRepository;
         //private readonly Func<IBillingUnitOfWork> _billingUowFactoryMethod;
         private readonly Func<AddSupplierViewModel> _addSupplierViewModelFactoryMethod;
-        private readonly Func<SupplierDTO, EditSupplierViewModel> _editSupplierViewModelFactoryMethod;
+        private readonly Func<SupplierDto, EditSupplierViewModel> _editSupplierViewModelFactoryMethod;
 
         private readonly SerialDisposable _suppliersSubscription;
 
@@ -59,7 +60,7 @@ namespace Billy.UI.Wpf.Presentation.Billing
             //, Func<IBillingUnitOfWork> billingUowFactoryMethod
             , IBillingService billingService
             , Func<AddSupplierViewModel> addSupplierViewModelFactoryMethod
-            , Func<SupplierDTO, EditSupplierViewModel> editSupplierViewModelFactoryMethod
+            , Func<SupplierDto, EditSupplierViewModel> editSupplierViewModelFactoryMethod
             )
         {
             this._dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
@@ -69,13 +70,15 @@ namespace Billy.UI.Wpf.Presentation.Billing
 
             this._suppliersSubscription = new SerialDisposable().DisposeWith(this._disposables);
 
-            this.WhenSelectionChanged = Observable
-                .FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
-                    h => this.PropertyChanged += h,
-                    h => this.PropertyChanged -= h)
-                .Where(x => x.EventArgs.PropertyName == nameof(this.SelectedSupplierViewModel))
-                .Select(_ => this.SelectedSupplierViewModel)
-                .StartWith(this.SelectedSupplierViewModel);
+            //this.WhenSelectionChanged = Observable
+            //    .FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
+            //        h => this.PropertyChanged += h,
+            //        h => this.PropertyChanged -= h)
+            //    .Where(x => x.EventArgs.PropertyName == nameof(this.SelectedSupplierViewModel))
+            //    .Select(_ => this.SelectedSupplierViewModel)
+            //    .StartWith(this.SelectedSupplierViewModel);
+
+            this.WhenSelectionChanged = this.WhenAnyValue(x => x.SelectedSupplierViewModel);
 
             this.ShowAddSupplierView = ReactiveCommand.CreateFromTask(
                 () => this._dialogService.ShowDialogAsync(this._addSupplierViewModelFactoryMethod()));
@@ -210,11 +213,7 @@ namespace Billy.UI.Wpf.Presentation.Billing
         public SupplierViewModel SelectedSupplierViewModel
         {
             get => this._selectedSupplierViewModel;
-            set
-            {
-                this.Set(ref this._selectedSupplierViewModel, value);
-            }
-
+            set => this.Set(ref this._selectedSupplierViewModel, value);
         }
 
         #endregion
