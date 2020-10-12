@@ -34,7 +34,7 @@ namespace Billy.UI.Wpf.Presentation
 
             this.Items.Add(this.SuppliersViewModel);
 
-            this.DisplayName = nameof(Billy);
+            this.DisplayName = nameof(Billy) + Thread.CurrentThread.Name;
         }
 
         #endregion

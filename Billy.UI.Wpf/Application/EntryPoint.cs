@@ -24,10 +24,12 @@ namespace Billy.UI.Wpf
             //var roex = x as ReactiveObjectEx;
             //roex.PropertyChanged += Roex_PropertyChanged;
 
-            //var rs = x as ReactiveScreen;
+            //var rs = x as Screen;
             //rs.PropertyChanged += Rs_PropertyChanged;
 
             //x.Name = "fewofjwejfwoe";
+
+            Thread.CurrentThread.Name = "Main thread";
 
             if (_wasCreatedNew && _mutex.WaitOne(TimeSpan.Zero, true))
             {
