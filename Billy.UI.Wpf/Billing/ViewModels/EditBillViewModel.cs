@@ -1,5 +1,6 @@
 ﻿using System;
 using Billy.Domain.Billing.Models;
+using Caliburn.Micro;
 using Caliburn.Micro.ReactiveUI;
 
 namespace Billy.UI.Wpf.Presentation.Billing

@@ -15,7 +15,7 @@ namespace Billy.UI.Wpf.Presentation.Billing
 {
     public class AddSupplierViewModel :
         //EditSupplierViewModel
-        ReactiveScreen // TODO: make Conductor.AllActive, where items are child-entities/ValueObject editors
+        Screen // TODO: make Conductor.AllActive, where items are child-entities/ValueObject editors
         , IDisposable
     {
         #region constants & fields
