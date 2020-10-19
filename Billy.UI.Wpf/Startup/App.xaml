@@ -1,24 +1,28 @@
 ﻿<Application
-    x:Class="Billy.UI.Wpf.App"
+    x:Class="Billy.UI.Wpf.Startup.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:MaterialDesignThemes="http://materialdesigninxaml.net/winfx/xaml/themes">
+    xmlns:materialDesgin="http://materialdesigninxaml.net/winfx/xaml/themes">
 
     <Application.Resources>
 
         <ResourceDictionary>
-
             <ResourceDictionary.MergedDictionaries>
 
-                <ResourceDictionary >
+                <ResourceDictionary>
 
-                    <Color x:Key="MyColor" A="255" R="0" G="122" B="232" />
+                    <Color
+                        x:Key="MyColor"
+                        A="255"
+                        B="216"
+                        G="142"
+                        R="142" />
 
                 </ResourceDictionary>
 
-                <MaterialDesignThemes:CustomColorTheme
+                <materialDesgin:CustomColorTheme
                     BaseTheme="Dark"
-                    PrimaryColor="{StaticResource MyColor}" 
+                    PrimaryColor="{StaticResource MyColor}"
                     SecondaryColor="Lime" />
 
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />

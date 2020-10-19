@@ -1,3 +1,5 @@
+using Billy.Common.Controls;
+using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +9,8 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Navigation;
-using Billy.UI.Wpf.Presentation;
-using Caliburn.Micro;
 
-namespace Billy.UI.Wpf.Services
+namespace Billy.UI.Wpf.Common.Services
 {
     /// <summary>
     /// A service that manages windows.

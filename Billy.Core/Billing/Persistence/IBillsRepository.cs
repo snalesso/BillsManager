@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Billy.Billing.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Billy.Domain.Billing.Models;
 
 namespace Billy.Billing.Persistence
 {

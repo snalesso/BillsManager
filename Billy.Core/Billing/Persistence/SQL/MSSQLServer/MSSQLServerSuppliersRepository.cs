@@ -1,9 +1,7 @@
-﻿using Billy.Domain.Billing.Models;
-using Billy.Billing.Persistence;
+﻿using Billy.Billing.Models;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Billy.Billing.Persistence.SQL.MSSQLServer

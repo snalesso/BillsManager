@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Billy.UI.Wpf.Presentation
+namespace Billy.Common.Controls
 {
     /// <summary>
     /// Interaction logic for StyledWindow.xaml

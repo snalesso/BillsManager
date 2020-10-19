@@ -1,18 +1,16 @@
-﻿using System;
+﻿using Billy.Billing.Models;
+using Billy.Billing.Persistence;
+using Billy.UI.Wpf.Common.Services;
+using Caliburn.Micro;
+using Caliburn.Micro.ReactiveUI;
+using ReactiveUI;
+using System;
 using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Billy.Domain.Billing.Models;
-using Billy.Billing.Persistence;
-using Billy.UI.Wpf.Services;
-using Caliburn.Micro;
-using Caliburn.Micro.ReactiveUI;
-using ReactiveUI;
 
-namespace Billy.UI.Wpf.Presentation.Billing
+namespace Billy.Billing.ViewModels
 {
     public class BillViewModel : ReactiveScreen, IDisposable
     {
@@ -53,7 +51,7 @@ namespace Billy.UI.Wpf.Presentation.Billing
         #endregion
 
         #region properties
-        
+
         public int Id => this._bill.Id;
 
         #endregion

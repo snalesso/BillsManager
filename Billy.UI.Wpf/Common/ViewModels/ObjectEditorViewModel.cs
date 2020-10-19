@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Billy.Domain.Models;
+using Caliburn.Micro.ReactiveUI;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq.Expressions;
-using Billy.Domain.Models;
-using Caliburn.Micro;
-using Caliburn.Micro.ReactiveUI;
 
-namespace Billy.UI.Wpf.Presentation
+namespace Billy.UI.Wpf.Common.ViewModels
 {
     public abstract class ObjectEditorViewModel<TObject> : ReactiveScreen
         where TObject : class

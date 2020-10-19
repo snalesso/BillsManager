@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Billy.Domain.Models;
+using System;
 using System.Collections.Generic;
-using Billy.Domain.Models;
 
-namespace Billy.Domain.Billing.Models
+namespace Billy.Billing.Models
 {
     // TODO: make entity? identity is defined by type+value, other properties are decorations
     public class Contact : ValueObject<Contact>
@@ -16,7 +16,7 @@ namespace Billy.Domain.Billing.Models
             string notes)
         {
             this.Type = type;
-            this.Value = value?.Trim() ?? throw new ArgumentNullException(nameof(value));
+            this.Value = value.TrimToNull() ?? throw new ArgumentNullException(nameof(value));
             this.Name = name;
             this.Notes = notes;
         }

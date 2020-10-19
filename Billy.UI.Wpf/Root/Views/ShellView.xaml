@@ -1,0 +1,24 @@
+﻿<UserControl
+    x:Class="Billy.UI.Wpf.Root.Views.ShellView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Billing_ViewModels="clr-namespace:Billy.Billing.ViewModels"
+    xmlns:Billing_Views="clr-namespace:Billy.Billing.Views"
+    xmlns:Root_ViewModels="clr-namespace:Billy.UI.Wpf.Root.ViewModels"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:Background="{StaticResource MaterialDesignPaper}"
+    d:DataContext="{d:DesignInstance Type=Root_ViewModels:ShellViewModel,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="250"
+    d:DesignWidth="550"
+    d:TextElement.Foreground="{StaticResource MaterialDesignBody}"
+    mc:Ignorable="d">
+
+    <Grid>
+
+        <Billing_Views:SuppliersView Margin="8" DataContext="{Binding SuppliersViewModel}" />
+
+    </Grid>
+</UserControl>

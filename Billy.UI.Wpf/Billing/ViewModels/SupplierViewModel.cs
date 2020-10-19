@@ -1,19 +1,10 @@
-﻿using System;
-using System.Diagnostics;
-using System.Reactive;
-using System.Reactive.Disposables;
-using System.Reactive.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Billy.Billing.Application.DTOs;
-using Billy.Domain.Billing.Models;
-using Billy.Billing.Persistence;
-using Billy.UI.Wpf.Services;
-using Caliburn.Micro;
+﻿using Billy.Billing.Application.DTOs;
+using Billy.Billing.Models;
 using Caliburn.Micro.ReactiveUI;
-using ReactiveUI;
+using System;
+using System.Reactive.Disposables;
 
-namespace Billy.UI.Wpf.Presentation.Billing
+namespace Billy.Billing.ViewModels
 {
     public class SupplierViewModel : ReactiveScreen, IDisposable
     {
@@ -39,7 +30,7 @@ namespace Billy.UI.Wpf.Presentation.Billing
             //this._suppliersRepository = suppliersRepository ?? throw new ArgumentNullException(nameof(suppliersRepository));
             //this._dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
             //this._editSupplierTagsViewModelFactoryMethod = editSupplierViewModelFactoryMethod ?? throw new ArgumentNullException(nameof(editSupplierViewModelFactoryMethod));
-                    }
+        }
 
         #endregion
 

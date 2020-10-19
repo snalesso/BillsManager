@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using Billy.Domain.Models;
+﻿using Billy.Domain.Models;
+using System.Collections.Generic;
 
-namespace Billy.UI.Wpf.Presentation
+namespace Billy.UI.Wpf.Common.ViewModels
 {
     public abstract class ValueObjectEditorViewModel<TValueObject> : ObjectEditorViewModel<TValueObject>
         where TValueObject : ValueObject<TValueObject>

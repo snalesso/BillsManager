@@ -1,7 +1,6 @@
-﻿using System;
-using Billy.Domain.Models;
+﻿using Billy.Domain.Models;
 
-namespace Billy.Domain.Billing.Models
+namespace Billy.Billing.Models
 {
     public class Supplier : Entity<int>//, ISupplier
     {

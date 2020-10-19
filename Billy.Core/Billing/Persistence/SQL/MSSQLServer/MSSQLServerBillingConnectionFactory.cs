@@ -1,8 +1,5 @@
 ﻿using Billy.Domain.Persistence;
 using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Billy.Billing.Persistence.SQL.MSSQLServer

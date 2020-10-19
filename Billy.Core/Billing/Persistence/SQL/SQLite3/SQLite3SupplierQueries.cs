@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Data.SQLite;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using Billy.Domain.Billing.Models;
+﻿using Billy.Billing.Models;
 using Billy.Domain.Persistence.SQL;
 using Billy.Domain.Persistence.SQL.SQLite3;
+using System;
+using System.Data.SQLite;
+using System.Linq;
 
 namespace Billy.Billing.Persistence.SQL.SQLite3
 {

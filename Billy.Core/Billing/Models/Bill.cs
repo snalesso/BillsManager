@@ -1,7 +1,7 @@
 ﻿using Billy.Domain.Models;
 using System;
 
-namespace Billy.Domain.Billing.Models
+namespace Billy.Billing.Models
 {
     // TODO: ensure try-catch blocks await returned Tasks in all the source (written here so this comment will not get accidentally deleted)
     public class Bill : Entity<int>//, IBill

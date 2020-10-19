@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data.SQLite;
-using System.Reflection;
 
 namespace Billy.Domain.Persistence.SQL.SQLite3
 {

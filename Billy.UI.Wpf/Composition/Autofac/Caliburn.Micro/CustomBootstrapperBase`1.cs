@@ -1,6 +1,4 @@
 using Autofac;
-using Billy.UI.Wpf.Presentation;
-using Billy.UI.Wpf.Presentation.Billing;
 using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
@@ -63,11 +61,13 @@ namespace Billy.UI.Wpf.Composition.Autofac.Caliburn.Micro
         {
             var config = new TypeMappingConfiguration
             {
-                DefaultSubNamespaceForViews = typeof(ShellView).Namespace,
-                DefaultSubNamespaceForViewModels = typeof(ShellViewModel).Namespace
+                //DefaultSubNamespaceForViews = typeof(ShellView).Namespace,
+                //DefaultSubNamespaceForViewModels = typeof(ShellViewModel).Namespace
+
+                //UseNameSuffixesInMappings = false
             };
-            ViewLocator.ConfigureTypeMappings(config);
-            ViewModelLocator.ConfigureTypeMappings(config);
+            ViewLocator.AddSubNamespaceMapping("*.ViewModels", "*.Views");
+            //ViewModelLocator.ConfigureTypeMappings(config);
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)

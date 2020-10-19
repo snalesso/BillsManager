@@ -1,7 +1,4 @@
-﻿using Billy.Billing.Persistence;
-using Microsoft.Data.SqlClient;
-using System;
-using System.Data;
+﻿using System;
 using System.Data.Common;
 using System.Threading.Tasks;
 

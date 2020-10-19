@@ -4,7 +4,7 @@
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<UseWPF>true</UseWPF>
-		<StartupObject>Billy.UI.Wpf.EntryPoint</StartupObject>
+		<StartupObject>Billy.UI.Wpf.Startup.EntryPoint</StartupObject>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
 
@@ -13,7 +13,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Autofac" Version="5.2.0" />
+		<PackageReference Include="Autofac" Version="6.0.0" />
 		<PackageReference Include="Caliburn.Micro" Version="4.0.136-rc" />
 		<PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
 		<PackageReference Include="ReactiveUI" Version="11.5.35" />
@@ -26,9 +26,4 @@
 		<ProjectReference Include="..\Billy.Application\Billy.Application.csproj" />
 		<ProjectReference Include="..\Billy.Core\Billy.Core.csproj" />
 	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="Common\Views\" />
-	</ItemGroup>
-
 </Project>

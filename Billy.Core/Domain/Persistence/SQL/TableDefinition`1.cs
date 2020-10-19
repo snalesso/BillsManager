@@ -1,8 +1,7 @@
-﻿using Billy.Domain.Persistence.SQL;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Billy.Billing.Persistence.SQL
+namespace Billy.Domain.Persistence.SQL
 {
     internal class TableDefinition
     {

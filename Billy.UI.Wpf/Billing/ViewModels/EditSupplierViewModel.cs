@@ -1,19 +1,18 @@
-﻿using System;
+﻿using Billy.Billing.Application.DTOs;
+using Billy.Billing.Models;
+using Billy.Billing.Persistence;
+using Billy.Billing.Services;
+using Caliburn.Micro;
+using Caliburn.Micro.ReactiveUI;
+using ReactiveUI;
+using System;
 using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Disposables;
-using Billy.Billing.Application;
-using Billy.Billing.Application.DTOs;
-using Billy.Domain.Billing.Models;
-using Billy.Billing.Persistence;
-using Caliburn.Micro;
-using ReactiveUI;
-using System.Threading.Tasks;
 using System.Threading;
-using Caliburn.Micro.ReactiveUI;
-using Billy.Billing.Services;
+using System.Threading.Tasks;
 
-namespace Billy.UI.Wpf.Presentation.Billing
+namespace Billy.Billing.ViewModels
 {
     public class EditSupplierViewModel : ReactiveScreen
     {

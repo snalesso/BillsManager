@@ -1,10 +1,7 @@
-﻿using Billy.Domain.Billing.Models;
-using Billy.Billing.Persistence;
-using Microsoft.Data.SqlClient;
+﻿using Billy.Billing.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Billy.Billing.Persistence.SQL.SQLite3

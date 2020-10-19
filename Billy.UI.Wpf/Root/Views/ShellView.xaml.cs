@@ -1,7 +1,6 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
-namespace Billy.UI.Wpf.Presentation
+namespace Billy.UI.Wpf.Root.Views
 {
     /// <summary>
     /// Interaction logic for ShellView.xaml

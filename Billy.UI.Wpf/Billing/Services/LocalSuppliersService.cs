@@ -1,6 +1,6 @@
 ﻿using Billy.Billing.Application.DTOs;
+using Billy.Billing.Models;
 using Billy.Billing.Persistence;
-using Billy.Domain.Billing.Models;
 using DynamicData;
 using DynamicData.Binding;
 using System;
@@ -39,6 +39,7 @@ namespace Billy.Billing.Services
             this.SuppliersChanges = ObservableChangeSet.Create<SupplierDto, int>(
                 async cache =>
                 {
+                    //await Task.Delay(5_000);
                     var supplierDTOs = await this.GetAllAsync();
 
                     cache.AddOrUpdate(supplierDTOs);
@@ -54,7 +55,6 @@ namespace Billy.Billing.Services
                         {
                             cache.Edit(cacheUpdater =>
                             {
-
                                 var updates = e
                                     .Select(
                                         updatedSupplierDto =>
