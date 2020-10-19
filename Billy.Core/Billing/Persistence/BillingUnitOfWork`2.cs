@@ -1,5 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using System;
+﻿using System;
 using System.Data;
 using System.Data.Common;
 using System.Threading.Tasks;
@@ -40,7 +39,7 @@ namespace Billy.Billing.Persistence
 
         private IBillsRepository _bills;
         public IBillsRepository Bills => throw new NotImplementedException();
-            //this._bills ??= this._billsRepositoryFactoryMethod.Invoke(this._connection, this._transaction);
+        //this._bills ??= this._billsRepositoryFactoryMethod.Invoke(this._connection, this._transaction);
 
         public async Task CommitAsync()
         {

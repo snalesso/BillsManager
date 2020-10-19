@@ -1,8 +1,6 @@
-﻿using Billy.Billing.Application;
+﻿using Billy.Billing.Models;
 using Billy.Billing.Services;
-using Billy.Domain.Billing.Models;
 using Caliburn.Micro;
-using Caliburn.Micro.ReactiveUI;
 using ReactiveUI;
 using System;
 using System.Diagnostics;
@@ -11,7 +9,7 @@ using System.Reactive.Disposables;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Billy.UI.Wpf.Presentation.Billing
+namespace Billy.Billing.ViewModels
 {
     public class AddSupplierViewModel :
         //EditSupplierViewModel

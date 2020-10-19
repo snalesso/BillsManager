@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Billy.Billing.Application.DTOs;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Billy.Billing.Application.DTOs;
 
 namespace Billy.Billing.Services
 {

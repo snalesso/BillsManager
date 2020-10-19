@@ -1,7 +1,8 @@
 ﻿using Billy.Billing.Application.DTOs;
-using Billy.Domain.Billing.Models;
+using Billy.Billing.Models;
+using Billy.UI.Wpf.Common.ViewModels;
 
-namespace Billy.UI.Wpf.Presentation.Billing
+namespace Billy.Billing.ViewModels
 {
     public class SupplierEditorViewModel : ObjectEditorViewModel<SupplierDto>
     {

@@ -1,7 +1,4 @@
-﻿using Billy.Domain.Persistence;
-using Billy.Billing.Persistence;
-using Billy.Billing.Persistence.SQL.MSSQLServer;
-using Billy.Billing.Persistence.SQL.MSSQLServer.Dapper;
+﻿using Billy.Billing.Persistence.SQL.MSSQLServer.Dapper;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Threading.Tasks;

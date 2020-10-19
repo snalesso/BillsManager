@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Billy.Domain.Models;
+﻿using Billy.Domain.Models;
+using System.Collections.Generic;
+using System;
 
-namespace Billy.Domain.Billing.Models
+namespace Billy.Billing.Models
 {
     public class Address : ValueObject<Address>
     {

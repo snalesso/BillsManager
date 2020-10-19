@@ -1,5 +1,4 @@
 ﻿using System;
-using Billy.Domain.Billing.Models;
 
 namespace Billy.Billing.Services
 {

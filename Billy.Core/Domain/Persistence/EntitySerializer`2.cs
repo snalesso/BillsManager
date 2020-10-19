@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Billy.Domain.Models;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Threading;
 using System.Threading.Tasks;
-using Billy.Domain.Models;
 
 namespace Billy.Domain.Persistence
 {

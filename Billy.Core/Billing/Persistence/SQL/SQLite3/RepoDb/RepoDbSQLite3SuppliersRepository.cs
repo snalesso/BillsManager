@@ -7,7 +7,7 @@
 //using System.Data.SQLite;
 //using System.Data.SQLite.Generic;
 //using RepoDb.Extensions;
-//using Billy.Domain.Billing.Models;
+//using Billy.Billing.Models;
 //using Billy.Billing.Persistence;
 //using System.Reactive.Disposables;
 

@@ -1,9 +1,8 @@
-﻿using System;
-using Billy.Domain.Billing.Models;
-using Caliburn.Micro;
+﻿using Billy.Billing.Models;
 using Caliburn.Micro.ReactiveUI;
+using System;
 
-namespace Billy.UI.Wpf.Presentation.Billing
+namespace Billy.Billing.ViewModels
 {
     public class EditBillViewModel : ReactiveScreen
     {

@@ -1,21 +1,23 @@
 using Autofac;
-using Billy.Billing.Application;
-using Billy.Billing.Persistence.SQL.MSSQLServer;
 using Billy.Billing.Persistence;
+using Billy.Billing.Persistence.SQL.MSSQLServer;
 using Billy.Billing.Persistence.SQL.MSSQLServer.Dapper;
-using Billy.UI.Wpf.Presentation;
-using Billy.UI.Wpf.Presentation.Billing;
-using Billy.UI.Wpf.Services;
+using Billy.Billing.Services;
+using Billy.Billing.ViewModels;
+using Billy.Billing.Views;
+using Billy.UI.Wpf.Common.Services;
+using Billy.UI.Wpf.Root.ViewModels;
+using Billy.UI.Wpf.Root.Views;
 using global::Caliburn.Micro;
 using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
-using Billy.Billing.Services;
 
 namespace Billy.UI.Wpf.Composition.Autofac.Caliburn.Micro
 {
@@ -111,9 +113,21 @@ namespace Billy.UI.Wpf.Composition.Autofac.Caliburn.Micro
             // PRESENTATION
 
             builder.RegisterType<ShellViewModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<ShellView>().AsSelf().InstancePerLifetimeScope();
+
             builder.RegisterType<SuppliersViewModel>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<SuppliersView>().AsSelf().InstancePerLifetimeScope();
+
+            builder.RegisterType<SupplierViewModel>().AsSelf().InstancePerLifetimeScope();
+
             builder.RegisterType<AddSupplierViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<AddSupplierView>().AsSelf().InstancePerDependency();
+
+            builder.RegisterType<SupplierEditorViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<SupplierEditor>().AsSelf().InstancePerDependency();
             builder.RegisterType<EditSupplierViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<EditSupplierView>().AsSelf().InstancePerDependency();
+            builder.RegisterType<SupplierEditor>().AsSelf().InstancePerDependency();
 
             //builder.Register<Func<Track, TrackViewModel>>(
             //    ctx =>
@@ -133,19 +147,21 @@ namespace Billy.UI.Wpf.Composition.Autofac.Caliburn.Micro
             return this.assemblies ??= new[]
                 {
                     typeof(ShellViewModel).Assembly,
-                    typeof(ShellView).Assembly
+                    typeof(ShellView).Assembly,
+                    typeof(EditSupplierViewModel).Assembly,
+                    typeof(EditSupplierView).Assembly
                 }
                 .Distinct();
         }
 
         protected override void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            //if (Debugger.IsAttached)
-            //    return;
+            if (Debugger.IsAttached)
+                return;
 
-            //e.Handled = true;
+            e.Handled = true;
 
-            //Application.Current.Shutdown();
+            Application.Current.Shutdown();
         }
 
         #endregion

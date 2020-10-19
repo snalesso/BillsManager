@@ -1,13 +1,13 @@
 using Billy.UI.Wpf.Composition.Autofac.Caliburn.Micro;
 
-namespace Billy.UI.Wpf
+namespace Billy.UI.Wpf.Startup
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : System.Windows.Application
     {
-        private readonly AutofacCaliburnMicroBootstrapper  _bootstrapper;
+        private readonly AutofacCaliburnMicroBootstrapper _bootstrapper;
 
         public App()
         {

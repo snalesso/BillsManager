@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Billy.UI.Wpf.Services
+namespace Billy.UI.Wpf.Common.Services
 {
     public class WindowsTaskbarService : ITaskbarService
     {

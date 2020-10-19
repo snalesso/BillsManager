@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Billy.Billing.ViewModels;
+using Billy.UI.Wpf.Common.Services;
+using Caliburn.Micro;
+using Caliburn.Micro.ReactiveUI;
+using System;
 using System.Reactive.Disposables;
 using System.Threading;
 using System.Threading.Tasks;
-using Billy.UI.Wpf.Presentation.Billing;
-using Billy.UI.Wpf.Services;
-using Caliburn.Micro;
-using Caliburn.Micro.ReactiveUI;
 
 // TODO: change/remove .Presentation namespace name
-namespace Billy.UI.Wpf.Presentation
+namespace Billy.UI.Wpf.Root.ViewModels
 {
     public class ShellViewModel : ReactiveConductor<IScreen>.Collection.AllActive, IDisposable
     {
@@ -56,22 +56,15 @@ namespace Billy.UI.Wpf.Presentation
 
         #region methods
 
-        public override Task TryCloseAsync(bool? dialogResult = null)
+        protected override async Task OnActivateAsync(CancellationToken cancellationToken)
         {
-            return base.TryCloseAsync(dialogResult);
+            await base.OnActivateAsync(cancellationToken);
         }
 
-        public override Task<bool> CanCloseAsync(CancellationToken cancellationToken = default)
+        protected override Task OnDeactivateAsync(bool close, CancellationToken cancellationToken)
         {
-            return base.CanCloseAsync(cancellationToken);
+            return base.OnDeactivateAsync(close, cancellationToken);
         }
-
-        //protected override async Task OnActivateAsync(CancellationToken cancellationToken)
-        //{
-        //    await base.OnActivateAsync(cancellationToken);
-
-        //    await this.ActivateItemAsync(this.SuppliersViewModel);
-        //}
 
         //public override void CanClose(Action<bool> callback)
         //{

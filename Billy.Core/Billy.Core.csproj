@@ -44,4 +44,8 @@
     <Folder Include="Domain\Persistence\SQL\SQLite3\RepoDb\" />
   </ItemGroup>
   
+  <ItemGroup>
+    <ProjectReference Include="..\..\Daedalus\Src\Daedalus.ExtensionMethods\Daedalus.ExtensionMethods.csproj" />
+  </ItemGroup>
+  
 </Project>

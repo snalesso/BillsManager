@@ -1,15 +1,15 @@
-﻿using System;
+﻿using Billy.Billing.Persistence;
+using Caliburn.Micro;
+using Caliburn.Micro.ReactiveUI;
+using ReactiveUI;
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using Billy.Billing.Persistence;
-using Caliburn.Micro;
-using Caliburn.Micro.ReactiveUI;
-using ReactiveUI;
 
-namespace Billy.UI.Wpf.Presentation.Billing
+namespace Billy.Billing.ViewModels
 {
     public class BillsViewModel : ReactiveScreen, IDisposable
     {

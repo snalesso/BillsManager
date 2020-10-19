@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Billy.Domain.Billing.Models
+﻿namespace Billy.Billing.Models
 {
     public enum ContactType : int
     {

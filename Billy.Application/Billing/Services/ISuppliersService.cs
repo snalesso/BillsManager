@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
+﻿using Billy.Billing.Application.DTOs;
 using Billy.Communication;
-using Billy.Billing.Application.DTOs;
-using Billy.Domain.Billing.Models;
 using DynamicData;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Billy.Billing.Services
 {

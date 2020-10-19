@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Billy.Domain.Billing.Models;
+﻿using Billy.Billing.Models;
 
 namespace Billy.Billing.Application.DTOs
 {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Billy.Domain.Billing.Models;
-
-namespace Billy.Billing.Persistence
+﻿namespace Billy.Billing.Persistence
 {
     public static class IBillsRepositoryExtensions
     {

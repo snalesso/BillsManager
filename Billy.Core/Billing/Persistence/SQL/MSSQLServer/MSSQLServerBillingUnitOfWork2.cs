@@ -1,6 +1,5 @@
-﻿using System;
-using Billy.Billing.Persistence;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
+using System;
 
 namespace Billy.Billing.Persistence.SQL.MSSQLServer
 {

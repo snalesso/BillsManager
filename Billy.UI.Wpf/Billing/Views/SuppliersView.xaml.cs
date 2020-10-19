@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Billy.Billing.ViewModels;
+using System.Reactive.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace Billy.UI.Wpf.Presentation.Billing
+namespace Billy.Billing.Views
 {
     /// <summary>
     /// Interaction logic for SuppliersView.xaml
@@ -23,6 +14,18 @@ namespace Billy.UI.Wpf.Presentation.Billing
         public SuppliersView()
         {
             this.InitializeComponent();
+        }
+
+        private async void ListViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left
+                //&& e.ClickCount == 2
+                && this.DataContext is SuppliersViewModel suppliersViewModel
+                && sender is FrameworkElement fe
+                && fe.DataContext is SupplierViewModel supplierViewModel)
+            {
+                await suppliersViewModel.ShowEditSupplierView.Execute(supplierViewModel);
+            }
         }
     }
 }

@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Collections.ObjectModel;
-using System.Data;
-using System.Data.SqlTypes;
-using System.Dynamic;
-using System.Linq;
-using System.Threading.Tasks;
-using Billy.Domain.Billing.Models;
+﻿using Billy.Billing.Models;
 using Billy.Domain.Persistence;
-using Billy.Billing.Persistence.SQL.MSSQLServer.Dapper;
+using Billy.Domain.Persistence.SQL;
 using Dapper;
-using Microsoft.Data.SqlClient;
-using Billy.Domain.Persistence;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SQLite;
 //using Billy.Domain.Persistence.SQL.MSSQLServer;
 using System.Diagnostics;
-using Billy.Domain.Persistence.SQL;
-using Billy.Billing.Persistence.SQL.MSSQLServer;
-using System.Data.SQLite;
-using Billy.Billing.Persistence.SQL.SQLite3;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
 {

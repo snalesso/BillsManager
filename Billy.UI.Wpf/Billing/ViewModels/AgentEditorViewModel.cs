@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-using Billy.Domain.Billing.Models;
+﻿using Billy.Billing.Models;
+using Billy.UI.Wpf.Common.ViewModels;
+using System.Collections.Generic;
 
-namespace Billy.UI.Wpf.Presentation.Billing
+namespace Billy.Billing.ViewModels
 {
     public class AgentEditorViewModel : ValueObjectEditorViewModel<Agent>
     {

@@ -1,7 +1,7 @@
+using Billy.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Billy.Domain.Models;
 
 namespace Billy.Domain.Persistence
 {

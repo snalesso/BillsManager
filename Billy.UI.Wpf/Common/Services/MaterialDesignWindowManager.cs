@@ -1,8 +1,8 @@
-﻿using System.Windows;
-using Billy.UI.Wpf.Presentation;
+﻿using Billy.Common.Controls;
 using Caliburn.Micro;
+using System.Windows;
 
-namespace Billy.UI.Wpf.Services
+namespace Billy.UI.Wpf.Common.Services
 {
     public class MaterialDesignWindowManager : WindowManager
     {

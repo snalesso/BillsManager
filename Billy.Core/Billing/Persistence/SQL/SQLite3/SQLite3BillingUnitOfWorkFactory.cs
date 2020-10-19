@@ -1,10 +1,5 @@
-﻿using Billy.Billing.Persistence;
-using Billy.Billing.Persistence.SQL.SQLite3;
-using Billy.Billing.Persistence.SQL.SQLite3.Dapper;
-using System;
-using System.Collections.Generic;
+﻿using Billy.Billing.Persistence.SQL.SQLite3.Dapper;
 using System.Data.SQLite;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Billy.Billing.Persistence.SQL.SQLite3
