@@ -62,8 +62,6 @@ namespace Billy.Billing.Persistence.SQL
 
         #region READ
 
-        #region READ
-
         #region helpers
 
         // TODO: get rid of this trick?
@@ -348,8 +346,6 @@ namespace Billy.Billing.Persistence.SQL
         {
             throw new NotImplementedException();
         }
-
-        #endregion
 
         #endregion
     }
