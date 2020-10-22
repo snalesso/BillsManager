@@ -25,6 +25,8 @@ namespace Billy.Billing.ViewModels
         private readonly IDialogService _dialogService;
         private readonly IBillingService _billingService;
 
+        private readonly ISourceCache<SupplierDto, long> _suppliersSourceCache;
+
         private readonly Func<AddSupplierViewModel> _addSupplierViewModelFactoryMethod;
         private readonly Func<SupplierDto, EditSupplierViewModel> _editSupplierViewModelFactoryMethod;
 
@@ -47,16 +49,33 @@ namespace Billy.Billing.ViewModels
             this._editSupplierViewModelFactoryMethod = editSupplierViewModelFactoryMethod ?? throw new ArgumentNullException(nameof(editSupplierViewModelFactoryMethod));
 
             this._suppliersSubscription = new SerialDisposable().DisposeWith(this._disposables);
+            this._suppliersSourceCache = new SourceCache<SupplierDto, long>(x => x.Id).DisposeWith(this._disposables);
 
             this.WhenSelectionChanged = this.WhenAnyValue(x => x.SelectedSupplierViewModel).DistinctUntilChanged();
+            this.WhenHasSelectionChanged = this.WhenSelectionChanged.Select(x => x != null).DistinctUntilChanged();
 
-            this.ShowAddSupplierView = ReactiveCommand.CreateFromTask(
-                () => this._dialogService.ShowDialogAsync(this._addSupplierViewModelFactoryMethod()));
-            this.ShowAddSupplierView.ThrownExceptions
+            this.LoadSuppliers = ReactiveCommand.Create(
+                () =>
+                {
+                    this._suppliersSourceCache.Edit(async updater =>
+                    {
+                        var items = await this._billingService.Suppliers.GetAllAsync().ConfigureAwait(false);
+                        updater.AddOrUpdate(items);
+                    });
+                })
+                .DisposeWith(this._disposables);
+            _ = this.LoadSuppliers.ThrownExceptions
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(ex => Debug.WriteLine(ex))
                 .DisposeWith(this._disposables);
-            this.ShowAddSupplierView.DisposeWith(this._disposables);
+
+            this.ShowAddSupplierView = ReactiveCommand.CreateFromTask(
+                () => this._dialogService.ShowDialogAsync(this._addSupplierViewModelFactoryMethod()))
+                .DisposeWith(this._disposables);
+            _ = this.ShowAddSupplierView.ThrownExceptions
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Subscribe(ex => Debug.WriteLine(ex))
+                .DisposeWith(this._disposables);
 
             this.RemoveSupplier = ReactiveCommand.CreateFromTask(
                 async (SupplierViewModel supplierViewModel) =>
@@ -75,12 +94,12 @@ namespace Billy.Billing.ViewModels
                     // TODO: handle if removed failed
                     var wasRemoved = await this._billingService.Suppliers.RemoveAsync(supplierViewModel.Id);
                 }
-                , this.WhenSelectionChanged.Select(x => x != null));
-            this.RemoveSupplier.ThrownExceptions
+                , this.WhenHasSelectionChanged)
+                .DisposeWith(this._disposables);
+            _ = this.RemoveSupplier.ThrownExceptions
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(ex => Debug.WriteLine(ex))
                 .DisposeWith(this._disposables);
-            this.RemoveSupplier.DisposeWith(this._disposables);
 
             this.ShowEditSupplierView = ReactiveCommand.CreateFromTask(
                  async (SupplierViewModel supplierViewModel) =>
@@ -91,16 +110,15 @@ namespace Billy.Billing.ViewModels
                          return;
                      }
 
-                     await this._dialogService.ShowDialogAsync(
-                         this._editSupplierViewModelFactoryMethod.Invoke(
-                             supplierViewModel.SupplierDto));
+                     var editSupplierVM = this._editSupplierViewModelFactoryMethod.Invoke(supplierViewModel.SupplierDto);
+                     await this._dialogService.ShowDialogAsync(editSupplierVM);
                  }
-                 , this.WhenSelectionChanged.Select(x => x != null));
-            this.ShowEditSupplierView.ThrownExceptions
+                 , this.WhenHasSelectionChanged)
+                .DisposeWith(this._disposables); ;
+            _ = this.ShowEditSupplierView.ThrownExceptions
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(ex => Debug.WriteLine(ex))
                 .DisposeWith(this._disposables);
-            this.ShowEditSupplierView.DisposeWith(this._disposables);
 
             //this.SortedFilteredSupplierViewModelsROOC
             //    .ObserveCollectionChanges()
@@ -128,16 +146,15 @@ namespace Billy.Billing.ViewModels
         #region properties
 
         public IObservable<SupplierViewModel> WhenSelectionChanged { get; }
+        public IObservable<bool> WhenHasSelectionChanged { get; }
 
-        private ReadOnlyObservableCollection<SupplierViewModel> _sortedFilteredSupplierViewModelsROOC;
-        public ReadOnlyObservableCollection<SupplierViewModel> SortedFilteredSupplierViewModelsROOC
+        private ReadOnlyObservableCollection<SupplierViewModel> _supplierViewModels;
+        public ReadOnlyObservableCollection<SupplierViewModel> SupplierViewModels
         {
-            get { return this._sortedFilteredSupplierViewModelsROOC; }
-            private set => this.Set(ref this._sortedFilteredSupplierViewModelsROOC, value);
+            get { return this._supplierViewModels; }
+            private set => this.Set(ref this._supplierViewModels, value);
         }
 
-        //private SupplierViewModel _previousSelection = null;
-        //private bool _needsReselection = false;
         private SupplierViewModel _selectedSupplierViewModel;
         public SupplierViewModel SelectedSupplierViewModel
         {
@@ -145,77 +162,76 @@ namespace Billy.Billing.ViewModels
             set => this.Set(ref this._selectedSupplierViewModel, value);
         }
 
-        //private readonly ObservableAsPropertyHelper<bool> _isCollectionSet_OAPH;
-        //public bool IsCollectionSet => this._isCollectionSet_OAPH.Value;
-
         #endregion
 
         #region methods
 
         private void SubscribeToSuppliers()
         {
-            this._suppliersSubscription.Disposable = this._billingService.Suppliers.SuppliersChanges
-                //.RefCount()
+            //this._suppliersSubscription.Disposable = this._billingService.Suppliers.SuppliersChanges
+            this._suppliersSubscription.Disposable = this._billingService.Suppliers.Suppliers
+                .Connect()
+                .RefCount()
                 .Transform(
                     supplier => new SupplierViewModel(supplier),
                     new ParallelisationOptions(ParallelType.Parallelise))
-                  //.OnItemUpdated((current, previous) =>
-                  //{
-                  //    // TODO: (better?) alternative: create an observable (selection change, collection.update) => if (needs_handle_update) -> change selection
-                  //    if (this.SelectedSupplierViewModel != previous || previous == current)
-                  //        return;
+                //.OnItemUpdated((current, previous) =>
+                //{
+                //    // TODO: (better?) alternative: create an observable (selection change, collection.update) => if (needs_handle_update) -> change selection
+                //    if (this.SelectedSupplierViewModel != previous || previous == current)
+                //        return;
 
-                  //    //this._needsReselection = true;
-                  //    this._previousSelection = this.SelectedSupplierViewModel;
+                //    //this._needsReselection = true;
+                //    this._previousSelection = this.SelectedSupplierViewModel;
 
-                  //    var plan = this.SortedFilteredSupplierViewModelsROOC
-                  //        .ObserveCollectionChanges()
-                  //        .Where(x =>
-                  //           {
-                  //               var replacedItem = x.EventArgs.OldItems[0];
+                //    var plan = this.SortedFilteredSupplierViewModelsROOC
+                //        .ObserveCollectionChanges()
+                //        .Where(x =>
+                //           {
+                //               var replacedItem = x.EventArgs.OldItems[0];
 
-                  //               var z = x.EventArgs.Action == NotifyCollectionChangedAction.Replace
-                  //               && x.EventArgs.OldItems.Count >= 1
-                  //               && replacedItem == this._previousSelection;
+                //               var z = x.EventArgs.Action == NotifyCollectionChangedAction.Replace
+                //               && x.EventArgs.OldItems.Count >= 1
+                //               && replacedItem == this._previousSelection;
 
-                  //               return z;
-                  //           })
-                  //            .Take(1)
-                  //        .Select(x => x.EventArgs.NewItems.Count >= 1 ? x.EventArgs.NewItems[0] as SupplierViewModel : default)
-                  //        .And(
-                  //            this.WhenPropertyChanged(x => x.SelectedSupplierViewModel)
-                  //            .Take(1)
-                  //            .Where(x => x.Value == null)
-                  //            .Select(_ => Unit.Default))
-                  //        .Then((x, y) =>
-                  //        {
-                  //            return x;
-                  //        });
+                //               return z;
+                //           })
+                //            .Take(1)
+                //        .Select(x => x.EventArgs.NewItems.Count >= 1 ? x.EventArgs.NewItems[0] as SupplierViewModel : default)
+                //        .And(
+                //            this.WhenPropertyChanged(x => x.SelectedSupplierViewModel)
+                //            .Take(1)
+                //            .Where(x => x.Value == null)
+                //            .Select(_ => Unit.Default))
+                //        .Then((x, y) =>
+                //        {
+                //            return x;
+                //        });
 
-                  //    Observable.When(plan).Take(1).Subscribe(x =>
-                  //    {
-                  //        this._previousSelection = null;
-                  //        this.SelectedSupplierViewModel = x;
-                  //    });
-                  //})
-                  //.DeferUntilLoaded()
-                  //.Multicast(new ReplaySubject<IChangeSet<SupplierViewModel, int>>())
-                  //.AutoConnect(1, subscription => this._suppliersSubscription.Disposable = subscription)
+                //    Observable.When(plan).Take(1).Subscribe(x =>
+                //    {
+                //        this._previousSelection = null;
+                //        this.SelectedSupplierViewModel = x;
+                //    });
+                //})
+                //.DeferUntilLoaded()
+                //.Multicast(new ReplaySubject<IChangeSet<SupplierViewModel, int>>())
+                //.AutoConnect(1, subscription => this._suppliersSubscription.Disposable = subscription)
 
-                  //.ObserveOn(RxApp.TaskpoolScheduler)
-                  .ObserveOn(RxApp.MainThreadScheduler)
-                  //.SubscribeOn(RxApp.MainThreadScheduler)
+                //.ObserveOn(RxApp.TaskpoolScheduler)
+                .ObserveOn(RxApp.MainThreadScheduler)
+                //.SubscribeOn(RxApp.MainThreadScheduler)
 
-                  .Bind(out var supplierVMs)
-                  .DisposeMany()
+                .Bind(out var supplierVMs)
+                .DisposeMany()
 
-                  //.SubscribeOn(RxApp.TaskpoolScheduler)
+                //.SubscribeOn(RxApp.TaskpoolScheduler)
 
-                  // TODO: .MonitorStatus
-                  // TODO: delay subscription to OnActivate
-                  .Subscribe();
+                // TODO: .MonitorStatus
+                // TODO: delay subscription to OnActivate
+                .Subscribe();
 
-            this.SortedFilteredSupplierViewModelsROOC = supplierVMs;
+            this.SupplierViewModels = supplierVMs;
         }
 
         public void UnsubscribeFromSuppliers()
@@ -250,6 +266,8 @@ namespace Billy.Billing.ViewModels
         #endregion
 
         #region commands
+
+        public ReactiveCommand<Unit, Unit> LoadSuppliers { get; }
 
         public ReactiveCommand<Unit, Unit> ShowAddSupplierView { get; }
         public ReactiveCommand<SupplierViewModel, Unit> ShowEditSupplierView { get; }

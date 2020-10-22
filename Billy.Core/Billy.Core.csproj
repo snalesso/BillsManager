@@ -34,14 +34,11 @@
     <Compile Remove="Billing\Persistence\SQL\SQLite3\Dapper\DapperSQLite3ValueObjectSplitter.cs" />
     <Compile Remove="Billing\Persistence\SQL\SQLite3\Dapper\DictionaryWritingTools.cs" />
     <Compile Remove="Domain\Models\INotifyingTrackableErroring.cs" />
-    <Compile Remove="Domain\Persistence\SQL\MSSQLServer\MSSQLServerSchemaHelper.cs" />
     <Compile Remove="OldNewValues`1.cs" />
   </ItemGroup>
   
   <ItemGroup>
     <Folder Include="Billing\Persistence\SQL\SQLite3\EFCore\" />
-    <Folder Include="Domain\Persistence\SQL\MSSQLServer\" />
-    <Folder Include="Domain\Persistence\SQL\SQLite3\RepoDb\" />
   </ItemGroup>
   
   <ItemGroup>

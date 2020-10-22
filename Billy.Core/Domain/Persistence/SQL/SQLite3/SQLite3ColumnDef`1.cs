@@ -3,10 +3,10 @@ using System.Data.SQLite;
 
 namespace Billy.Domain.Persistence.SQL.SQLite3
 {
-    internal class SQLite3ColumnDef<TTable, TColumn> : SQLColumnDef<TTable, TColumn>
+    internal class SQLite3ColumnDef<TEdit> : SQLColumnDef<TEdit>
     {
         public SQLite3ColumnDef(
-            Func<TTable, TColumn> columnValueExtractor,
+            Func<TEdit, string> columnValueExtractor,
             string name,
             TypeAffinity typeAffinity,
             bool isNotNull = false,

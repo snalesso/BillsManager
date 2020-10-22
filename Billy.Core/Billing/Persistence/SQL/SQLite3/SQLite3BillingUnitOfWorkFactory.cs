@@ -1,5 +1,7 @@
 ﻿using Billy.Billing.Persistence.SQL.SQLite3.Dapper;
+using System;
 using System.Data.SQLite;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Billy.Billing.Persistence.SQL.SQLite3
@@ -30,9 +32,35 @@ namespace Billy.Billing.Persistence.SQL.SQLite3
             {
                 this._connection = new SQLiteConnection(SQLite3BillingConnectionFactory.ConnectionString);
                 await this._connection.OpenAsync();
+
+                // TODO: execute only when needed
+                await this.EnsureSchemaAsync();
             }
 
             return new SQLite3BillingUnitOfWork(this._connection, this.GetSuppliersRepository);
+        }
+
+        private async Task EnsureSchemaAsync()
+        {
+            using (var initTrans = await this._connection.BeginTransactionAsync().ConfigureAwait(false) as SQLiteTransaction)
+            {
+                try
+                {
+                    //var drop = "Drop table if exists Supplier";
+                    var createSuppliersSQL = SQLite3SupplierQueries.GetCreateTableQuery();
+                    var cmd = new SQLiteCommand(
+                        //drop + ";" + 
+                        createSuppliersSQL,
+                        this._connection, initTrans);
+                    var result = await cmd.ExecuteNonQueryAsync().ConfigureAwait(false);
+                    await initTrans.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    // TODO: handle
+                    Debug.WriteLine(ex);
+                }
+            }
         }
 
         #region IDisposable

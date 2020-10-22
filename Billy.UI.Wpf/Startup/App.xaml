@@ -9,23 +9,51 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
 
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+
                 <ResourceDictionary>
 
                     <Color
-                        x:Key="MyColor"
+                        x:Key="MyViolet"
                         A="255"
-                        B="216"
-                        G="142"
-                        R="142" />
+                        B="226"
+                        G="155"
+                        R="155" />
+
+                    <Color
+                        x:Key="UncleGreen"
+                        A="255"
+                        B="140"
+                        G="240"
+                        R="170" />
+
+                    <Color
+                        x:Key="UncleGreenDark"
+                        A="255"
+                        B="78"
+                        G="186"
+                        R="68" />
+
+                    <Color
+                        x:Key="UncleGreenDark2"
+                        A="255"
+                        B="37"
+                        G="135"
+                        R="37" />
 
                 </ResourceDictionary>
 
-                <materialDesgin:CustomColorTheme
+                <!--<materialDesgin:CustomColorTheme
+                    x:Name="Theme1"
                     BaseTheme="Dark"
-                    PrimaryColor="{StaticResource MyColor}"
-                    SecondaryColor="Lime" />
+                    PrimaryColor="{StaticResource UncleGreen}"
+                    SecondaryColor="GhostWhite" />-->
 
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <materialDesgin:CustomColorTheme
+                    x:Name="Theme2"
+                    BaseTheme="Light"
+                    PrimaryColor="{StaticResource UncleGreenDark2}"
+                    SecondaryColor="GhostWhite" />
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

@@ -2,10 +2,12 @@ using Autofac;
 using Billy.Billing.Persistence;
 using Billy.Billing.Persistence.SQL.MSSQLServer;
 using Billy.Billing.Persistence.SQL.MSSQLServer.Dapper;
+using Billy.Billing.Persistence.SQL.SQLite3;
 using Billy.Billing.Services;
 using Billy.Billing.ViewModels;
 using Billy.Billing.Views;
 using Billy.UI.Wpf.Common.Services;
+using Billy.UI.Wpf.Composition.Autofac.Modules;
 using Billy.UI.Wpf.Root.ViewModels;
 using Billy.UI.Wpf.Root.Views;
 using global::Caliburn.Micro;
@@ -13,6 +15,7 @@ using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Data.SQLite;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -76,15 +79,24 @@ namespace Billy.UI.Wpf.Composition.Autofac.Caliburn.Micro
             //    return conn;
 
             //})
-            builder.RegisterInstance(new SqlConnection(@$"Server=.;" + "Integrated Security=SSPI;" + "Database=Billy;"))
-                .As<IDbConnection>()
-                .As<DbConnection>()
-                .As<SqlConnection>()
-                .OnActivating(x =>
-                {
-                    x.Instance.Open();
-                })
-                .SingleInstance();
+            //builder.RegisterInstance(new SqlConnection(@$"Server=.;" + "Integrated Security=SSPI;" + "Database=Billy;"))
+            //    .As<IDbConnection>()
+            //    .As<DbConnection>()
+            //    .As<SqlConnection>()
+            //    .OnActivating(connectionAEA => connectionAEA.Instance.Open())
+            //    .SingleInstance();<
+            //builder.RegisterType<MSSQLServerBillingUnitOfWorkFactory>().As<IBillingUnitOfWorkFactory>().InstancePerLifetimeScope();
+            //builder.RegisterType<DapperMSSQLServerSuppliersRepository>()
+            //    .As<ISuppliersRepository>()
+            //    .As<MSSQLServerSuppliersRepository>()
+            //    .InstancePerLifetimeScope();
+
+            //builder.RegisterInstance(new SQLiteConnection(SQLite3BillingConnectionFactory.ConnectionString))
+            //    .As<IDbConnection>()
+            //    .As<DbConnection>()
+            //    .As<SQLiteConnection>()
+            //    .OnActivating(connectionAEA => connectionAEA.Instance.Open())
+            //    .SingleInstance();
 
             // SQLite3
 
@@ -92,14 +104,11 @@ namespace Billy.UI.Wpf.Composition.Autofac.Caliburn.Micro
             //builder.RegisterType<SQLite3BillingUnitOfWork>().As<IBillingUnitOfWork>().InstancePerLifetimeScope();
 
             // MS SQL Server
+            //builder.RegisterModule<Billing_MSSQLServer>();
+            builder.RegisterModule<Billing_SQLite3>();
 
             // TODO: configure modules to register components groups for faster MSSQLS + Dapper, SQLite3 + Dapper, etc ...
             //builder.RegisterType<MSSQLServerBillingConnectionFactory>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<MSSQLServerBillingUnitOfWorkFactory>().As<IBillingUnitOfWorkFactory>().InstancePerLifetimeScope();
-            builder.RegisterType<DapperMSSQLServerSuppliersRepository>()
-                .As<ISuppliersRepository>()
-                .As<MSSQLServerSuppliersRepository>()
-                .InstancePerLifetimeScope();
             //builder.RegisterType<MSSQLServerBillingUnitOfWork>().As<IBillingUnitOfWork>().InstancePerLifetimeScope();
             //builder.RegisterType<MSSQLServerBillingUnitOfWork2>().As<IBillingUnitOfWork>().InstancePerLifetimeScope();
             //builder.RegisterType<BillingUnitOfWork>().As<IBillingUnitOfWork>().InstancePerLifetimeScope();

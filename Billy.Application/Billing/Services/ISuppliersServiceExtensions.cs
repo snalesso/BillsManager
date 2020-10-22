@@ -10,7 +10,7 @@ namespace Billy.Billing.Services
         {
             return service.CreateAndAddAsync(new Dictionary<string, object>(data));
         }
-        public static Task UpdateAsync(this ISuppliersService service, int supplierId, IReadOnlyDictionary<string, object> changes)
+        public static Task UpdateAsync(this ISuppliersService service, long supplierId, IReadOnlyDictionary<string, object> changes)
         {
             return service.UpdateAsync(supplierId, new Dictionary<string, object>(changes));
         }

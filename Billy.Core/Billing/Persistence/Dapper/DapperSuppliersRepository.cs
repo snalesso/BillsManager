@@ -2,51 +2,88 @@
 using Billy.Domain.Persistence;
 using Billy.Domain.Persistence.SQL;
 using Dapper;
-using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 //using Billy.Domain.Persistence.SQL.MSSQLServer;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Billy.Billing.Persistence.SQL.MSSQLServer.Dapper
+namespace Billy.Billing.Persistence.SQL
 {
-    public class DapperMSSQLServerSuppliersRepository : MSSQLServerSuppliersRepository
+    public abstract class DapperSuppliersRepository : ISuppliersRepository
     {
+        #region fields & constants
+
+        protected readonly DbConnection _connection;
+        protected readonly DbTransaction _transaction;
+
+        #endregion
+
         #region ctor
 
-        public DapperMSSQLServerSuppliersRepository(
-            SqlConnection connection,
-            SqlTransaction transaction = null)
-            : base(connection, transaction)
+        public DapperSuppliersRepository(
+            DbConnection connection,
+            DbTransaction transaction = null)
         {
+            this._connection = connection ?? throw new ArgumentNullException(nameof(connection));
+            this._transaction = transaction;
         }
 
         #endregion
 
         #region methods
 
+        #region core
+
+        protected abstract string GetSelectScopeIdentitySQL();
+
+        protected virtual string GetInsertSingleSQLFormat(IEnumerable<KeyValuePair<string, object>> data)
+        {
+            var columns = data.Select(x => "\"" + x.Key + "\"");
+            //var values = data.Select(x => x.Value);
+            var values = data.Select(x => "@" + x.Key);
+            return $"insert into \"{nameof(Supplier)}\" ({string.Join(",", columns)}) values ({string.Join(",", values)})";
+        }
+
+        protected virtual string GetSelectAll()
+        {
+            return $"select * from \"{nameof(Supplier)}\"";
+        }
+
+        protected virtual string GetSelectAllWhereId()
+        {
+            return this.GetSelectAll() + $" where \"{nameof(Supplier.Id)}\" = @{nameof(Supplier.Id)};";
+        }
+
+        #endregion
+
+        #region READ
+
         #region READ
 
         #region helpers
 
         // TODO: get rid of this trick?
-        private SqlTransaction GetTransactionIfAvailable() => this._transaction.Connection != null ? this._transaction : null;
+        private DbTransaction GetTransactionIfAvailable() => this._transaction.Connection != null ? this._transaction : null;
 
         #endregion
 
-        public override async Task<IReadOnlyCollection<Supplier>> GetMultipleAsync()
+        #endregion
+
+        public async Task<IReadOnlyCollection<Supplier>> GetMultipleAsync()
         {
             try
             {
                 var suppliers = new List<Supplier>();
 
-                await using (var reader = await SqlMapper.ExecuteReaderAsync(
+                var reader = await SqlMapper.ExecuteReaderAsync(
                     cnn: this._connection,
-                    sql: $"select * from [{nameof(Supplier)}];",
-                    transaction: this.GetTransactionIfAvailable()))
+                    sql: this.GetSelectAll(), // $"select * from [{nameof(Supplier)}];",
+                    transaction: this.GetTransactionIfAvailable());
+                await using (reader)
                 {
                     while (await reader.ReadAsync())
                     {
@@ -93,12 +130,14 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer.Dapper
             }
         }
 
-        public override async Task<Supplier> GetByIdAsync(long id)
+        public async Task<Supplier> GetByIdAsync(long id)
         {
             try
             {
-                var queryParams = new { SearchedId = id };
-                var query = $"select * from [{nameof(Supplier)}] where [{nameof(Supplier.Id)}] = @{nameof(queryParams.SearchedId)};";
+                var queryParams = new DynamicParameters();
+                queryParams.Add(nameof(Supplier.Id), id);
+                var query = this.GetSelectAllWhereId();
+                //$"select * from [{nameof(Supplier)}] where [{nameof(Supplier.Id)}] = @{nameof(queryParams.SearchedId)};";
 
                 var lastInsertedRow = await SqlMapper.QueryFirstOrDefaultAsync(
                     cnn: this._connection,
@@ -136,7 +175,7 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer.Dapper
             }
         }
 
-        public override async Task<IReadOnlyCollection<Supplier>> GetByIdAsync(params long[] ids)
+        public async Task<IReadOnlyCollection<Supplier>> GetByIdAsync(params long[] ids)
         {
             try
             {
@@ -187,27 +226,24 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer.Dapper
 
         #region WRITE
 
-        public override async Task<Supplier> CreateAndAddAsync(IEnumerable<KeyValuePair<string, object>> data)
+        public async Task<Supplier> CreateAndAddAsync(IEnumerable<KeyValuePair<string, object>> data)
         {
             try
             {
                 var flattenedData = DbSchemaHelper.FlattenChanges(new Dictionary<string, object>(data));
-                var columns = flattenedData.Select(x => "[" + x.Key + "]");
-                //var values = data.Select(x => x.Value);
-                var values = flattenedData.Select(x => "@" + x.Key);
-                var sql =
-                    $"insert into [{nameof(Supplier)}] ({string.Join(",", columns)}) values ({string.Join(",", values)});" +
-                    "SELECT SCOPE_IDENTITY();";
+                var sql = string.Join(";",
+                    this.GetInsertSingleSQLFormat(flattenedData),
+                    this.GetSelectScopeIdentitySQL());
 
                 // TODO: consider using QueryMultipleAsync
-                var id = await SqlMapper.ExecuteScalarAsync<int>(
+                var id = await SqlMapper.ExecuteScalarAsync<long>(
                     this._connection,
                     new CommandDefinition(
                         commandText: sql,
                         parameters: flattenedData.Select(kvp => new KeyValuePair<string, object>("@" + kvp.Key, kvp.Value)),
                         transaction: this._transaction));
 
-                sql = $"select * from [{nameof(Supplier)}] where [{nameof(Supplier.Id)}] = @{nameof(Supplier.Id)};";
+                sql = this.GetSelectAllWhereId();
 
                 var lastInsertedRow = await SqlMapper.QueryFirstOrDefaultAsync(
                     cnn: this._connection,
@@ -251,7 +287,7 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer.Dapper
             }
         }
 
-        public override async Task UpdateAsync(long id, IEnumerable<KeyValuePair<string, object>> changes)
+        public async Task UpdateAsync(long id, IEnumerable<KeyValuePair<string, object>> changes)
         {
             try
             {
@@ -283,7 +319,7 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer.Dapper
             }
         }
 
-        public override async Task RemoveAsync(long id)
+        public async Task RemoveAsync(long id)
         {
             try
             {
@@ -308,7 +344,7 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer.Dapper
             }
         }
 
-        public override Task RemoveAsync(IEnumerable<long> ids)
+        public Task RemoveAsync(IEnumerable<long> ids)
         {
             throw new NotImplementedException();
         }

@@ -2,10 +2,10 @@
 
 namespace Billy.Domain.Persistence.SQL
 {
-    internal abstract class SQLColumnDef<TTable, TColumn>
+    internal abstract class SQLColumnDef<TEditor>
     {
         public SQLColumnDef(
-            Func<TTable, TColumn> columnValueExtractor,
+            Func<TEditor, string> columnValueExtractor,
             string name, string typeName, bool isNotNull = false, bool isPK = false, bool isUnique = false)
         {
             this.ColumnValueExtractor = columnValueExtractor;
@@ -16,7 +16,7 @@ namespace Billy.Domain.Persistence.SQL
             this.IsUnique = isUnique;
         }
 
-        public Func<TTable, TColumn> ColumnValueExtractor { get; }
+        public Func<TEditor, string> ColumnValueExtractor { get; }
         public string Name { get; }
         public string TypeName { get; }
         public bool IsNotNull { get; }

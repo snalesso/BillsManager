@@ -4,25 +4,25 @@ using System;
 namespace Billy.Billing.Models
 {
     // TODO: ensure try-catch blocks await returned Tasks in all the source (written here so this comment will not get accidentally deleted)
-    public class Bill : Entity<int>//, IBill
+    public class Bill : Entity<long>//, IBill
     {
-        #region ctor
+        #region ctors
 
         public Bill(
-            int id,
-            uint supplierID,
-            DateTime registrationDate,
-            DateTime dueDate,
+            long id,
+            long supplierId,
             DateTime releaseDate,
+            DateTime dueDate,
             DateTime? paymentDate,
+            DateTime registrationDate,
             double amount,
             double agio,
             double costs,
             string code,
-            string notes = null)
+            string notes)
             : base(id)
         {
-            this.SupplierID = supplierID;
+            this.SupplierId = supplierId;
             this.RegistrationDate = registrationDate;
             this.DueDate = dueDate;
             this.ReleaseDate = releaseDate;
@@ -32,6 +32,21 @@ namespace Billy.Billing.Models
             this.AdditionalCosts = costs;
             this.Code = code;
             this.Notes = notes;
+        }
+
+        public Bill(
+            long id,
+            long supplierId,
+            DateTime releaseDate,
+            DateTime dueDate,
+            DateTime? paymentDate,
+            double amount,
+            double agio,
+            double costs,
+            string code,
+            string notes)
+            : this(id, supplierId, releaseDate, dueDate, paymentDate, DateTime.Now, amount, agio, costs, code, notes)
+        {
         }
 
         #endregion
@@ -87,8 +102,8 @@ namespace Billy.Billing.Models
             set { this.SetAndRaiseIfChanged(ref this._additionalCosts, value); }
         }
 
-        private uint _supplierId;
-        public uint SupplierID
+        private long _supplierId;
+        public long SupplierId
         {
             get { return this._supplierId; }
             set { this.SetAndRaiseIfChanged(ref this._supplierId, value); }

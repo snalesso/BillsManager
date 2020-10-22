@@ -3,6 +3,7 @@ using Billy.Billing.Models;
 using Billy.Billing.Persistence;
 using DynamicData;
 using DynamicData.Binding;
+using DynamicData.Cache.Internal;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,37 +18,34 @@ namespace Billy.Billing.Services
     public class LocalSuppliersService : ISuppliersService, IDisposable
     {
         private readonly IBillingUnitOfWorkFactory _billingUnitOfWorkFactory;
-        //private readonly Func<IBillingUnitOfWork> _billingUowFactoryMethod;
         private readonly SerialDisposable _suppliersChangesSubscription;
 
         public LocalSuppliersService(
             IBillingUnitOfWorkFactory _billingUnitOfWorkFactory
-            //, Func<IBillingUnitOfWork> billingUowFactoryMethod
             )
         {
             this._billingUnitOfWorkFactory = _billingUnitOfWorkFactory ?? throw new ArgumentNullException(nameof(_billingUnitOfWorkFactory));
-            //this._billingUowFactoryMethod = billingUowFactoryMethod ?? throw new ArgumentNullException(nameof(billingUowFactoryMethod));
 
             this._added_Subject = new Subject<SupplierDto>().DisposeWith(this._disposables);
             this._updated_Subject = new Subject<IReadOnlyCollection<SupplierDto>>().DisposeWith(this._disposables);
-            this._removed_Subject = new Subject<IReadOnlyCollection<int>>().DisposeWith(this._disposables);
+            this._removed_Subject = new Subject<IReadOnlyCollection<long>>().DisposeWith(this._disposables);
 
             //this._isBusy_BehaveiorSubject = new BehaviorSubject<bool>(false).DisposeWith(this._disposables);
             //this.IsBusyChanged = this._isBusy_BehaveiorSubject.DistinctUntilChanged();
 
             this._suppliersChangesSubscription = new SerialDisposable().DisposeWith(this._disposables);
-            this.SuppliersChanges = ObservableChangeSet.Create<SupplierDto, int>(
+            var supplierDtoChangeSets = ObservableChangeSet.Create<SupplierDto, long>(
                 async cache =>
                 {
-                    //await Task.Delay(5_000);
-                    var supplierDTOs = await this.GetAllAsync();
+                    //await Task.Delay(3_000);
+                    var supplierDTOs = await this.GetAllAsync().ConfigureAwait(false);
 
                     cache.AddOrUpdate(supplierDTOs);
 
                     var crudSubscriptions = new CompositeDisposable();
 
                     this.Added
-                        .Subscribe(e => cache.Edit(cacheUpdater => cacheUpdater.AddOrUpdate(e)))
+                        .Subscribe(supplierDto => cache.Edit(cacheUpdater => cacheUpdater.AddOrUpdate(supplierDto)))
                         .DisposeWith(crudSubscriptions);
 
                     this.Updated
@@ -61,7 +59,7 @@ namespace Billy.Billing.Services
                                         {
                                             var oldVersion = cacheUpdater.Lookup(updatedSupplierDto.Id);
 
-                                            return new Change<SupplierDto, int>(
+                                            return new Change<SupplierDto, long>(
                                                 ChangeReason.Update,
                                                 updatedSupplierDto.Id,
                                                 updatedSupplierDto,
@@ -69,7 +67,7 @@ namespace Billy.Billing.Services
                                         })
                                     .ToArray();
 
-                                var changes = new ChangeSet<SupplierDto, int>(updates);
+                                var changes = new ChangeSet<SupplierDto, long>(updates);
 
                                 cacheUpdater.Clone(changes);
                             });
@@ -83,13 +81,19 @@ namespace Billy.Billing.Services
                     return crudSubscriptions;
                 },
                 x => x.Id)
-                // TODO: add synchronization to handle multiple subscriptions?
+                //this.SuppliersChanges = supplierDtoChangeSets
+                //    // TODO: add synchronization to handle multiple subscriptions?
+                //    //.RefCount()
+                //    //.Transform(supplier => this._supplierViewModelFactoryMethod.Invoke(supplier), new ParallelisationOptions(ParallelType.Parallelise))
+                //    //.DisposeMany()
+                //    .Sort(SortExpressionComparer<SupplierDto>.Ascending(vm => vm.Name))
+                //.Multicast(new ReplaySubject<IChangeSet<SupplierDto, int>>())
+                //.AutoConnect(1, subscription => this._suppliersChangesSubscription.Disposable = subscription)
+                ;
+            this.Suppliers = supplierDtoChangeSets
+                //.Sort(SortExpressionComparer<SupplierDto>.Ascending(vm => vm.Name))
                 .RefCount()
-                //.Transform(supplier => this._supplierViewModelFactoryMethod.Invoke(supplier), new ParallelisationOptions(ParallelType.Parallelise))
-                //.DisposeMany()
-                .Sort(SortExpressionComparer<SupplierDto>.Ascending(vm => vm.Name))
-                .Multicast(new ReplaySubject<IChangeSet<SupplierDto, int>>())
-                .AutoConnect(1, subscription => this._suppliersChangesSubscription.Disposable = subscription);
+                .AsObservableCache();// applyLocking: false);
         }
 
         // READ
@@ -99,17 +103,17 @@ namespace Billy.Billing.Services
         public IObservable<SupplierDto> Added => this._added_Subject;
         private readonly ISubject<IReadOnlyCollection<SupplierDto>> _updated_Subject;
         public IObservable<IReadOnlyCollection<SupplierDto>> Updated => this._updated_Subject;
-        private readonly ISubject<IReadOnlyCollection<int>> _removed_Subject;
-        public IObservable<IReadOnlyCollection<int>> Removed => this._removed_Subject;
+        private readonly ISubject<IReadOnlyCollection<long>> _removed_Subject;
+        public IObservable<IReadOnlyCollection<long>> Removed => this._removed_Subject;
 
         public async Task<IReadOnlyCollection<SupplierDto>> GetAllAsync()
         {
             IReadOnlyCollection<Supplier> suppliers;
 
             //using (var uow = this._billingUowFactoryMethod.Invoke())
-            using (var uow = await this._billingUnitOfWorkFactory.CreateAsync())
+            using (var uow = await this._billingUnitOfWorkFactory.CreateAsync().ConfigureAwait(false))
             {
-                suppliers = await uow.Suppliers.GetMultipleAsync();
+                suppliers = await uow.Suppliers.GetMultipleAsync().ConfigureAwait(false);
             }
 
             var supplierDTOs = suppliers.Select(s => new SupplierDto(s)).ToList();
@@ -117,7 +121,9 @@ namespace Billy.Billing.Services
             return supplierDTOs;
         }
 
-        public IObservable<IChangeSet<SupplierDto, int>> SuppliersChanges { get; }
+        public IObservable<IChangeSet<SupplierDto, long>> SuppliersChanges { get; }
+
+        public IObservableCache<SupplierDto, long> Suppliers { get; }
 
         //private readonly BehaviorSubject<bool> _isBusy_BehaveiorSubject;
         //public IObservable<bool> IsBusyChanged { get; }
@@ -131,12 +137,12 @@ namespace Billy.Billing.Services
             //using (var uow = this._billingUowFactoryMethod.Invoke())
             Supplier addedSupplier = null;
 
-            using (var uow = await this._billingUnitOfWorkFactory.CreateAsync())
+            using (var uow = await this._billingUnitOfWorkFactory.CreateAsync().ConfigureAwait(false))
             {
                 try
                 {
-                    addedSupplier = await uow.Suppliers.CreateAndAddAsync(data);
-                    await uow.CommitAsync();
+                    addedSupplier = await uow.Suppliers.CreateAndAddAsync(data).ConfigureAwait(false);
+                    await uow.CommitAsync().ConfigureAwait(false);
                 }
                 catch (Exception)
                 {
@@ -155,35 +161,40 @@ namespace Billy.Billing.Services
             return addedSupplierDto;
         }
 
-        public async Task UpdateAsync(int supplierId, IDictionary<string, object> changes)
+        public async Task UpdateAsync(long supplierId, IDictionary<string, object> changes)
         {
+
             Supplier updatedSupplier = null;
-
-            //using (var uow = this._billingUowFactoryMethod.Invoke())
-            using (var uow = await this._billingUnitOfWorkFactory.CreateAsync())
+            try
             {
-                try
+                using (var uow = await this._billingUnitOfWorkFactory.CreateAsync().ConfigureAwait(false))
                 {
-                    await uow.Suppliers.UpdateAsync(supplierId, changes);
-                    await uow.CommitAsync();
-
-                    try
-                    {
-                        // TODO: read outside any transaction
-                        updatedSupplier = await uow.Suppliers.GetByIdAsync(supplierId);
-                    }
-                    catch (Exception)
-                    {
-                        Debug.WriteLine("error reading updated supplier from service");
-                        throw;
-                    }
-                }
-                catch (Exception)
-                {
-                    Debug.WriteLine("error updating supplier from service");
-                    throw;
+                    await uow.Suppliers.UpdateAsync(supplierId, changes).ConfigureAwait(false);
+                    await uow.CommitAsync().ConfigureAwait(false);
+                    updatedSupplier = await uow.Suppliers.GetByIdAsync(supplierId).ConfigureAwait(false);
                 }
             }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error updating supplier from service.");
+                Debug.WriteLine(ex);
+                throw;
+            }
+
+            //try
+            //{
+            //    using (var uow = await this._billingUnitOfWorkFactory.CreateAsync().ConfigureAwait(false))
+            //    {
+            //        // TODO: read outside any transaction
+            //        updatedSupplier = await uow.Suppliers.GetByIdAsync(supplierId).ConfigureAwait(false);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Debug.WriteLine("Error reading updated supplier from service.");
+            //    Debug.WriteLine(ex);
+            //    throw;
+            //}
 
             var addedSupplierDto = new SupplierDto(updatedSupplier);
 
@@ -197,14 +208,14 @@ namespace Billy.Billing.Services
         //    await x.
         //}
 
-        public async Task<bool> RemoveAsync(int id)
+        public async Task<bool> RemoveAsync(long id)
         {
             //using (var uow = this._billingUowFactoryMethod.Invoke())
-            using (var uow = await this._billingUnitOfWorkFactory.CreateAsync())
+            using (var uow = await this._billingUnitOfWorkFactory.CreateAsync().ConfigureAwait(false))
             {
                 try
                 {
-                    await uow.Suppliers.RemoveAsync(id);
+                    await uow.Suppliers.RemoveAsync(id).ConfigureAwait(false);
                 }
                 catch (Exception)
                 {

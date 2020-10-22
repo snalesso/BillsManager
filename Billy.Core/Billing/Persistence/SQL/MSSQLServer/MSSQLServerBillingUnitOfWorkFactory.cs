@@ -30,7 +30,7 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer
             if (this._connection == null)
             {
                 this._connection = new SqlConnection(MSSQLServerBillingConnectionFactory.ConnectionString);
-                await this._connection.OpenAsync();
+                await this._connection.OpenAsync().ConfigureAwait(false);
             }
 
             return new MSSQLServerBillingUnitOfWork2(this._connection, this.GetSuppliersRepository);
