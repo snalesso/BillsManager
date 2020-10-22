@@ -13,7 +13,7 @@ namespace Billy.Billing.Application.DTOs
             this._supplier = supplier;
         }
 
-        public int Id => this._supplier.Id;
+        public long Id => this._supplier.Id;
         public string Name => this._supplier.Name;
         public Agent Agent => this._supplier.Agent;
         public string Email => this._supplier.Email;

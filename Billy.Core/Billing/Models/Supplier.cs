@@ -2,12 +2,12 @@
 
 namespace Billy.Billing.Models
 {
-    public class Supplier : Entity<int>//, ISupplier
+    public class Supplier : Entity<long>//, ISupplier
     {
         #region ctor
 
         public Supplier(
-            int id,
+            long id,
             string name,
             string eMail = null,
             string webSite = null,

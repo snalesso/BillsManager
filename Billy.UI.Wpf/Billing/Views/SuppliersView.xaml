@@ -39,11 +39,19 @@
 
         <ListView
             Grid.Row="2"
-            ItemsSource="{Binding SortedFilteredSupplierViewModelsROOC}"
+            materialDesign:ScrollBarAssist.ButtonsVisibility="Collapsed"
+            BorderBrush="{x:Null}"
+            BorderThickness="0"
+            ItemsSource="{Binding SupplierViewModels}"
+            ScrollViewer.VerticalScrollBarVisibility="Visible"
             SelectedItem="{Binding SelectedSupplierViewModel}"
             SelectionMode="Single"
             VirtualizingPanel.IsVirtualizing="True"
             VirtualizingPanel.VirtualizationMode="Recycling">
+
+            <ListView.Resources>
+                <Style BasedOn="{StaticResource MaterialDesignScrollBarMinimal}" TargetType="ScrollBar" />
+            </ListView.Resources>
 
             <ListView.ItemContainerStyle>
                 <Style BasedOn="{StaticResource MaterialDesignGridViewItem}" TargetType="{x:Type ListViewItem}">

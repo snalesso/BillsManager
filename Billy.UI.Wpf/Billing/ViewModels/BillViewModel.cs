@@ -52,7 +52,7 @@ namespace Billy.Billing.ViewModels
 
         #region properties
 
-        public int Id => this._bill.Id;
+        public long Id => this._bill.Id;
 
         #endregion
 

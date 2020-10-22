@@ -4,11 +4,11 @@ namespace Billy.Domain.Persistence.SQL
 {
     public static class DbSchemaHelper
     {
-        public const char SQLCommandCommandComposedParamNameDivider = '_';
+        public const char ComposedColumnFieldsSeparator = '_';
 
         public static string ComposeColumnName(params string[] columnNames)
         {
-            return string.Join(SQLCommandCommandComposedParamNameDivider, columnNames);
+            return string.Join(ComposedColumnFieldsSeparator, columnNames);
         }
 
         public static IDictionary<string, object> FlattenChanges(IDictionary<string, object> changes)

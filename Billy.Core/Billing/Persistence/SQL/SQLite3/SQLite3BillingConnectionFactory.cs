@@ -6,7 +6,12 @@ namespace Billy.Billing.Persistence.SQL.SQLite3
 {
     public class SQLite3BillingConnectionFactory : IConnectionFactory<SQLiteConnection>//, IDisposable
     {
-        public const string ConnectionString = "Server=.;" + "Integrated Security=SSPI;" + "Database=Billy;";
+        public const string DbFileExtensions = "sqlite3.db";
+        public const string DbFileName = nameof(Billing) + "." + DbFileExtensions;
+        public const string ConnectionString =
+            "Version=3;" +
+            ";Data Source=" + DbFileName +
+            ";FailIfMissing=False";
 
         // TODO: investigate connection pooling: no need to cache connection?
         //private SqlConnection _connection;

@@ -9,6 +9,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Page Remove="Startup\App.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ApplicationDefinition Include="Startup\App.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
 	</ItemGroup>
 

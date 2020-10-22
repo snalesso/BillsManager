@@ -12,9 +12,10 @@ namespace Billy.Billing.Services
         // READ
         IObservable<SupplierDto> Added { get; }
         IObservable<IReadOnlyCollection<SupplierDto>> Updated { get; }
-        IObservable<IReadOnlyCollection<int>> Removed { get; }
+        IObservable<IReadOnlyCollection<long>> Removed { get; }
 
-        IObservable<IChangeSet<SupplierDto, int>> SuppliersChanges { get; }
+        IObservable<IChangeSet<SupplierDto, long>> SuppliersChanges { get; }
+        IObservableCache<SupplierDto, long> Suppliers { get; }
 
         Task<IReadOnlyCollection<SupplierDto>> GetAllAsync();
 
@@ -23,8 +24,8 @@ namespace Billy.Billing.Services
 
         // WRITE
         Task<SupplierDto> CreateAndAddAsync(IDictionary<string, object> data);
-        Task UpdateAsync(int supplierIdd, IDictionary<string, object> changes);
-        Task<bool> RemoveAsync(int id);
+        Task UpdateAsync(long supplierId, IDictionary<string, object> changes);
+        Task<bool> RemoveAsync(long id);
         //Task AddBillToSupplierAsync(int supplierId, IDictionary<string, object> data);
     }
 }

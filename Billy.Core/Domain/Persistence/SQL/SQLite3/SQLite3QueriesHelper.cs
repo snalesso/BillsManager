@@ -8,14 +8,15 @@ namespace Billy.Domain.Persistence.SQL.SQLite3
 {
     internal static class SQLite3QueriesHelper
     {
-        private static readonly string DbFilePath = $"{nameof(Billing)}.sqlite3.db";
+        private static readonly string DbFileExtension = "sqlite3.db";
+        public const char ComposedColumnFieldsSeparator = DbSchemaHelper.ComposedColumnFieldsSeparator;
 
         public static string CreateTable<T>(bool ifNotExists, params string[] columnDefinitions)
         {
             return
                 $"CREATE TABLE"
                 + (ifNotExists ? " IF NOT EXISTS" : string.Empty)
-                + $" [{typeof(T).Name}]"
+                + $" \"{typeof(T).Name}\""
                 + $" ({string.Join(",", columnDefinitions)})";
         }
 
@@ -41,7 +42,7 @@ namespace Billy.Domain.Persistence.SQL.SQLite3
 
         public static string BuildColName(params string[] fieldNames)
         {
-            return $"[{string.Join(".", fieldNames)}]";
+            return $"{string.Join(SQLite3QueriesHelper.ComposedColumnFieldsSeparator, fieldNames)}";
         }
 
         /* private static string EnsureSuppliersTable()
@@ -90,30 +91,30 @@ namespace Billy.Domain.Persistence.SQL.SQLite3
         }*/
 
         // TODO: verify if this stuff is all needed
-        public static void EnsureDatabase()
-        {
+        //public static void EnsureDatabase()
+        //{
 
-            if (!File.Exists(DbFilePath))
-            {
-                // TODO: async?
-                SQLiteConnection.CreateFile(DbFilePath);
-            }
+        //    if (!File.Exists(DbFileExtension))
+        //    {
+        //        // TODO: async?
+        //        SQLiteConnection.CreateFile(DbFileExtension);
+        //    }
 
-            // TODO: this should be moved to specific implementations which use SQLite3
-            var cs = new SQLiteConnectionStringBuilder
-            {
-                DataSource = DbFilePath,
-                SyncMode = SynchronizationModes.Normal,
-                DefaultIsolationLevel = IsolationLevel.Serializable,
-                FailIfMissing = false,
-                //Flags = SQLiteConnectionFlags.
-                ToFullPath = true,
-                Version = 3
-            };
-            //cs.SyncMode = SynchronizationModes.Full;
-            // TODO: improve config
-            SQLiteConnection connection = new SQLiteConnection("Data Source = " + DbFilePath);
-        }
+        //    // TODO: this should be moved to specific implementations which use SQLite3
+        //    var cs = new SQLiteConnectionStringBuilder
+        //    {
+        //        DataSource = DbFileExtension,
+        //        SyncMode = SynchronizationModes.Normal,
+        //        DefaultIsolationLevel = IsolationLevel.Serializable,
+        //        FailIfMissing = false,
+        //        //Flags = SQLiteConnectionFlags.
+        //        ToFullPath = true,
+        //        Version = 3
+        //    };
+        //    //cs.SyncMode = SynchronizationModes.Full;
+        //    // TODO: improve config
+        //    SQLiteConnection connection = new SQLiteConnection("Data Source = " + DbFileExtension);
+        //}
 
         public static string GetInsertQueryReturningId(string insertQuery)
         {

@@ -13,12 +13,12 @@ namespace Billy.Billing.Models
             ContactType type,
             string value,
             string name,
-            string notes)
+            string notes = null)
         {
             this.Type = type;
-            this.Value = value.TrimToNull() ?? throw new ArgumentNullException(nameof(value));
-            this.Name = name;
-            this.Notes = notes;
+            this.Value = value?.TrimToNull() ?? throw new ArgumentNullException(nameof(value));
+            this.Name = name?.TrimToNull() ?? throw new ArgumentNullException(nameof(name));
+            this.Notes = notes?.TrimToNull();
         }
 
         #endregion

@@ -34,30 +34,10 @@ namespace Billy.Billing.Persistence.SQL.SQLite3
                 }
             ));
 
-        //private static readonly Lazy<IReadOnlyList<SQLite3ColumnDef<Supplier>>> ColumnDefs = new Lazy<IReadOnlyList<SQLite3ColumnDef<Supplier>>>(
-        //    () => new[]
-        //    {
-        //        new SQLite3ColumnDef<Supplier>(null, nameof(Supplier.Id), TypeAffinity.Int64, isPK: true),
-        //        new SQLite3ColumnDef<Supplier>(s => s.Email.Quoted(), nameof(Supplier.Email), TypeAffinity.Text),
-        //        new SQLite3ColumnDef<Supplier>(s => s.Fax.Quoted(), nameof(Supplier.Fax), TypeAffinity.Text),
-        //        new SQLite3ColumnDef<Supplier>(s => s.Name.Quoted(), nameof(Supplier.Name), TypeAffinity.Text, isNotNull: true, isUnique: true),
-        //        new SQLite3ColumnDef<Supplier>(s => s.Notes.Quoted(), nameof(Supplier.Notes), TypeAffinity.Text),
-        //        new SQLite3ColumnDef<Supplier>(s => s.Phone.Quoted(), nameof(Supplier.Phone), TypeAffinity.Text),
-        //        new SQLite3ColumnDef<Supplier>(s => s.Website.Quoted(), nameof(Supplier.Website), TypeAffinity.Text),
-
-        //        new SQLite3ColumnDef<Supplier>(s => s.Address.Country.Quoted(), SQLite3QueriesHelper.BuildColName(nameof(Supplier.Address), nameof(Supplier.Address.Country)), TypeAffinity.Text),
-        //        new SQLite3ColumnDef<Supplier>(s => s.Address.Province.Quoted(), SQLite3QueriesHelper.BuildColName(nameof(Supplier.Address), nameof(Supplier.Address.Province)), TypeAffinity.Text),
-        //        new SQLite3ColumnDef<Supplier>(s => s.Address.City.Quoted(), SQLite3QueriesHelper.BuildColName(nameof(Supplier.Address), nameof(Supplier.Address.City)), TypeAffinity.Text),
-        //        new SQLite3ColumnDef<Supplier>(s => s.Address.Zip.Quoted(), SQLite3QueriesHelper.BuildColName(nameof(Supplier.Address), nameof(Supplier.Address.Zip)), TypeAffinity.Text),
-        //        new SQLite3ColumnDef<Supplier>(s => s.Address.Street.Quoted(), SQLite3QueriesHelper.BuildColName(nameof(Supplier.Address), nameof(Supplier.Address.Street)), TypeAffinity.Text),
-        //        new SQLite3ColumnDef<Supplier>(s => s.Address.Number.Quoted(), SQLite3QueriesHelper.BuildColName(nameof(Supplier.Address), nameof(Supplier.Address.Number)), TypeAffinity.Text),
-
-        //        new SQLite3ColumnDef<Supplier>(s => s.Agent.Name.Quoted(), SQLite3QueriesHelper.BuildColName(nameof(Supplier.Agent), nameof(Supplier.Agent.Name)), TypeAffinity.Text),
-        //        new SQLite3ColumnDef<Supplier>(s => s.Agent.Surname.Quoted(), SQLite3QueriesHelper.BuildColName(nameof(Supplier.Agent), nameof(Supplier.Agent.Surname)), TypeAffinity.Text),
-        //        new SQLite3ColumnDef<Supplier>(s => s.Agent.Phone.Quoted(), SQLite3QueriesHelper.BuildColName(nameof(Supplier.Agent), nameof(Supplier.Agent.Phone)), TypeAffinity.Text),
-        //    }
-        //    .ToList()
-        //    .AsReadOnly());
+        public static string GetCreateTableQuery()
+        {
+            return SQLite3QueriesHelper.CreateTable(true, SQLite3SupplierQueries.TableDef.Value.ColumnDefs);
+        }
 
         public static string GetCreateTableQuery_old()
         {
@@ -111,11 +91,6 @@ namespace Billy.Billing.Persistence.SQL.SQLite3
         private static string Quoted(this string source)
         {
             return $"\"{source}\"";
-        }
-
-        public static string GetCreateTableQuery()
-        {
-            return SQLite3QueriesHelper.CreateTable(true, TableDef.Value.ColumnDefs);
         }
 
         public static string GetQuery()

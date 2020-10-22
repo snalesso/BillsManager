@@ -26,71 +26,14 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
 
         #endregion
 
-        #region methods
+        #region READ
 
-        public override async Task<Supplier> CreateAndAddAsync(IEnumerable<KeyValuePair<string, object>> data)
-        {
-            try
-            {
-                var flattenedData = DbSchemaHelper.FlattenChanges(new Dictionary<string, object>(data));
-                var columns = flattenedData.Select(x => "[" + x.Key + "]");
-                //var values = data.Select(x => x.Value);
-                var values = flattenedData.Select(x => "@" + x.Key);
-                var sql =
-                    $"insert into [{nameof(Supplier)}] ({string.Join(",", columns)}) values ({string.Join(",", values)});" +
-                    "SELECT SCOPE_IDENTITY();";
+        #region helpers
 
-                // TODO: consider using QueryMultipleAsync
-                var id = await SqlMapper.ExecuteScalarAsync<int>(
-                    this._connection,
-                    new CommandDefinition(
-                        commandText: sql,
-                        parameters: flattenedData.Select(kvp => new KeyValuePair<string, object>("@" + kvp.Key, kvp.Value)),
-                        transaction: this._transaction));
+        // TODO: get rid of this trick?
+        private SQLiteTransactionBase GetTransactionIfAvailable() => this._transaction.Connection != null ? this._transaction : null;
 
-                sql = $"select * from [{nameof(Supplier)}] where [{nameof(Supplier.Id)}] = @{nameof(Supplier.Id)};";
-
-                var lastInsertedRow = await SqlMapper.QueryFirstOrDefaultAsync(
-                    cnn: this._connection,
-                    sql: sql, //$"select * from [{nameof(Supplier)}] where [{nameof(Supplier.Id)}] = "+id,
-                    param: new Dictionary<string, object>()
-                    {
-                        { nameof(Supplier.Id), id }
-                    },
-                    transaction: this._transaction)
-                    as IDictionary<string, object>;
-
-                // TODO: improve parsing, handling nulls etc.
-                var insertedSupplier = new Supplier(
-                    (int)lastInsertedRow[nameof(Supplier.Id)],
-                    (string)lastInsertedRow[nameof(Supplier.Name)],
-                    (string)lastInsertedRow[nameof(Supplier.Email)],
-                    (string)lastInsertedRow[nameof(Supplier.Website)],
-                    (string)lastInsertedRow[nameof(Supplier.Phone)],
-                    (string)lastInsertedRow[nameof(Supplier.Fax)],
-                    (string)lastInsertedRow[nameof(Supplier.Notes)],
-                    Address.Create(
-                        (string)lastInsertedRow[DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Country))],
-                        (string)lastInsertedRow[DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Province))],
-                        (string)lastInsertedRow[DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.City))],
-                        (string)lastInsertedRow[DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Zip))],
-                        (string)lastInsertedRow[DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Street))],
-                        (string)lastInsertedRow[DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Number))]),
-                    Agent.Create(
-                        (string)lastInsertedRow[DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Name))],
-                        (string)lastInsertedRow[DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Surname))],
-                        (string)lastInsertedRow[DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Phone))]));
-
-                //await Task.Delay(1000 * 3);
-
-                return insertedSupplier;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-                return null;
-            }
-        }
+        #endregion
 
         public override async Task<IReadOnlyCollection<Supplier>> GetMultipleAsync()
         {
@@ -98,10 +41,14 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
             {
                 var suppliers = new List<Supplier>();
 
-                await using (var reader = await SqlMapper.ExecuteReaderAsync(
-                    cnn: this._connection,
-                    sql: $"select * from [{nameof(Supplier)}];",
-                    transaction: this._transaction))
+                var cmd = new CommandDefinition(
+                    commandText: $"select * from [{nameof(Supplier)}]",
+                    transaction: this.GetTransactionIfAvailable());
+
+                //var resultsGrid = SqlMapper.QueryMultipleAsync(this._connection, cmd);
+                //var x = await resultsGrid.Result.ReadAsync();
+
+                await using (var reader = await SqlMapper.ExecuteReaderAsync(cnn: this._connection, cmd))
                 {
                     while (await reader.ReadAsync())
                     {
@@ -120,7 +67,7 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
 
                         suppliers.Add(
                             new Supplier(
-                                id: await reader.GetSafeAsync<int>(nameof(Supplier.Id)),
+                                id: await reader.GetSafeAsync<long>(nameof(Supplier.Id)),
                                 name: await reader.GetSafeAsync<string>(nameof(Supplier.Name)),
                                 eMail: await reader.GetSafeAsync<string>(nameof(Supplier.Email)),
                                 webSite: await reader.GetSafeAsync<string>(nameof(Supplier.Website)),
@@ -131,8 +78,6 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
                                 agent: agent));
                     }
                 }
-
-                //await Task.Delay(1000 * 3);
 
                 return suppliers;
             }
@@ -148,22 +93,22 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
             }
         }
 
-        public override async Task<Supplier> GetByIdAsync(int id)
+        public override async Task<Supplier> GetByIdAsync(long id)
         {
             try
             {
                 var queryParams = new { SearchedId = id };
-                var query = $"select * from [{nameof(Supplier)}] where [{nameof(Supplier.Id)}] = @{nameof(queryParams.SearchedId)};";
+                var query = $"select * from [{nameof(Supplier)}] where \"{nameof(Supplier.Id)}\" = @{nameof(queryParams.SearchedId)};";
 
                 var lastInsertedRow = await SqlMapper.QueryFirstOrDefaultAsync(
                     cnn: this._connection,
                     sql: query,
                     param: queryParams,
-                    transaction: this._transaction) as IDictionary<string, object>;
+                    transaction: this.GetTransactionIfAvailable()) as IDictionary<string, object>;
 
                 // TODO: create helper method dictionary -> supplier
                 var supplier = new Supplier(
-                    (int)lastInsertedRow[nameof(Supplier.Id)],
+                    (long)lastInsertedRow[nameof(Supplier.Id)],
                     (string)lastInsertedRow[nameof(Supplier.Name)],
                     (string)lastInsertedRow[nameof(Supplier.Email)],
                     (string)lastInsertedRow[nameof(Supplier.Website)],
@@ -191,24 +136,24 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
             }
         }
 
-        public override async Task<IReadOnlyCollection<Supplier>> GetByIdAsync(params int[] ids)
+        public override async Task<IReadOnlyCollection<Supplier>> GetByIdAsync(params long[] ids)
         {
             try
             {
-                var query = $"select * from [{nameof(Supplier)}] where [{nameof(Supplier.Id)}] in ({string.Join(",", ids)});";
+                var query = $"select * from [{nameof(Supplier)}] where \"{nameof(Supplier.Id)}\" in ({string.Join(",", ids)});";
 
                 var suppliers = new List<Supplier>();
 
                 await using (var reader = await SqlMapper.ExecuteReaderAsync(
                     cnn: this._connection,
                     sql: query,
-                    transaction: this._transaction))
+                    transaction: this.GetTransactionIfAvailable()))
                 {
                     while (await reader.ReadAsync())
                     {
                         suppliers.Add(
                             new Supplier(
-                                await reader.GetSafeAsync<int>(nameof(Supplier.Id)),
+                                await reader.GetSafeAsync<long>(nameof(Supplier.Id)),
                                 await reader.GetSafeAsync<string>(nameof(Supplier.Name)),
                                 await reader.GetSafeAsync<string>(nameof(Supplier.Email)),
                                 await reader.GetSafeAsync<string>(nameof(Supplier.Website)),
@@ -238,13 +183,113 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
             }
         }
 
-        public override async Task RemoveAsync(int id)
+        #endregion
+
+        #region WRITE
+
+        public override async Task<Supplier> CreateAndAddAsync(IEnumerable<KeyValuePair<string, object>> data)
+        {
+            try
+            {
+                var flattenedData = DbSchemaHelper.FlattenChanges(new Dictionary<string, object>(data));
+                var columns = flattenedData.Select(x => "[" + x.Key + "]");
+                //var values = data.Select(x => x.Value);
+                var values = flattenedData.Select(x => "@" + x.Key);
+
+                // TODO: consider using QueryMultipleAsync
+                var id = await SqlMapper.ExecuteScalarAsync<int>(
+                    this._connection,
+                    new CommandDefinition(
+                        commandText: string.Join(";",
+                            $"insert into [{nameof(Supplier)}] ({string.Join(",", columns)}) values ({string.Join(",", values)})",
+                            "SELECT last_insert_rowid()"),
+                        parameters: flattenedData.Select(kvp => new KeyValuePair<string, object>("@" + kvp.Key, kvp.Value)),
+                        transaction: this._transaction));
+
+                var lastInsertedCmd = new CommandDefinition(
+                    commandText: $"select * from [{nameof(Supplier)}] where \"{nameof(Supplier.Id)}\" = @{nameof(Supplier.Id)}",
+                    parameters: new Dictionary<string, object>()
+                    {
+                        [nameof(Supplier.Id)] = id
+                    },
+                    transaction: this._transaction);
+
+                var lastInsertedRow = await SqlMapper.QueryFirstOrDefaultAsync(
+                    cnn: this._connection,
+                    lastInsertedCmd)
+                    as IDictionary<string, object>;
+
+                // TODO: improve parsing, handling nulls etc.
+                var insertedSupplier = new Supplier(
+                    (long)lastInsertedRow[nameof(Supplier.Id)],
+                    (string)lastInsertedRow[nameof(Supplier.Name)],
+                    (string)lastInsertedRow[nameof(Supplier.Email)],
+                    (string)lastInsertedRow[nameof(Supplier.Website)],
+                    (string)lastInsertedRow[nameof(Supplier.Phone)],
+                    (string)lastInsertedRow[nameof(Supplier.Fax)],
+                    (string)lastInsertedRow[nameof(Supplier.Notes)],
+                    Address.Create(
+                        (string)lastInsertedRow[DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Country))],
+                        (string)lastInsertedRow[DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Province))],
+                        (string)lastInsertedRow[DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.City))],
+                        (string)lastInsertedRow[DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Zip))],
+                        (string)lastInsertedRow[DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Street))],
+                        (string)lastInsertedRow[DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Number))]),
+                    Agent.Create(
+                        (string)lastInsertedRow[DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Name))],
+                        (string)lastInsertedRow[DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Surname))],
+                        (string)lastInsertedRow[DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Phone))]));
+
+                //await Task.Delay(1000 * 3);
+
+                return insertedSupplier;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return null;
+            }
+        }
+
+        public override async Task UpdateAsync(long id, IEnumerable<KeyValuePair<string, object>> changes)
+        {
+            try
+            {
+                // TODO: find a way to avoid parameter keys collisions, like id / changes.id, maybe =<param_name> insread of @param_name ()
+                var queryParams = new
+                {
+                    UpdateId = id,
+                    Changes = changes
+                };
+                var flattenedChanges = DbSchemaHelper.FlattenChanges(new Dictionary<string, object>(changes));
+                var sets = flattenedChanges.Select(x => $"[{x.Key}] = @{x.Key}").ToArray();
+                var sql = $"update [{nameof(Supplier)}] set {string.Join(",", sets)} where \"{nameof(Supplier.Id)}\" = {id};"; // TODO: is it ok to encode id into string?
+
+                var affectedRows = await SqlMapper.ExecuteAsync(
+                    this._connection,
+                    new CommandDefinition(
+                        commandText: sql,
+                        parameters: flattenedChanges,
+                        transaction: this._transaction));
+
+                if (affectedRows <= 0)
+                {
+                    throw new KeyNotFoundException();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+        }
+
+        public override async Task RemoveAsync(long id)
         {
             try
             {
                 var queryParams = new { Id = id };
 
-                var query = $"delete from [{nameof(Supplier)}] where [{nameof(Supplier.Id)}] = @{nameof(queryParams.Id)};";
+                var query = $"delete from [{nameof(Supplier)}] where \"{nameof(Supplier.Id)}\" = @{nameof(queryParams.Id)};";
 
                 var affectedRows = await SqlMapper.ExecuteAsync(
                     cnn: this._connection,
@@ -263,41 +308,9 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
             }
         }
 
-        public override Task RemoveAsync(IEnumerable<int> ids)
+        public override Task RemoveAsync(IEnumerable<long> ids)
         {
             throw new NotImplementedException();
-        }
-
-        public override async Task UpdateAsync(int id, IEnumerable<KeyValuePair<string, object>> changes)
-        {
-            try
-            {
-                // TODO: find a way to avoid parameter keys collisions, like id / changes.id, maybe =<param_name> insread of @param_name ()
-                var queryParams = new
-                {
-                    UpdateId = id,
-                    Changes = changes
-                };
-                var flattenedChanges = DbSchemaHelper.FlattenChanges(new Dictionary<string, object>(changes));
-                var sets = flattenedChanges.Select(x => $"[{x.Key}] = @{x.Key}").ToArray();
-                var sql = $"update [{nameof(Supplier)}] set {string.Join(",", sets)} where [{nameof(Supplier.Id)}] = {id};"; // TODO: is it ok to encode id into string?
-
-                var affectedRows = await SqlMapper.ExecuteAsync(
-                    this._connection,
-                    new CommandDefinition(
-                        commandText: sql,
-                        parameters: flattenedChanges,
-                        transaction: this._transaction));
-
-                if (affectedRows <= 0)
-                {
-                    throw new KeyNotFoundException();
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
         }
 
         #endregion

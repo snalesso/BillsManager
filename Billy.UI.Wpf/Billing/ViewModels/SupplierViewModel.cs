@@ -39,7 +39,7 @@ namespace Billy.Billing.ViewModels
         [Obsolete("Find a way to not expose this, maybe making this VM editable.")]
         public SupplierDto SupplierDto => this._supplierDto;
 
-        public int Id => this._supplierDto.Id;
+        public long Id => this._supplierDto.Id;
         public string Name => this._supplierDto.Name;
         public string Notes => this._supplierDto.Notes;
         public string Fax => this._supplierDto.Fax;

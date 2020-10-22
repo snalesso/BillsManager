@@ -30,12 +30,12 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer
         #region methods
 
         public abstract Task<Supplier> CreateAndAddAsync(IEnumerable<KeyValuePair<string, object>> data);
-        public abstract Task<Supplier> GetByIdAsync(int id);
-        public abstract Task<IReadOnlyCollection<Supplier>> GetByIdAsync(params int[] ids);
+        public abstract Task<Supplier> GetByIdAsync(long id);
+        public abstract Task<IReadOnlyCollection<Supplier>> GetByIdAsync(params long[] ids);
         public abstract Task<IReadOnlyCollection<Supplier>> GetMultipleAsync();
-        public abstract Task RemoveAsync(int id);
-        public abstract Task RemoveAsync(IEnumerable<int> ids);
-        public abstract Task UpdateAsync(int id, IEnumerable<KeyValuePair<string, object>> changes);
+        public abstract Task RemoveAsync(long id);
+        public abstract Task RemoveAsync(IEnumerable<long> ids);
+        public abstract Task UpdateAsync(long id, IEnumerable<KeyValuePair<string, object>> changes);
 
         #endregion
     }

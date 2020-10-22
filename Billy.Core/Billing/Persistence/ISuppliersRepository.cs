@@ -5,21 +5,21 @@ using System.Threading.Tasks;
 
 namespace Billy.Billing.Persistence
 {
-    public interface ISuppliersRepository
+    public interface ISuppliersRepository : IReadSuppliersRepository, IWriteSuppliersRepository
     {
-        // TODO: handle db errors for missing/invalid values etc.
-        Task<Supplier> CreateAndAddAsync(IEnumerable<KeyValuePair<string, object>> data);
+        //// TODO: handle db errors for missing/invalid values etc.
+        //Task<Supplier> CreateAndAddAsync(IEnumerable<KeyValuePair<string, object>> data);
 
-        Task<IReadOnlyCollection<Supplier>> GetMultipleAsync();
-        Task<Supplier> GetByIdAsync(int id);
-        [Obsolete("Added for mistake, not needed by now")]
-        Task<IReadOnlyCollection<Supplier>> GetByIdAsync(params int[] ids);
+        //Task<IReadOnlyCollection<Supplier>> GetMultipleAsync();
+        //Task<Supplier> GetByIdAsync(int id);
+        //[Obsolete("Added for mistake, not needed by now")]
+        //Task<IReadOnlyCollection<Supplier>> GetByIdAsync(params int[] ids);
 
-        // TODO: return bool cause surronding exceptions might be caused by any other surrounding code
-        Task UpdateAsync(int id, IEnumerable<KeyValuePair<string, object>> changes);
+        //// TODO: return bool cause surronding exceptions might be caused by any other surrounding code
+        //Task UpdateAsync(int id, IEnumerable<KeyValuePair<string, object>> changes);
 
-        Task RemoveAsync(int id);
-        Task RemoveAsync(IEnumerable<int> ids);
+        //Task RemoveAsync(int id);
+        //Task RemoveAsync(IEnumerable<int> ids);
 
         //IObservable<IReadOnlyCollection<Supplier>> SuppliersAddeded { get; }
         //IObservable<IReadOnlyCollection<Supplier>> SuppliersRemoved { get; }
