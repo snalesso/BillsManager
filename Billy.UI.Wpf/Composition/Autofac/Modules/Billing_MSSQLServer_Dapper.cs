@@ -8,7 +8,7 @@ using System.Data.Common;
 
 namespace Billy.UI.Wpf.Composition.Autofac.Modules
 {
-    internal class Billing_MSSQLServer : Module
+    internal class Billing_MSSQLServer_Dapper : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
@@ -20,9 +20,12 @@ namespace Billy.UI.Wpf.Composition.Autofac.Modules
                 .As<SqlConnection>()
                 .OnActivating(connectionAEA => connectionAEA.Instance.Open())
                 .SingleInstance();
-            builder.RegisterType<MSSQLServerBillingUnitOfWorkFactory>().As<IBillingUnitOfWorkFactory>().InstancePerLifetimeScope();
+            builder.RegisterType<MSSQLServerBillingUnitOfWorkFactory>()
+                .As<IBillingUnitOfWorkFactory>()
+                .InstancePerLifetimeScope();
+
             builder.RegisterType<DapperMSSQLServerSuppliersRepository>()
-                .AsSelf()
+                //.AsSelf()
                 .As<ISuppliersRepository>()
                 .InstancePerLifetimeScope();
         }

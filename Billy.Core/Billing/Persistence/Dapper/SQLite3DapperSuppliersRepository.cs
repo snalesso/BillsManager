@@ -5,7 +5,7 @@ namespace Billy.Billing.Persistence.Dapper
 {
     public class SQLite3DapperSuppliersRepository : DapperSuppliersRepository
     {
-        public SQLite3DapperSuppliersRepository(SQLiteConnection connection, SQLiteTransaction transaction = null)
+        public SQLite3DapperSuppliersRepository(SQLiteConnection connection, SQLiteTransactionBase transaction = null)
             : base(connection, transaction)
         {
         }

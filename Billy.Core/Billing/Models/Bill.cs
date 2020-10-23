@@ -17,7 +17,7 @@ namespace Billy.Billing.Models
             DateTime registrationDate,
             double amount,
             double agio,
-            double costs,
+            double additionalCosts,
             string code,
             string notes)
             : base(id)
@@ -29,7 +29,7 @@ namespace Billy.Billing.Models
             this.PaymentDate = paymentDate;
             this.Amount = amount;
             this.Agio = agio;
-            this.AdditionalCosts = costs;
+            this.AdditionalCosts = additionalCosts;
             this.Code = code;
             this.Notes = notes;
         }
@@ -42,10 +42,10 @@ namespace Billy.Billing.Models
             DateTime? paymentDate,
             double amount,
             double agio,
-            double costs,
+            double additionalCosts,
             string code,
             string notes)
-            : this(id, supplierId, releaseDate, dueDate, paymentDate, DateTime.Now, amount, agio, costs, code, notes)
+            : this(id, supplierId, releaseDate, dueDate, paymentDate, DateTime.Now, amount, agio, additionalCosts, code, notes)
         {
         }
 
@@ -53,11 +53,11 @@ namespace Billy.Billing.Models
 
         #region properties
 
-        private DateTime _registrationDate;
-        public DateTime RegistrationDate
+        private DateTime _releaseDate;
+        public DateTime ReleaseDate
         {
-            get { return this._registrationDate; }
-            set { this.SetAndRaiseIfChanged(ref this._registrationDate, value); }
+            get { return this._releaseDate; }
+            set { this.SetAndRaiseIfChanged(ref this._releaseDate, value); }
         }
 
         private DateTime _dueDate;
@@ -74,11 +74,11 @@ namespace Billy.Billing.Models
             set { this.SetAndRaiseIfChanged(ref this._paymentDate, value); }
         }
 
-        private DateTime _releaseDate;
-        public DateTime ReleaseDate
+        private DateTime _registrationDate;
+        public DateTime RegistrationDate
         {
-            get { return this._releaseDate; }
-            set { this.SetAndRaiseIfChanged(ref this._releaseDate, value); }
+            get { return this._registrationDate; }
+            set { this.SetAndRaiseIfChanged(ref this._registrationDate, value); }
         }
 
         private double _amount;
@@ -122,17 +122,6 @@ namespace Billy.Billing.Models
             get { return this._code; }
             set { this.SetAndRaiseIfChanged(ref this._code, value); }
         }
-
-        #endregion
-
-        #region Entity
-
-        //protected override void EnsureIsWellFormattedId(int id)
-        //{
-        //    if (id <= 0)
-        //        // TODO: create ad-hoc exception (e.g. InvalidIdValueException)
-        //        throw new ArgumentException($"{this.GetType().FullName}.{nameof(this.Id)} cannot be set to {id}.", nameof(id));
-        //}
 
         #endregion
     }

@@ -65,7 +65,7 @@ namespace Billy.Billing.Persistence.SQL
         #region helpers
 
         // TODO: get rid of this trick?
-        private DbTransaction GetTransactionIfAvailable() => this._transaction.Connection != null ? this._transaction : null;
+        private DbTransaction GetTransactionIfAvailable() => this._transaction?.Connection != null ? this._transaction : null;
 
         #endregion
 

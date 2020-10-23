@@ -8,22 +8,24 @@ namespace Billy.Billing.Persistence.SQL.SQLite3
 {
     public class SQLite3BillingUnitOfWorkFactory : IBillingUnitOfWorkFactory //: IDisposable
     {
+        #region constants & fields
+        
         //private readonly IConnectionFactory<SqlConnection> _connectionFactory;
-        private SQLiteConnection _connection;
+        private readonly Func<SQLiteConnection, SQLiteTransactionBase, ISuppliersRepository> _suppliersRepositoryFactoryMethod;
+        private readonly Func<SQLiteConnection, SQLiteTransactionBase, IBillsRepository> _billsRepositoryFactoryMethod;
 
-        public SQLite3BillingUnitOfWorkFactory()
+        private SQLiteConnection _connection; 
+
+        #endregion
+
+        public SQLite3BillingUnitOfWorkFactory(
+            //IConnectionFactory<SqlConnection> connectionFactory
+            Func<SQLiteConnection, SQLiteTransactionBase, ISuppliersRepository> suppliersRepositoryFactoryMethod,
+            Func<SQLiteConnection, SQLiteTransactionBase, IBillsRepository> billsRepositoryFactoryMethod)
         {
-        }
-
-        //public SQLite3BillingUnitOfWorkFactory(IConnectionFactory<SqlConnection> connectionFactory)
-        //{
-        //    this._connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
-        //}
-
-        private ISuppliersRepository GetSuppliersRepository(SQLiteConnection conn, SQLiteTransactionBase tran)
-        {
-            // TODO: make implementation agnostic
-            return new DapperSQLite3SuppliersRepository(conn, tran);
+            //this._connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
+            this._suppliersRepositoryFactoryMethod = suppliersRepositoryFactoryMethod ?? throw new ArgumentNullException(nameof(suppliersRepositoryFactoryMethod));
+            this._billsRepositoryFactoryMethod = billsRepositoryFactoryMethod ?? throw new ArgumentNullException(nameof(billsRepositoryFactoryMethod));
         }
 
         public async Task<IBillingUnitOfWork> CreateAsync()
@@ -37,7 +39,7 @@ namespace Billy.Billing.Persistence.SQL.SQLite3
                 await this.EnsureSchemaAsync();
             }
 
-            return new SQLite3BillingUnitOfWork(this._connection, this.GetSuppliersRepository);
+            return new SQLite3BillingUnitOfWork(this._connection, this._suppliersRepositoryFactoryMethod, this._billsRepositoryFactoryMethod);
         }
 
         private async Task EnsureSchemaAsync()
