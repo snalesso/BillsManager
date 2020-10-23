@@ -46,32 +46,32 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer.Dapper
                 await using (var reader = await SqlMapper.ExecuteReaderAsync(
                     cnn: this._connection,
                     sql: $"select * from [{nameof(Supplier)}];",
-                    transaction: this.GetTransactionIfAvailable()))
+                    transaction: this.GetTransactionIfAvailable()).ConfigureAwait(false))
                 {
                     while (await reader.ReadAsync())
                     {
                         var address = Address.Create(
-                            country: await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Country))),
-                            province: await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Province))),
-                            city: await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.City))),
-                            zip: await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Zip))),
-                            street: await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Street))),
-                            number: await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Number))));
+                            country: await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Country))).ConfigureAwait(false),
+                            province: await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Province))).ConfigureAwait(false),
+                            city: await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.City))).ConfigureAwait(false),
+                            zip: await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Zip))).ConfigureAwait(false),
+                            street: await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Street))).ConfigureAwait(false),
+                            number: await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Number))).ConfigureAwait(false));
 
                         var agent = Agent.Create(
-                            name: await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Name))),
-                            surname: await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Surname))),
-                            phone: await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Phone))));
+                            name: await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Name))).ConfigureAwait(false),
+                            surname: await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Surname))).ConfigureAwait(false),
+                            phone: await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Phone))).ConfigureAwait(false));
 
                         suppliers.Add(
                             new Supplier(
-                                id: await reader.GetSafeAsync<int>(nameof(Supplier.Id)),
-                                name: await reader.GetSafeAsync<string>(nameof(Supplier.Name)),
-                                eMail: await reader.GetSafeAsync<string>(nameof(Supplier.Email)),
-                                webSite: await reader.GetSafeAsync<string>(nameof(Supplier.Website)),
-                                phone: await reader.GetSafeAsync<string>(nameof(Supplier.Phone)),
-                                fax: await reader.GetSafeAsync<string>(nameof(Supplier.Fax)),
-                                notes: await reader.GetSafeAsync<string>(nameof(Supplier.Notes)),
+                                id: await reader.GetSafeAsync<int>(nameof(Supplier.Id)).ConfigureAwait(false),
+                                name: await reader.GetSafeAsync<string>(nameof(Supplier.Name)).ConfigureAwait(false),
+                                eMail: await reader.GetSafeAsync<string>(nameof(Supplier.Email)).ConfigureAwait(false),
+                                webSite: await reader.GetSafeAsync<string>(nameof(Supplier.Website)).ConfigureAwait(false),
+                                phone: await reader.GetSafeAsync<string>(nameof(Supplier.Phone)).ConfigureAwait(false),
+                                fax: await reader.GetSafeAsync<string>(nameof(Supplier.Fax)).ConfigureAwait(false),
+                                notes: await reader.GetSafeAsync<string>(nameof(Supplier.Notes)).ConfigureAwait(false),
                                 address: address,
                                 agent: agent));
                     }
@@ -104,7 +104,7 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer.Dapper
                     cnn: this._connection,
                     sql: query,
                     param: queryParams,
-                    transaction: this.GetTransactionIfAvailable()) as IDictionary<string, object>;
+                    transaction: this.GetTransactionIfAvailable()).ConfigureAwait(false) as IDictionary<string, object>;
 
                 // TODO: create helper method dictionary -> supplier
                 var supplier = new Supplier(
@@ -147,30 +147,30 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer.Dapper
                 await using (var reader = await SqlMapper.ExecuteReaderAsync(
                     cnn: this._connection,
                     sql: query,
-                    transaction: this.GetTransactionIfAvailable()))
+                    transaction: this.GetTransactionIfAvailable()).ConfigureAwait(false))
                 {
                     while (await reader.ReadAsync())
                     {
                         suppliers.Add(
                             new Supplier(
-                                await reader.GetSafeAsync<int>(nameof(Supplier.Id)),
-                                await reader.GetSafeAsync<string>(nameof(Supplier.Name)),
-                                await reader.GetSafeAsync<string>(nameof(Supplier.Email)),
-                                await reader.GetSafeAsync<string>(nameof(Supplier.Website)),
-                                await reader.GetSafeAsync<string>(nameof(Supplier.Phone)),
-                                await reader.GetSafeAsync<string>(nameof(Supplier.Fax)),
-                                await reader.GetSafeAsync<string>(nameof(Supplier.Notes)),
+                                await reader.GetSafeAsync<int>(nameof(Supplier.Id)).ConfigureAwait(false),
+                                await reader.GetSafeAsync<string>(nameof(Supplier.Name)).ConfigureAwait(false),
+                                await reader.GetSafeAsync<string>(nameof(Supplier.Email)).ConfigureAwait(false),
+                                await reader.GetSafeAsync<string>(nameof(Supplier.Website)).ConfigureAwait(false),
+                                await reader.GetSafeAsync<string>(nameof(Supplier.Phone)).ConfigureAwait(false),
+                                await reader.GetSafeAsync<string>(nameof(Supplier.Fax)).ConfigureAwait(false),
+                                await reader.GetSafeAsync<string>(nameof(Supplier.Notes)).ConfigureAwait(false),
                                 Address.Create(
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Country))),
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Province))),
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.City))),
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Zip))),
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Street))),
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Number)))),
+                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Country))).ConfigureAwait(false),
+                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Province))).ConfigureAwait(false),
+                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.City))).ConfigureAwait(false),
+                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Zip))).ConfigureAwait(false),
+                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Street))).ConfigureAwait(false),
+                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Number))).ConfigureAwait(false)),
                                 Agent.Create(
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Name))),
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Surname))),
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Phone))))));
+                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Name))).ConfigureAwait(false),
+                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Surname))).ConfigureAwait(false),
+                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Phone))).ConfigureAwait(false))));
                     }
                 }
 
@@ -205,7 +205,7 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer.Dapper
                     new CommandDefinition(
                         commandText: sql,
                         parameters: flattenedData.Select(kvp => new KeyValuePair<string, object>("@" + kvp.Key, kvp.Value)),
-                        transaction: this._transaction));
+                        transaction: this._transaction)).ConfigureAwait(false);
 
                 sql = $"select * from [{nameof(Supplier)}] where [{nameof(Supplier.Id)}] = @{nameof(Supplier.Id)};";
 
@@ -216,7 +216,7 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer.Dapper
                     {
                         { nameof(Supplier.Id), id }
                     },
-                    transaction: this._transaction)
+                    transaction: this._transaction).ConfigureAwait(false)
                     as IDictionary<string, object>;
 
                 // TODO: improve parsing, handling nulls etc.
@@ -270,7 +270,7 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer.Dapper
                     new CommandDefinition(
                         commandText: sql,
                         parameters: flattenedChanges,
-                        transaction: this._transaction));
+                        transaction: this._transaction)).ConfigureAwait(false);
 
                 if (affectedRows <= 0)
                 {
@@ -295,7 +295,7 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer.Dapper
                     cnn: this._connection,
                     sql: query,
                     param: queryParams,
-                    transaction: this._transaction);
+                    transaction: this._transaction).ConfigureAwait(false);
 
                 if (affectedRows <= 0)
                 {
