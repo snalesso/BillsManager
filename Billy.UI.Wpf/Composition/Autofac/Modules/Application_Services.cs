@@ -14,6 +14,7 @@ namespace Billy.UI.Wpf.Composition.Autofac.Modules
             builder.RegisterType<MaterialDesignWindowManager>().As<IWindowManager>().InstancePerLifetimeScope();
             builder.RegisterType<WindowsDialogService>().As<IDialogService>().InstancePerLifetimeScope();
             builder.RegisterType<LocalSuppliersService>().As<ISuppliersService>().InstancePerLifetimeScope();
+            builder.RegisterType<LocalBillsService>().As<IBillsService>().InstancePerLifetimeScope();
             builder.RegisterType<LocalBillingService>().As<IBillingService>().InstancePerLifetimeScope();
         }
     }

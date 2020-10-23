@@ -4,5 +4,6 @@
     public interface IBillingService //: ISuppliersRepository
     {
         ISuppliersService Suppliers { get; }
+        IBillsService Bills { get; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Billy.Billing.Models;
+﻿using Billy.Billing.Application.DTOs;
+using Billy.Billing.Models;
 using Billy.Billing.Persistence;
 using Billy.UI.Wpf.Common.Services;
 using Caliburn.Micro;
@@ -16,69 +17,59 @@ namespace Billy.Billing.ViewModels
     {
         #region constants & fields
 
-        private readonly IBillsRepository _billsRepository;
-        private readonly IDialogService _dialogService;
+        //private readonly IDialogService _dialogService;
 
-        private readonly Bill _bill;
-        private readonly Func<Bill, EditBillViewModel> _editBillTagsViewModelFactoryMethod;
+        private readonly BillDto _billDto;
+        //private readonly Func<Bill, EditBillViewModel> _editBillTagsViewModelFactoryMethod;
 
         #endregion
 
         #region constructors
 
         public BillViewModel(
-            Bill bill,
-            IBillsRepository billsRepository,
-            IDialogService dialogService,
-            Func<Bill, EditBillViewModel> editBillViewModelFactoryMethod)
+            BillDto billDto
+            //, IBillsRepository billsRepository,
+            //, IDialogService dialogService,
+            //, Func<Bill, EditBillViewModel> editBillViewModelFactoryMethod
+            )
         {
-            this._bill = bill ?? throw new ArgumentNullException(nameof(bill));
-            this._billsRepository = billsRepository ?? throw new ArgumentNullException(nameof(billsRepository));
-            this._dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
-            this._editBillTagsViewModelFactoryMethod = editBillViewModelFactoryMethod ?? throw new ArgumentNullException(nameof(editBillViewModelFactoryMethod));
-
-            this.EditBillTags = ReactiveCommand.Create(
-                () =>
-                {
-                    this._dialogService.ShowDialogAsync(this._editBillTagsViewModelFactoryMethod?.Invoke(this._bill));
-                });
-            this.EditBillTags.ThrownExceptions
-                .Subscribe(ex => Debug.WriteLine(ex.Message))
-                .DisposeWith(this._disposables);
-            this.EditBillTags.DisposeWith(this._disposables);
+            this._billDto = billDto ?? throw new ArgumentNullException(nameof(billDto));
+            //this._billsRepository = billsRepository ?? throw new ArgumentNullException(nameof(billsRepository));
+            //this._dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
+            //this._editBillTagsViewModelFactoryMethod = editBillViewModelFactoryMethod ?? throw new ArgumentNullException(nameof(editBillViewModelFactoryMethod));
         }
 
         #endregion
 
         #region properties
 
-        public long Id => this._bill.Id;
+        [Obsolete("Find a way to not expose this, maybe making this VM editable.")]
+        public BillDto BillDto => this._billDto;
+
+        public long Id => this._billDto.Id;
+        public long SupplierId => this._billDto.SupplierId;
+        public DateTime ReleaseDate => this._billDto.ReleaseDate;
+        public DateTime DueDate => this._billDto.DueDate;
+        public DateTime? PaymentDate => this._billDto.PaymentDate;
+        public DateTime RegistrationDate => this._billDto.RegistrationDate;
+        public double Amount => this._billDto.Amount;
+        public double Agio => this._billDto.Agio;
+        public double AdditionalCosts => this._billDto.AdditionalCosts;
+        public string Notes => this._billDto.Notes;
+        public string Code => this._billDto.Code;
 
         #endregion
 
         #region methods
 
-        //public override Task<bool> CanCloseAsync(CancellationToken cancellationToken = default)
-        //{
-        //    return base.CanCloseAsync(cancellationToken);
-        //}
-
-        //public override void CanClose(Action<bool> callback)
-        //{
-        //    base.CanClose(callback);
-        //}
-
         #endregion
 
         #region commands
-
-        public ReactiveCommand<Unit, Unit> EditBillTags { get; }
 
         #endregion
 
         #region IDisposable
 
-        // https://docs.microsoft.com/en-us/dotnet/api/system.idisposable?view=netframework-4.8
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
         private bool _isDisposed = false;
 
