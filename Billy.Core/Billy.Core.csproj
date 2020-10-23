@@ -30,7 +30,6 @@
     <Compile Remove="Billing\Models\NewSupplier.cs" />
     <Compile Remove="Billing\Persistence\SQL\MSSQLServer\Dapper\DapperMSSQLServerValueObjectSplitter.cs" />
     <Compile Remove="Billing\Persistence\SQL\MSSQLServer\Dapper\DictionaryWritingTools.cs" />
-    <Compile Remove="Billing\Persistence\SQL\SQLite3\Dapper\DapperSQLite3BillsRepository.cs" />
     <Compile Remove="Billing\Persistence\SQL\SQLite3\Dapper\DapperSQLite3ValueObjectSplitter.cs" />
     <Compile Remove="Billing\Persistence\SQL\SQLite3\Dapper\DictionaryWritingTools.cs" />
     <Compile Remove="Domain\Models\INotifyingTrackableErroring.cs" />

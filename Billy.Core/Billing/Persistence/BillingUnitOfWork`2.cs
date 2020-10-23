@@ -13,7 +13,7 @@ namespace Billy.Billing.Persistence
         private readonly TConnection _connection;
         private readonly TTransaction _transaction;
         private readonly Func<TConnection, TTransaction, ISuppliersRepository> _suppliersRepositoryFactoryMethod;
-        //private readonly Func<TConnection, TTransaction, IBillsRepository> _billsRepositoryFactoryMethod;
+        private readonly Func<TConnection, TTransaction, IBillsRepository> _billsRepositoryFactoryMethod;
 
         //private readonly DbConnection _connection;
         //private DbTransaction _transaction;
@@ -23,12 +23,12 @@ namespace Billy.Billing.Persistence
         public BillingUnitOfWork(
             TConnection connection
             , Func<TConnection, TTransaction, ISuppliersRepository> suppliersRepositoryFactoryMethod
-            //, Func<TConnection, TTransaction, IBillsRepository> billsRepositoryFactoryMethod
+            , Func<TConnection, TTransaction, IBillsRepository> billsRepositoryFactoryMethod
             )
         {
             this._connection = connection ?? throw new ArgumentNullException(nameof(connection));
             this._suppliersRepositoryFactoryMethod = suppliersRepositoryFactoryMethod ?? throw new ArgumentNullException(nameof(suppliersRepositoryFactoryMethod));
-            //this._billsRepositoryFactoryMethod = billsRepositoryFactoryMethod ?? throw new ArgumentNullException(nameof(billsRepositoryFactoryMethod));
+            this._billsRepositoryFactoryMethod = billsRepositoryFactoryMethod ?? throw new ArgumentNullException(nameof(billsRepositoryFactoryMethod));
 
             // TODO: use async and create as late as possible!
             this._transaction = (TTransaction)this._connection.BeginTransaction(IsolationLevel.Serializable);
@@ -38,8 +38,7 @@ namespace Billy.Billing.Persistence
         public ISuppliersRepository Suppliers => this._suppliers ??= this._suppliersRepositoryFactoryMethod.Invoke(this._connection, this._transaction);
 
         private IBillsRepository _bills;
-        public IBillsRepository Bills => throw new NotImplementedException();
-        //this._bills ??= this._billsRepositoryFactoryMethod.Invoke(this._connection, this._transaction);
+        public IBillsRepository Bills => this._bills ??= this._billsRepositoryFactoryMethod.Invoke(this._connection, this._transaction);
 
         public async Task CommitAsync()
         {

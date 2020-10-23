@@ -1,5 +1,4 @@
-﻿using Billy.Billing.Persistence.SQL.MSSQLServer.Dapper;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using System;
 using System.Threading.Tasks;
 
@@ -7,22 +6,24 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer
 {
     public class MSSQLServerBillingUnitOfWorkFactory : IBillingUnitOfWorkFactory, IDisposable
     {
+        #region constants & fields
+
         //private readonly IConnectionFactory<SqlConnection> _connectionFactory;
+        private readonly Func<SqlConnection, SqlTransaction, ISuppliersRepository> _suppliersRepositoryFactoryMethod;
+        private readonly Func<SqlConnection, SqlTransaction, IBillsRepository> _billsRepositoryFactoryMethod;
+
         private SqlConnection _connection;
 
-        public MSSQLServerBillingUnitOfWorkFactory()
-        {
-        }
+        #endregion
 
-        //public MSSQLServerBillingUnitOfWorkFactory(IConnectionFactory<SqlConnection> connectionFactory)
-        //{
-        //    this._connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
-        //}
-
-        private ISuppliersRepository GetSuppliersRepository(SqlConnection conn, SqlTransaction tran)
+        public MSSQLServerBillingUnitOfWorkFactory(
+            //IConnectionFactory<SqlConnection> connectionFactory
+            Func<SqlConnection, SqlTransaction, ISuppliersRepository> suppliersRepositoryFactoryMethod,
+            Func<SqlConnection, SqlTransaction, IBillsRepository> billsRepositoryFactoryMethod)
         {
-            // TODO: make implementation agnostic
-            return new DapperMSSQLServerSuppliersRepository(conn, tran);
+            //this._connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
+            this._suppliersRepositoryFactoryMethod = suppliersRepositoryFactoryMethod ?? throw new ArgumentNullException(nameof(suppliersRepositoryFactoryMethod));
+            this._billsRepositoryFactoryMethod = billsRepositoryFactoryMethod ?? throw new ArgumentNullException(nameof(billsRepositoryFactoryMethod));
         }
 
         public async Task<IBillingUnitOfWork> CreateAsync()
@@ -33,7 +34,7 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer
                 await this._connection.OpenAsync().ConfigureAwait(false);
             }
 
-            return new MSSQLServerBillingUnitOfWork2(this._connection, this.GetSuppliersRepository);
+            return new MSSQLServerBillingUnitOfWork2(this._connection, this._suppliersRepositoryFactoryMethod, this._billsRepositoryFactoryMethod);
         }
 
         #region IDisposable

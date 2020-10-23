@@ -33,7 +33,7 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer.Dapper
         #region helpers
 
         // TODO: get rid of this trick?
-        private SqlTransaction GetTransactionIfAvailable() => this._transaction.Connection != null ? this._transaction : null;
+        private SqlTransaction GetTransactionIfAvailable() => this._transaction?.Connection != null ? this._transaction : null;
 
         #endregion
 

@@ -1,27 +1,25 @@
 ﻿using Billy.Billing.Models;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Billy.Billing.Persistence
 {
-    public interface IBillsRepository
+    public interface IBillsRepository : IReadBillsRepository, IWriteBillsRepository
     {
-        Task<IReadOnlyCollection<Bill>> GetBillsAsync();
+    }
 
-        //Task<Bill> CreateAndAddAsync(NewBill newBill);
+    public interface IReadBillsRepository
+    {
+        Task<Bill> GetByIdAsync(long id);
+        Task<IReadOnlyCollection<Bill>> GetMultipleAsync();
+    }
 
-        //Task UpdateAsync(uint id, IBill changes);
-
-        Task RemoveAsync(uint id);
-        Task RemoveAsync(IEnumerable<uint> ids);
-
-        //IObservable<IReadOnlyCollection<Bill>> BillsAddeded { get; }
-        //IObservable<IReadOnlyCollection<Bill>> BillsRemoved { get; }
-        //IObservable<IReadOnlyCollection<Bill>> BillsUpdated { get; }
-
-        public event EventHandler<IReadOnlyCollection<Bill>> BillsAddeded;
-        public event EventHandler<IReadOnlyCollection<Bill>> BillsRemoved;
-        public event EventHandler<IReadOnlyCollection<Bill>> BillsUpdated;
+    // TODO: decide if return Task<Result<T>> or throw exceptions
+    public interface IWriteBillsRepository
+    {
+        // TODO: handle db errors for missing/invalid values etc.
+        Task<Bill> CreateAndAddAsync(IEnumerable<KeyValuePair<string, object>> data);
+        Task UpdateAsync(long id, IEnumerable<KeyValuePair<string, object>> changes);
+        Task RemoveAsync(long id);
     }
 }

@@ -31,7 +31,7 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
         #region helpers
 
         // TODO: get rid of this trick?
-        private SQLiteTransactionBase GetTransactionIfAvailable() => this._transaction.Connection != null ? this._transaction : null;
+        private SQLiteTransactionBase GetTransactionIfAvailable() => this._transaction?.Connection != null ? this._transaction : null;
 
         #endregion
 
@@ -52,6 +52,7 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
                 {
                     while (await reader.ReadAsync())
                     {
+                        // TODO: cache column names composition
                         var address = Address.Create(
                             country: await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Country))),
                             province: await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Province))),
