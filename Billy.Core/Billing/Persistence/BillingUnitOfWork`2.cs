@@ -46,7 +46,7 @@ namespace Billy.Billing.Persistence
                 // TODO: this is handled transparently but should be logged as an error since it should never happen
                 return;
 
-            await this._transaction.CommitAsync();
+            await this._transaction.CommitAsync().ConfigureAwait(false);
             // TODO: verify if following code should be added. Even though transaction is set to null repositories still hold a reference to it,
             //await this._transaction.DisposeAsync();
 
@@ -59,7 +59,7 @@ namespace Billy.Billing.Persistence
                 // TODO: this is handled transparently but should be logged as an error since it should never happen
                 return;
 
-            await this._transaction.RollbackAsync();
+            await this._transaction.RollbackAsync().ConfigureAwait(false);
             // TODO: verify if following code should be added
             //await this._transaction.DisposeAsync();
 

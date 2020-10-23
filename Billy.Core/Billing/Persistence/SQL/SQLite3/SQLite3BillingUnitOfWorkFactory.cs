@@ -33,10 +33,10 @@ namespace Billy.Billing.Persistence.SQL.SQLite3
             if (this._connection == null)
             {
                 this._connection = new SQLiteConnection(SQLite3BillingConnectionFactory.ConnectionString);
-                await this._connection.OpenAsync();
+                await this._connection.OpenAsync().ConfigureAwait(false);
 
                 // TODO: execute only when needed
-                await this.EnsureSchemaAsync();
+                await this.EnsureSchemaAsync().ConfigureAwait(false);
             }
 
             return new SQLite3BillingUnitOfWork(this._connection, this._suppliersRepositoryFactoryMethod, this._billsRepositoryFactoryMethod);
@@ -55,7 +55,7 @@ namespace Billy.Billing.Persistence.SQL.SQLite3
                         createSuppliersSQL,
                         this._connection, initTrans);
                     var result = await cmd.ExecuteNonQueryAsync().ConfigureAwait(false);
-                    await initTrans.CommitAsync();
+                    await initTrans.CommitAsync().ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {

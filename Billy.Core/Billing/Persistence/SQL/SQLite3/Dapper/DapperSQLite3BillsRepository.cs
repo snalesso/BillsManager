@@ -47,25 +47,24 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
                 //var resultsGrid = SqlMapper.QueryMultipleAsync(this._connection, cmd);
                 //var x = await resultsGrid.Result.ReadAsync();
 
-                await using (var reader = await SqlMapper.ExecuteReaderAsync(cnn: this._connection, cmd))
+                await using (var reader = await SqlMapper.ExecuteReaderAsync(cnn: this._connection, cmd).ConfigureAwait(false))
                 {
                     while (await reader.ReadAsync())
                     {
                         // TODO: cache column names composition
                         bills.Add(
                             new Bill(
-                                id: await reader.GetSafeAsync<long>(nameof(Bill.Id)),
-                                supplierId: await reader.GetSafeAsync<long>(nameof(Bill.SupplierId)),
-                                releaseDate: await reader.GetSafeAsync<DateTime>(nameof(Bill.ReleaseDate)),
-                                dueDate: await reader.GetSafeAsync<DateTime>(nameof(Bill.DueDate)),
-                                paymentDate: await reader.GetSafeAsync<DateTime?>(nameof(Bill.PaymentDate)),
-                                registrationDate: await reader.GetSafeAsync<DateTime>(nameof(Bill.RegistrationDate)),
-                                amount: await reader.GetSafeAsync<double>(nameof(Bill.Amount)),
-                                agio: await reader.GetSafeAsync<double>(nameof(Bill.Agio)),
-                                additionalCosts: await reader.GetSafeAsync<double>(nameof(Bill.AdditionalCosts)),
-                                code: await reader.GetSafeAsync<string>(nameof(Bill.Code)),
-                                notes: await reader.GetSafeAsync<string>(nameof(Bill.Notes))
-                                ));
+                                id: await reader.GetSafeAsync<long>(nameof(Bill.Id)).ConfigureAwait(false),
+                                supplierId: await reader.GetSafeAsync<long>(nameof(Bill.SupplierId)).ConfigureAwait(false),
+                                releaseDate: await reader.GetSafeAsync<DateTime>(nameof(Bill.ReleaseDate)).ConfigureAwait(false),
+                                dueDate: await reader.GetSafeAsync<DateTime>(nameof(Bill.DueDate)).ConfigureAwait(false),
+                                paymentDate: await reader.GetSafeAsync<DateTime?>(nameof(Bill.PaymentDate)).ConfigureAwait(false),
+                                registrationDate: await reader.GetSafeAsync<DateTime>(nameof(Bill.RegistrationDate)).ConfigureAwait(false),
+                                amount: await reader.GetSafeAsync<double>(nameof(Bill.Amount)).ConfigureAwait(false),
+                                agio: await reader.GetSafeAsync<double>(nameof(Bill.Agio)).ConfigureAwait(false),
+                                additionalCosts: await reader.GetSafeAsync<double>(nameof(Bill.AdditionalCosts)).ConfigureAwait(false),
+                                code: await reader.GetSafeAsync<string>(nameof(Bill.Code)).ConfigureAwait(false),
+                                notes: await reader.GetSafeAsync<string>(nameof(Bill.Notes)).ConfigureAwait(false)));
                     }
                 }
 
@@ -94,7 +93,7 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
                     cnn: this._connection,
                     sql: query,
                     param: queryParams,
-                    transaction: this.GetTransactionIfAvailable()) as IDictionary<string, object>;
+                    transaction: this.GetTransactionIfAvailable()).ConfigureAwait(false) as IDictionary<string, object>;
 
                 // TODO: create helper method dictionary -> bill
                 var bill = new Bill(
@@ -140,7 +139,8 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
                             $"insert into [{nameof(Bill)}] ({string.Join(",", columns)}) values ({string.Join(",", values)})",
                             "SELECT last_insert_rowid()"),
                         parameters: flattenedData.Select(kvp => new KeyValuePair<string, object>("@" + kvp.Key, kvp.Value)),
-                        transaction: this._transaction));
+                        transaction: this._transaction))
+                    .ConfigureAwait(false);
 
                 var lastInsertedCmd = new CommandDefinition(
                     commandText: $"select * from [{nameof(Bill)}] where \"{nameof(Bill.Id)}\" = @{nameof(Bill.Id)}",
@@ -153,6 +153,7 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
                 var lastInsertedRow = await SqlMapper.QueryFirstOrDefaultAsync(
                     cnn: this._connection,
                     lastInsertedCmd)
+                    .ConfigureAwait(false)
                     as IDictionary<string, object>;
 
                 // TODO: improve parsing, handling nulls etc.
@@ -199,7 +200,8 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
                     new CommandDefinition(
                         commandText: sql,
                         parameters: flattenedChanges,
-                        transaction: this._transaction));
+                        transaction: this._transaction))
+                    .ConfigureAwait(false);
 
                 if (affectedRows <= 0)
                 {
@@ -220,11 +222,13 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
 
                 var query = $"delete from [{nameof(Bill)}] where \"{nameof(Bill.Id)}\" = @{nameof(queryParams.Id)};";
 
-                var affectedRows = await SqlMapper.ExecuteAsync(
-                    cnn: this._connection,
-                    sql: query,
-                    param: queryParams,
-                    transaction: this._transaction);
+                var affectedRows = await SqlMapper
+                    .ExecuteAsync(
+                        cnn: this._connection,
+                        sql: query,
+                        param: queryParams,
+                        transaction: this._transaction)
+                    .ConfigureAwait(false);
 
                 if (affectedRows <= 0)
                 {

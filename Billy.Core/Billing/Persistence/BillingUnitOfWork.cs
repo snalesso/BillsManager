@@ -51,7 +51,7 @@ namespace Billy.Billing.Persistence
                 // TODO: this is handled transparently but should be logged as an error since it should never happen
                 return;
 
-            await this._transaction.CommitAsync();
+            await this._transaction.CommitAsync().ConfigureAwait(false);
             //await this._transaction.DisposeAsync();
 
             //this._transaction = null;
@@ -63,7 +63,7 @@ namespace Billy.Billing.Persistence
                 // TODO: this is handled transparently but should be logged as an error since it should never happen
                 return;
 
-            await this._transaction.RollbackAsync();
+            await this._transaction.RollbackAsync().ConfigureAwait(false);
             //await this._transaction.DisposeAsync();
 
             //this._transaction = null;
