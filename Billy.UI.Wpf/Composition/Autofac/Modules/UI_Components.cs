@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Billy.Billing.ViewModels;
-using Billy.Billing.Views;
 using Billy.UI.Wpf.Root.ViewModels;
 
 namespace Billy.UI.Wpf.Composition.Autofac.Modules
@@ -20,10 +19,9 @@ namespace Billy.UI.Wpf.Composition.Autofac.Modules
             builder.RegisterType<AddSupplierViewModel>().AsSelf().InstancePerDependency();
             //builder.RegisterType<AddSupplierView>().AsSelf().InstancePerDependency();
             builder.RegisterType<SupplierEditorViewModel>().AsSelf().InstancePerDependency();
-            builder.RegisterType<SupplierEditor>().AsSelf().InstancePerDependency();
+            //builder.RegisterType<SupplierEditor>().AsSelf().InstancePerDependency();
             builder.RegisterType<EditSupplierViewModel>().AsSelf().InstancePerDependency();
             //builder.RegisterType<EditSupplierView>().AsSelf().InstancePerDependency();
-            builder.RegisterType<SupplierEditor>().AsSelf().InstancePerDependency();
 
             builder.RegisterType<BillsViewModel>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<BillViewModel>().AsSelf().InstancePerDependency();
