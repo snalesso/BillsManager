@@ -21,11 +21,14 @@ namespace Billy.UI.Wpf.Root.ViewModels
         #region ctor
 
         public ShellViewModel(
-            IDialogService dialogService,
-            SuppliersViewModel suppliersViewModel)
+            IDialogService dialogService
+            , SuppliersViewModel suppliersViewModel
+            , BillsViewModel billsViewModel
+            )
         {
             this._dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
             this.SuppliersViewModel = suppliersViewModel ?? throw new ArgumentNullException(nameof(suppliersViewModel));
+            this.BillsViewModel = billsViewModel ?? throw new ArgumentNullException(nameof(billsViewModel));
 
             //this._isEnabled_OAPH = Observable
             //    .Return(true)
@@ -42,6 +45,8 @@ namespace Billy.UI.Wpf.Root.ViewModels
         #region properties
 
         public SuppliersViewModel SuppliersViewModel { get; }
+
+        public BillsViewModel BillsViewModel { get; }
 
         //private readonly ObservableAsPropertyHelper<bool> _isEnabled_OAPH;
         //public bool IsEnabled => this._isEnabled_OAPH.Value;

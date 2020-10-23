@@ -6,6 +6,7 @@ namespace Billy.Billing.Application.DTOs
     {
         /* TODO: what happens if underlying entity changes property and for some reason UI re-scans the DTO?
          * better copy properties and not return from the source? probably yes */
+        // TODO: what happens if the system wants to dispose the entity, and there's a reference to it held in here?
         private readonly Supplier _supplier;
 
         public SupplierDto(Supplier supplier)

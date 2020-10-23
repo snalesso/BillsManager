@@ -17,8 +17,17 @@
     mc:Ignorable="d">
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="8"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <Billing_Views:SuppliersView Margin="8" DataContext="{Binding SuppliersViewModel}" />
+        <Billing_Views:SuppliersView DataContext="{Binding SuppliersViewModel}" Grid.Column="0" />
+
+        <GridSplitter Grid.Column="1" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"></GridSplitter>
+
+        <Billing_Views:BillsView DataContext="{Binding BillsViewModel}" Grid.Column="2"></Billing_Views:BillsView>
 
     </Grid>
 </UserControl>
