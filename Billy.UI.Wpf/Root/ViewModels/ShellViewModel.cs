@@ -36,6 +36,7 @@ namespace Billy.UI.Wpf.Root.ViewModels
             //    .DisposeWith(this._disposables);
 
             this.Items.Add(this.SuppliersViewModel);
+            this.Items.Add(this.BillsViewModel);
 
             this.DisplayName = nameof(Billy) + Thread.CurrentThread.Name;
         }

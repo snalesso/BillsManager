@@ -39,7 +39,7 @@ namespace Billy.Billing.Persistence.SQL.SQLite3
             return SQLite3QueriesHelper.CreateTable(true, SQLite3SupplierQueries.TableDef.Value.ColumnDefs);
         }
 
-        public static string GetCreateTableQuery_old()
+        public static string GetCreateTableQueryRAW()
         {
             return
                 SQLite3QueriesHelper.CreateTable<Supplier>(

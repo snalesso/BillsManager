@@ -35,11 +35,12 @@
                         R="68" />
 
                     <Color
-                        x:Key="UncleGreenDark2"
+                        x:Key="UncleGreenDark2Color"
                         A="255"
                         B="37"
                         G="135"
                         R="37" />
+                    <SolidColorBrush x:Key="UncleGreenDarkBrush" Color="{StaticResource UncleGreenDark2Color}" />
 
                 </ResourceDictionary>
 
@@ -52,7 +53,7 @@
                 <materialDesgin:CustomColorTheme
                     x:Name="Theme2"
                     BaseTheme="Light"
-                    PrimaryColor="{StaticResource UncleGreenDark2}"
+                    PrimaryColor="{StaticResource UncleGreenDark2Color}"
                     SecondaryColor="GhostWhite" />
 
             </ResourceDictionary.MergedDictionaries>

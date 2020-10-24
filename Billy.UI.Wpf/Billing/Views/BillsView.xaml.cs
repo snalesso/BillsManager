@@ -22,7 +22,8 @@ namespace Billy.Billing.Views
                 //&& e.ClickCount == 2
                 && this.DataContext is BillsViewModel billsViewModel
                 && sender is FrameworkElement fe
-                && fe.DataContext is BillViewModel billViewModel)
+                && fe.DataContext is BillViewModel billViewModel
+                && billsViewModel.ShowEditBillView != null)
             {
                 await billsViewModel.ShowEditBillView.Execute(billViewModel);
             }

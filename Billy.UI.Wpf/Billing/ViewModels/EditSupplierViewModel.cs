@@ -43,8 +43,8 @@ namespace Billy.Billing.ViewModels
                     // TODO: handle esceptions/response
                     try
                     {
-                        await this._suppliersService.UpdateAsync(this._supplierDto.Id, changedValues);
-                        await this.TryCloseAsync(true);
+                        await this._suppliersService.UpdateAsync(this._supplierDto.Id, changedValues).ConfigureAwait(false);
+                        await this.TryCloseAsync(true).ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {
@@ -59,7 +59,7 @@ namespace Billy.Billing.ViewModels
             this.DiscardAndClose = ReactiveCommand.CreateFromTask(
                 async () =>
                 {
-                    await this.TryCloseAsync(false);
+                    await this.TryCloseAsync(false).ConfigureAwait(false);
                 });
             this.DiscardAndClose.ThrownExceptions
                 .Subscribe(ex => Debug.WriteLine(ex.Message))
