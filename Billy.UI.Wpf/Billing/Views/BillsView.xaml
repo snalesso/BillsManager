@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Billing_ViewModels="clr-namespace:Billy.Billing.ViewModels"
     xmlns:Billing_Views="clr-namespace:Billy.Billing.Views"
+    xmlns:Daedalus_UI_Converters="clr-namespace:Daedalus.UI.Converters;assembly=Daedalus.UI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -15,6 +16,11 @@
     d:TextElement.Foreground="{StaticResource MaterialDesignBody}"
     mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <Daedalus_UI_Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Daedalus_UI_Converters:BooleanToVisibilityInverter x:Key="BooleanToVisibilityInverter" />
+    </UserControl.Resources>
+
     <Grid>
 
         <Grid.RowDefinitions>
@@ -22,7 +28,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <WrapPanel Margin="8">
+        <!--<WrapPanel Margin="8">
             <Button Command="{Binding ShowAddBillView}" Content="Add bill" />
             <Button
                 Margin="8,0,0,0"
@@ -34,7 +40,7 @@
                 Command="{Binding RemoveBill}"
                 CommandParameter="{Binding SelectedBillViewModel}"
                 Content="Remove bill" />
-        </WrapPanel>
+        </WrapPanel>-->
 
         <ListView
             Grid.Row="1"
@@ -72,38 +78,60 @@
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID">
+                    <!--<GridViewColumn Header="ID">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Id, Mode=OneTime}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>-->
+                    <GridViewColumn Header="Supplier ID">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding SupplierId, Mode=OneTime}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="Code">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Code}" />
+                                <TextBlock Text="{Binding Code, Mode=OneTime}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="Amount">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Amount}" />
+                                <TextBlock Text="{Binding Amount, Mode=OneTime}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Supplier ID">
+                    <GridViewColumn Header="Paid">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding SupplierId}" />
+                                <!--<CheckBox
+                                    IsChecked="{Binding IsPaid, Mode=OneTime}"
+                                    IsEnabled="False"
+                                    ToolTip="{Binding PaymentDate, Mode=OneTime, StringFormat=\{0:d\}}" />-->
+                                <StackPanel Orientation="Horizontal" ToolTip="{Binding PaymentDate, Mode=OneTime, StringFormat=\{0:d\}}">
+                                    <materialDesign:PackIcon
+                                        Height="16"
+                                        Foreground="{StaticResource UncleGreenDarkBrush}"
+                                        Kind="Check"
+                                        Visibility="{Binding IsPaid, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneTime}" />
+                                    <materialDesign:PackIcon
+                                        Height="16"
+                                        Foreground="Red"
+                                        Kind="Close"
+                                        Visibility="{Binding IsPaid, Converter={StaticResource BooleanToVisibilityInverter}, Mode=OneTime}" />
+                                </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="Notes">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Notes}" />
+                                <TextBlock Text="{Binding Notes, Mode=OneTime}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

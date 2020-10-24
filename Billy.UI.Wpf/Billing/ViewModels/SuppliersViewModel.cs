@@ -70,7 +70,7 @@ namespace Billy.Billing.ViewModels
                 .DisposeWith(this._disposables);
 
             this.ShowAddSupplierView = ReactiveCommand.CreateFromTask(
-                () => this._dialogService.ShowDialogAsync(this._addSupplierViewModelFactoryMethod()))
+                async () => await this._dialogService.ShowDialogAsync(this._addSupplierViewModelFactoryMethod()).ConfigureAwait(false))
                 .DisposeWith(this._disposables);
             _ = this.ShowAddSupplierView.ThrownExceptions
                 .ObserveOn(RxApp.MainThreadScheduler)
@@ -92,7 +92,7 @@ namespace Billy.Billing.ViewModels
                     }
 
                     // TODO: handle if removed failed
-                    var wasRemoved = await this._billingService.Suppliers.RemoveAsync(supplierViewModel.Id);
+                    var wasRemoved = await this._billingService.Suppliers.RemoveAsync(supplierViewModel.Id).ConfigureAwait(false);
                 }
                 , this.WhenHasSelectionChanged)
                 .DisposeWith(this._disposables);
@@ -111,7 +111,7 @@ namespace Billy.Billing.ViewModels
                      }
 
                      var editSupplierVM = this._editSupplierViewModelFactoryMethod.Invoke(supplierViewModel.SupplierDto);
-                     await this._dialogService.ShowDialogAsync(editSupplierVM);
+                     await this._dialogService.ShowDialogAsync(editSupplierVM).ConfigureAwait(false);
                  }
                  , this.WhenHasSelectionChanged)
                 .DisposeWith(this._disposables); ;

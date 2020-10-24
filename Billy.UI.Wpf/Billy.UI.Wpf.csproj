@@ -31,6 +31,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\Caliburn.Micro.ReactiveUI\src\Caliburn.Micro.ReactiveUI\Caliburn.Micro.ReactiveUI.csproj" />
+		<ProjectReference Include="..\..\Daedalus\Src\Daedalus.UI\Daedalus.UI.csproj" />
 		<ProjectReference Include="..\Billy.Application\Billy.Application.csproj" />
 		<ProjectReference Include="..\Billy.Core\Billy.Core.csproj" />
 	</ItemGroup>

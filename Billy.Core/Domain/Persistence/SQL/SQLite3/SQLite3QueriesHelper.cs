@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
@@ -13,11 +14,22 @@ namespace Billy.Domain.Persistence.SQL.SQLite3
 
         public static string CreateTable<T>(bool ifNotExists, params string[] columnDefinitions)
         {
+            var cols =
+#if DEBUG
+                Environment.NewLine +
+#endif
+                string.Join(
+            ","
+#if DEBUG
+                + Environment.NewLine
+#endif
+                , columnDefinitions);
+
             return
                 $"CREATE TABLE"
                 + (ifNotExists ? " IF NOT EXISTS" : string.Empty)
                 + $" \"{typeof(T).Name}\""
-                + $" ({string.Join(",", columnDefinitions)})";
+                + $" ({cols})";
         }
 
         public static string CreateTable<T>(bool ifNotExists, IEnumerable<string> columnDefinitions)

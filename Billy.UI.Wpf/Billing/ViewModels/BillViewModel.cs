@@ -58,6 +58,8 @@ namespace Billy.Billing.ViewModels
         public string Notes => this._billDto.Notes;
         public string Code => this._billDto.Code;
 
+        public bool IsPaid => this.PaymentDate.HasValue;
+
         #endregion
 
         #region methods

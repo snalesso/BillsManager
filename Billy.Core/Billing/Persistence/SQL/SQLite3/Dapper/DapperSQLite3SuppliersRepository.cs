@@ -201,19 +201,22 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
                 var columns = flattenedData.Select(x => "[" + x.Key + "]");
                 //var values = data.Select(x => x.Value);
                 var values = flattenedData.Select(x => "@" + x.Key);
+                var queryParams = flattenedData.Select(kvp => new KeyValuePair<string, object>("@" + kvp.Key, kvp.Value));
+                //var rawQuery = $"insert into [{nameof(Supplier)}] ({string.Join(",", columns)}) values ({string.Join(",", flattenedData.Select(x => "\"" + x.Value + "\""))})";
+
+                var insertBillsCommand = new CommandDefinition(
+                    commandText: string.Join(";",
+                        $"insert into [{nameof(Supplier)}] ({string.Join(",", columns)}) values ({string.Join(",", values)})",
+                        "SELECT last_insert_rowid()"),
+                    parameters: queryParams,
+                    transaction: this._transaction);
 
                 // TODO: consider using QueryMultipleAsync
-                var id = await SqlMapper.ExecuteScalarAsync<int>(
-                    this._connection,
-                    new CommandDefinition(
-                        commandText: string.Join(";",
-                            $"insert into [{nameof(Supplier)}] ({string.Join(",", columns)}) values ({string.Join(",", values)})",
-                            "SELECT last_insert_rowid()"),
-                        parameters: flattenedData.Select(kvp => new KeyValuePair<string, object>("@" + kvp.Key, kvp.Value)),
-                        transaction: this._transaction))
+                var id = await SqlMapper
+                    .ExecuteScalarAsync<int>(this._connection, insertBillsCommand)
                     .ConfigureAwait(false);
 
-                var lastInsertedCmd = new CommandDefinition(
+                var getLastInsertedSupplierCommand = new CommandDefinition(
                     commandText: $"select * from [{nameof(Supplier)}] where \"{nameof(Supplier.Id)}\" = @{nameof(Supplier.Id)}",
                     parameters: new Dictionary<string, object>()
                     {
@@ -221,9 +224,8 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
                     },
                     transaction: this._transaction);
 
-                var lastInsertedRow = await SqlMapper.QueryFirstOrDefaultAsync(
-                    cnn: this._connection,
-                    lastInsertedCmd)
+                var lastInsertedRow = await SqlMapper
+                    .QueryFirstOrDefaultAsync(cnn: this._connection, getLastInsertedSupplierCommand)
                     .ConfigureAwait(false)
                     as IDictionary<string, object>;
 

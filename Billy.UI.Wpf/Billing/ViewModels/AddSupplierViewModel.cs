@@ -41,10 +41,10 @@ namespace Billy.Billing.ViewModels
                     //this.SupplierEditorViewModel.Values.Where(x => x.Value.OldValue != x.Value.NewValue).ToDictionary(x => x.Key, x => x.Value.NewValue);
 
                     // TODO: handle esceptions/response
-                    var addedSupplier = await this._suppliersService.CreateAndAddAsync(changedValues);
+                    var addedSupplier = await this._suppliersService.CreateAndAddAsync(changedValues).ConfigureAwait(false);
                     if (addedSupplier != null)
                     {
-                        await this.TryCloseAsync(true);
+                        await this.TryCloseAsync(true).ConfigureAwait(false);
                     }
                 });
             this.TrySaveAndClose.ThrownExceptions
@@ -53,7 +53,7 @@ namespace Billy.Billing.ViewModels
             this.TrySaveAndClose.DisposeWith(this._disposables);
 
             this.DiscardAndClose = ReactiveCommand.CreateFromTask(
-                () => this.TryCloseAsync(false));
+                async () => await this.TryCloseAsync(false).ConfigureAwait(false));
             this.DiscardAndClose.ThrownExceptions
                 .Subscribe(ex => Debug.WriteLine(ex.Message))
                 .DisposeWith(this._disposables);

@@ -22,7 +22,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <WrapPanel Margin="8">
+        <!--<WrapPanel Margin="8">
             <Button Command="{Binding ShowAddSupplierView}" Content="Add supplier" />
             <Button
                 Margin="8,0,0,0"
@@ -34,7 +34,7 @@
                 Command="{Binding RemoveSupplier}"
                 CommandParameter="{Binding SelectedSupplierViewModel}"
                 Content="Remove supplier" />
-        </WrapPanel>
+        </WrapPanel>-->
 
         <ListView
             Grid.Row="1"

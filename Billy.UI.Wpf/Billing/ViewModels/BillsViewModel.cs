@@ -93,7 +93,7 @@ namespace Billy.Billing.ViewModels
                     }
 
                     // TODO: handle if removed failed
-                    var wasRemoved = await this._billingService.Bills.RemoveAsync(billViewModel.Id);
+                    var wasRemoved = await this._billingService.Bills.RemoveAsync(billViewModel.Id).ConfigureAwait(false);
                 }
                 , this.WhenHasSelectionChanged)
                 .DisposeWith(this._disposables);

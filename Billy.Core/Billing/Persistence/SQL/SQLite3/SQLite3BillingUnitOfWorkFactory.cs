@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Billy.Billing.Persistence.SQL.SQLite3
 {
-    public class SQLite3BillingUnitOfWorkFactory : IBillingUnitOfWorkFactory //: IDisposable
+    public class SQLite3BillingUnitOfWorkFactory : IBillingUnitOfWorkFactory, IDisposable
     {
         #region constants & fields
-        
+
         //private readonly IConnectionFactory<SqlConnection> _connectionFactory;
         private readonly Func<SQLiteConnection, SQLiteTransactionBase, ISuppliersRepository> _suppliersRepositoryFactoryMethod;
         private readonly Func<SQLiteConnection, SQLiteTransactionBase, IBillsRepository> _billsRepositoryFactoryMethod;
 
-        private SQLiteConnection _connection; 
+        private SQLiteConnection _connection;
 
         #endregion
 
@@ -50,10 +50,16 @@ namespace Billy.Billing.Persistence.SQL.SQLite3
                 {
                     //var drop = "Drop table if exists Supplier";
                     var createSuppliersSQL = SQLite3SupplierQueries.GetCreateTableQuery();
-                    var cmd = new SQLiteCommand(
-                        //drop + ";" + 
+                    var createBillsSQL = SQLite3BillsQueries.GetCreateTableQueryRAW();
+                    var createSchemaSQL = string.Join(
+                        ";"
+#if DEBUG
+                        + Environment.NewLine
+#endif
+                        ,
                         createSuppliersSQL,
-                        this._connection, initTrans);
+                        createBillsSQL);
+                    var cmd = new SQLiteCommand(createSchemaSQL, this._connection, initTrans);
                     var result = await cmd.ExecuteNonQueryAsync().ConfigureAwait(false);
                     await initTrans.CommitAsync().ConfigureAwait(false);
                 }
