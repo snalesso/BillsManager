@@ -32,8 +32,11 @@ namespace Billy.UI.Wpf.Common.Services
 
             var resultCode = ofd.ShowDialog();
 
-            // TODO: investigate for awaitable versions
-            return Task.FromResult(new DialogResult<IReadOnlyCollection<string>>(resultCode, resultCode == true ? ofd.FileNames : null));
+            return Task.FromResult(
+                new DialogResult<IReadOnlyCollection<string>>(
+                    resultCode, resultCode == true 
+                    ? ofd.FileNames 
+                    : null));
         }
 
         public Task ShowDialogAsync(object dataContext)

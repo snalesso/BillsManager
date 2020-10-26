@@ -82,7 +82,6 @@ namespace Billy.Billing.Services
                 },
                 x => x.Id)
                 //this.SuppliersChanges = supplierDtoChangeSets
-                //    // TODO: add synchronization to handle multiple subscriptions?
                 //    //.RefCount()
                 //    //.Transform(supplier => this._supplierViewModelFactoryMethod.Invoke(supplier), new ParallelisationOptions(ParallelType.Parallelise))
                 //    //.DisposeMany()
@@ -180,21 +179,6 @@ namespace Billy.Billing.Services
                 Debug.WriteLine(ex);
                 throw;
             }
-
-            //try
-            //{
-            //    using (var uow = await this._billingUnitOfWorkFactory.CreateAsync().ConfigureAwait(false))
-            //    {
-            //        // TODO: read outside any transaction
-            //        updatedSupplier = await uow.Suppliers.GetByIdAsync(supplierId).ConfigureAwait(false);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Debug.WriteLine("Error reading updated supplier from service.");
-            //    Debug.WriteLine(ex);
-            //    throw;
-            //}
 
             var addedSupplierDto = new SupplierDto(updatedSupplier);
 

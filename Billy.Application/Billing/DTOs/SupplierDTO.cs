@@ -2,6 +2,7 @@
 
 namespace Billy.Billing.Application.DTOs
 {
+    // TODO: consider changing name to something like "XDetailsDto"/"XSummaryDto"
     public sealed class SupplierDto
     {
         /* TODO: what happens if underlying entity changes property and for some reason UI re-scans the DTO?

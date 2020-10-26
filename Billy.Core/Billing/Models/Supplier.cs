@@ -91,16 +91,5 @@ namespace Billy.Billing.Models
         }
 
         #endregion
-
-        #region Entity
-
-        //protected override void EnsureIsWellFormattedId(int id)
-        //{
-        //    if (id <= 0)
-        //        // TODO: create ad-hoc exception (e.g. InvalidIdentityException)
-        //        throw new ArgumentException($"{this.GetType().FullName}.{nameof(this.Id)} cannot be set to {id}.", nameof(id));
-        //}
-
-        #endregion
     }
 }

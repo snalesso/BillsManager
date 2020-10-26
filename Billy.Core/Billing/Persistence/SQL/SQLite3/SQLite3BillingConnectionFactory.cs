@@ -1,4 +1,5 @@
 ﻿using Billy.Domain.Persistence;
+using Billy.Domain.Persistence.SQL.SQLite3;
 using System.Data.SQLite;
 using System.Threading.Tasks;
 
@@ -6,8 +7,7 @@ namespace Billy.Billing.Persistence.SQL.SQLite3
 {
     public class SQLite3BillingConnectionFactory : IConnectionFactory<SQLiteConnection>//, IDisposable
     {
-        public const string DbFileExtensions = "sqlite3.db";
-        public const string DbFileName = nameof(Billing) + "." + DbFileExtensions;
+        public const string DbFileName = nameof(Billing) + "." + SQLite3QueriesHelper.DbFileExtension;
         public const string ConnectionString =
             "Version=3;" +
             ";Data Source=" + DbFileName +
