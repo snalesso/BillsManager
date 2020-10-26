@@ -41,17 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Bill.cs" />
-    <Compile Include="Domain\Bill.ICloneable.cs" />
-    <Compile Include="Domain\DBConnectionState.cs" />
-    <Compile Include="Domain\DueAlert.cs" />
-    <Compile Include="Domain\Obligation.cs" />
-    <Compile Include="Domain\Supplier.cs" />
-    <Compile Include="Domain\Supplier.ICloneable.cs" />
-    <Compile Include="Persistence\IBillsProvider.cs" />
-    <Compile Include="Persistence\IDBConnector.cs" />
-    <Compile Include="Persistence\ISuppliersProvider.cs" />
-    <Compile Include="Persistence\XMLDbSerializer.cs" />
+    <Compile Include="v1\Domain\Bill.cs" />
+    <Compile Include="v1\Domain\Bill.ICloneable.cs" />
+    <Compile Include="v1\Domain\DBConnectionState.cs" />
+    <Compile Include="v1\Domain\DueAlert.cs" />
+    <Compile Include="v1\Domain\Obligation.cs" />
+    <Compile Include="v1\Domain\Supplier.cs" />
+    <Compile Include="v1\Domain\Supplier.ICloneable.cs" />
+    <Compile Include="v1\Persistence\IBillsProvider.cs" />
+    <Compile Include="v1\Persistence\IDBConnector.cs" />
+    <Compile Include="v1\Persistence\ISuppliersProvider.cs" />
+    <Compile Include="v1\Persistence\XMLDbSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

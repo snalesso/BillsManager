@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BillsManager.Models
+namespace BillsManager.v1.Models
 {
     public partial class Supplier : ICloneable
     {

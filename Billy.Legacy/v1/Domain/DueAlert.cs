@@ -1,4 +1,4 @@
-﻿namespace BillsManager.Models
+﻿namespace BillsManager.v1.Models
 {
     public enum DueAlert
     {
