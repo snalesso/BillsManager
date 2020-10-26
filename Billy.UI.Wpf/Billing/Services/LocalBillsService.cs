@@ -6,6 +6,7 @@ using DynamicData.Binding;
 using DynamicData.Cache.Internal;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Disposables;
@@ -48,19 +49,18 @@ namespace Billy.Billing.Services
 
         public async Task<IReadOnlyCollection<BillDto>> GetAsync()
         {
-            IReadOnlyCollection<Bill> bills;
+            IReadOnlyCollection<Bill> bills = null;
 
-            //using (var uow = this._billingUowFactoryMethod.Invoke())
             using (var uow = await this._billingUnitOfWorkFactory.CreateAsync().ConfigureAwait(false))
             {
                 bills = await uow.Bills.GetMultipleAsync().ConfigureAwait(false);
             }
 
-            var billDTOs = bills.Select(s => new BillDto(s)).ToList();
+            var billDTOs = bills.Select(s => new BillDto(s)).ToList().AsReadOnly();
 
             return billDTOs;
         }
-                       
+
         public async Task<BillDto> CreateAndAddAsync(IDictionary<string, object> data)
         {
             //using (var uow = this._billingUowFactoryMethod.Invoke())
@@ -92,44 +92,33 @@ namespace Billy.Billing.Services
 
         public async Task UpdateAsync(long billId, IDictionary<string, object> changes)
         {
-
-            Bill updatedBill = null;
             try
             {
+                Bill updatedBill = null;
+
                 using (var uow = await this._billingUnitOfWorkFactory.CreateAsync().ConfigureAwait(false))
                 {
-                    await uow.Bills.UpdateAsync(billId, changes).ConfigureAwait(false);
-                    await uow.CommitAsync().ConfigureAwait(false);
-                    updatedBill = await uow.Bills.GetByIdAsync(billId).ConfigureAwait(false);
+                    try
+                    {
+                        await uow.Bills.UpdateAsync(billId, changes).ConfigureAwait(false);
+                        await uow.CommitAsync().ConfigureAwait(false);
+                        updatedBill = await uow.Bills.GetByIdAsync(billId).ConfigureAwait(false);
+                    }
+                    catch (Exception)
+                    {
+                        await uow.RollbackAsync();
+                        throw;
+                    }
                 }
+
+                this._updated_Subject.OnNext(new[] { new BillDto(updatedBill) });
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Error updating bill from service.");
                 Debug.WriteLine(ex);
-                throw;
             }
-
-            //try
-            //{
-            //    using (var uow = await this._billingUnitOfWorkFactory.CreateAsync().ConfigureAwait(false))
-            //    {
-            //        // TODO: read outside any transaction
-            //        updatedBill = await uow.Bills.GetByIdAsync(billId).ConfigureAwait(false);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Debug.WriteLine("Error reading updated bill from service.");
-            //    Debug.WriteLine(ex);
-            //    throw;
-            //}
-
-            var addedBillDto = new BillDto(updatedBill);
-
-            this._updated_Subject.OnNext(new[] { addedBillDto });
         }
-               
+
         public async Task<bool> RemoveAsync(long id)
         {
             //using (var uow = this._billingUowFactoryMethod.Invoke())

@@ -3,6 +3,7 @@ using System;
 
 namespace Billy.Billing.Application.DTOs
 {
+    // TODO: consider changing name to something like "XDetailsDto"/"XSummaryDto"
     public sealed class BillDto
     {
         private readonly Bill _bill;
