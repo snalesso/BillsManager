@@ -1,4 +1,4 @@
-﻿using BillsManager.Models;
+﻿using BillsManager.v1.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
 
-namespace BillsManager.Services.Data
+namespace BillsManager.v1.Services.Data
 {
     public class XMLDbSerializer : IDBConnector
     {
