@@ -1,5 +1,4 @@
 ﻿using Billy.Billing.Application.DTOs;
-using Billy.Communication;
 using DynamicData;
 using System;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Billy.Billing.Services
 {
-    public interface ISuppliersService : IService
+    public interface ISuppliersService
     {
         // READ
         IObservable<SupplierDto> Added { get; }

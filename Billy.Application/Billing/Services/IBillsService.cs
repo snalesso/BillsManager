@@ -1,12 +1,11 @@
 ﻿using Billy.Billing.Application.DTOs;
-using Billy.Communication;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Billy.Billing.Services
 {
-    public interface IBillsService : IService
+    public interface IBillsService
     {
         // READ
         IObservable<BillDto> Added { get; }

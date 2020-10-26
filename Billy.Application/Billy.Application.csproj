@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Communication\**" />
+    <EmbeddedResource Remove="Communication\**" />
+    <None Remove="Communication\**" />
+  </ItemGroup>
+
+  <ItemGroup>
 	  <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
   </ItemGroup>
 
