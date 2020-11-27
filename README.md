@@ -1,5 +1,5 @@
-# Billy (previously BillsManager)
+# ~~BillsManager~~ Billy
 
-WIP Moving to v2 ...
+WIP to v2 ...
 
 ![Screenshot of the application](https://github.com/snalesso/BillsManager/blob/master/screenshot.png)
