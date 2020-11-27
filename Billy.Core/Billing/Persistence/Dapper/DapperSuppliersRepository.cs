@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 namespace Billy.Billing.Persistence.SQL
 {
     public abstract class DapperSuppliersRepository : ISuppliersRepository
+        , IReadSuppliersRepository
+        , IWriteSuppliersRepository
     {
         #region fields & constants
 
@@ -38,6 +40,11 @@ namespace Billy.Billing.Persistence.SQL
 
         #region core
 
+        protected virtual string GetSortingSQL()
+        {
+            return $"order by {nameof(Supplier.Name)} asc";
+        }
+
         protected abstract string GetSelectScopeIdentitySQL();
 
         protected virtual string GetInsertSingleSQLFormat(IEnumerable<KeyValuePair<string, object>> data)
@@ -48,14 +55,14 @@ namespace Billy.Billing.Persistence.SQL
             return $"insert into \"{nameof(Supplier)}\" ({string.Join(",", columns)}) values ({string.Join(",", values)})";
         }
 
-        protected virtual string GetSelectAll()
+        protected virtual string GetSelectAllSQL()
         {
             return $"select * from \"{nameof(Supplier)}\"";
         }
 
-        protected virtual string GetSelectAllWhereId()
+        protected virtual string GetWhereIdSQL()
         {
-            return this.GetSelectAll() + $" where \"{nameof(Supplier.Id)}\" = @{nameof(Supplier.Id)};";
+            return $"where \"{nameof(Supplier.Id)}\" = @{nameof(Supplier.Id)}";
         }
 
         #endregion
@@ -71,7 +78,7 @@ namespace Billy.Billing.Persistence.SQL
 
         #endregion
 
-        public async Task<IReadOnlyCollection<Supplier>> GetMultipleAsync()
+        public async Task<IReadOnlyCollection<Supplier>> GetMultipleAsync(SupplierCriteria criteria = null)
         {
             try
             {
@@ -79,7 +86,7 @@ namespace Billy.Billing.Persistence.SQL
 
                 var reader = await SqlMapper.ExecuteReaderAsync(
                     cnn: this._connection,
-                    sql: this.GetSelectAll(), // $"select * from [{nameof(Supplier)}];",
+                    sql: this.GetSelectAllSQL() + " " + this.GetSortingSQL(), // $"select * from [{nameof(Supplier)}];",
                     transaction: this.GetTransactionIfAvailable());
                 await using (reader)
                 {
@@ -134,7 +141,7 @@ namespace Billy.Billing.Persistence.SQL
             {
                 var queryParams = new DynamicParameters();
                 queryParams.Add(nameof(Supplier.Id), id);
-                var query = this.GetSelectAllWhereId();
+                var query = this.GetSelectAllSQL() + " " + this.GetWhereIdSQL();
                 //$"select * from [{nameof(Supplier)}] where [{nameof(Supplier.Id)}] = @{nameof(queryParams.SearchedId)};";
 
                 var lastInsertedRow = await SqlMapper.QueryFirstOrDefaultAsync(
@@ -220,6 +227,11 @@ namespace Billy.Billing.Persistence.SQL
             }
         }
 
+        public Task<Supplier> GetSingleAsync(SupplierCriteria criteria = null)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region WRITE
@@ -241,7 +253,7 @@ namespace Billy.Billing.Persistence.SQL
                         parameters: flattenedData.Select(kvp => new KeyValuePair<string, object>("@" + kvp.Key, kvp.Value)),
                         transaction: this._transaction));
 
-                sql = this.GetSelectAllWhereId();
+                sql = this.GetSelectAllSQL() + " " + this.GetSortingSQL();
 
                 var lastInsertedRow = await SqlMapper.QueryFirstOrDefaultAsync(
                     cnn: this._connection,

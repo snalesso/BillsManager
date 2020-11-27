@@ -1,47 +1,51 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>Billy</RootNamespace>
-	  <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-  </PropertyGroup>
 
-  <ItemGroup>
-	  <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.0.35" />
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="2.0.1" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.113.1" />
-    <PackageReference Include="System.Reactive" Version="4.4.1" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Compile Remove="Billing\Reporting\**" />
-    <EmbeddedResource Remove="Billing\Reporting\**" />
-    <None Remove="Billing\Reporting\**" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Compile Remove="Billing\Models\IBill.cs" />
-    <Compile Remove="Billing\Models\ISupplier.cs" />
-    <Compile Remove="Billing\Models\NewBill.cs" />
-    <Compile Remove="Billing\Models\NewSupplier.cs" />
-    <Compile Remove="Billing\Persistence\SQL\MSSQLServer\Dapper\DapperMSSQLServerValueObjectSplitter.cs" />
-    <Compile Remove="Billing\Persistence\SQL\MSSQLServer\Dapper\DictionaryWritingTools.cs" />
-    <Compile Remove="Billing\Persistence\SQL\SQLite3\Dapper\DapperSQLite3ValueObjectSplitter.cs" />
-    <Compile Remove="Billing\Persistence\SQL\SQLite3\Dapper\DictionaryWritingTools.cs" />
-    <Compile Remove="Domain\Models\INotifyingTrackableErroring.cs" />
-    <Compile Remove="OldNewValues`1.cs" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Billing\Persistence\SQL\SQLite3\EFCore\" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\..\Daedalus\Src\Daedalus.ExtensionMethods\Daedalus.ExtensionMethods.csproj" />
-  </ItemGroup>
-  
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<RootNamespace>Billy</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Remove="Billing\Reporting\**" />
+		<EmbeddedResource Remove="Billing\Reporting\**" />
+		<None Remove="Billing\Reporting\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Remove="Billing\Models\IBill.cs" />
+		<Compile Remove="Billing\Models\ISupplier.cs" />
+		<Compile Remove="Billing\Models\NewBill.cs" />
+		<Compile Remove="Billing\Models\NewSupplier.cs" />
+		<Compile Remove="Billing\Persistence\SQL\MSSQLServer\Dapper\DapperMSSQLServerValueObjectSplitter.cs" />
+		<Compile Remove="Billing\Persistence\SQL\MSSQLServer\Dapper\DictionaryWritingTools.cs" />
+		<Compile Remove="Billing\Persistence\SQL\SQLite3\Dapper\DapperSQLite3ValueObjectSplitter.cs" />
+		<Compile Remove="Billing\Persistence\SQL\SQLite3\Dapper\DictionaryWritingTools.cs" />
+		<Compile Remove="Domain\Models\INotifyingTrackableErroring.cs" />
+		<Compile Remove="OldNewValues`1.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Billing\Persistence\SQL\SQLite3\EFCore\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Dapper" Version="2.0.35" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="2.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0" />
+		<PackageReference Include="System.Data.SQLite.Core" Version="1.0.113.6" />
+		<PackageReference Include="System.Reactive" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Daedalus\Src\Daedalus.ExtensionMethods\Daedalus.ExtensionMethods.csproj" />
+	</ItemGroup>
+
 </Project>

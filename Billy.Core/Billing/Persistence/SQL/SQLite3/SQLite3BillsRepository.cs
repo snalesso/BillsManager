@@ -32,7 +32,9 @@ namespace Billy.Billing.Persistence.SQL.SQLite3
         // TODO: define base impl
         public abstract Task<Bill> CreateAndAddAsync(IEnumerable<KeyValuePair<string, object>> data);
         public abstract Task<Bill> GetByIdAsync(long id);
-        public abstract Task<IReadOnlyCollection<Bill>> GetMultipleAsync();
+        public abstract Task<Bill> GetSingleAsync(BillCriteria billCriteria);
+        public abstract Task<IReadOnlyCollection<Bill>> GetMultipleAsync(BillCriteria billCriteria = null);
+
         public abstract Task RemoveAsync(long id);
         public abstract Task UpdateAsync(long id, IEnumerable<KeyValuePair<string, object>> changes);
 

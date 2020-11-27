@@ -49,7 +49,7 @@ namespace Billy.Billing.ViewModels
             this._editSupplierViewModelFactoryMethod = editSupplierViewModelFactoryMethod ?? throw new ArgumentNullException(nameof(editSupplierViewModelFactoryMethod));
 
             this._suppliersSubscription = new SerialDisposable().DisposeWith(this._disposables);
-            this._suppliersSourceCache = new SourceCache<SupplierDto, long>(x => x.Id).DisposeWith(this._disposables);
+            //new SourceCache<SupplierDto, long>(x => x.Id).DisposeWith(this._disposables);
 
             this.WhenSelectionChanged = this.WhenAnyValue(x => x.SelectedSupplierViewModel).DistinctUntilChanged();
             this.WhenHasSelectionChanged = this.WhenSelectionChanged.Select(x => x != null).DistinctUntilChanged();
@@ -169,9 +169,9 @@ namespace Billy.Billing.ViewModels
         private void SubscribeToSuppliers()
         {
             //this._suppliersSubscription.Disposable = this._billingService.Suppliers.SuppliersChanges
-            this._suppliersSubscription.Disposable = this._billingService.Suppliers.Suppliers
+            this._suppliersSubscription.Disposable = this._billingService.Suppliers.Cache
                 .Connect()
-                .RefCount()
+                //.RefCount()
                 .Transform(
                     supplier => new SupplierViewModel(supplier),
                     new ParallelisationOptions(ParallelType.Parallelise))

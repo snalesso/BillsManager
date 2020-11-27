@@ -23,6 +23,7 @@ namespace Billy.UI.Wpf.Composition.Autofac.Modules
             builder.RegisterType<EditSupplierViewModel>().AsSelf().InstancePerDependency();
             //builder.RegisterType<EditSupplierView>().AsSelf().InstancePerDependency();
 
+            builder.RegisterType<BillsFiltersViewModel>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<BillsViewModel>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<BillViewModel>().AsSelf().InstancePerDependency();
         }

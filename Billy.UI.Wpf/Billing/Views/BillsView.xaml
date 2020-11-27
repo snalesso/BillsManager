@@ -11,8 +11,8 @@
     d:Background="{StaticResource MaterialDesignPaper}"
     d:DataContext="{d:DesignInstance Type=Billing_ViewModels:BillsViewModel,
                                      IsDesignTimeCreatable=False}"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
+    d:DesignHeight="250"
+    d:DesignWidth="600"
     d:TextElement.Foreground="{StaticResource MaterialDesignBody}"
     mc:Ignorable="d">
 
@@ -25,8 +25,11 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+
+        <Billing_Views:BillsFiltersView DataContext="{Binding BillsFilterViewModel}" Grid.Row="0" />
 
         <!--<WrapPanel Margin="8">
             <Button Command="{Binding ShowAddBillView}" Content="Add bill" />
@@ -44,6 +47,7 @@
 
         <ListView
             Grid.Row="1"
+            Grid.RowSpan="2"
             materialDesign:ScrollBarAssist.ButtonsVisibility="Collapsed"
             BorderBrush="{x:Null}"
             BorderThickness="0"
@@ -55,7 +59,7 @@
             VirtualizingPanel.VirtualizationMode="Recycling">
 
             <ListView.Resources>
-                <Style BasedOn="{StaticResource MaterialDesignScrollBarMinimal}" TargetType="ScrollBar" />
+                <Style BasedOn="{StaticResource MaterialDesignScrollBarMinimal}" TargetType="{x:Type ScrollBar}" />
             </ListView.Resources>
 
             <ListView.ItemContainerStyle>
@@ -89,6 +93,13 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding SupplierId, Mode=OneTime}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Released">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ReleaseDate, Mode=OneTime, StringFormat=\{0:dd/MM/yyyy\}}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

@@ -1,27 +1,32 @@
-﻿namespace Billy.Billing.Services
+﻿using System.Collections.Generic;
+
+namespace Billy.Billing.Services
 {
-    //public class Response
-    //{
-    //    public ResponseStatus Status { get; }
-
-    //    public Response(ResponseStatus status)
-    //    {
-    //        this.Status = status;
-    //    }
-    //}
-
-    public class Response<T> //: Response
+    public class Response<T>
     {
         public Response(
-            ResponseStatus status,
-            T content)
-        //: base(status)
+            T content,
+            IEnumerable<DbValidationError<T>> errors = null)
         {
-            this.Status = status;
-            this.Content = content; // ?? throw new ArgumentNullException(nameof(content));
+            this.Content = content;
+            this.Errors = errors;
         }
 
         public ResponseStatus Status { get; }
         public T Content { get; }
+        public IEnumerable<DbValidationError<T>> Errors { get; }
+    }
+
+    public class DbValidationError<T>
+    {
+        public string EntityName { get; }
+        public string PropertyName { get; }
+        public string Message { get; }
+        public DbErrorCode Code { get; }
+    }
+
+    public enum DbErrorCode
+    {
+        Unique,
     }
 }

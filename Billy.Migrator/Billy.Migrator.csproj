@@ -1,13 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<LangVersion>9.0</LangVersion>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Billy.Core\Billy.Core.csproj" />
-    <ProjectReference Include="..\Billy.Legacy\Billy.Legacy.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Billy.Core\Billy.Core.csproj" />
+		<ProjectReference Include="..\Billy.Legacy\Billy.Legacy.csproj" />
+	</ItemGroup>
 
 </Project>

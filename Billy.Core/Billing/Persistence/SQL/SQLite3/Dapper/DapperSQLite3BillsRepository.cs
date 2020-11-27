@@ -3,6 +3,7 @@ using Billy.Billing.Persistence.SQL.SQLite3;
 using Billy.Domain.Persistence;
 using Billy.Domain.Persistence.SQL;
 using Dapper;
+using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -32,16 +33,80 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
         // TODO: get rid of this trick?
         private SQLiteTransactionBase GetTransactionIfAvailable() => this._transaction?.Connection != null ? this._transaction : null;
 
+        private (string sql, IDictionary<string, object> parameters) GetWhereConditions(BillCriteria billCriteria)
+        {
+            if (billCriteria == null)
+                return (null, null);
+
+            //IDictionary<string, IEnumerable<Tuple<string, object>>> clauses = new Dictionary<string, IEnumerable<Tuple<string, object>>>();
+            IList<string> whereSqlClauses = new List<string>();
+            var whereParamsDict = new Dictionary<string, object>();
+
+            if (billCriteria.SupplierId.HasValue)
+            {
+                const string paramKey = "@" /*+ nameof(billCriteria) + "." */+ nameof(billCriteria.SupplierId);
+                whereSqlClauses.Add(nameof(Bill.SupplierId) + " = " + paramKey);
+                whereParamsDict.Add(paramKey, billCriteria.SupplierId);
+            }
+            if (billCriteria.IsPaid.HasValue)
+            {
+                whereSqlClauses.Add(nameof(Bill.PaymentDate) + (billCriteria.IsPaid.Value ? " is not " : " is ") + "NULL");
+            }
+            if (billCriteria.ReleaseDateRange != null)
+            {
+                if (billCriteria.ReleaseDateRange.Start.HasValue && billCriteria.ReleaseDateRange.End.HasValue)
+                {
+                    const string startParamKey = "@" + nameof(billCriteria.ReleaseDateRange) + nameof(billCriteria.ReleaseDateRange.Start);
+                    const string endParamKey = "@" + nameof(billCriteria.ReleaseDateRange) + nameof(billCriteria.ReleaseDateRange.End);
+
+                    if (billCriteria.ReleaseDateRange.Start.Value == billCriteria.ReleaseDateRange.End.Value)
+                        whereSqlClauses.Add(nameof(Bill.ReleaseDate) + " = " + startParamKey);
+                    else
+                        whereSqlClauses.Add(nameof(Bill.ReleaseDate) + " between " + startParamKey + " and " + endParamKey);
+
+                    whereParamsDict.Add(startParamKey, billCriteria.ReleaseDateRange.Start);
+                    whereParamsDict.Add(endParamKey, billCriteria.ReleaseDateRange.End);
+                }
+                else if (billCriteria.ReleaseDateRange.Start.HasValue)
+                {
+                    const string startParamKey = "@" + nameof(billCriteria.ReleaseDateRange) + nameof(billCriteria.ReleaseDateRange.Start);
+                    whereSqlClauses.Add(nameof(Bill.ReleaseDate) + " >= " + startParamKey);
+                    whereParamsDict.Add(startParamKey, billCriteria.ReleaseDateRange.Start);
+                }
+                else
+                {
+                    const string endParamKey = "@" + nameof(billCriteria.ReleaseDateRange) + nameof(billCriteria.ReleaseDateRange.End);
+                    whereSqlClauses.Add(nameof(Bill.ReleaseDate) + " <= " + endParamKey);
+                    whereParamsDict.Add(endParamKey, billCriteria.ReleaseDateRange.End);
+                }
+            }
+
+            // TODO: use stringbuilder
+            return (string.Join(" and ", whereSqlClauses), whereParamsDict);
+        }
+
+        private string GetSortingSQL()
+        {
+            return $"order by {nameof(Bill.ReleaseDate)} asc, {nameof(Bill.SupplierId)} asc, {nameof(Bill.Code)} asc";
+        }
+
         #endregion
 
-        public override async Task<IReadOnlyCollection<Bill>> GetMultipleAsync()
+        public override async Task<IReadOnlyCollection<Bill>> GetMultipleAsync(BillCriteria billCriteria = null)
         {
             try
             {
                 var bills = new List<Bill>();
 
+                var rawQuery = $"select * from [{nameof(Bill)}]";
+                var wherePart = this.GetWhereConditions(billCriteria);
+
+                var sql = rawQuery
+                    + (wherePart.sql is not null && wherePart.sql != string.Empty ? " where " + wherePart.sql : string.Empty)
+                    + " " + this.GetSortingSQL();
                 var cmd = new CommandDefinition(
-                    commandText: $"select * from [{nameof(Bill)}]",
+                    commandText: sql,
+                    parameters: wherePart.parameters, // clauses.Values.SelectMany(x => (k => k.Item1, k => k.Item2)).ToDictionary(x => x,
                     transaction: this.GetTransactionIfAvailable());
 
                 //var resultsGrid = SqlMapper.QueryMultipleAsync(this._connection, cmd);
@@ -49,7 +114,7 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
 
                 await using (var reader = await SqlMapper.ExecuteReaderAsync(cnn: this._connection, cmd).ConfigureAwait(false))
                 {
-                    while (await reader.ReadAsync())
+                    while (await reader.ReadAsync().ConfigureAwait(false))
                     {
                         // TODO: cache column names composition
                         bills.Add(
@@ -68,7 +133,7 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
                     }
                 }
 
-                return bills;
+                return bills.AsReadOnly();
             }
             catch (InvalidCastException ex)
             {
@@ -82,6 +147,11 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
             }
         }
 
+        public override Task<Bill> GetSingleAsync(BillCriteria billCriteria)
+        {
+            throw new NotImplementedException();
+        }
+
         public override async Task<Bill> GetByIdAsync(long id)
         {
             try
@@ -89,11 +159,14 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
                 var queryParams = new { SearchedId = id };
                 var query = $"select * from [{nameof(Bill)}] where \"{nameof(Bill.Id)}\" = @{nameof(queryParams.SearchedId)};";
 
-                var lastInsertedRow = await SqlMapper.QueryFirstOrDefaultAsync(
-                    cnn: this._connection,
-                    sql: query,
-                    param: queryParams,
-                    transaction: this.GetTransactionIfAvailable()).ConfigureAwait(false) as IDictionary<string, object>;
+                var lastInsertedRow = await SqlMapper
+                    .QueryFirstOrDefaultAsync(
+                        cnn: this._connection,
+                        sql: query,
+                        param: queryParams,
+                        transaction: this.GetTransactionIfAvailable())
+                    .ConfigureAwait(false)
+                    as IDictionary<string, object>;
 
                 // TODO: create helper method dictionary -> bill
                 var bill = new Bill(
@@ -225,9 +298,9 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
                 var affectedRows = await SqlMapper
                     .ExecuteAsync(
                         cnn: this._connection,
+                        transaction: this._transaction,
                         sql: query,
-                        param: queryParams,
-                        transaction: this._transaction)
+                        param: queryParams)
                     .ConfigureAwait(false);
 
                 if (affectedRows <= 0)

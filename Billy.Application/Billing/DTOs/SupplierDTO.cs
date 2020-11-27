@@ -1,4 +1,5 @@
 ﻿using Billy.Billing.Models;
+using System;
 
 namespace Billy.Billing.Application.DTOs
 {
@@ -12,7 +13,7 @@ namespace Billy.Billing.Application.DTOs
 
         public SupplierDto(Supplier supplier)
         {
-            this._supplier = supplier;
+            this._supplier = supplier ?? throw new ArgumentNullException(nameof(supplier));
         }
 
         public long Id => this._supplier.Id;

@@ -11,20 +11,20 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Billy.Application", "Billy.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caliburn.Micro.ReactiveUI", "..\Caliburn.Micro.ReactiveUI\src\Caliburn.Micro.ReactiveUI\Caliburn.Micro.ReactiveUI.csproj", "{F59E3C5E-8862-43B4-A59A-CF795B3912F3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daedalus.UI", "..\Daedalus\Src\Daedalus.UI\Daedalus.UI.csproj", "{8008609E-8813-4A12-B385-431B25BCBBF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daedalus.ExtensionMethods", "..\Daedalus\Src\Daedalus.ExtensionMethods\Daedalus.ExtensionMethods.csproj", "{3358412E-6CA8-462B-883B-0A640218A4A0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Legacy", "Legacy", "{291BEDCD-75C7-4343-B248-238636214D0E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Billy.Migrator", "Billy.Migrator\Billy.Migrator.csproj", "{22AF4C98-ABE3-4558-A51F-102D7BC3CFA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Billy.Legacy", "Billy.Legacy\Billy.Legacy.csproj", "{05033E77-2DE7-423F-AB93-5FD9DD827CDA}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AEF3219E-FA60-4CF9-8D90-BE5B055F0204}"
 	ProjectSection(SolutionItems) = preProject
 		SharedAssemblyInfo.cs = SharedAssemblyInfo.cs
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daedalus.ExtensionMethods", "..\Daedalus\Src\Daedalus.ExtensionMethods\Daedalus.ExtensionMethods.csproj", "{3358412E-6CA8-462B-883B-0A640218A4A0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Billy.Migrator", "Billy.Migrator\Billy.Migrator.csproj", "{22AF4C98-ABE3-4558-A51F-102D7BC3CFA0}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Legacy", "Legacy", "{291BEDCD-75C7-4343-B248-238636214D0E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daedalus.UI", "..\Daedalus\Src\Daedalus.UI\Daedalus.UI.csproj", "{8008609E-8813-4A12-B385-431B25BCBBF1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Billy.Legacy", "Billy.Legacy\Billy.Legacy.csproj", "{05033E77-2DE7-423F-AB93-5FD9DD827CDA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

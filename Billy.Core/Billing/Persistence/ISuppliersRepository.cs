@@ -8,4 +8,8 @@ namespace Billy.Billing.Persistence
     public interface ISuppliersRepository : IReadSuppliersRepository, IWriteSuppliersRepository
     {
     }
+
+    public interface IReadWriteBillingModel : IReadBillingModel, IWriteBillingModel
+    {
+    }
 }

@@ -37,7 +37,7 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer.Dapper
 
         #endregion
 
-        public override async Task<IReadOnlyCollection<Supplier>> GetMultipleAsync()
+        public override async Task<IReadOnlyCollection<Supplier>> GetMultipleAsync(SupplierCriteria criteria = null)
         {
             try
             {
@@ -136,51 +136,9 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer.Dapper
             }
         }
 
-        public override async Task<IReadOnlyCollection<Supplier>> GetByIdAsync(params long[] ids)
+        public override Task<Supplier> GetSingleAsync(SupplierCriteria criteria = null)
         {
-            try
-            {
-                var query = $"select * from [{nameof(Supplier)}] where [{nameof(Supplier.Id)}] in ({string.Join(",", ids)});";
-
-                var suppliers = new List<Supplier>();
-
-                await using (var reader = await SqlMapper.ExecuteReaderAsync(
-                    cnn: this._connection,
-                    sql: query,
-                    transaction: this.GetTransactionIfAvailable()).ConfigureAwait(false))
-                {
-                    while (await reader.ReadAsync())
-                    {
-                        suppliers.Add(
-                            new Supplier(
-                                await reader.GetSafeAsync<int>(nameof(Supplier.Id)).ConfigureAwait(false),
-                                await reader.GetSafeAsync<string>(nameof(Supplier.Name)).ConfigureAwait(false),
-                                await reader.GetSafeAsync<string>(nameof(Supplier.Email)).ConfigureAwait(false),
-                                await reader.GetSafeAsync<string>(nameof(Supplier.Website)).ConfigureAwait(false),
-                                await reader.GetSafeAsync<string>(nameof(Supplier.Phone)).ConfigureAwait(false),
-                                await reader.GetSafeAsync<string>(nameof(Supplier.Fax)).ConfigureAwait(false),
-                                await reader.GetSafeAsync<string>(nameof(Supplier.Notes)).ConfigureAwait(false),
-                                Address.Create(
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Country))).ConfigureAwait(false),
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Province))).ConfigureAwait(false),
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.City))).ConfigureAwait(false),
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Zip))).ConfigureAwait(false),
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Street))).ConfigureAwait(false),
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Number))).ConfigureAwait(false)),
-                                Agent.Create(
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Name))).ConfigureAwait(false),
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Surname))).ConfigureAwait(false),
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Phone))).ConfigureAwait(false))));
-                    }
-                }
-
-                return suppliers;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-                return null;
-            }
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -306,11 +264,6 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer.Dapper
             {
                 Debug.WriteLine(ex);
             }
-        }
-
-        public override Task RemoveAsync(IEnumerable<long> ids)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

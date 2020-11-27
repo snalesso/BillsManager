@@ -1,5 +1,4 @@
 ﻿using Billy.Domain.Persistence;
-using System.Threading.Tasks;
 
 namespace Billy.Billing.Persistence
 {
@@ -7,9 +6,12 @@ namespace Billy.Billing.Persistence
     {
         ISuppliersRepository Suppliers { get; }
         IBillsRepository Bills { get; }
-    }
-    public interface IBillingUnitOfWorkFactory
-    {
-        Task<IBillingUnitOfWork> CreateAsync();
+
+        ISupplierSummaries SupplierSummaries { get; }
+        ISupplierHeadersView SupplierHeaders { get; }
+        IDetailedBillsView DetailedBills { get; }
+
+        //IReadBillingModel Read { get; }
+        //IWriteBillingModel Write { get; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Billy.Billing.Persistence.SQL.MSSQLServer
 {
-    public abstract class MSSQLServerSuppliersRepository : ISuppliersRepository
+    public abstract class MSSQLServerSuppliersRepository : IReadSuppliersRepository, IWriteSuppliersRepository
     {
         #region fields & constants
 
@@ -29,13 +29,13 @@ namespace Billy.Billing.Persistence.SQL.MSSQLServer
 
         #region methods
 
-        public abstract Task<Supplier> CreateAndAddAsync(IEnumerable<KeyValuePair<string, object>> data);
         public abstract Task<Supplier> GetByIdAsync(long id);
-        public abstract Task<IReadOnlyCollection<Supplier>> GetByIdAsync(params long[] ids);
-        public abstract Task<IReadOnlyCollection<Supplier>> GetMultipleAsync();
-        public abstract Task RemoveAsync(long id);
-        public abstract Task RemoveAsync(IEnumerable<long> ids);
+        public abstract Task<Supplier> GetSingleAsync(SupplierCriteria criteria = null);
+        public abstract Task<IReadOnlyCollection<Supplier>> GetMultipleAsync(SupplierCriteria criteria = null);
+
+        public abstract Task<Supplier> CreateAndAddAsync(IEnumerable<KeyValuePair<string, object>> data);
         public abstract Task UpdateAsync(long id, IEnumerable<KeyValuePair<string, object>> changes);
+        public abstract Task RemoveAsync(long id);
 
         #endregion
     }

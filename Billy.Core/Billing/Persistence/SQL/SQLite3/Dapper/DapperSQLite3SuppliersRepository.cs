@@ -1,5 +1,6 @@
 ﻿using Billy.Billing.Models;
 using Billy.Domain.Persistence;
+using Billy.Domain.Persistence.Exceptions;
 using Billy.Domain.Persistence.SQL;
 using Dapper;
 using System;
@@ -35,14 +36,14 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
 
         #endregion
 
-        public override async Task<IReadOnlyCollection<Supplier>> GetMultipleAsync()
+        public override async Task<IReadOnlyCollection<Supplier>> GetMultipleAsync(SupplierCriteria criteria = null)
         {
             try
             {
                 var suppliers = new List<Supplier>();
 
                 var cmd = new CommandDefinition(
-                    commandText: $"select * from [{nameof(Supplier)}]",
+                    commandText: $"select * from [{nameof(Supplier)}] order by { nameof(Supplier.Name) } asc",
                     transaction: this.GetTransactionIfAvailable());
 
                 //var resultsGrid = SqlMapper.QueryMultipleAsync(this._connection, cmd);
@@ -140,53 +141,9 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
             }
         }
 
-        public override async Task<IReadOnlyCollection<Supplier>> GetByIdAsync(params long[] ids)
+        public override Task<Supplier> GetSingleAsync(SupplierCriteria criteria = null)
         {
-            try
-            {
-                var query = $"select * from [{nameof(Supplier)}] where \"{nameof(Supplier.Id)}\" in ({string.Join(",", ids)});";
-
-                var suppliers = new List<Supplier>();
-
-                await using (var reader = await SqlMapper
-                    .ExecuteReaderAsync(
-                        cnn: this._connection,
-                        sql: query,
-                        transaction: this.GetTransactionIfAvailable())
-                    .ConfigureAwait(false))
-                {
-                    while (await reader.ReadAsync().ConfigureAwait(false))
-                    {
-                        suppliers.Add(
-                            new Supplier(
-                                await reader.GetSafeAsync<long>(nameof(Supplier.Id)).ConfigureAwait(false),
-                                await reader.GetSafeAsync<string>(nameof(Supplier.Name)).ConfigureAwait(false),
-                                await reader.GetSafeAsync<string>(nameof(Supplier.Email)).ConfigureAwait(false),
-                                await reader.GetSafeAsync<string>(nameof(Supplier.Website)).ConfigureAwait(false),
-                                await reader.GetSafeAsync<string>(nameof(Supplier.Phone)).ConfigureAwait(false),
-                                await reader.GetSafeAsync<string>(nameof(Supplier.Fax)).ConfigureAwait(false),
-                                await reader.GetSafeAsync<string>(nameof(Supplier.Notes)).ConfigureAwait(false),
-                                Address.Create(
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Country))).ConfigureAwait(false),
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Province))).ConfigureAwait(false),
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.City))).ConfigureAwait(false),
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Zip))).ConfigureAwait(false),
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Street))).ConfigureAwait(false),
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Address), nameof(Address.Number))).ConfigureAwait(false)),
-                                Agent.Create(
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Name))).ConfigureAwait(false),
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Surname))).ConfigureAwait(false),
-                                    await reader.GetSafeAsync<string>(DbSchemaHelper.ComposeColumnName(nameof(Supplier.Agent), nameof(Agent.Phone))).ConfigureAwait(false))));
-                    }
-                }
-
-                return suppliers;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-                return null;
-            }
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -254,9 +211,19 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
 
                 return insertedSupplier;
             }
-            catch (Exception ex)
+            catch (SQLiteException ex)
             {
+                // UNIQUE: error code = 19
                 Debug.WriteLine(ex);
+
+                switch (ex.ErrorCode)
+                {
+                    case 19: // UNIQUE
+                        var tableField = ex.Message.Split(' ', StringSplitOptions.RemoveEmptyEntries).LastOrDefault()?.Split('.', StringSplitOptions.RemoveEmptyEntries);
+                        throw new UniqueConstraintViolationException(tableField?.FirstOrDefault(), string.Join('.', tableField?.Skip(1)));
+                }
+
+
                 return null;
             }
         }
@@ -319,11 +286,6 @@ namespace Billy.Billing.Persistence.SQL.SQLite3.Dapper
             {
                 Debug.WriteLine(ex);
             }
-        }
-
-        public override Task RemoveAsync(IEnumerable<long> ids)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

@@ -3,17 +3,24 @@
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<UseWPF>true</UseWPF>
 		<StartupObject>Billy.UI.Wpf.Startup.EntryPoint</StartupObject>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Page Remove="Startup\App.xaml" />
+		<Compile Remove="Billing\Services\LocalBillingService.cs" />
+		<Compile Remove="Billing\Services\LocalBillsService.cs" />
+		<Compile Remove="Billing\Services\LocalSuppliersService.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ApplicationDefinition Include="Startup\App.xaml" />
+		<Page Remove="Startup\App.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ApplicationDefinition Include="Startup\App.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -24,9 +31,11 @@
 		<PackageReference Include="Autofac" Version="6.0.0" />
 		<PackageReference Include="Caliburn.Micro" Version="4.0.136-rc" />
 		<PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
-		<PackageReference Include="ReactiveUI" Version="11.5.35" />
-		<PackageReference Include="ReactiveUI.Events.WPF" Version="11.5.35" />
-		<PackageReference Include="ReactiveUI.WPF" Version="11.5.35" />
+		<PackageReference Include="ReactiveUI" Version="12.1.5" />
+		<PackageReference Include="ReactiveUI.Events.WPF" Version="12.1.5" />
+		<PackageReference Include="ReactiveUI.Fody" Version="12.1.5" />
+		<PackageReference Include="ReactiveUI.Validation" Version="1.8.6" />
+		<PackageReference Include="ReactiveUI.WPF" Version="12.1.5" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -34,5 +43,9 @@
 		<ProjectReference Include="..\..\Daedalus\Src\Daedalus.UI\Daedalus.UI.csproj" />
 		<ProjectReference Include="..\Billy.Application\Billy.Application.csproj" />
 		<ProjectReference Include="..\Billy.Core\Billy.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Billing\Services\" />
 	</ItemGroup>
 </Project>

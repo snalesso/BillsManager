@@ -46,9 +46,9 @@ namespace Billy.Billing.ViewModels
                         await this._suppliersService.UpdateAsync(this._supplierDto.Id, changedValues).ConfigureAwait(false);
                         await this.TryCloseAsync(true).ConfigureAwait(false);
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        throw ex;
+                        throw;
                     }
                 });
             this.TrySaveAndClose.ThrownExceptions

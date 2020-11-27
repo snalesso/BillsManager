@@ -1,27 +1,31 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-	  <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<LangVersion>9.0</LangVersion>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<RootNamespace>Billy</RootNamespace>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Communication\**" />
-    <EmbeddedResource Remove="Communication\**" />
-    <None Remove="Communication\**" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="Billing\DTOs\**" />
+		<Compile Remove="Communication\**" />
+		<EmbeddedResource Remove="Billing\DTOs\**" />
+		<EmbeddedResource Remove="Communication\**" />
+		<None Remove="Billing\DTOs\**" />
+		<None Remove="Communication\**" />
+	</ItemGroup>
 
-  <ItemGroup>
-	  <Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\SharedAssemblyInfo.cs" Link="Properties\SharedAssemblyInfo.cs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="DynamicData" Version="6.17.14" />
-    <PackageReference Include="Nito.AsyncEx.Coordination" Version="5.1.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="DynamicData" Version="6.17.14" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Billy.Core\Billy.Core.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Billy.Core\Billy.Core.csproj" />
+	</ItemGroup>
 
 </Project>

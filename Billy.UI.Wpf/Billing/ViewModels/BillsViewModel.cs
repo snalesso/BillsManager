@@ -6,6 +6,13 @@ using Caliburn.Micro;
 using Caliburn.Micro.ReactiveUI;
 using DynamicData;
 using DynamicData.PLinq;
+using DynamicData.Aggregation;
+using DynamicData.Binding;
+using DynamicData.Cache;
+using DynamicData.Cache.Internal;
+using DynamicData.Kernel;
+using DynamicData.List;
+using DynamicData.Operators;
 using ReactiveUI;
 using System;
 using System.Collections.ObjectModel;
@@ -16,6 +23,7 @@ using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Reactive.Subjects;
 
 namespace Billy.Billing.ViewModels
 {
@@ -31,6 +39,7 @@ namespace Billy.Billing.ViewModels
         //private readonly Func<AddBillViewModel> _addBillViewModelFactoryMethod;
         //private readonly Func<BillDto, EditBillViewModel> _editBillViewModelFactoryMethod;
 
+        private readonly IConnectableObservable<IChangeSet<BillViewModel, long>> _billViewModelsChanges_Trigger;
         private readonly SerialDisposable _billsSubscription;
 
         #endregion
@@ -40,12 +49,14 @@ namespace Billy.Billing.ViewModels
         public BillsViewModel(
             IDialogService dialogService
             , IBillingService billingService
+            , BillsFiltersViewModel billsFilterViewModel
             //, Func<AddBillViewModel> addBillViewModelFactoryMethod
             //, Func<BillDto, EditBillViewModel> editBillViewModelFactoryMethod
             )
         {
             this._dialogService = dialogService ?? throw new ArgumentNullException(nameof(dialogService));
             this._billingService = billingService ?? throw new ArgumentNullException(nameof(billingService));
+            this.BillsFilterViewModel = billsFilterViewModel ?? throw new ArgumentNullException(nameof(billsFilterViewModel));
             //this._addBillViewModelFactoryMethod = addBillViewModelFactoryMethod ?? throw new ArgumentNullException(nameof(addBillViewModelFactoryMethod));
             //this._editBillViewModelFactoryMethod = editBillViewModelFactoryMethod ?? throw new ArgumentNullException(nameof(editBillViewModelFactoryMethod));
 
@@ -60,7 +71,8 @@ namespace Billy.Billing.ViewModels
                 {
                     this._billsSourceCache.Edit(async updater =>
                     {
-                        var items = await this._billingService.Bills.GetAsync().ConfigureAwait(false);
+                        updater.Clear();
+                        var items = await this._billingService.Bills.GetAsync(this.BillsFilterViewModel.Criteria).ConfigureAwait(false);
                         updater.AddOrUpdate(items);
                     });
                 })
@@ -68,6 +80,13 @@ namespace Billy.Billing.ViewModels
             _ = this.LoadBills.ThrownExceptions
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(ex => Debug.WriteLine(ex))
+                .DisposeWith(this._disposables);
+
+            this.BillsFilterViewModel.WhenCriteriaChanged
+                //.ObserveOn(RxApp.TaskpoolScheduler)
+                //.SubscribeOn(RxApp.MainThreadScheduler)
+                .Select(_ => Unit.Default)
+                .InvokeCommand(this/*, x => x*/.LoadBills)
                 .DisposeWith(this._disposables);
 
             //this.ShowAddBillView = ReactiveCommand.CreateFromTask(
@@ -149,15 +168,32 @@ namespace Billy.Billing.ViewModels
 
         private void SubscribeToBills()
         {
+            //this._billsSubscription.Disposable =
+            //    Observable
+            //    .StartAsync(
+            //        async () => await this._billingService.Bills.GetAsync().ConfigureAwait(false),
+            //        RxApp.TaskpoolScheduler)
+            //    .ToObservableChangeSet(x => x.Id)
+            //    .Transform(
+            //        bill => new BillViewModel(bill),
+            //        new ParallelisationOptions(ParallelType.Parallelise))
+            //    .ObserveOn(RxApp.MainThreadScheduler)
+            //    .Bind(out var billVMs)
+            //    .DisposeMany()
+            //    .Subscribe();
+
             this._billsSubscription.Disposable =
-                Observable
-                .StartAsync(
-                    async () => await this._billingService.Bills.GetAsync().ConfigureAwait(false),
-                    RxApp.TaskpoolScheduler)
-                .ToObservableChangeSet(x => x.Id)
+                this._billsSourceCache
+                .Connect()
+                .ObserveOn(RxApp.TaskpoolScheduler)
                 .Transform(
                     bill => new BillViewModel(bill),
                     new ParallelisationOptions(ParallelType.Parallelise))
+                .Sort(OrderedComparer<BillViewModel>
+                    .OrderBy(x => x.PaymentDate)
+                    .ThenByDescending(x => x.ReleaseDate)
+                    .ThenBy(x => x.SupplierId)
+                    .ThenBy(x => x.Code))
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Bind(out var billVMs)
                 .DisposeMany()
@@ -194,6 +230,7 @@ namespace Billy.Billing.ViewModels
         public ReactiveCommand<Unit, Unit> ShowAddBillView { get; }
         public ReactiveCommand<BillViewModel, Unit> ShowEditBillView { get; }
         public ReactiveCommand<BillViewModel, Unit> RemoveBill { get; }
+        public BillsFiltersViewModel BillsFilterViewModel { get; }
 
         #endregion
 

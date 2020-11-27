@@ -56,6 +56,10 @@
                     PrimaryColor="{StaticResource UncleGreenDark2Color}"
                     SecondaryColor="GhostWhite" />
 
+                <!--<ResourceDictionary>
+                    <Style BasedOn="{StaticResource MaterialDesignScrollBarMinimal}" TargetType="{x:Type ScrollBar}" />
+                </ResourceDictionary>-->
+
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 
