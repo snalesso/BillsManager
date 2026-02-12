@@ -1,0 +1,68 @@
+﻿<Application
+    x:Class="Billy.UI.Wpf.Startup.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:materialDesgin="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <Application.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+
+                <ResourceDictionary>
+
+                    <Color
+                        x:Key="MyViolet"
+                        A="255"
+                        B="226"
+                        G="155"
+                        R="155" />
+
+                    <Color
+                        x:Key="UncleGreen"
+                        A="255"
+                        B="140"
+                        G="240"
+                        R="170" />
+
+                    <Color
+                        x:Key="UncleGreenDark"
+                        A="255"
+                        B="78"
+                        G="186"
+                        R="68" />
+
+                    <Color
+                        x:Key="UncleGreenDark2Color"
+                        A="255"
+                        B="37"
+                        G="135"
+                        R="37" />
+                    <SolidColorBrush x:Key="UncleGreenDarkBrush" Color="{StaticResource UncleGreenDark2Color}" />
+
+                </ResourceDictionary>
+
+                <!--<materialDesgin:CustomColorTheme
+                    x:Name="Theme1"
+                    BaseTheme="Dark"
+                    PrimaryColor="{StaticResource UncleGreen}"
+                    SecondaryColor="GhostWhite" />-->
+
+                <materialDesgin:CustomColorTheme
+                    x:Name="Theme2"
+                    BaseTheme="Light"
+                    PrimaryColor="{StaticResource UncleGreenDark2Color}"
+                    SecondaryColor="GhostWhite" />
+
+                <!--<ResourceDictionary>
+                    <Style BasedOn="{StaticResource MaterialDesignScrollBarMinimal}" TargetType="{x:Type ScrollBar}" />
+                </ResourceDictionary>-->
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Application.Resources>
+
+</Application>
